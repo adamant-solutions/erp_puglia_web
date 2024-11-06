@@ -109,3 +109,12 @@ input {
 }
 
 /* ---------------------------------------------------------------------- */
+
+/* temp ? */
+
+#navbarToggleExternalContent.show {
+  position: fixed;
+}
+main {
+  padding-left: calc(195px + 24px);
+}
