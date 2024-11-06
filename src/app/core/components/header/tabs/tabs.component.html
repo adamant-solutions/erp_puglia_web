@@ -1,0 +1,116 @@
+<nav class="navbar navbar-dark bg-dark fixed-top py-3">
+  <div class="container-fluid justify-content-start">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarToggleExternalContent"
+      aria-controls="navbarToggleExternalContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- navbar brand -->
+    <a class="navbar-brand ms-5 me-0" [routerLink]="['/']" title="ERP Puglia">
+      <img
+        src="./assets/images/erp_puglia_logo.svg"
+        alt="ERP Puglia Logo"
+        height="60"
+      />
+    </a>
+  </div>
+</nav>
+
+<div
+  class="collapse collapse-horizontal show"
+  id="navbarToggleExternalContent"
+  data-bs-theme="dark"
+  style="max-width: 240px; height: 100vh; padding-top: 73.6px"
+>
+  <div class="bg-dark p-4" style="height: 100%">
+    <ul class="navbar-nav main-nav-menu">
+      <li class="nav-item">
+        <!-- aria-current="page" -->
+        <a
+          class="nav-link"
+          [routerLink]="['/patrimonio']"
+          [ngClass]="{ active: isCurrentRoute('patrimonio') }"
+        >
+          <span>Patrimonio</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/contabilita']"
+          [ngClass]="{ active: isCurrentRoute('contabilita') }"
+        >
+          <span>Contabilità</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/anagrafica']"
+          [ngClass]="{ active: isCurrentRoute('anagrafica') }"
+        >
+          <span>Anagrafica</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/contratti-locazione']"
+          [ngClass]="{ active: isCurrentRoute('contratti-locazione') }"
+        >
+          <span>Contratti locazione</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/manutenzione']"
+          [ngClass]="{ active: isCurrentRoute('manutenzione') }"
+        >
+          <span>Manutenzione</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/ripartizione-spese']"
+          [ngClass]="{ active: isCurrentRoute('ripartizione-spese') }"
+        >
+          <span>Ripartizione spese</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/morosita']"
+          [ngClass]="{ active: isCurrentRoute('morosita') }"
+        >
+          <span>Morosità</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/ciclo-passivo']"
+          [ngClass]="{ active: isCurrentRoute('ciclo-passivo') }"
+        >
+          <span>Ciclo passivo</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
