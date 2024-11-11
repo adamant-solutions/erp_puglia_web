@@ -38,6 +38,13 @@ const routes: Routes = [
         (m) => m.ManutenzioneModule
       ),
   },
+  {
+    path: 'ripartizione-spese',
+    loadChildren: () =>
+      import('./features/ripartizione-spese/ripartizione-spese.module').then(
+        (m) => m.RipartizioneSpeseModule
+      ),
+  },
   { path: '**', redirectTo: 'patrimonio' },
 ];
 
