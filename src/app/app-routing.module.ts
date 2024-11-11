@@ -45,6 +45,13 @@ const routes: Routes = [
         (m) => m.RipartizioneSpeseModule
       ),
   },
+  {
+    path: 'morosita',
+    loadChildren: () =>
+      import('./features/morosita/morosita.module').then(
+        (m) => m.MorositaModule
+      ),
+  },
   { path: '**', redirectTo: 'patrimonio' },
 ];
 
