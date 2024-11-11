@@ -31,6 +31,13 @@ const routes: Routes = [
         (m) => m.ContrattiLocazioneModule
       ),
   },
+  {
+    path: 'manutenzione',
+    loadChildren: () =>
+      import('./features/manutenzione/manutenzione.module').then(
+        (m) => m.ManutenzioneModule
+      ),
+  },
   { path: '**', redirectTo: 'patrimonio' },
 ];
 
