@@ -52,6 +52,13 @@ const routes: Routes = [
         (m) => m.MorositaModule
       ),
   },
+  {
+    path: 'ciclo-passivo',
+    loadChildren: () =>
+      import('./features/ciclo-passivo/ciclo-passivo.module').then(
+        (m) => m.CicloPassivoModule
+      ),
+  },
   { path: '**', redirectTo: 'patrimonio' },
 ];
 
