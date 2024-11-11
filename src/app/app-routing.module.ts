@@ -24,6 +24,13 @@ const routes: Routes = [
         (m) => m.AnagraficaModule
       ),
   },
+  {
+    path: 'contratti-locazione',
+    loadChildren: () =>
+      import('./features/contratti-locazione/contratti-locazione.module').then(
+        (m) => m.ContrattiLocazioneModule
+      ),
+  },
   { path: '**', redirectTo: 'patrimonio' },
 ];
 
