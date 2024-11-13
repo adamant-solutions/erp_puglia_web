@@ -112,9 +112,18 @@ input {
 
 /* temp ? */
 
+.header {
+  min-height: 98px; /* 98px = ".navbar" height */
+}
+
 #navbarToggleExternalContent.show {
   position: fixed;
+  height: 100vh;
+  padding-top: 98px; /* 98px = ".navbar" height */
+  min-width: 250px;
 }
 main {
-  padding-left: calc(195px + 24px);
+  padding-left: calc(
+    250px + 30px
+  ); /* 250px = #navbarToggleExternalContent width, 30px = extra space */
 }
