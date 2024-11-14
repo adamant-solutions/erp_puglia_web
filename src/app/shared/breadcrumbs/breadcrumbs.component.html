@@ -1,0 +1,55 @@
+<div class="col-12">
+  <div class="container">
+    <div class="row">
+      <nav class="breadcrumb-container" aria-label="Percorso di navigazione">
+        <ol class="breadcrumb align-items-center mb-0" style="padding: 15px 0">
+          <!-- <li class="breadcrumb-item">
+            <a [routerLink]="['/']">
+              <svg class="icon icon-sm" aria-hidden="true">
+                <use
+                  href="assets/svg/sprites.svg#it-pa"
+                  xlink:href="assets/svg/sprites.svg#it-pa"
+                ></use>
+              </svg>
+            </a>
+            <span class="separator">
+              <svg class="icon icon-sm" aria-hidden="true">
+                <use
+                  href="assets/svg/sprites.svg#it-chevron-right"
+                  xlink:href="assets/svg/sprites.svg#it-chevron-right"
+                ></use>
+              </svg>
+            </span>
+          </li> -->
+
+          <li class="breadcrumb-item" *ngFor="let crumb of crumbsList">
+            <a [routerLink]="[crumb.link]">{{ crumb.label }}</a>
+            <span class="separator">
+              <svg class="icon icon-sm" aria-hidden="true">
+                <use
+                  href="assets/svg/sprites.svg#it-chevron-right"
+                  xlink:href="assets/svg/sprites.svg#it-chevron-right"
+                ></use>
+              </svg>
+            </span>
+          </li>
+
+          <li class="breadcrumb-item active" aria-current="page">
+            {{ currentPage }}
+          </li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- <nav aria-label="Breadcrumb">
+  <ol class="breadcrumb">
+    <li *ngFor="let crumb of crumbs; let i = index" class="breadcrumb-item">
+      <a *ngIf="crumb.link" [href]="crumb.link" class="breadcrumb-link">{{
+        crumb.label
+      }}</a>
+      <span *ngIf="!crumb.link">{{ crumb.label }}</span>
+    </li>
+  </ol>
+</nav> -->
