@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-anagrafica',
   templateUrl: './anagrafica.component.html',
-  styleUrls: ['./anagrafica.component.css']
+  styleUrls: ['./anagrafica.component.css'],
 })
 export class AnagraficaComponent {
-
+  pageTitle: string = 'Anagrafica';
 }

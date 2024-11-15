@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./patrimonio.component.css'],
 })
 export class PatrimonioComponent {
-  // breadcrumbList = [{ label: 'Parent', link: '/parent' }];
+  pageTitle: string = 'Patrimonio';
+
   breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
-  // breadcrumbList = [];
 }
