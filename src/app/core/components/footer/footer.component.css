@@ -1,0 +1,110 @@
+/* TEMP (css from DMS Puglia) */
+
+.dms-footer .pre-footer a {
+  font-family: "titilliumwebSemibold", sans-serif;
+}
+.dms-footer .pre-footer {
+  background-color: #f2f2f2;
+  height: 40px;
+}
+.dms-footer .pre-footer a {
+  color: #0075bf;
+}
+.dms-footer .pre-footer a:hover {
+  text-decoration: underline;
+}
+
+.dms-footer .main-footer {
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-top: 2px solid #003a54;
+  min-height: 380px;
+  color: #000000;
+  font-size: 14px;
+}
+.dms-footer .main-footer h5 {
+  margin: 0;
+  padding: 0;
+  color: #000000;
+  line-height: 1.4;
+}
+@media (max-width: 991.98px) {
+  .dms-footer .main-footer h5 {
+    font-size: 14px;
+  }
+}
+.dms-footer .main-footer a {
+  color: #000000;
+}
+.dms-footer .main-footer a:hover {
+  opacity: 90%;
+}
+.dms-footer .main-footer a:active {
+  text-decoration: underline;
+  color: #0075bf;
+}
+.dms-footer .main-footer a:hover,
+.dms-footer .main-footer a:focus {
+  color: #0075bf;
+}
+.dms-footer .main-footer a.footer-logo > img {
+  max-height: 58px;
+  filter: invert(1);
+}
+.dms-footer .main-footer .dms-footer--social {
+  margin-top: 20px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #003a54;
+  border-top: 1px solid #003a54;
+  text-align: center;
+}
+@media (min-width: 992px) {
+  .dms-footer .main-footer .dms-footer--social {
+    padding-top: 0;
+    padding-bottom: 15px;
+    border-top: none;
+    text-align: right;
+  }
+}
+.dms-footer .main-footer .dms-footer--social a i {
+  margin-left: 25px;
+  color: #000000;
+  font-size: 25px;
+  opacity: 1;
+}
+.dms-footer .main-footer .dms-footer--social a i:hover,
+.dms-footer .main-footer .dms-footer--social a i:focus {
+  opacity: 0.8;
+  text-decoration: none;
+}
+.dms-footer .main-footer .dms-footer--social a:hover,
+.dms-footer .main-footer .dms-footer--social a:focus {
+  text-decoration: none;
+}
+.dms-footer .main-footer .dms-footer--social a:first-child i,
+.dms-footer .main-footer .dms-footer--social a:first-of-type i {
+  margin-left: 0;
+}
+.dms-footer .main-footer .dms-footer--info {
+  padding-top: 20px;
+  font-size: 14px;
+}
+.dms-footer .main-footer .dms-footer--info .info-section {
+  margin-bottom: 20px;
+  display: block;
+}
+.dms-footer .main-footer .dms-footer--info .info-section ul {
+  padding-left: 0;
+  list-style: none;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.dms-footer .main-footer .dms-footer--bottom {
+  padding-top: 20px;
+  border-top: 1px solid #003a54;
+}
+.dms-footer .main-footer .dms-footer--bottom-link {
+  margin-right: 30px;
+  font-size: 14px;
+}
