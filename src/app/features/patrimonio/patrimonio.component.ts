@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-patrimonio',
@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class PatrimonioComponent {
   // breadcrumbList = [{ label: 'Parent', link: '/parent' }];
-  breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
+  breadcrumbList = [{label: 'ERP - di Regione Puglia', link: '/'}];
   // breadcrumbList = [];
 }

@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { MorositaRoutingModule } from './morosita-routing.module';
-import { MorositaComponent } from './morosita.component';
+import {MorositaRoutingModule} from './morosita-routing.module';
+import {MorositaComponent} from './morosita.component';
 
 
 @NgModule({
@@ -14,4 +14,5 @@ import { MorositaComponent } from './morosita.component';
     MorositaRoutingModule
   ]
 })
-export class MorositaModule { }
+export class MorositaModule {
+}

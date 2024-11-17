@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RipartizioneSpeseComponent } from './ripartizione-spese.component';
+import {RipartizioneSpeseComponent} from './ripartizione-spese.component';
 
 describe('RipartizioneSpeseComponent', () => {
   let component: RipartizioneSpeseComponent;

@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'patrimonio', pathMatch: 'full' },
+  {path: '', redirectTo: 'patrimonio', pathMatch: 'full'},
   {
     path: 'patrimonio',
     loadChildren: () =>
@@ -59,11 +59,12 @@ const routes: Routes = [
         (m) => m.CicloPassivoModule
       ),
   },
-  { path: '**', redirectTo: 'patrimonio' },
+  {path: '**', redirectTo: 'patrimonio'},
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+}

@@ -1,10 +1,12 @@
 .breadcrumb-item {
   font-size: 14px;
 }
+
 .breadcrumb-item a {
   font-weight: 400;
   border: none;
 }
+
 .breadcrumb-item a:hover {
   text-decoration: underline;
 }

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { MorositaComponent } from './morosita.component';
+import {MorositaComponent} from './morosita.component';
 
 describe('MorositaComponent', () => {
   let component: MorositaComponent;

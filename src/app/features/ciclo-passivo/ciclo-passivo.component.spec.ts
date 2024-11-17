@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CicloPassivoComponent } from './ciclo-passivo.component';
+import {CicloPassivoComponent} from './ciclo-passivo.component';
 
 describe('CicloPassivoComponent', () => {
   let component: CicloPassivoComponent;
