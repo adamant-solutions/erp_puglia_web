@@ -1,28 +1,37 @@
-<div class="py-4">
-  <h1 id="main-content">{{ pageTitle }}</h1>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Anagrafica'">
+</app-breadcrumbs>
 
-  <div class="table-responsive">
-    <table class="table table-striped table-hover table-bordered">
-      <thead>
-        <tr>
-          <th scope="col">Cittadino ID</th>
-          <th scope="col">Codice fiscale</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Cognome</th>
-          <th scope="col">Azioni</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let anagraficaItem of anagrafica">
-          <th scope="row">{{ anagraficaItem.cittadino.id }}</th>
-          <td>{{ anagraficaItem.cittadino.codice_fiscale }}</td>
-          <td>{{ anagraficaItem.cittadino.nome }}</td>
-          <td>{{ anagraficaItem.cittadino.cognome }}</td>
-          <td>
-            <a href="#">View</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Cittadino ID</th>
+                <th scope="col">Codice fiscale</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Cognome</th>
+                <th scope="col">Azioni</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let anagraficaItem of anagrafica">
+                <th scope="row">{{ anagraficaItem.cittadino.id }}</th>
+                <td>{{ anagraficaItem.cittadino.codice_fiscale }}</td>
+                <td>{{ anagraficaItem.cittadino.nome }}</td>
+                <td>{{ anagraficaItem.cittadino.cognome }}</td>
+                <td>
+                  <a href="#">View</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>

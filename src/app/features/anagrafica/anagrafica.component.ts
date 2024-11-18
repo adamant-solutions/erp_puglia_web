@@ -10,6 +10,8 @@ import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 export class AnagraficaComponent implements OnInit {
   pageTitle: string = 'Anagrafica';
 
+  breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
+
   anagrafica: Anagrafica[] = [
     {
       cittadino: {
