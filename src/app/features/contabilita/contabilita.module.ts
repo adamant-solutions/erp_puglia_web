@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ContabilitaRoutingModule } from './contabilita-routing.module';
-import { ContabilitaComponent } from './contabilita.component';
+import {ContabilitaRoutingModule} from './contabilita-routing.module';
+import {ContabilitaComponent} from './contabilita.component';
 
 
 @NgModule({
@@ -14,4 +14,5 @@ import { ContabilitaComponent } from './contabilita.component';
     ContabilitaRoutingModule
   ]
 })
-export class ContabilitaModule { }
+export class ContabilitaModule {
+}

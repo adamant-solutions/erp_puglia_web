@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { ContrattiLocazioneRoutingModule } from './contratti-locazione-routing.module';
-import { ContrattiLocazioneComponent } from './contratti-locazione.component';
+import {ContrattiLocazioneRoutingModule} from './contratti-locazione-routing.module';
+import {ContrattiLocazioneComponent} from './contratti-locazione.component';
 
 
 @NgModule({
@@ -14,4 +14,5 @@ import { ContrattiLocazioneComponent } from './contratti-locazione.component';
     ContrattiLocazioneRoutingModule
   ]
 })
-export class ContrattiLocazioneModule { }
+export class ContrattiLocazioneModule {
+}

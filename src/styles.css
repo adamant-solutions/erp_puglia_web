@@ -134,6 +134,7 @@ main {
   ); /* 250px = "#navbarToggleExternalContent" width, 30px = extra space */
   padding-right: 30px;
 }
+
 footer {
   padding-left: 250px; /* 250px = "#navbarToggleExternalContent" width */
 }

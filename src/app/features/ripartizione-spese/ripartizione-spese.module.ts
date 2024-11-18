@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { RipartizioneSpeseRoutingModule } from './ripartizione-spese-routing.module';
-import { RipartizioneSpeseComponent } from './ripartizione-spese.component';
+import {RipartizioneSpeseRoutingModule} from './ripartizione-spese-routing.module';
+import {RipartizioneSpeseComponent} from './ripartizione-spese.component';
 
 
 @NgModule({
@@ -14,4 +14,5 @@ import { RipartizioneSpeseComponent } from './ripartizione-spese.component';
     RipartizioneSpeseRoutingModule
   ]
 })
-export class RipartizioneSpeseModule { }
+export class RipartizioneSpeseModule {
+}

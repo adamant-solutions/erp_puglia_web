@@ -1,10 +1,12 @@
 .main-nav-menu .nav-item {
   margin-bottom: 15px;
 }
+
 .main-nav-menu .nav-link {
   color: #fff;
   font-weight: bold;
 }
+
 .main-nav-menu .nav-link:hover span,
 .main-nav-menu .nav-link.active span {
   color: #faba00;

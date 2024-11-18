@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { CicloPassivoRoutingModule } from './ciclo-passivo-routing.module';
-import { CicloPassivoComponent } from './ciclo-passivo.component';
+import {CicloPassivoRoutingModule} from './ciclo-passivo-routing.module';
+import {CicloPassivoComponent} from './ciclo-passivo.component';
 
 
 @NgModule({
@@ -14,4 +14,5 @@ import { CicloPassivoComponent } from './ciclo-passivo.component';
     CicloPassivoRoutingModule
   ]
 })
-export class CicloPassivoModule { }
+export class CicloPassivoModule {
+}

@@ -4,14 +4,8 @@ import { CommonModule } from '@angular/common';
 import { AnagraficaRoutingModule } from './anagrafica-routing.module';
 import { AnagraficaComponent } from './anagrafica.component';
 
-
 @NgModule({
-  declarations: [
-    AnagraficaComponent
-  ],
-  imports: [
-    CommonModule,
-    AnagraficaRoutingModule
-  ]
+  declarations: [AnagraficaComponent],
+  imports: [CommonModule, AnagraficaRoutingModule],
 })
-export class AnagraficaModule { }
+export class AnagraficaModule {}
