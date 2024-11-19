@@ -239,13 +239,10 @@ export class AnagraficaComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    console.log(
-      'Activated route data in Component: ',
-      this.activatedRoute.data
-    );
+    // console.log(this.activatedRoute.snapshot.data['anagraficaResolver']);
+    console.log('Anagrafica dummy data: ', this.anagrafica);
 
     // this.getAnagrafica();
-    console.log(this.anagrafica);
   }
 
   getAnagrafica() {

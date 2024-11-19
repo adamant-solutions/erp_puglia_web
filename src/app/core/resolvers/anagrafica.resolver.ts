@@ -1,30 +1,23 @@
-import { Injectable } from '@angular/core';
 import {
-  Resolve,
+  ResolveFn,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { inject } from '@angular/core';
+import { catchError, Observable, of } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 import { AnagraficaService } from '../services/anagrafica.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AnagraficaResolver implements Resolve<Anagrafica[]> {
-  constructor(private anagraficaService: AnagraficaService) {}
+export const anagraficaResolver: ResolveFn<Anagrafica[]> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): Observable<Anagrafica[]> => {
+  const anagraficaService = inject(AnagraficaService);
 
-  resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<Anagrafica[]> {
-    return this.anagraficaService.getAnagrafica().pipe(
-      catchError((error) => {
-        // return of('Error: ' + error);
-        // return of('No data');
-        return of([]);
-      })
-    );
-  }
-}
+  return anagraficaService.getAnagrafica().pipe(
+    catchError((error) => {
+      console.error('Error fetching anagrafica data:', error);
+      return of([]);
+    })
+  );
+};
