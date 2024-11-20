@@ -20,10 +20,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let anagraficaItem of anagrafica">
+              <tr *ngFor="let anagraficaItem of anagraficaList">
                 <th scope="row">{{ anagraficaItem.id }}</th>
                 <td>{{ anagraficaItem.cittadino.id }}</td>
-                <td>{{ anagraficaItem.cittadino.codice_fiscale }}</td>
+                <td>{{ anagraficaItem.cittadino.codiceFiscale }}</td>
                 <td>{{ anagraficaItem.cittadino.nome }}</td>
                 <td>{{ anagraficaItem.cittadino.cognome }}</td>
                 <td>
