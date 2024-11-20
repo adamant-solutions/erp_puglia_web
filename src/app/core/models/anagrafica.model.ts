@@ -5,11 +5,11 @@ export interface LuogoNascita {
 }
 
 export interface Cittadino {
-  id: string;
-  codice_fiscale: string;
+  id?: number | string;
+  codiceFiscale: string;
   nome: string;
   cognome: string;
-  data_nascita: string;
+  dataDiNascita?: Date | string;
   luogo_nascita: LuogoNascita;
   genere: string;
   cittadinanza: string;
@@ -33,20 +33,20 @@ export interface Contatti {
 export interface DocumentiIdentita {
   tipo_documento: string;
   numero_documento: string;
-  data_emissione: string;
-  data_scadenza: string;
+  data_emissione: Date | string;
+  data_scadenza: Date | string;
   ente_emittente: string;
 }
 
 export interface AltriDettagli {
   stato_civile: string;
-  data_ultimo_aggiornamento: string;
+  data_ultimo_aggiornamento: Date | string;
 }
 
 export interface Anagrafica {
-  id: string;
-  data_creazione: string;
-  data_ultima_modifica: string;
+  id?: number | string;
+  data_creazione: Date | string;
+  data_ultima_modifica: Date | string;
 
   cittadino: Cittadino;
   residenza: Residenza;
