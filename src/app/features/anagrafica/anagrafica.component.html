@@ -12,20 +12,30 @@
             <thead>
               <tr>
                 <th scope="col">Anagrafica ID</th>
+
                 <th scope="col">Cittadino ID</th>
-                <th scope="col">Codice fiscale</th>
                 <th scope="col">Nome</th>
                 <th scope="col">Cognome</th>
+                <th scope="col">Codice fiscale</th>
+                <th scope="col">Genere</th>
+                <th scope="col">Cittadinanza</th>
+                <th scope="col">Data di nascita</th>
+
                 <th scope="col">Azioni</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let anagraficaItem of anagraficaList">
                 <th scope="row">{{ anagraficaItem.id }}</th>
+
                 <td>{{ anagraficaItem.cittadino.id }}</td>
-                <td>{{ anagraficaItem.cittadino.codiceFiscale }}</td>
                 <td>{{ anagraficaItem.cittadino.nome }}</td>
                 <td>{{ anagraficaItem.cittadino.cognome }}</td>
+                <td>{{ anagraficaItem.cittadino.codiceFiscale }}</td>
+                <td>{{ anagraficaItem.cittadino.genere }}</td>
+                <td>{{ anagraficaItem.cittadino.cittadinanza }}</td>
+                <td>{{ anagraficaItem.cittadino.dataDiNascita }}</td>
+
                 <td>
                   <a href="#">View</a>
                 </td>
