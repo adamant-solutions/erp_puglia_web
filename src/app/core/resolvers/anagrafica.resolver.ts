@@ -8,10 +8,10 @@ import { catchError, Observable, of } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 import { AnagraficaService } from '../services/anagrafica.service';
 
-export const anagraficaResolver: ResolveFn<Anagrafica[]> = (
+export const anagraficaResolver: ResolveFn<Observable<Anagrafica[]>> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<Anagrafica[]> => {
+) => {
   const anagraficaService = inject(AnagraficaService);
 
   return anagraficaService.getAnagrafica().pipe(

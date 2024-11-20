@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, Observable, of } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
@@ -7,15 +7,15 @@ import { Anagrafica } from '../models/anagrafica.model';
   providedIn: 'root',
 })
 export class AnagraficaService {
-  url = 'https://api.example.com/data';
-
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject('anagraficaUrl') private anagraficaUrl: string,
+    private http: HttpClient
+  ) {}
 
   getAnagrafica(): Observable<Anagrafica[]> {
-    return this.http.get<Anagrafica[]>(this.url).pipe(
+    return this.http.get<Anagrafica[]>(this.anagraficaUrl).pipe(
       catchError((error) => {
-        // throw error;
-        return of([]);
+        throw error;
       })
     );
   }
