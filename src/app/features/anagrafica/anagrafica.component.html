@@ -11,6 +11,7 @@
           <table class="table table-striped table-hover table-bordered">
             <thead>
               <tr>
+                <th scope="col">Anagrafica ID</th>
                 <th scope="col">Cittadino ID</th>
                 <th scope="col">Codice fiscale</th>
                 <th scope="col">Nome</th>
@@ -20,7 +21,8 @@
             </thead>
             <tbody>
               <tr *ngFor="let anagraficaItem of anagrafica">
-                <th scope="row">{{ anagraficaItem.cittadino.id }}</th>
+                <th scope="row">{{ anagraficaItem.id }}</th>
+                <td>{{ anagraficaItem.cittadino.id }}</td>
                 <td>{{ anagraficaItem.cittadino.codice_fiscale }}</td>
                 <td>{{ anagraficaItem.cittadino.nome }}</td>
                 <td>{{ anagraficaItem.cittadino.cognome }}</td>

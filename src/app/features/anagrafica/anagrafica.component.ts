@@ -14,6 +14,9 @@ export class AnagraficaComponent implements OnInit {
 
   anagrafica: Anagrafica[] = [
     {
+      id: '1',
+      data_creazione: '19/11/2024',
+      data_ultima_modifica: '19/11/2024',
       cittadino: {
         id: '123456789',
         codice_fiscale: 'RSSMRA85M01H501Z',
@@ -25,7 +28,7 @@ export class AnagraficaComponent implements OnInit {
           provincia: 'MI',
           stato: 'Italia',
         },
-        sesso: 'M',
+        genere: 'M',
         cittadinanza: 'Italiana',
       },
       residenza: {
@@ -57,6 +60,9 @@ export class AnagraficaComponent implements OnInit {
     },
 
     {
+      id: '2',
+      data_creazione: '19/11/2024',
+      data_ultima_modifica: '19/11/2024',
       cittadino: {
         id: '987654321',
         codice_fiscale: 'BNCLRA90F20C351Z',
@@ -68,7 +74,7 @@ export class AnagraficaComponent implements OnInit {
           provincia: 'RM',
           stato: 'Italia',
         },
-        sesso: 'F',
+        genere: 'F',
         cittadinanza: 'Italiana',
       },
       residenza: {
@@ -107,6 +113,9 @@ export class AnagraficaComponent implements OnInit {
     },
 
     {
+      id: '3',
+      data_creazione: '19/11/2024',
+      data_ultima_modifica: '19/11/2024',
       cittadino: {
         id: '654321987',
         codice_fiscale: 'VRDGNE70A01F205X',
@@ -118,7 +127,7 @@ export class AnagraficaComponent implements OnInit {
           provincia: 'NA',
           stato: 'Italia',
         },
-        sesso: 'M',
+        genere: 'M',
         cittadinanza: 'Italiana',
       },
       residenza: {
@@ -150,6 +159,9 @@ export class AnagraficaComponent implements OnInit {
     },
 
     {
+      id: '4',
+      data_creazione: '19/11/2024',
+      data_ultima_modifica: '19/11/2024',
       cittadino: {
         id: '1122334455',
         codice_fiscale: 'FNZGRA95L15D961Y',
@@ -161,7 +173,7 @@ export class AnagraficaComponent implements OnInit {
           provincia: 'FI',
           stato: 'Italia',
         },
-        sesso: 'F',
+        genere: 'F',
         cittadinanza: 'Italiana',
       },
       residenza: {
@@ -193,6 +205,9 @@ export class AnagraficaComponent implements OnInit {
     },
 
     {
+      id: '5',
+      data_creazione: '19/11/2024',
+      data_ultima_modifica: '19/11/2024',
       cittadino: {
         id: '9988776655',
         codice_fiscale: 'CNTMRZ88B10E100V',
@@ -204,7 +219,7 @@ export class AnagraficaComponent implements OnInit {
           provincia: 'BO',
           stato: 'Italia',
         },
-        sesso: 'F',
+        genere: 'F',
         cittadinanza: 'Italiana',
       },
       residenza: {

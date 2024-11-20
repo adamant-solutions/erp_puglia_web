@@ -11,7 +11,7 @@ export interface Cittadino {
   cognome: string;
   data_nascita: string;
   luogo_nascita: LuogoNascita;
-  sesso: string;
+  genere: string;
   cittadinanza: string;
 }
 
@@ -44,6 +44,10 @@ export interface AltriDettagli {
 }
 
 export interface Anagrafica {
+  id: string;
+  data_creazione: string;
+  data_ultima_modifica: string;
+
   cittadino: Cittadino;
   residenza: Residenza;
   contatti: Contatti;
