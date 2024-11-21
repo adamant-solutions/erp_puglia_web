@@ -37,7 +37,12 @@
                 <td>{{ anagraficaItem.cittadino.dataDiNascita }}</td>
 
                 <td>
-                  <a href="#">View</a>
+                  <a
+                    [routerLink]="[
+                      anagraficaItem.id + '/visualizza-anagrafica'
+                    ]"
+                    >View</a
+                  >
                 </td>
               </tr>
             </tbody>
