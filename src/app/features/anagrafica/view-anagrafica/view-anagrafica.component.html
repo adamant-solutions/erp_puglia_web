@@ -1,0 +1,79 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Visualizza Anagrafica'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-12">
+            <div class="mb-3">
+              <label class="form-label" for="idAnagrafica">Anagrafica ID</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="idAnagrafica"
+                  name="idAnagrafica"
+                  formControlName="idAnagrafica"
+                />
+                <!-- <span class="input-group-text">
+                  <i class="bi bi-record-circle"></i>
+                </span> -->
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="nome">Nome</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome"
+                  name="nome"
+                  formControlName="nome"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-person-circle"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="cognome">Cognome</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  formControlName="cognome"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-person-circle"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-4 d-flex justify-content-between">
+            <button type="submit" class="px-3 py-1">Modifica</button>
+
+            <button type="button" class="px-3 py-1" (click)="indietro()">
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
