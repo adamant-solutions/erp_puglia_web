@@ -19,4 +19,12 @@ export class AnagraficaService {
       })
     );
   }
+
+  getAnagraficaById(id: number): Observable<Anagrafica> {
+    return this.http.get<Anagrafica>(`${this.anagraficaUrl}/` + id).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
 }
