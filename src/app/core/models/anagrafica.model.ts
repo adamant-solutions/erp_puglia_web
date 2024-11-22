@@ -5,14 +5,16 @@ export interface LuogoNascita {
 }
 
 export interface Cittadino {
-  id?: number | string;
-  codiceFiscale: string;
+  id: number;
+  createDate: Date | string;
+  lastUpdateDate: Date | string;
   nome: string;
   cognome: string;
-  dataDiNascita?: Date | string;
-  luogo_nascita: LuogoNascita;
+  codiceFiscale: string;
   genere: string;
   cittadinanza: string;
+  dataDiNascita: Date | string;
+  luogo_nascita: LuogoNascita;
 }
 
 export interface Residenza {
@@ -44,9 +46,9 @@ export interface AltriDettagli {
 }
 
 export interface Anagrafica {
-  id?: number | string;
-  data_creazione: Date | string;
-  data_ultima_modifica: Date | string;
+  id: number;
+  createDate: Date | string;
+  lastUpdateDate: Date | string;
 
   cittadino: Cittadino;
   residenza: Residenza;

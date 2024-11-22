@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 
 @Component({
@@ -25,38 +24,41 @@ export class ViewAnagraficaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.activatedRoute.data.subscribe(({ anagraficaByIdResolver }) => {
       this.anagrafica = anagraficaByIdResolver;
       console.log('anagraficaByIdResolver: ', anagraficaByIdResolver);
     });
-  }
 
-  ngOnInit() {
     this.initForm();
   }
 
   initForm() {
     this.viewForm = this.formBuilder.group({
       idAnagrafica: [this.anagrafica.id],
-      nome: [this.anagrafica.cittadino.nome],
-      cognome: [this.anagrafica.cittadino.cognome],
+      createDate: [this.anagrafica.createDate],
+      lastUpdateDate: [this.anagrafica.lastUpdateDate],
+
+      cittadino: this.formBuilder.group({
+        idCittadino: [this.anagrafica.cittadino.id],
+        createDate: [this.anagrafica.cittadino.createDate],
+        lastUpdateDate: [this.anagrafica.cittadino.lastUpdateDate],
+        nome: [this.anagrafica.cittadino.nome],
+        cognome: [this.anagrafica.cittadino.cognome],
+        codiceFiscale: [this.anagrafica.cittadino.codiceFiscale],
+        genere: [this.anagrafica.cittadino.genere],
+        cittadinanza: [this.anagrafica.cittadino.cittadinanza],
+        dataDiNascita: [this.anagrafica.cittadino.dataDiNascita],
+      }),
     });
 
-    // this.disableInputs();
+    this.viewForm.disable();
   }
 
   indietro() {
     this.router.navigate(['/anagrafica']);
-  }
-
-  disableInputs() {
-    Object.keys(this.viewForm.controls).forEach((key) => {
-      const control = this.viewForm.get(key);
-      if (control) {
-        control.disable();
-      }
-    });
   }
 
   onSubmit() {
