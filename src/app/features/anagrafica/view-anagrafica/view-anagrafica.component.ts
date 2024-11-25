@@ -63,7 +63,7 @@ export class ViewAnagraficaComponent implements OnInit {
 
   onSubmit() {
     if (this.viewForm.valid) {
-      console.log('Form Data: ', this.viewForm.value);
+      console.log('Form data: ', this.viewForm.value);
     } else {
       // errors
     }

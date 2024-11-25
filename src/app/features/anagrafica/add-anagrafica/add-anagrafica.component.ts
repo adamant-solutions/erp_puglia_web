@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 
@@ -18,8 +18,8 @@ export class AddAnagraficaComponent implements OnInit {
   ];
 
   anagrafica!: Anagrafica;
-
   addForm!: FormGroup;
+  submitted: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -36,31 +36,36 @@ export class AddAnagraficaComponent implements OnInit {
       id: [-1],
       cittadino: this.formBuilder.group({
         id: [],
-        nome: [''],
-        cognome: [''],
-        codiceFiscale: [''],
-        genere: [''],
-        cittadinanza: [''],
-        dataDiNascita: [''],
+        nome: ['', Validators.required],
+        cognome: ['', Validators.required],
+        codiceFiscale: ['', Validators.required],
+        genere: ['', Validators.required],
+        cittadinanza: ['', Validators.required],
+        dataDiNascita: ['', Validators.required],
       }),
     });
   }
 
-  cancel() {
+  cancelForm() {
     this.addForm.reset();
   }
 
   onSubmit() {
+    this.submitted = true;
+
+    console.log('Form controls: ', this.addForm.controls);
+    console.log('Form data: ', this.addForm.value);
+
     if (this.addForm.invalid) {
       return;
     } else {
-      console.log('Form Data: ', this.addForm.value);
-
       this.anagraficaService
         .addAnagrafica(this.addForm.getRawValue())
         .subscribe({
           next: (data: any) => {
+            console.log('Form data (response): ', data);
             this.addForm.reset();
+            this.submitted = false;
             this.router.navigate(['/anagrafica']);
           },
           error: (error: any) => {
