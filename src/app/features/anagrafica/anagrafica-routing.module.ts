@@ -6,6 +6,7 @@ import {
   anagraficaResolver,
 } from 'src/app/core/resolvers/anagrafica.resolver';
 import { ViewAnagraficaComponent } from './view-anagrafica/view-anagrafica.component';
+import { AddAnagraficaComponent } from './add-anagrafica/add-anagrafica.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: 'anagrafica-dettagli/:anagraficaId',
     component: ViewAnagraficaComponent,
     resolve: { anagraficaByIdResolver },
+  },
+  {
+    path: 'nuova-anagrafica',
+    component: AddAnagraficaComponent,
   },
 ];
 

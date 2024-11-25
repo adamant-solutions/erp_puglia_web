@@ -7,6 +7,18 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-3"
+            [routerLink]="['nuova-anagrafica']"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+            </svg>
+            <span>Aggiungi anagrafica</span>
+          </button>
+        </div>
+
         <div class="table-responsive">
           <table class="table table-striped table-hover table-bordered">
             <thead>
