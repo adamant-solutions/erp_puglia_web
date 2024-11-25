@@ -12,9 +12,9 @@ export class AnagraficaService {
     private http: HttpClient
   ) {}
 
-  getAnagrafica(pageIndex: number): Observable<Anagrafica[]> {
+  getAnagrafica(pageNumber: number): Observable<Anagrafica[]> {
     return this.http
-      .get<Anagrafica[]>(`${this.anagraficaUrl}?pageIndex=${pageIndex}`)
+      .get<Anagrafica[]>(`${this.anagraficaUrl}?pagina=${pageNumber}`)
       .pipe(
         catchError((error) => {
           throw error;

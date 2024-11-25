@@ -15,9 +15,11 @@ export const anagraficaResolver: ResolveFn<Observable<Anagrafica[]>> = (
 ) => {
   const anagraficaService = inject(AnagraficaService);
 
-  const pageIndex = route.params['pageIndex'] || 0;
+  const pageNumber = route.queryParamMap.get('pagina')
+    ? Number(route.queryParamMap.get('pagina'))
+    : 1;
 
-  return anagraficaService.getAnagrafica(pageIndex).pipe(
+  return anagraficaService.getAnagrafica(pageNumber).pipe(
     catchError((error) => {
       console.error('Error fetching anagrafica data:', error);
       return of([]);

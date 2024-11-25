@@ -40,7 +40,7 @@
               <tr *ngFor="let anagraficaItem of anagraficaList">
                 <td>
                   <a
-                    [routerLink]="['anagrafica-dettagli/' + anagraficaItem.id]"
+                    [routerLink]="['anagrafica-dettagli', anagraficaItem.id]"
                     title="Vedi dettagli"
                     class="me-3"
                   >

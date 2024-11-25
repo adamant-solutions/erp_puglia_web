@@ -18,10 +18,10 @@ export class AnagraficaComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.getAnagrafica();
+    this.getAnagraficaList();
   }
 
-  getAnagrafica() {
+  getAnagraficaList() {
     this.activatedRoute.data
       .pipe(map((data) => data['anagraficaResolver']))
       .subscribe((response) => {

@@ -35,7 +35,7 @@ export class AddAnagraficaComponent implements OnInit {
     this.addForm = this.formBuilder.group({
       id: [-1],
       cittadino: this.formBuilder.group({
-        id: [],
+        // id: [],
         nome: ['', Validators.required],
         cognome: ['', Validators.required],
         codiceFiscale: ['', Validators.required],
