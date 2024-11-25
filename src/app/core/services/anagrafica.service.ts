@@ -29,4 +29,12 @@ export class AnagraficaService {
       })
     );
   }
+
+  addAnagrafica(anagrafica: Anagrafica): Observable<Anagrafica> {
+    return this.http.post<Anagrafica>(`${this.anagraficaUrl}`, anagrafica).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
 }
