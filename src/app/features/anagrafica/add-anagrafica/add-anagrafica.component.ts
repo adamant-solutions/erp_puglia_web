@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
+import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 
 @Component({
   selector: 'app-add-anagrafica',
@@ -22,8 +23,8 @@ export class AddAnagraficaComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private anagraficaService: AnagraficaService
   ) {}
 
   ngOnInit() {
@@ -32,10 +33,9 @@ export class AddAnagraficaComponent implements OnInit {
 
   initForm() {
     this.addForm = this.formBuilder.group({
-      idAnagrafica: [-1],
-
+      id: [-1],
       cittadino: this.formBuilder.group({
-        idCittadino: [],
+        id: [],
         nome: [''],
         cognome: [''],
         codiceFiscale: [''],
@@ -46,15 +46,27 @@ export class AddAnagraficaComponent implements OnInit {
     });
   }
 
-  indietro() {
-    this.router.navigate(['/anagrafica']);
+  cancel() {
+    this.addForm.reset();
   }
 
   onSubmit() {
-    if (this.addForm.valid) {
-      console.log('Form Data: ', this.addForm.value);
+    if (this.addForm.invalid) {
+      return;
     } else {
-      // errors
+      console.log('Form Data: ', this.addForm.value);
+
+      this.anagraficaService
+        .addAnagrafica(this.addForm.getRawValue())
+        .subscribe({
+          next: (data: any) => {
+            this.addForm.reset();
+            this.router.navigate(['/anagrafica']);
+          },
+          error: (error: any) => {
+            console.error('An error occurred while adding anagrafica:', error);
+          },
+        });
     }
   }
 }
