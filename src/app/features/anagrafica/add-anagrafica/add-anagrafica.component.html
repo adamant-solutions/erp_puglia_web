@@ -1,1 +1,146 @@
-<p>add-anagrafica works!</p>
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Nuova Anagrafica'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-12">
+            <!-- cittadino -->
+            <fieldset formGroupName="cittadino">
+              <legend>CITTADINO:</legend>
+
+              <div class="row d-flex">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="nome">Nome</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nome"
+                      name="nome"
+                      formControlName="nome"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-person-circle"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cognome">Cognome</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cognome"
+                      name="cognome"
+                      formControlName="cognome"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-person-circle"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="codiceFiscale"
+                    >Codice fiscale</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="codiceFiscale"
+                      name="codiceFiscale"
+                      formControlName="codiceFiscale"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-ticket-detailed"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row d-flex">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="genere">Genere</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="genere"
+                      name="genere"
+                      formControlName="genere"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-gender-neuter"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cittadinanza"
+                    >Cittadinanza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cittadinanza"
+                      name="cittadinanza"
+                      formControlName="cittadinanza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="dataDiNascita"
+                    >Data di nascita</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="dataDiNascita"
+                      name="dataDiNascita"
+                      formControlName="dataDiNascita"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+
+            <button type="submit" class="btn btn-primary py-2">Aggiungi</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
