@@ -14,7 +14,7 @@ const routes: Routes = [
     resolve: { anagraficaResolver: anagraficaResolver },
   },
   {
-    path: ':anagraficaId/visualizza-anagrafica',
+    path: 'anagrafica-dettagli/:anagraficaId',
     component: ViewAnagraficaComponent,
     resolve: { anagraficaByIdResolver },
   },

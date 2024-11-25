@@ -9,7 +9,7 @@ import { Anagrafica } from 'src/app/core/models/anagrafica.model';
   styleUrls: ['./view-anagrafica.component.css'],
 })
 export class ViewAnagraficaComponent implements OnInit {
-  pageTitle: string = 'Visualizza Anagrafica';
+  pageTitle: string = 'Anagrafica dettagli';
 
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
