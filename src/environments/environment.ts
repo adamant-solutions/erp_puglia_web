@@ -2,7 +2,7 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-const API_BASE_URL = 'http://195.231.37.106:8089/';
+const API_BASE_URL = '/';
 
 export const environment = {
   production: false,
