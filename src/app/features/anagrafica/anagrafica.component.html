@@ -11,6 +11,8 @@
           <table class="table table-striped table-hover table-bordered">
             <thead>
               <tr>
+                <th scope="col">Azioni</th>
+
                 <th scope="col">Anagrafica ID</th>
 
                 <th scope="col">Cittadino ID</th>
@@ -20,13 +22,27 @@
                 <th scope="col">Genere</th>
                 <th scope="col">Cittadinanza</th>
                 <th scope="col">Data di nascita</th>
-
-                <th scope="col">Azioni</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let anagraficaItem of anagraficaList">
-                <th scope="row">{{ anagraficaItem.id }}</th>
+                <td>
+                  <a
+                    [routerLink]="['anagrafica-dettagli/' + anagraficaItem.id]"
+                    title="Vedi dettagli"
+                    class="me-3"
+                  >
+                    <i class="bi bi-eye-fill"></i>
+                  </a>
+                  <a href="#" title="Modifica" class="me-3">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <a href="#" title="Cancella">
+                    <i class="bi bi-trash3"></i>
+                  </a>
+                </td>
+
+                <td>{{ anagraficaItem.id }}</td>
 
                 <td>{{ anagraficaItem.cittadino.id }}</td>
                 <td>{{ anagraficaItem.cittadino.nome }}</td>
@@ -35,12 +51,6 @@
                 <td>{{ anagraficaItem.cittadino.genere }}</td>
                 <td>{{ anagraficaItem.cittadino.cittadinanza }}</td>
                 <td>{{ anagraficaItem.cittadino.dataDiNascita }}</td>
-
-                <td>
-                  <a [routerLink]="['anagrafica-dettagli/' + anagraficaItem.id]"
-                    >View</a
-                  >
-                </td>
               </tr>
             </tbody>
           </table>
