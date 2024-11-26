@@ -25,7 +25,9 @@
               <tr>
                 <th scope="col">Azioni</th>
 
-                <th scope="col">Anagrafica ID</th>
+                <th scope="col">
+                  Anagrafica ID <i class="bi bi-chevron-expand"></i>
+                </th>
 
                 <th scope="col">Cittadino ID</th>
                 <th scope="col">Nome</th>
@@ -38,7 +40,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let anagraficaItem of anagraficaList">
-                <td>
+                <td scope="row">
                   <a
                     [routerLink]="['anagrafica-dettagli', anagraficaItem.id]"
                     title="Vedi dettagli"
@@ -49,20 +51,28 @@
                   <a href="#" title="Modifica" class="me-3">
                     <i class="bi bi-pencil"></i>
                   </a>
-                  <a href="#" title="Cancella">
+                  <a
+                    (click)="deleteAnagraficaModal(anagraficaItem)"
+                    title="Cancella"
+                    style="cursor: pointer; color: #0052a3"
+                  >
                     <i class="bi bi-trash3"></i>
                   </a>
                 </td>
 
-                <td>{{ anagraficaItem.id }}</td>
+                <td scope="row">{{ anagraficaItem.id }}</td>
 
-                <td>{{ anagraficaItem.cittadino.id }}</td>
-                <td>{{ anagraficaItem.cittadino.nome }}</td>
-                <td>{{ anagraficaItem.cittadino.cognome }}</td>
-                <td>{{ anagraficaItem.cittadino.codiceFiscale }}</td>
-                <td>{{ anagraficaItem.cittadino.genere }}</td>
-                <td>{{ anagraficaItem.cittadino.cittadinanza }}</td>
-                <td>{{ anagraficaItem.cittadino.dataDiNascita }}</td>
+                <td scope="row">{{ anagraficaItem.cittadino.id }}</td>
+                <td scope="row">{{ anagraficaItem.cittadino.nome }}</td>
+                <td scope="row">{{ anagraficaItem.cittadino.cognome }}</td>
+                <td scope="row">
+                  {{ anagraficaItem.cittadino.codiceFiscale }}
+                </td>
+                <td scope="row">{{ anagraficaItem.cittadino.genere }}</td>
+                <td scope="row">{{ anagraficaItem.cittadino.cittadinanza }}</td>
+                <td scope="row">
+                  {{ anagraficaItem.cittadino.dataDiNascita }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -71,3 +81,68 @@
     </div>
   </div>
 </section>
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deleteAnagraficaModal"
+  tabindex="-1"
+  aria-labelledby="deleteAnagraficaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="deleteAnagraficaModalLabel">Elimina Anagrafica</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare l'anagrafica <b>{{ anagraficaId }}</b
+          >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deleteAnagraficaModal2"
+          data-bs-toggle="modal"
+          (click)="deleteAnagrafica()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteAnagraficaModal2"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-body text-center">
+        <p>
+          Anagrafica <b>{{ anagraficaId }}</b> eliminata!
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

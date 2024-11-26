@@ -37,4 +37,12 @@ export class AnagraficaService {
       })
     );
   }
+
+  deleteAnagrafica(id: number): Observable<Anagrafica> {
+    return this.http.delete<Anagrafica>(`${this.anagraficaUrl}/` + id).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
 }
