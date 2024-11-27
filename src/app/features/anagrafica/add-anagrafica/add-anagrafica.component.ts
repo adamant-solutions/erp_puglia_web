@@ -34,14 +34,17 @@ export class AddAnagraficaComponent implements OnInit {
   initForm() {
     this.addForm = this.formBuilder.group({
       id: [-1],
+
       cittadino: this.formBuilder.group({
         // id: [],
+
         nome: ['', Validators.required],
         cognome: ['', Validators.required],
         codiceFiscale: ['', Validators.required],
         genere: ['', Validators.required],
         cittadinanza: ['', Validators.required],
         dataDiNascita: [''],
+
         residenza: this.formBuilder.group({
           indirizzo: [''],
           civico: [''],
@@ -65,7 +68,11 @@ export class AddAnagraficaComponent implements OnInit {
     });
   }
 
-  cancelForm() {
+  indietro() {
+    this.router.navigate(['/anagrafica']);
+  }
+
+  resetForm() {
     this.addForm.reset();
   }
 

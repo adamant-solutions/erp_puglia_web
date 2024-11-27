@@ -436,13 +436,29 @@
             <button
               type="button"
               class="btn btn-outline-primary py-2"
-              (click)="cancelForm()"
+              (click)="indietro()"
             >
-              <i class="bi bi-x-circle me-1"></i>
-              Annulla
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
             </button>
 
-            <button type="submit" class="btn btn-primary py-2">Aggiungi</button>
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm()"
+              >
+                <i class="bi bi-x-circle me-1"></i>
+                Annulla
+              </button>
+
+              <button type="submit" class="btn btn-primary py-2">
+                Aggiungi
+              </button>
+            </div>
           </div>
         </form>
       </div>
