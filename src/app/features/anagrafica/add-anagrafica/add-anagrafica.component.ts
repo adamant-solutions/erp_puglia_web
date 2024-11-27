@@ -42,6 +42,25 @@ export class AddAnagraficaComponent implements OnInit {
         genere: ['', Validators.required],
         cittadinanza: ['', Validators.required],
         dataDiNascita: ['', Validators.required],
+        residenza: this.formBuilder.group({
+          indirizzo: [''],
+          civico: [''],
+          cap: [''],
+          comuneResidenza: [''],
+          provinciaResidenza: [''],
+          statoResidenza: [''],
+        }),
+        contatti: this.formBuilder.group({
+          telefono: [''],
+          cellulare: [''],
+          email: [''],
+          pec: [''],
+        }),
+        luogo_nascita: this.formBuilder.group({
+          comune: [''],
+          provincia: [''],
+          stato: [''],
+        }),
       }),
     });
   }

@@ -1,3 +1,19 @@
+export interface Residenza {
+  indirizzo: string;
+  civico: string;
+  cap: string;
+  comuneResidenza: string;
+  provinciaResidenza: string;
+  statoResidenza: string;
+}
+
+export interface Contatti {
+  telefono: string;
+  cellulare: string;
+  email: string;
+  pec: string;
+}
+
 export interface LuogoNascita {
   comune: string;
   provincia: string;
@@ -14,22 +30,9 @@ export interface Cittadino {
   genere: string;
   cittadinanza: string;
   dataDiNascita: Date | string;
+  residenza: Residenza;
+  contatti: Contatti;
   luogo_nascita: LuogoNascita;
-}
-
-export interface Residenza {
-  indirizzo: string;
-  civico: number; // string ?
-  cap: string;
-  comune_residenza: string;
-  provincia_residenza: string;
-  stato_residenza: string;
-}
-
-export interface Contatti {
-  telefono: string;
-  email: string;
-  pec: string;
 }
 
 export interface DocumentiIdentita {
@@ -51,8 +54,7 @@ export interface Anagrafica {
   lastUpdateDate: Date | string;
 
   cittadino: Cittadino;
-  residenza: Residenza;
-  contatti: Contatti;
+
   documenti_identita: DocumentiIdentita[];
   altri_dettagli: AltriDettagli;
 }

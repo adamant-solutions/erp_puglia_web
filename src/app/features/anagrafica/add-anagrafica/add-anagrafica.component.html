@@ -184,6 +184,392 @@
                   </span>
                 </div>
               </div>
+
+              <!-- Residenza -->
+              <div
+                formGroupName="residenza"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3">Residenza:</div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="indirizzo">Indirizzo</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="indirizzo"
+                      name="indirizzo"
+                      formControlName="indirizzo"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.indirizzo')?.errors &&
+                      !addForm.value.cittadino.indirizzo &&
+                      (addForm.get('cittadino.indirizzo')?.touched || submitted)
+                    "
+                  >
+                    Indirizzo è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="civico">Civico</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="civico"
+                      name="civico"
+                      formControlName="civico"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.civico')?.errors &&
+                      !addForm.value.cittadino.civico &&
+                      (addForm.get('cittadino.civico')?.touched || submitted)
+                    "
+                  >
+                    Civico è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cap">CAP</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cap"
+                      name="cap"
+                      formControlName="cap"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.cap')?.errors &&
+                      !addForm.value.cittadino.cap &&
+                      (addForm.get('cittadino.cap')?.touched || submitted)
+                    "
+                  >
+                    CAP è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comuneResidenza"
+                    >Comune residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comuneResidenza"
+                      name="comuneResidenza"
+                      formControlName="comuneResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.comuneResidenza')?.errors &&
+                      !addForm.value.cittadino.comuneResidenza &&
+                      (addForm.get('cittadino.comuneResidenza')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Comune residenza è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="provinciaResidenza"
+                    >Provincia residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="provinciaResidenza"
+                      name="provinciaResidenza"
+                      formControlName="provinciaResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.provinciaResidenza')?.errors &&
+                      !addForm.value.cittadino.provinciaResidenza &&
+                      (addForm.get('cittadino.provinciaResidenza')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Provincia residenza è obbligatoria!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="statoResidenza"
+                    >Stato residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="statoResidenza"
+                      name="statoResidenza"
+                      formControlName="statoResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.statoResidenza')?.errors &&
+                      !addForm.value.cittadino.statoResidenza &&
+                      (addForm.get('cittadino.statoResidenza')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Stato residenza è obbligatorio!
+                  </span>
+                </div>
+              </div>
+
+              <!-- Contatti -->
+              <div
+                formGroupName="contatti"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3">Contatti:</div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="telefono">Telefono</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="telefono"
+                      name="telefono"
+                      formControlName="telefono"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.telefono')?.errors &&
+                      !addForm.value.cittadino.telefono &&
+                      (addForm.get('cittadino.telefono')?.touched || submitted)
+                    "
+                  >
+                    Telefono è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cellulare">Cellulare</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cellulare"
+                      name="cellulare"
+                      formControlName="cellulare"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.cellulare')?.errors &&
+                      !addForm.value.cittadino.cellulare &&
+                      (addForm.get('cittadino.cellulare')?.touched || submitted)
+                    "
+                  >
+                    Cellulare è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="email">Email</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      formControlName="email"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.email')?.errors &&
+                      !addForm.value.cittadino.email &&
+                      (addForm.get('cittadino.email')?.touched || submitted)
+                    "
+                  >
+                    Email è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="pec">PEC</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="pec"
+                      name="pec"
+                      formControlName="pec"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.pec')?.errors &&
+                      !addForm.value.cittadino.pec &&
+                      (addForm.get('cittadino.pec')?.touched || submitted)
+                    "
+                  >
+                    PEC è obbligatorio!
+                  </span>
+                </div>
+              </div>
+
+              <!-- Luogo nascita -->
+              <div
+                formGroupName="luogo_nascita"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3">Luogo nascita:</div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comune">Comune</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comune"
+                      name="comune"
+                      formControlName="comune"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.comune')?.errors &&
+                      !addForm.value.cittadino.comune &&
+                      (addForm.get('cittadino.comune')?.touched || submitted)
+                    "
+                  >
+                    Comune è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="provincia">Provincia</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="provincia"
+                      name="provincia"
+                      formControlName="provincia"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.provincia')?.errors &&
+                      !addForm.value.cittadino.provincia &&
+                      (addForm.get('cittadino.provincia')?.touched || submitted)
+                    "
+                  >
+                    Provincia è obbligatoria!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="stato">Stato</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="stato"
+                      name="stato"
+                      formControlName="stato"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.stato')?.errors &&
+                      !addForm.value.cittadino.stato &&
+                      (addForm.get('cittadino.stato')?.touched || submitted)
+                    "
+                  >
+                    Stato è obbligatorio!
+                  </span>
+                </div>
+              </div>
             </fieldset>
           </div>
 
