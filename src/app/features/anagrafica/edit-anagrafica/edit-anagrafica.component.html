@@ -1,0 +1,578 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Modifica Anagrafica'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form
+          [formGroup]="modificaForm"
+          (ngSubmit)="onSubmit()"
+          class="row g-3"
+        >
+          <div class="col-12">
+            <!-- Anagrafica -->
+            <div class="row d-flex">
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="idAnagrafica">ID</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="idAnagrafica"
+                    name="idAnagrafica"
+                    formControlName="id"
+                  />
+                  <span class="input-group-text">
+                    <i class="bi bi-person-vcard"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="createDate"
+                  >Data creazione</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="createDate"
+                    name="createDate"
+                    formControlName="createDate"
+                  />
+                  <span class="input-group-text">
+                    <i class="bi bi-calendar"></i>
+                  </span>
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="lastUpdateDate"
+                  >Data ultima modifica</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastUpdateDate"
+                    name="lastUpdateDate"
+                    formControlName="lastUpdateDate"
+                  />
+                  <span class="input-group-text">
+                    <i class="bi bi-calendar"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Cittadino -->
+            <fieldset formGroupName="cittadino">
+              <legend>CITTADINO:</legend>
+
+              <!-- Cittadino main input fields -->
+              <div class="row d-flex">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="idCittadino">ID</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="idCittadino"
+                      name="idCittadino"
+                      formControlName="id"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-person-vcard"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="createDate"
+                    >Data creazione</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="createDate"
+                      name="createDate"
+                      formControlName="createDate"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="lastUpdateDate"
+                    >Data ultima modifica</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="lastUpdateDate"
+                      name="lastUpdateDate"
+                      formControlName="lastUpdateDate"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="nome">Nome *</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="nome"
+                      name="nome"
+                      formControlName="nome"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-person"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm.get('cittadino.nome')?.errors &&
+                      !modificaForm.value.cittadino.nome &&
+                      (modificaForm.get('cittadino.nome')?.touched || submitted)
+                    "
+                  >
+                    Nome è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cognome">Cognome *</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cognome"
+                      name="cognome"
+                      formControlName="cognome"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-person"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm.get('cittadino.cognome')?.errors &&
+                      !modificaForm.value.cittadino.cognome &&
+                      (modificaForm.get('cittadino.cognome')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Cognome è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="codiceFiscale"
+                    >Codice fiscale *</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="codiceFiscale"
+                      name="codiceFiscale"
+                      formControlName="codiceFiscale"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-ticket-detailed"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm.get('cittadino.codiceFiscale')?.errors &&
+                      !modificaForm.value.cittadino.codiceFiscale &&
+                      (modificaForm.get('cittadino.codiceFiscale')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Codice fiscale è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="genere">Genere *</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="genere"
+                      name="genere"
+                      formControlName="genere"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-gender-neuter"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm.get('cittadino.genere')?.errors &&
+                      !modificaForm.value.cittadino.genere &&
+                      (modificaForm.get('cittadino.genere')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Genere è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cittadinanza"
+                    >Cittadinanza *</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cittadinanza"
+                      name="cittadinanza"
+                      formControlName="cittadinanza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm.get('cittadino.cittadinanza')?.errors &&
+                      !modificaForm.value.cittadino.cittadinanza &&
+                      (modificaForm.get('cittadino.cittadinanza')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Cittadinanza è obbligatoria!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="dataDiNascita"
+                    >Data di nascita</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="dataDiNascita"
+                      name="dataDiNascita"
+                      formControlName="dataDiNascita"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Residenza -->
+              <div
+                formGroupName="residenza"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3"><strong>Residenza:</strong></div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="indirizzo">Indirizzo</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="indirizzo"
+                      name="indirizzo"
+                      formControlName="indirizzo"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-geo-alt"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="civico">Civico</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="civico"
+                      name="civico"
+                      formControlName="civico"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-house"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cap">CAP</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cap"
+                      name="cap"
+                      formControlName="cap"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-mailbox"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comuneResidenza"
+                    >Comune residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comuneResidenza"
+                      name="comuneResidenza"
+                      formControlName="comuneResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="provinciaResidenza"
+                    >Provincia residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="provinciaResidenza"
+                      name="provinciaResidenza"
+                      formControlName="provinciaResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="statoResidenza"
+                    >Stato residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="statoResidenza"
+                      name="statoResidenza"
+                      formControlName="statoResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contatti -->
+              <div
+                formGroupName="contatti"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3"><strong>Contatti:</strong></div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="telefono">Telefono</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="telefono"
+                      name="telefono"
+                      formControlName="telefono"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-telephone"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cellulare">Cellulare</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cellulare"
+                      name="cellulare"
+                      formControlName="cellulare"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-phone"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="email">Email</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      formControlName="email"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="pec">PEC</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="pec"
+                      name="pec"
+                      formControlName="pec"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Luogo nascita -->
+              <div
+                formGroupName="luogo_nascita"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3"><strong>Luogo nascita:</strong></div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comune">Comune</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comune"
+                      name="comune"
+                      formControlName="comune"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="provincia">Provincia</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="provincia"
+                      name="provincia"
+                      formControlName="provincia"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="stato">Stato</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="stato"
+                      name="stato"
+                      formControlName="stato"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Documenti identita -->
+
+            <!-- Altri dettagli -->
+          </div>
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm()"
+              >
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                Reset
+              </button>
+
+              <button type="submit" class="btn btn-primary py-2">Salva</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

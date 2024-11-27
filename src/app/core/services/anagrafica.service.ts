@@ -38,6 +38,14 @@ export class AnagraficaService {
     );
   }
 
+  modificaAnagrafica(anagrafica: Anagrafica): Observable<Anagrafica> {
+    return this.http.put<Anagrafica>(`${this.anagraficaUrl}`, anagrafica).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+
   deleteAnagrafica(id: number): Observable<Anagrafica> {
     return this.http.delete<Anagrafica>(`${this.anagraficaUrl}/` + id).pipe(
       catchError((error) => {
