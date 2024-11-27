@@ -84,14 +84,4 @@ export class ViewAnagraficaComponent implements OnInit {
   indietro() {
     this.router.navigate(['/anagrafica']);
   }
-
-  onSubmit() {
-    // this.viewForm.enable();
-
-    if (this.viewForm.valid) {
-      console.log('Form data: ', this.viewForm.value);
-    } else {
-      // errors
-    }
-  }
 }

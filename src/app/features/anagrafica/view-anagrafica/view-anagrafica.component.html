@@ -10,7 +10,7 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
 
-        <form [formGroup]="viewForm" (ngSubmit)="onSubmit()" class="row g-3">
+        <form [formGroup]="viewForm" class="row g-3">
           <div class="col-12">
             <!-- Anagrafica -->
             <div class="row d-flex">
@@ -487,7 +487,7 @@
             <!-- Altri dettagli -->
           </div>
 
-          <div class="col-12 mt-5 d-flex justify-content-between">
+          <div class="col-12 mt-5">
             <button
               type="button"
               class="btn btn-outline-primary py-2"
@@ -499,8 +499,6 @@
               ></i>
               Indietro
             </button>
-
-            <button type="submit" class="btn btn-primary py-2">Modifica</button>
           </div>
         </form>
       </div>
