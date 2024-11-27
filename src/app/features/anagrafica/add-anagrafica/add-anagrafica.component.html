@@ -12,10 +12,11 @@
 
         <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
-            <!-- cittadino -->
+            <!-- Cittadino -->
             <fieldset formGroupName="cittadino">
               <legend>CITTADINO:</legend>
 
+              <!-- main input fields -->
               <div class="row d-flex">
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="nome">Nome *</label>
@@ -28,7 +29,7 @@
                       formControlName="nome"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-person-circle"></i>
+                      <i class="bi bi-person"></i>
                     </span>
                   </div>
                   <span
@@ -54,7 +55,7 @@
                       formControlName="cognome"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-person-circle"></i>
+                      <i class="bi bi-person"></i>
                     </span>
                   </div>
                   <span
@@ -97,9 +98,7 @@
                     Codice fiscale è obbligatorio!
                   </span>
                 </div>
-              </div>
 
-              <div class="row d-flex">
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="genere">Genere *</label>
                   <div class="input-group">
@@ -195,7 +194,7 @@
                   margin-top: 2rem;
                 "
               >
-                <div class="col-12 mb-3">Residenza:</div>
+                <div class="col-12 mb-3"><strong>Residenza:</strong></div>
 
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="indirizzo">Indirizzo</label>
@@ -208,7 +207,7 @@
                       formControlName="indirizzo"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-geo-alt"></i>
                     </span>
                   </div>
                   <span
@@ -234,7 +233,7 @@
                       formControlName="civico"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-house"></i>
                     </span>
                   </div>
                   <span
@@ -260,7 +259,7 @@
                       formControlName="cap"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-mailbox"></i>
                     </span>
                   </div>
                   <span
@@ -288,7 +287,7 @@
                       formControlName="comuneResidenza"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-buildings"></i>
                     </span>
                   </div>
                   <span
@@ -317,7 +316,7 @@
                       formControlName="provinciaResidenza"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-buildings"></i>
                     </span>
                   </div>
                   <span
@@ -346,7 +345,7 @@
                       formControlName="statoResidenza"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-buildings"></i>
                     </span>
                   </div>
                   <span
@@ -373,7 +372,7 @@
                   margin-top: 2rem;
                 "
               >
-                <div class="col-12 mb-3">Contatti:</div>
+                <div class="col-12 mb-3"><strong>Contatti:</strong></div>
 
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="telefono">Telefono</label>
@@ -386,7 +385,7 @@
                       formControlName="telefono"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-telephone"></i>
                     </span>
                   </div>
                   <span
@@ -412,7 +411,7 @@
                       formControlName="cellulare"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-phone"></i>
                     </span>
                   </div>
                   <span
@@ -438,7 +437,7 @@
                       formControlName="email"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-envelope"></i>
                     </span>
                   </div>
                   <span
@@ -464,7 +463,7 @@
                       formControlName="pec"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-envelope"></i>
                     </span>
                   </div>
                   <span
@@ -490,7 +489,7 @@
                   margin-top: 2rem;
                 "
               >
-                <div class="col-12 mb-3">Luogo nascita:</div>
+                <div class="col-12 mb-3"><strong>Luogo nascita:</strong></div>
 
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="comune">Comune</label>
@@ -503,7 +502,7 @@
                       formControlName="comune"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-buildings"></i>
                     </span>
                   </div>
                   <span
@@ -529,7 +528,7 @@
                       formControlName="provincia"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-buildings"></i>
                     </span>
                   </div>
                   <span
@@ -555,7 +554,7 @@
                       formControlName="stato"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-plus-circle"></i>
+                      <i class="bi bi-buildings"></i>
                     </span>
                   </div>
                   <span
@@ -571,6 +570,10 @@
                 </div>
               </div>
             </fieldset>
+
+            <!-- Documenti identita -->
+
+            <!-- Altri dettagli -->
           </div>
 
           <div class="col-12 mt-5 d-flex justify-content-between">
