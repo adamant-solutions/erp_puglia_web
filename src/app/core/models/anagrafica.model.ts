@@ -1,4 +1,7 @@
 export interface Residenza {
+  id: number;
+  createDate: Date | string;
+  lastUpdateDate: Date | string;
   indirizzo: string;
   civico: string;
   cap: string;
@@ -8,6 +11,9 @@ export interface Residenza {
 }
 
 export interface Contatti {
+  id: number;
+  createDate: Date | string;
+  lastUpdateDate: Date | string;
   telefono: string;
   cellulare: string;
   email: string;
