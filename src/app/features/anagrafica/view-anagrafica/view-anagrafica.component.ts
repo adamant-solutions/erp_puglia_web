@@ -17,13 +17,12 @@ export class ViewAnagraficaComponent implements OnInit {
   ];
 
   anagrafica!: Anagrafica;
-
   viewForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -45,12 +44,37 @@ export class ViewAnagraficaComponent implements OnInit {
         idCittadino: [this.anagrafica.cittadino.id],
         createDate: [this.anagrafica.cittadino.createDate],
         lastUpdateDate: [this.anagrafica.cittadino.lastUpdateDate],
+
         nome: [this.anagrafica.cittadino.nome],
         cognome: [this.anagrafica.cittadino.cognome],
         codiceFiscale: [this.anagrafica.cittadino.codiceFiscale],
         genere: [this.anagrafica.cittadino.genere],
         cittadinanza: [this.anagrafica.cittadino.cittadinanza],
         dataDiNascita: [this.anagrafica.cittadino.dataDiNascita],
+
+        residenza: this.formBuilder.group({
+          indirizzo: [this.anagrafica.cittadino.residenza.indirizzo],
+          civico: [this.anagrafica.cittadino.residenza.civico],
+          cap: [this.anagrafica.cittadino.residenza.cap],
+          comuneResidenza: [
+            this.anagrafica.cittadino.residenza.comuneResidenza,
+          ],
+          provinciaResidenza: [
+            this.anagrafica.cittadino.residenza.provinciaResidenza,
+          ],
+          statoResidenza: [this.anagrafica.cittadino.residenza.statoResidenza],
+        }),
+        contatti: this.formBuilder.group({
+          telefono: [this.anagrafica.cittadino.contatti.telefono],
+          cellulare: [this.anagrafica.cittadino.contatti.cellulare],
+          email: [this.anagrafica.cittadino.contatti.email],
+          pec: [this.anagrafica.cittadino.contatti.pec],
+        }),
+        luogo_nascita: this.formBuilder.group({
+          comune: [this.anagrafica.cittadino.luogo_nascita.comune],
+          provincia: [this.anagrafica.cittadino.luogo_nascita.provincia],
+          stato: [this.anagrafica.cittadino.luogo_nascita.stato],
+        }),
       }),
     });
 
@@ -62,6 +86,8 @@ export class ViewAnagraficaComponent implements OnInit {
   }
 
   onSubmit() {
+    // this.viewForm.enable();
+
     if (this.viewForm.valid) {
       console.log('Form data: ', this.viewForm.value);
     } else {

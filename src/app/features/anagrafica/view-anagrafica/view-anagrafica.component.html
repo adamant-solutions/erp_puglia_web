@@ -12,6 +12,7 @@
 
         <form [formGroup]="viewForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
+            <!-- Anagrafica -->
             <div class="row d-flex">
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="idAnagrafica">ID</label>
@@ -66,10 +67,11 @@
               </div>
             </div>
 
-            <!-- cittadino -->
+            <!-- Cittadino -->
             <fieldset formGroupName="cittadino">
               <legend>CITTADINO:</legend>
 
+              <!-- Cittadino main input fields -->
               <div class="row d-flex">
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="idCittadino">ID</label>
@@ -122,9 +124,7 @@
                     </span>
                   </div>
                 </div>
-              </div>
 
-              <div class="row d-flex">
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="nome">Nome</label>
                   <div class="input-group">
@@ -136,7 +136,7 @@
                       formControlName="nome"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-person-circle"></i>
+                      <i class="bi bi-person"></i>
                     </span>
                   </div>
                 </div>
@@ -152,7 +152,7 @@
                       formControlName="cognome"
                     />
                     <span class="input-group-text">
-                      <i class="bi bi-person-circle"></i>
+                      <i class="bi bi-person"></i>
                     </span>
                   </div>
                 </div>
@@ -174,9 +174,7 @@
                     </span>
                   </div>
                 </div>
-              </div>
 
-              <div class="row d-flex">
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="genere">Genere</label>
                   <div class="input-group">
@@ -229,7 +227,264 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Residenza -->
+              <div
+                formGroupName="residenza"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3"><strong>Residenza:</strong></div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="indirizzo">Indirizzo</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="indirizzo"
+                      name="indirizzo"
+                      formControlName="indirizzo"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-geo-alt"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="civico">Civico</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="civico"
+                      name="civico"
+                      formControlName="civico"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-house"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cap">CAP</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cap"
+                      name="cap"
+                      formControlName="cap"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-mailbox"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comuneResidenza"
+                    >Comune residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comuneResidenza"
+                      name="comuneResidenza"
+                      formControlName="comuneResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="provinciaResidenza"
+                    >Provincia residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="provinciaResidenza"
+                      name="provinciaResidenza"
+                      formControlName="provinciaResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="statoResidenza"
+                    >Stato residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="statoResidenza"
+                      name="statoResidenza"
+                      formControlName="statoResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Contatti -->
+              <div
+                formGroupName="contatti"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3"><strong>Contatti:</strong></div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="telefono">Telefono</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="telefono"
+                      name="telefono"
+                      formControlName="telefono"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-telephone"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="cellulare">Cellulare</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="cellulare"
+                      name="cellulare"
+                      formControlName="cellulare"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-phone"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="email">Email</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="email"
+                      name="email"
+                      formControlName="email"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="pec">PEC</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="pec"
+                      name="pec"
+                      formControlName="pec"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Luogo nascita -->
+              <div
+                formGroupName="luogo_nascita"
+                class="row d-flex"
+                style="
+                  border-top: 1px solid #000;
+                  padding-top: 2rem;
+                  margin-top: 2rem;
+                "
+              >
+                <div class="col-12 mb-3"><strong>Luogo nascita:</strong></div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comune">Comune</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comune"
+                      name="comune"
+                      formControlName="comune"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="provincia">Provincia</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="provincia"
+                      name="provincia"
+                      formControlName="provincia"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="stato">Stato</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="stato"
+                      name="stato"
+                      formControlName="stato"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
             </fieldset>
+
+            <!-- Documenti identita -->
+
+            <!-- Altri dettagli -->
           </div>
 
           <div class="col-12 mt-5 d-flex justify-content-between">
