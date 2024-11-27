@@ -41,7 +41,7 @@ export class AddAnagraficaComponent implements OnInit {
         codiceFiscale: ['', Validators.required],
         genere: ['', Validators.required],
         cittadinanza: ['', Validators.required],
-        dataDiNascita: ['', Validators.required],
+        dataDiNascita: [''],
         residenza: this.formBuilder.group({
           indirizzo: [''],
           civico: [''],
