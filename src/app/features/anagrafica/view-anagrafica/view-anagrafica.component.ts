@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 
 @Component({
@@ -22,7 +23,8 @@ export class ViewAnagraficaComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit() {
@@ -34,23 +36,32 @@ export class ViewAnagraficaComponent implements OnInit {
     this.initForm();
   }
 
+  // Format the ISO date to dd/MM/yyyy using DatePipe
+  formatDate(isoDate: string): string {
+    return this.datePipe.transform(isoDate, 'dd/MM/yyyy') || '';
+  }
+
   initForm() {
     this.viewForm = this.formBuilder.group({
       idAnagrafica: [this.anagrafica.id],
-      createDate: [this.anagrafica.createDate],
-      lastUpdateDate: [this.anagrafica.lastUpdateDate],
+      createDate: [this.formatDate(this.anagrafica.createDate)],
+      lastUpdateDate: [this.formatDate(this.anagrafica.lastUpdateDate)],
 
       cittadino: this.formBuilder.group({
         idCittadino: [this.anagrafica.cittadino.id],
-        createDate: [this.anagrafica.cittadino.createDate],
-        lastUpdateDate: [this.anagrafica.cittadino.lastUpdateDate],
+        createDate: [this.formatDate(this.anagrafica.cittadino.createDate)],
+        lastUpdateDate: [
+          this.formatDate(this.anagrafica.cittadino.lastUpdateDate),
+        ],
 
         nome: [this.anagrafica.cittadino.nome],
         cognome: [this.anagrafica.cittadino.cognome],
         codiceFiscale: [this.anagrafica.cittadino.codiceFiscale],
         genere: [this.anagrafica.cittadino.genere],
         cittadinanza: [this.anagrafica.cittadino.cittadinanza],
-        dataDiNascita: [this.anagrafica.cittadino.dataDiNascita],
+        dataDiNascita: [
+          this.formatDate(this.anagrafica.cittadino.dataDiNascita),
+        ],
 
         residenza: this.formBuilder.group({
           indirizzo: [this.anagrafica.cittadino.residenza.indirizzo],

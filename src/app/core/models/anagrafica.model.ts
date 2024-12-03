@@ -1,7 +1,7 @@
 export interface Residenza {
   id: number;
-  createDate: Date | string;
-  lastUpdateDate: Date | string;
+  createDate: string;
+  lastUpdateDate: string;
   indirizzo: string;
   civico: string;
   cap: string;
@@ -12,8 +12,8 @@ export interface Residenza {
 
 export interface Contatti {
   id: number;
-  createDate: Date | string;
-  lastUpdateDate: Date | string;
+  createDate: string;
+  lastUpdateDate: string;
   telefono: string;
   cellulare: string;
   email: string;
@@ -28,14 +28,14 @@ export interface LuogoNascita {
 
 export interface Cittadino {
   id: number;
-  createDate: Date | string;
-  lastUpdateDate: Date | string;
+  createDate: string;
+  lastUpdateDate: string;
   nome: string;
   cognome: string;
   codiceFiscale: string;
   genere: string;
   cittadinanza: string;
-  dataDiNascita: Date | string;
+  dataDiNascita: string;
   residenza: Residenza;
   contatti: Contatti;
   luogo_nascita: LuogoNascita;
@@ -44,20 +44,20 @@ export interface Cittadino {
 export interface DocumentiIdentita {
   tipo_documento: string;
   numero_documento: string;
-  data_emissione: Date | string;
-  data_scadenza: Date | string;
+  data_emissione: string;
+  data_scadenza: string;
   ente_emittente: string;
 }
 
 export interface AltriDettagli {
   stato_civile: string;
-  data_ultimo_aggiornamento: Date | string;
+  data_ultimo_aggiornamento: string;
 }
 
 export interface Anagrafica {
   id: number;
-  createDate: Date | string;
-  lastUpdateDate: Date | string;
+  createDate: string;
+  lastUpdateDate: string;
 
   cittadino: Cittadino;
 
