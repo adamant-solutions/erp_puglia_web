@@ -36,9 +36,9 @@ export class ViewAnagraficaComponent implements OnInit {
     this.initForm();
   }
 
-  // Format the ISO date to dd/MM/yyyy using DatePipe
-  formatDate(isoDate: string): string {
-    return this.datePipe.transform(isoDate, 'dd/MM/yyyy') || '';
+  // Format the date to dd/MM/yyyy using DatePipe
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
   }
 
   initForm() {
