@@ -19,6 +19,14 @@ export class AnagraficaComponent implements OnInit {
 
   anagraficaId!: number;
 
+  anagrafica: Anagrafica | any = {
+    cittadino: {
+      nome: '',
+      cognome: '',
+      codiceFiscale: '',
+    },
+  };
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private anagraficaService: AnagraficaService,
@@ -57,4 +65,8 @@ export class AnagraficaComponent implements OnInit {
       },
     });
   }
+
+  getFilteredData() {}
+
+  cancellaCerca() {}
 }

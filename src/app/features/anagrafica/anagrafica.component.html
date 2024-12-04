@@ -7,6 +7,80 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
+        <!-- Filter -->
+        <div class="col-12 mb-5">
+          <form class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="nome">Nome</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome"
+                  name="nome"
+                  [(ngModel)]="anagrafica.nome"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-person"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="cognome">Cognome</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  [(ngModel)]="anagrafica.cognome"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-person"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="codiceFiscale"
+                >Codice fiscale</label
+              >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="codiceFiscale"
+                  name="codiceFiscale"
+                  [(ngModel)]="anagrafica.codiceFiscale"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-ticket-detailed"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3 search-form-buttons">
+              <button
+                type="button"
+                class="btn btn-primary me-3"
+                (click)="getFilteredData()"
+              >
+                Cerca
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="cancellaCerca()"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Aggiungi btn -->
         <div class="col-12 d-flex justify-content-end">
           <button
             class="btn btn-primary btn-icon btn-xs mb-3"
