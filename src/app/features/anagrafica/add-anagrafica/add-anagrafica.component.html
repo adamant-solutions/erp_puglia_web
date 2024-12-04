@@ -108,6 +108,7 @@
                       id="genere"
                       name="genere"
                       formControlName="genere"
+                      placeholder="M, F or N (non binario)"
                     />
                     <span class="input-group-text">
                       <i class="bi bi-gender-neuter"></i>
@@ -155,21 +156,41 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
-                  <label class="form-label" for="dataDiNascita"
+                  <mat-form-field appearance="fill" style="width: 100%">
+                    <mat-label>Data di nascita</mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      formControlName="dataDiNascita"
+                      [value]="formattedDate"
+                      (dateChange)="onDateChange($event)"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+
+                  <!-- <label class="form-label" for="dataDiNascita"
                     >Data di nascita</label
                   >
                   <div class="input-group">
                     <input
-                      type="text"
+                      type="date"
                       class="form-control"
                       id="dataDiNascita"
                       name="dataDiNascita"
                       formControlName="dataDiNascita"
+                      #dataDiNascita
+                      (change)="onDateChange(dataDiNascita.value)"
+                      style="
+                        display: inline-block;
+                        border-top-right-radius: 3px;
+                        border-bottom-right-radius: 3px;
+                      "
                     />
-                    <span class="input-group-text">
-                      <i class="bi bi-calendar"></i>
-                    </span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
 
