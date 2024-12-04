@@ -18,7 +18,6 @@ export class AddAnagraficaComponent implements OnInit {
     { label: 'Anagrafica', link: '/anagrafica' },
   ];
 
-  anagrafica!: Anagrafica;
   addForm!: FormGroup;
   formattedDate: string | null = null;
   submitted: boolean = false;
@@ -52,7 +51,7 @@ export class AddAnagraficaComponent implements OnInit {
 
   /*
   onDateChange(value: string): void {
-    console.log('Selected date (yyyy-MM-dd):', value); // default format of HTML's native date input type (yyyy-MM-dd)
+    console.log('Selected date (yyyy-MM-dd):', value); // HTML's native date input type - default format (yyyy-MM-dd)
 
     // Convert the date to dd/MM/yyyy for display
     const formattedDate = this.datePipe.transform(value, 'dd/MM/yyyy');
@@ -65,8 +64,6 @@ export class AddAnagraficaComponent implements OnInit {
       id: [-1],
 
       cittadino: this.formBuilder.group({
-        // id: [],
-
         nome: ['', Validators.required],
         cognome: ['', Validators.required],
         codiceFiscale: ['', Validators.required],

@@ -43,17 +43,7 @@ export class ViewAnagraficaComponent implements OnInit {
 
   initForm() {
     this.viewForm = this.formBuilder.group({
-      idAnagrafica: [this.anagrafica.id],
-      createDate: [this.formatDate(this.anagrafica.createDate)],
-      lastUpdateDate: [this.formatDate(this.anagrafica.lastUpdateDate)],
-
       cittadino: this.formBuilder.group({
-        idCittadino: [this.anagrafica.cittadino.id],
-        createDate: [this.formatDate(this.anagrafica.cittadino.createDate)],
-        lastUpdateDate: [
-          this.formatDate(this.anagrafica.cittadino.lastUpdateDate),
-        ],
-
         nome: [this.anagrafica.cittadino.nome],
         cognome: [this.anagrafica.cittadino.cognome],
         codiceFiscale: [this.anagrafica.cittadino.codiceFiscale],

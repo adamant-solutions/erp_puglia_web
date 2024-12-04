@@ -156,8 +156,9 @@
                 </div>
 
                 <div class="col-md-4 mb-3">
+                  <label class="form-label">Data di nascita</label>
                   <mat-form-field appearance="fill" style="width: 100%">
-                    <mat-label>Data di nascita</mat-label>
+                    <!-- <mat-label>Data di nascita</mat-label> -->
                     <input
                       matInput
                       [matDatepicker]="picker"
@@ -173,9 +174,9 @@
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
 
-                  <!-- <label class="form-label" for="dataDiNascita"
-                    >Data di nascita</label
-                  >
+                  <!-- <label class="form-label" for="dataDiNascita">
+                    Data di nascita
+                  </label>
                   <div class="input-group">
                     <input
                       type="date"
@@ -198,12 +199,7 @@
               <!-- Residenza -->
               <div
                 formGroupName="residenza"
-                class="row d-flex"
-                style="
-                  border-top: 1px solid #000;
-                  padding-top: 2rem;
-                  margin-top: 2rem;
-                "
+                class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Residenza:</strong></div>
 
@@ -313,12 +309,7 @@
               <!-- Contatti -->
               <div
                 formGroupName="contatti"
-                class="row d-flex"
-                style="
-                  border-top: 1px solid #000;
-                  padding-top: 2rem;
-                  margin-top: 2rem;
-                "
+                class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Contatti:</strong></div>
 
@@ -390,12 +381,7 @@
               <!-- Luogo nascita -->
               <div
                 formGroupName="luogo_nascita"
-                class="row d-flex"
-                style="
-                  border-top: 1px solid #000;
-                  padding-top: 2rem;
-                  margin-top: 2rem;
-                "
+                class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Luogo nascita:</strong></div>
 
@@ -447,13 +433,18 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Documenti identita -->
+              <!-- <div formGroupName="documenti_identita" class="row d-flex cittadino-nested-form-group"
+              >
+                <div class="col-12 mb-3"><strong>Documenti identita:</strong></div>
+              </div> -->
+
+              <!-- Altri dettagli -->
             </fieldset>
-
-            <!-- Documenti identita -->
-
-            <!-- Altri dettagli -->
           </div>
 
+          <!-- buttons -->
           <div class="col-12 mt-5 d-flex justify-content-between">
             <button
               type="button"

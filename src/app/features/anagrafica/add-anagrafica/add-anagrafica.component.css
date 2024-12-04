@@ -29,3 +29,9 @@ legend {
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
+
+.cittadino-nested-form-group {
+  border-top: 1px solid #000;
+  padding-top: 2rem;
+  margin-top: 2rem;
+}

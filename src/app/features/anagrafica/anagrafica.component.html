@@ -80,7 +80,7 @@
           </form>
         </div>
 
-        <!-- Aggiungi btn -->
+        <!-- Aggiungi anagrafica btn -->
         <div class="col-12 d-flex justify-content-end">
           <button
             class="btn btn-primary btn-icon btn-xs mb-3"
@@ -93,18 +93,14 @@
           </button>
         </div>
 
+        <!-- Table - all Anagrafica -->
         <div class="table-responsive">
           <table class="table table-striped table-hover table-bordered">
             <thead>
               <tr>
                 <th scope="col">Azioni</th>
 
-                <th scope="col">
-                  Anagrafica ID <i class="bi bi-chevron-expand"></i>
-                </th>
-
-                <th scope="col">Cittadino ID</th>
-                <th scope="col">Nome</th>
+                <th scope="col">Nome <i class="bi bi-chevron-expand"></i></th>
                 <th scope="col">Cognome</th>
                 <th scope="col">Codice fiscale</th>
                 <th scope="col">Genere</th>
@@ -140,9 +136,6 @@
                   </a>
                 </td>
 
-                <td scope="row">{{ anagraficaItem.id }}</td>
-
-                <td scope="row">{{ anagraficaItem.cittadino.id }}</td>
                 <td scope="row">{{ anagraficaItem.cittadino.nome }}</td>
                 <td scope="row">{{ anagraficaItem.cittadino.cognome }}</td>
                 <td scope="row">
