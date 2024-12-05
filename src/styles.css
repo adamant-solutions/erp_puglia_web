@@ -271,3 +271,29 @@ i {
 .dms-wk-icon-yt:before {
   content: "";
 }
+
+/* ---------------------------------------------------------------------- */
+
+/* override */
+.mat-mdc-text-field-wrapper {
+  border: 1px solid #0075bf;
+  border-radius: 3px !important;
+  background-color: #fff !important;
+}
+.mdc-text-field--no-label:not(.mdc-text-field--outlined):not(
+    .mdc-text-field--textarea
+  )
+  .mat-mdc-form-field-infix {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  min-height: auto;
+}
+.mat-mdc-icon-button.mat-mdc-button-base {
+  padding-top: 0.375rem;
+  padding-bottom: 0.375rem;
+  height: auto;
+  min-height: 40px;
+}
+/* .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+} */
