@@ -16,119 +16,12 @@
           class="row g-3"
         >
           <div class="col-12">
-            <!-- Anagrafica -->
-            <div class="row d-flex">
-              <div class="col-md-4 mb-3">
-                <label class="form-label" for="idAnagrafica">ID</label>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="idAnagrafica"
-                    name="idAnagrafica"
-                    formControlName="id"
-                  />
-                  <span class="input-group-text">
-                    <i class="bi bi-person-vcard"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-4 mb-3">
-                <label class="form-label" for="createDate"
-                  >Data creazione</label
-                >
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="createDate"
-                    name="createDate"
-                    formControlName="createDate"
-                  />
-                  <span class="input-group-text">
-                    <i class="bi bi-calendar"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-4 mb-3">
-                <label class="form-label" for="lastUpdateDate"
-                  >Data ultima modifica</label
-                >
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="lastUpdateDate"
-                    name="lastUpdateDate"
-                    formControlName="lastUpdateDate"
-                  />
-                  <span class="input-group-text">
-                    <i class="bi bi-calendar"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-
             <!-- Cittadino -->
             <fieldset formGroupName="cittadino">
               <legend>CITTADINO:</legend>
 
               <!-- Cittadino main input fields -->
               <div class="row d-flex">
-                <div class="col-md-4 mb-3">
-                  <label class="form-label" for="idCittadino">ID</label>
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="idCittadino"
-                      name="idCittadino"
-                      formControlName="id"
-                    />
-                    <span class="input-group-text">
-                      <i class="bi bi-person-vcard"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                  <label class="form-label" for="createDate"
-                    >Data creazione</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="createDate"
-                      name="createDate"
-                      formControlName="createDate"
-                    />
-                    <span class="input-group-text">
-                      <i class="bi bi-calendar"></i>
-                    </span>
-                  </div>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                  <label class="form-label" for="lastUpdateDate"
-                    >Data ultima modifica</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="lastUpdateDate"
-                      name="lastUpdateDate"
-                      formControlName="lastUpdateDate"
-                    />
-                    <span class="input-group-text">
-                      <i class="bi bi-calendar"></i>
-                    </span>
-                  </div>
-                </div>
-
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="nome">Nome *</label>
                   <div class="input-group">
@@ -289,12 +182,7 @@
               <!-- Residenza -->
               <div
                 formGroupName="residenza"
-                class="row d-flex"
-                style="
-                  border-top: 1px solid #000;
-                  padding-top: 2rem;
-                  margin-top: 2rem;
-                "
+                class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Residenza:</strong></div>
 
@@ -404,12 +292,7 @@
               <!-- Contatti -->
               <div
                 formGroupName="contatti"
-                class="row d-flex"
-                style="
-                  border-top: 1px solid #000;
-                  padding-top: 2rem;
-                  margin-top: 2rem;
-                "
+                class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Contatti:</strong></div>
 
@@ -481,12 +364,7 @@
               <!-- Luogo nascita -->
               <div
                 formGroupName="luogo_nascita"
-                class="row d-flex"
-                style="
-                  border-top: 1px solid #000;
-                  padding-top: 2rem;
-                  margin-top: 2rem;
-                "
+                class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Luogo nascita:</strong></div>
 
@@ -538,13 +416,18 @@
                   </div>
                 </div>
               </div>
+
+              <!-- Documenti identita -->
+              <!-- <div formArrayName="documenti_identita" class="row d-flex cittadino-nested-form-group"
+              >
+                <div class="col-12 mb-3"><strong>Documenti identita:</strong></div>
+              </div> -->
+
+              <!-- Altri dettagli -->
             </fieldset>
-
-            <!-- Documenti identita -->
-
-            <!-- Altri dettagli -->
           </div>
 
+          <!-- buttons -->
           <div class="col-12 mt-5 d-flex justify-content-between">
             <button
               type="button"

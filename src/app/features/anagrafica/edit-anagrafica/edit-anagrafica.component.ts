@@ -33,10 +33,10 @@ export class EditAnagraficaComponent implements OnInit {
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ anagraficaByIdResolver }) => {
       this.anagrafica = anagraficaByIdResolver;
-      console.log('anagraficaByIdResolver: ', anagraficaByIdResolver);
+      console.log('anagraficaByIdResolver:', anagraficaByIdResolver);
 
       this.anagraficaId = anagraficaByIdResolver.id;
-      console.log('Anagrafica ID: ', this.anagraficaId);
+      console.log('Anagrafica ID:', this.anagraficaId);
     });
 
     this.initForm();
@@ -44,20 +44,10 @@ export class EditAnagraficaComponent implements OnInit {
 
   initForm() {
     this.modificaForm = this.formBuilder.group({
-      id: [{ value: this.anagrafica.id, disabled: true }],
-      createDate: [{ value: this.anagrafica.createDate, disabled: true }],
-      lastUpdateDate: [
-        { value: this.anagrafica.lastUpdateDate, disabled: true },
-      ],
+      id: [this.anagrafica.id],
 
       cittadino: this.formBuilder.group({
-        id: [{ value: this.anagrafica.cittadino.id, disabled: true }],
-        createDate: [
-          { value: this.anagrafica.cittadino.createDate, disabled: true },
-        ],
-        lastUpdateDate: [
-          { value: this.anagrafica.cittadino.lastUpdateDate, disabled: true },
-        ],
+        id: [this.anagrafica.cittadino.id],
 
         nome: [this.anagrafica.cittadino.nome, Validators.required],
         cognome: [this.anagrafica.cittadino.cognome, Validators.required],
@@ -74,8 +64,6 @@ export class EditAnagraficaComponent implements OnInit {
 
         residenza: this.formBuilder.group({
           id: [this.anagrafica.cittadino.residenza.id],
-          createDate: [this.anagrafica.cittadino.residenza.createDate],
-          lastUpdateDate: [this.anagrafica.cittadino.residenza.lastUpdateDate],
 
           indirizzo: [this.anagrafica.cittadino.residenza.indirizzo],
           civico: [this.anagrafica.cittadino.residenza.civico],
@@ -90,8 +78,6 @@ export class EditAnagraficaComponent implements OnInit {
         }),
         contatti: this.formBuilder.group({
           id: [this.anagrafica.cittadino.contatti.id],
-          createDate: [this.anagrafica.cittadino.contatti.createDate],
-          lastUpdateDate: [this.anagrafica.cittadino.contatti.lastUpdateDate],
 
           telefono: [this.anagrafica.cittadino.contatti.telefono],
           cellulare: [this.anagrafica.cittadino.contatti.cellulare],
@@ -122,8 +108,8 @@ export class EditAnagraficaComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    console.log('Form controls: ', this.modificaForm.controls);
-    console.log('Form data: ', this.modificaForm.value);
+    console.log('Form controls:', this.modificaForm.controls);
+    console.log('Form data:', this.modificaForm.value);
 
     if (this.modificaForm.invalid) {
       return;
@@ -132,7 +118,7 @@ export class EditAnagraficaComponent implements OnInit {
         .modificaAnagrafica(this.modificaForm.getRawValue())
         .subscribe({
           next: (data: any) => {
-            console.log('Form data (response): ', data);
+            console.log('Form data (response):', data);
 
             this.submitted = false;
 
