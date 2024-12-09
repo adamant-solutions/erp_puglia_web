@@ -144,7 +144,9 @@
                 <td scope="row">{{ anagraficaItem.cittadino.genere }}</td>
                 <td scope="row">{{ anagraficaItem.cittadino.cittadinanza }}</td>
                 <td scope="row">
-                  {{ anagraficaItem.cittadino.dataDiNascita }}
+                  {{
+                    anagraficaItem.cittadino.dataDiNascita | date : "dd/MM/yyyy"
+                  }}
                 </td>
               </tr>
             </tbody>
