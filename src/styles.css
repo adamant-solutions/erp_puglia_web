@@ -140,8 +140,10 @@ footer {
 }
 
 .custom-error {
-  font-size: 12px;
+  display: inline-block;
+  font-size: 14px;
   color: red;
+  margin-top: 5px;
   margin-left: 1rem;
 }
 

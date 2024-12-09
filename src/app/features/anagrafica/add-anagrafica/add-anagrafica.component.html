@@ -35,8 +35,7 @@
                   <span
                     class="custom-error"
                     *ngIf="
-                      addForm.get('cittadino.nome')?.errors &&
-                      !addForm.value.cittadino.nome &&
+                      addForm.get('cittadino.nome')?.hasError('required') &&
                       (addForm.get('cittadino.nome')?.touched || submitted)
                     "
                   >
@@ -61,8 +60,7 @@
                   <span
                     class="custom-error"
                     *ngIf="
-                      addForm.get('cittadino.cognome')?.errors &&
-                      !addForm.value.cittadino.cognome &&
+                      addForm.get('cittadino.cognome')?.hasError('required') &&
                       (addForm.get('cittadino.cognome')?.touched || submitted)
                     "
                   >
@@ -89,8 +87,9 @@
                   <span
                     class="custom-error"
                     *ngIf="
-                      addForm.get('cittadino.codiceFiscale')?.errors &&
-                      !addForm.value.cittadino.codiceFiscale &&
+                      addForm
+                        .get('cittadino.codiceFiscale')
+                        ?.hasError('required') &&
                       (addForm.get('cittadino.codiceFiscale')?.touched ||
                         submitted)
                     "
@@ -117,8 +116,7 @@
                   <span
                     class="custom-error"
                     *ngIf="
-                      addForm.get('cittadino.genere')?.errors &&
-                      !addForm.value.cittadino.genere &&
+                      addForm.get('cittadino.genere')?.hasError('required') &&
                       (addForm.get('cittadino.genere')?.touched || submitted)
                     "
                   >
@@ -145,8 +143,9 @@
                   <span
                     class="custom-error"
                     *ngIf="
-                      addForm.get('cittadino.cittadinanza')?.errors &&
-                      !addForm.value.cittadino.cittadinanza &&
+                      addForm
+                        .get('cittadino.cittadinanza')
+                        ?.hasError('required') &&
                       (addForm.get('cittadino.cittadinanza')?.touched ||
                         submitted)
                     "
@@ -163,9 +162,7 @@
                       matInput
                       [matDatepicker]="picker"
                       formControlName="dataDiNascita"
-                      [value]="formattedDate"
-                      (dateChange)="onDateChange($event)"
-                      placeholder="MM/dd/yyyy"
+                      placeholder="dd/mm/yyyy"
                     />
                     <mat-datepicker-toggle
                       matSuffix
@@ -173,26 +170,23 @@
                     ></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                   </mat-form-field>
-
-                  <!-- <label class="form-label" for="dataDiNascita">
-                    Data di nascita
-                  </label>
-                  <div class="input-group">
-                    <input
-                      type="date"
-                      class="form-control"
-                      id="dataDiNascita"
-                      name="dataDiNascita"
-                      formControlName="dataDiNascita"
-                      #dataDiNascita
-                      (change)="onDateChange(dataDiNascita.value)"
-                      style="
-                        display: inline-block;
-                        border-top-right-radius: 3px;
-                        border-bottom-right-radius: 3px;
-                      "
-                    />
-                  </div> -->
+                  <div
+                    class="custom-error"
+                    *ngIf="
+                      addForm
+                        .get('cittadino.dataDiNascita')
+                        ?.hasError('required') &&
+                      (addForm.get('cittadino.dataDiNascita')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Data di nascita è obbligatoria!
+                  </div>
+                  <!-- 
+                  <div class="custom-error" *ngIf="addForm.get('cittadino.dataDiNascita')?.errors?.invalidDate && addForm.get('cittadino.dataDiNascita')?.touched">
+                      Please enter a valid date in the format dd/MM/yyyy.
+                  </div>
+                  -->
                 </div>
               </div>
 
@@ -435,7 +429,7 @@
               </div>
 
               <!-- Documenti identita -->
-              <!-- <div formGroupName="documenti_identita" class="row d-flex cittadino-nested-form-group"
+              <!-- <div formArrayName="documenti_identita" class="row d-flex cittadino-nested-form-group"
               >
                 <div class="col-12 mb-3"><strong>Documenti identita:</strong></div>
               </div> -->
