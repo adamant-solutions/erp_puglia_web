@@ -36,7 +36,7 @@ export class ViewAnagraficaComponent implements OnInit {
     this.initForm();
   }
 
-  // Format the date to dd/MM/yyyy using DatePipe
+  // Format the date to dd/MM/yyyy
   formatDate(date: string): string {
     return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
   }
@@ -76,6 +76,7 @@ export class ViewAnagraficaComponent implements OnInit {
           provincia: [this.anagrafica.cittadino.luogo_nascita.provincia],
           stato: [this.anagrafica.cittadino.luogo_nascita.stato],
         }),
+        documenti_identita: this.formBuilder.array([]),
       }),
     });
 

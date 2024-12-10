@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-anagrafica',
@@ -60,7 +61,10 @@ export class EditAnagraficaComponent implements OnInit {
           this.anagrafica.cittadino.cittadinanza,
           Validators.required,
         ],
-        dataDiNascita: [this.anagrafica.cittadino.dataDiNascita],
+        dataDiNascita: [
+          this.anagrafica.cittadino.dataDiNascita,
+          [Validators.required],
+        ],
 
         residenza: this.formBuilder.group({
           id: [this.anagrafica.cittadino.residenza.id],
@@ -89,6 +93,7 @@ export class EditAnagraficaComponent implements OnInit {
           provincia: [this.anagrafica.cittadino.luogo_nascita.provincia],
           stato: [this.anagrafica.cittadino.luogo_nascita.stato],
         }),
+        documenti_identita: this.formBuilder.array([]),
       }),
     });
 
@@ -100,16 +105,29 @@ export class EditAnagraficaComponent implements OnInit {
   }
 
   resetForm() {
-    // this.modificaForm.reset();
-    // this.initForm();
     this.modificaForm.reset(this.initialFormValues);
   }
 
   onSubmit() {
     this.submitted = true;
 
-    console.log('Form controls:', this.modificaForm.controls);
-    console.log('Form data:', this.modificaForm.value);
+    // console.log('Form controls:', this.modificaForm.controls);
+    console.log(
+      'Form data before converting dataDiNascita:',
+      this.modificaForm.value
+    );
+
+    let sendConvertedDataDiNascita = moment(
+      this.modificaForm.value.cittadino.dataDiNascita
+    ).format('YYYY-MM-DD');
+    console.log('Converted dataDiNascita:', sendConvertedDataDiNascita);
+
+    this.modificaForm.patchValue({
+      cittadino: {
+        dataDiNascita: sendConvertedDataDiNascita,
+      },
+    });
+    console.log('Form data to be sent to BE:', this.modificaForm.value);
 
     if (this.modificaForm.invalid) {
       return;

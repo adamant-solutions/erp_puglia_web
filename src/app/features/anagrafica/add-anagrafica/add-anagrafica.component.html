@@ -182,11 +182,18 @@
                   >
                     Data di nascita è obbligatoria!
                   </div>
-                  <!-- 
-                  <div class="custom-error" *ngIf="addForm.get('cittadino.dataDiNascita')?.errors?.invalidDate && addForm.get('cittadino.dataDiNascita')?.touched">
-                      Please enter a valid date in the format dd/MM/yyyy.
-                  </div>
-                  -->
+
+                  <!-- <div
+                    class="custom-error"
+                    *ngIf="
+                      addForm
+                        .get('cittadino.dataDiNascita')
+                        ?.hasError('invalidDate') &&
+                      addForm.get('cittadino.dataDiNascita')?.touched
+                    "
+                  >
+                    Please enter a valid date in the format dd/mm/yyyy.
+                  </div> -->
                 </div>
               </div>
 

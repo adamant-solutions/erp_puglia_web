@@ -296,6 +296,6 @@ i {
   height: auto;
   min-height: 40px;
 }
-/* .mat-mdc-form-field-subscript-wrapper {
+.mat-mdc-form-field-subscript-wrapper {
   display: none;
-} */
+}

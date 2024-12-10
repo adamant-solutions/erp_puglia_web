@@ -12,6 +12,7 @@ export class AnagraficaService {
     private http: HttpClient
   ) {}
 
+  // get anagrafica list by pagination
   getAnagrafica(pageNumber: number): Observable<Anagrafica[]> {
     return this.http
       .get<Anagrafica[]>(`${this.anagraficaUrl}?pagina=${pageNumber}`)

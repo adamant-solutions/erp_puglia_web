@@ -22,11 +22,11 @@ import {
 // Date format configuration
 export const MY_DATE_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY',
+    dateInput: 'DD/MM/YYYY', // Format for parsing user input (manual input)
   },
   display: {
-    dateInput: 'DD/MM/YYYY', // Displaying the date format in the input
-    monthYearLabel: 'MMM YYYY',
+    dateInput: 'DD/MM/YYYY', // Format for displaying in the input field
+    monthYearLabel: 'MMM YYYY', // Format for the month and year label in the calendar
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
   },
@@ -59,9 +59,13 @@ export const MY_DATE_FORMATS = {
     BreadcrumbsComponent,
   ],
   providers: [
+    // Set default locale for date pickers to Italian
     { provide: MAT_DATE_LOCALE, useValue: 'it-IT' },
+    // Define custom date formats for parsing and display
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    // Enable strict parsing to ensure valid date inputs
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { strict: true } },
+    // Configure Moment.js as the date adapter with locale and parsing options
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
