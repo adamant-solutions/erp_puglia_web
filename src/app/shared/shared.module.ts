@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
+
 // Material
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,9 @@ import {
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
+
+// paginator
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 // Date format configuration
 export const MY_DATE_FORMATS = {
@@ -44,6 +48,7 @@ export const MY_DATE_FORMATS = {
     MatInputModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatPaginatorModule,
   ],
   exports: [
     CommonModule,
@@ -55,6 +60,7 @@ export const MY_DATE_FORMATS = {
     MatInputModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatPaginatorModule,
 
     BreadcrumbsComponent,
   ],
