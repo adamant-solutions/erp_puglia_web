@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  AbstractControl,
+  FormArray,
   Validators,
+  AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -24,6 +25,7 @@ export class AddAnagraficaComponent implements OnInit {
   ];
 
   addForm!: FormGroup;
+  documentTypes = ["Carta d'Identità", 'Passaporto', 'Patente'];
   submitted: boolean = false;
 
   constructor(
@@ -70,6 +72,25 @@ export class AddAnagraficaComponent implements OnInit {
         documenti_identita: this.formBuilder.array([]),
       }),
     });
+  }
+
+  get documentiIdentita(): FormArray {
+    return this.addForm.get('cittadino.documenti_identita') as FormArray;
+  }
+
+  addDocumento(): void {
+    const documentoGroup = this.formBuilder.group({
+      tipo_documento: [''],
+      numero_documento: [''],
+      data_emissione: [''],
+      data_scadenza: [''],
+      ente_emittente: [''],
+    });
+    this.documentiIdentita.push(documentoGroup);
+  }
+
+  removeDocumento(index: number): void {
+    this.documentiIdentita.removeAt(index);
   }
 
   // recheck

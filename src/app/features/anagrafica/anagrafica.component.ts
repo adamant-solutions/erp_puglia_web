@@ -50,6 +50,7 @@ export class AnagraficaComponent implements OnInit {
   }
 
   getAnagraficaList() {
+    // Load initial data from resolver
     this.activatedRoute.data
       .pipe(map((data) => data['anagraficaResolver']))
       .subscribe((response) => {
