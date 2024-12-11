@@ -48,7 +48,7 @@ export class AddAnagraficaComponent implements OnInit {
         codiceFiscale: ['', Validators.required],
         genere: ['', Validators.required],
         cittadinanza: ['', Validators.required],
-        dataDiNascita: ['', [Validators.required, this.dateValidator]],
+        dataDiNascita: ['', [Validators.required]], // this.dateValidator
 
         residenza: this.formBuilder.group({
           indirizzo: [''],
@@ -94,11 +94,13 @@ export class AddAnagraficaComponent implements OnInit {
   }
 
   // recheck
+  /*
   dateValidator(control: AbstractControl): ValidationErrors | null {
     const inputValue = control.value;
     const isValid = moment(inputValue, 'DD/MM/YYYY', true).isValid();
     return isValid ? null : { invalidDate: true };
   }
+  */
 
   indietro() {
     this.router.navigate(['/anagrafica']);
@@ -115,6 +117,14 @@ export class AddAnagraficaComponent implements OnInit {
     console.log(
       'Form data before converting dataDiNascita:',
       this.addForm.value
+    );
+    console.log(
+      'Data emissione:',
+      this.documentiIdentita.at(0).get('data_emissione')?.value
+    );
+    console.log(
+      'Data scadenza:',
+      this.documentiIdentita.at(0).get('data_scadenza')?.value
     );
 
     let sendConvertedDataDiNascita = moment(

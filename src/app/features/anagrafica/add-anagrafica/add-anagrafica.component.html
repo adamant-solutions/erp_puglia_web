@@ -468,13 +468,10 @@
                       </div>
 
                       <div class="col-md-4 mb-3">
-                        <label class="form-label" for="tipo_documento">
-                          Tipo Documento
-                        </label>
+                        <label class="form-label">Tipo documento</label>
                         <div class="input-group">
                           <select
                             class="form-control"
-                            id="tipo_documento"
                             nome="tipo_documento"
                             formControlName="tipo_documento"
                           >
@@ -492,14 +489,11 @@
                       </div>
 
                       <div class="col-md-4 mb-3">
-                        <label class="form-label" for="numero_documento">
-                          Numero Documento
-                        </label>
+                        <label class="form-label">Numero documento</label>
                         <div class="input-group">
                           <input
                             type="text"
                             class="form-control"
-                            id="numero_documento"
                             nome="numero_documento"
                             formControlName="numero_documento"
                           />
@@ -510,50 +504,45 @@
                       </div>
 
                       <div class="col-md-4 mb-3">
-                        <label class="form-label" for="data_emissione">
-                          Data Emissione
-                        </label>
-                        <div class="input-group">
+                        <label class="form-label">Data emissione</label>
+                        <mat-form-field appearance="fill" style="width: 100%">
                           <input
-                            type="date"
-                            class="form-control"
-                            id="data_emissione"
-                            nome="data_emissione"
+                            matInput
+                            [matDatepicker]="picker_emissione"
                             formControlName="data_emissione"
+                            placeholder="dd/mm/yyyy"
                           />
-                          <span class="input-group-text">
-                            <i class="bi bi-calendar"></i>
-                          </span>
-                        </div>
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker_emissione"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #picker_emissione></mat-datepicker>
+                        </mat-form-field>
                       </div>
 
                       <div class="col-md-4 mb-3">
-                        <label class="form-label" for="data_scadenza">
-                          Data Scadenza
-                        </label>
-                        <div class="input-group">
+                        <label class="form-label">Data scadenza</label>
+                        <mat-form-field appearance="fill" style="width: 100%">
                           <input
-                            type="date"
-                            class="form-control"
-                            id="data_scadenza"
-                            nome="data_scadenza"
+                            matInput
+                            [matDatepicker]="picker_scadenza"
                             formControlName="data_scadenza"
+                            placeholder="dd/mm/yyyy"
                           />
-                          <span class="input-group-text">
-                            <i class="bi bi-calendar"></i>
-                          </span>
-                        </div>
+                          <mat-datepicker-toggle
+                            matSuffix
+                            [for]="picker_scadenza"
+                          ></mat-datepicker-toggle>
+                          <mat-datepicker #picker_scadenza></mat-datepicker>
+                        </mat-form-field>
                       </div>
 
                       <div class="col-md-4 mb-3">
-                        <label class="form-label" for="ente_emittente">
-                          Ente Emittente
-                        </label>
+                        <label class="form-label">Ente emittente</label>
                         <div class="input-group">
                           <input
                             type="text"
                             class="form-control"
-                            id="ente_emittente"
                             nome="ente_emittente"
                             formControlName="ente_emittente"
                           />
@@ -585,7 +574,7 @@
                     class="btn btn-primary py-2"
                     (click)="addDocumento()"
                   >
-                    Add Documento
+                    Add documento
                   </button>
                 </div>
               </div>
