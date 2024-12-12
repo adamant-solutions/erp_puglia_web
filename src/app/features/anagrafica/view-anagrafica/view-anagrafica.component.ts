@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
@@ -76,11 +76,25 @@ export class ViewAnagraficaComponent implements OnInit {
           provincia: [this.anagrafica.cittadino.luogo_nascita.provincia],
           stato: [this.anagrafica.cittadino.luogo_nascita.stato],
         }),
-        documenti_identita: this.formBuilder.array([]),
+        documenti_identita: this.formBuilder.array(
+          this.anagrafica.cittadino.documenti_identita.map((doc: any) =>
+            this.formBuilder.group({
+              tipo_documento: [doc.tipo_documento],
+              numero_documento: [doc.numero_documento],
+              data_emissione: [this.formatDate(doc.data_emissione)],
+              data_scadenza: [this.formatDate(doc.data_scadenza)],
+              ente_emittente: [doc.ente_emittente],
+            })
+          )
+        ),
       }),
     });
 
     this.viewForm.disable();
+  }
+
+  get documentiIdentita(): FormArray {
+    return this.viewForm.get('cittadino.documenti_identita') as FormArray;
   }
 
   indietro() {

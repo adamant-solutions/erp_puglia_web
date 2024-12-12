@@ -360,10 +360,103 @@
               </div>
 
               <!-- Documenti identita -->
-              <!-- <div formArrayName="documenti_identita" class="row d-flex cittadino-nested-form-group"
+              <div
+                formArrayName="documenti_identita"
+                class="cittadino-nested-form-group"
               >
-                <div class="col-12 mb-3"><strong>Documenti identita:</strong></div>
-              </div> -->
+                <div class="col-12 mb-3">
+                  <strong>Documenti identita:</strong>
+                </div>
+
+                <div class="col-12 mb-3">
+                  <div class="container-fluid">
+                    <div
+                      class="row d-flex mb-4 pt-3"
+                      *ngFor="
+                        let documento of documentiIdentita.controls;
+                        let i = index
+                      "
+                      [formGroupName]="i"
+                      style="background-color: #fff; border-radius: 6px"
+                    >
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Tipo documento</label>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            nome="tipo_documento"
+                            formControlName="tipo_documento"
+                          />
+                          <span class="input-group-text">
+                            <i class="bi bi-file-person"></i>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Numero documento</label>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            nome="numero_documento"
+                            formControlName="numero_documento"
+                          />
+                          <span class="input-group-text">
+                            <i class="bi bi-file-earmark-binary"></i>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Data emissione</label>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="data_emissione"
+                            formControlName="data_emissione"
+                          />
+                          <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Data scadenza</label>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            name="data_scadenza"
+                            formControlName="data_scadenza"
+                          />
+                          <span class="input-group-text">
+                            <i class="bi bi-calendar"></i>
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Ente emittente</label>
+                        <div class="input-group">
+                          <input
+                            type="text"
+                            class="form-control"
+                            nome="ente_emittente"
+                            formControlName="ente_emittente"
+                          />
+                          <span class="input-group-text">
+                            <i class="bi bi-buildings"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <!-- Altri dettagli -->
             </fieldset>
