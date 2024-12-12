@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
@@ -21,8 +21,10 @@ export class EditAnagraficaComponent implements OnInit {
   anagrafica!: Anagrafica;
   anagraficaId!: number;
   modificaForm!: FormGroup;
+  documentTypes = ["Carta d'Identità", 'Passaporto', 'Patente'];
   initialFormValues!: Anagrafica;
   submitted: boolean = false;
+  errorMessage = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -89,15 +91,50 @@ export class EditAnagraficaComponent implements OnInit {
           pec: [this.anagrafica.cittadino.contatti.pec],
         }),
         luogo_nascita: this.formBuilder.group({
-          comune: [this.anagrafica.cittadino.luogo_nascita.comune],
+          comune: [
+            this.anagrafica.cittadino.luogo_nascita.comune,
+            Validators.required,
+          ],
           provincia: [this.anagrafica.cittadino.luogo_nascita.provincia],
           stato: [this.anagrafica.cittadino.luogo_nascita.stato],
         }),
-        documenti_identita: this.formBuilder.array([]),
+        documenti_identita: this.formBuilder.array(
+          this.anagrafica.cittadino.documenti_identita
+            ? this.anagrafica.cittadino.documenti_identita.map((doc: any) =>
+                this.formBuilder.group({
+                  id: [doc.id],
+                  tipo_documento: [doc.tipo_documento],
+                  numero_documento: [doc.numero_documento],
+                  data_emissione: [doc.data_emissione],
+                  data_scadenza: [doc.data_scadenza],
+                  ente_emittente: [doc.ente_emittente],
+                })
+              )
+            : []
+        ),
       }),
     });
 
     this.initialFormValues = this.modificaForm.getRawValue();
+  }
+
+  get documentiIdentita(): FormArray {
+    return this.modificaForm.get('cittadino.documenti_identita') as FormArray;
+  }
+
+  addDocumento(): void {
+    const documentoGroup = this.formBuilder.group({
+      tipo_documento: [''],
+      numero_documento: [''],
+      data_emissione: [''],
+      data_scadenza: [''],
+      ente_emittente: [''],
+    });
+    this.documentiIdentita.push(documentoGroup);
+  }
+
+  removeDocumento(index: number): void {
+    this.documentiIdentita.removeAt(index);
   }
 
   indietro() {
@@ -116,6 +153,17 @@ export class EditAnagraficaComponent implements OnInit {
       'Form data before converting dataDiNascita:',
       this.modificaForm.value
     );
+
+    this.documentiIdentita?.controls.forEach((control, index) => {
+      console.log(
+        `Data emissione for document ${index + 1}:`,
+        control.get('data_emissione')?.value
+      );
+      console.log(
+        `Data scadenza for document ${index + 1}:`,
+        control.get('data_scadenza')?.value
+      );
+    });
 
     let sendConvertedDataDiNascita = moment(
       this.modificaForm.value.cittadino.dataDiNascita
@@ -150,6 +198,8 @@ export class EditAnagraficaComponent implements OnInit {
               'An error occurred while modifying anagrafica:',
               error
             );
+            this.errorMessage =
+              'Failed to update anagrafica. Please try again.';
           },
         });
     }
