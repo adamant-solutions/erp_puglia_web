@@ -77,15 +77,17 @@ export class ViewAnagraficaComponent implements OnInit {
           stato: [this.anagrafica.cittadino.luogo_nascita.stato],
         }),
         documenti_identita: this.formBuilder.array(
-          this.anagrafica.cittadino.documenti_identita.map((doc: any) =>
-            this.formBuilder.group({
-              tipo_documento: [doc.tipo_documento],
-              numero_documento: [doc.numero_documento],
-              data_emissione: [this.formatDate(doc.data_emissione)],
-              data_scadenza: [this.formatDate(doc.data_scadenza)],
-              ente_emittente: [doc.ente_emittente],
-            })
-          )
+          this.anagrafica.cittadino.documenti_identita
+            ? this.anagrafica.cittadino.documenti_identita.map((doc: any) =>
+                this.formBuilder.group({
+                  tipo_documento: [doc.tipo_documento],
+                  numero_documento: [doc.numero_documento],
+                  data_emissione: [this.formatDate(doc.data_emissione)],
+                  data_scadenza: [this.formatDate(doc.data_scadenza)],
+                  ente_emittente: [doc.ente_emittente],
+                })
+              )
+            : []
         ),
       }),
     });

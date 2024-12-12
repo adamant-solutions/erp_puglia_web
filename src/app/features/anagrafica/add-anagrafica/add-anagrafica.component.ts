@@ -65,7 +65,7 @@ export class AddAnagraficaComponent implements OnInit {
           pec: [''],
         }),
         luogo_nascita: this.formBuilder.group({
-          comune: [''],
+          comune: ['', Validators.required],
           provincia: [''],
           stato: [''],
         }),
@@ -118,14 +118,17 @@ export class AddAnagraficaComponent implements OnInit {
       'Form data before converting dataDiNascita:',
       this.addForm.value
     );
-    console.log(
-      'Data emissione:',
-      this.documentiIdentita.at(0).get('data_emissione')?.value
-    );
-    console.log(
-      'Data scadenza:',
-      this.documentiIdentita.at(0).get('data_scadenza')?.value
-    );
+
+    this.documentiIdentita?.controls.forEach((control, index) => {
+      console.log(
+        `Data emissione for document ${index + 1}:`,
+        control.get('data_emissione')?.value
+      );
+      console.log(
+        `Data scadenza for document ${index + 1}:`,
+        control.get('data_scadenza')?.value
+      );
+    });
 
     let sendConvertedDataDiNascita = moment(
       this.addForm.value.cittadino.dataDiNascita
