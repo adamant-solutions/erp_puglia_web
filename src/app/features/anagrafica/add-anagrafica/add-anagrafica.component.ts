@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
+import { TipoDocumento } from 'src/app/core/models/anagrafica.model';
 import * as moment from 'moment';
 
 @Component({
@@ -25,7 +26,11 @@ export class AddAnagraficaComponent implements OnInit {
   ];
 
   addForm!: FormGroup;
-  documentTypes = ["Carta d'Identità", 'Passaporto', 'Patente'];
+  documentTypes: TipoDocumento[] = [
+    TipoDocumento.CARTA_DEL_IDENTITA,
+    TipoDocumento.PASSAPORTO,
+    TipoDocumento.PATENTE,
+  ];
   submitted: boolean = false;
 
   constructor(

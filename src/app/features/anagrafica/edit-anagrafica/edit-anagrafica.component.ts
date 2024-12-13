@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Anagrafica } from 'src/app/core/models/anagrafica.model';
+import {
+  Anagrafica,
+  TipoDocumento,
+} from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import * as moment from 'moment';
 
@@ -21,7 +24,11 @@ export class EditAnagraficaComponent implements OnInit {
   anagrafica!: Anagrafica;
   anagraficaId!: number;
   modificaForm!: FormGroup;
-  documentTypes = ["Carta d'Identità", 'Passaporto', 'Patente'];
+  documentTypes: TipoDocumento[] = [
+    TipoDocumento.CARTA_DEL_IDENTITA,
+    TipoDocumento.PASSAPORTO,
+    TipoDocumento.PATENTE,
+  ];
   initialFormValues!: Anagrafica;
   submitted: boolean = false;
   errorMessage = '';
