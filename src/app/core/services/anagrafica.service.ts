@@ -23,6 +23,31 @@ export class AnagraficaService {
       );
   }
 
+  getFilteredAnagrafica(
+    pageNumber: number,
+    nome: string,
+    cognome: string,
+    codiceFiscale: string
+  ): Observable<Anagrafica[]> {
+    return this.http
+      .get<Anagrafica[]>(
+        `${this.anagraficaUrl}?pagina=${pageNumber}&nome=${nome}&cognome=${cognome}&codiceFiscale=${codiceFiscale}`
+      )
+      .pipe(
+        catchError((error) => {
+          throw error;
+        })
+      );
+  }
+
+  getTotalItems(): Observable<any> {
+    return this.http.get<any>(`${this.anagraficaUrl}/count`).pipe(
+      catchError((error) => {
+        throw error;
+      })
+    );
+  }
+
   getAnagraficaById(id: number): Observable<Anagrafica> {
     return this.http.get<Anagrafica>(`${this.anagraficaUrl}/` + id).pipe(
       catchError((error) => {

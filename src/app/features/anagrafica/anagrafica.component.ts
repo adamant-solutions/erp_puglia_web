@@ -57,8 +57,10 @@ export class AnagraficaComponent implements OnInit {
         console.log('Response from resolver:', response);
         this.anagraficaList = response;
 
-        // this.totalItems = response.totalItems;
-        this.totalItems = this.anagraficaList.length; // pageSize ?
+        this.anagraficaService.getTotalItems().subscribe((data) => {
+          this.totalItems = data.nrAnagrafica;
+          console.log('Total items: ', this.totalItems);
+        });
       });
   }
 
@@ -91,7 +93,32 @@ export class AnagraficaComponent implements OnInit {
     });
   }
 
-  getFilteredData() {}
+  getFilteredData(pageNumber: number) {
+    console.log(
+      'getFilteredData: ',
+      this.anagrafica.nome +
+        this.anagrafica.cognome +
+        this.anagrafica.codiceFiscale
+    );
+
+    this.anagraficaService
+      .getFilteredAnagrafica(
+        pageNumber,
+        this.anagrafica.nome,
+        this.anagrafica.cognome,
+        this.anagrafica.codiceFiscale
+      )
+      .subscribe((data) => {
+        console.log('Filtered anagrafica: ', data);
+      });
+
+    /*
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { page: pageNumber },
+    });
+    */
+  }
 
   cancellaCerca() {}
 }
