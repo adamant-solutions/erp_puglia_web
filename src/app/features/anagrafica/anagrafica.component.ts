@@ -30,7 +30,7 @@ export class AnagraficaComponent implements OnInit {
 
   totalItems = 0; // Total number of items, retrieved from backend
   pageSize = 10; // Default number of items per page
-  currentPage = 1; // Current page number / index
+  currentPage = 0; // Current page number / index
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
@@ -45,7 +45,7 @@ export class AnagraficaComponent implements OnInit {
 
     // Watch for query parameter changes (e.g., page number)
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.currentPage = params['pagina'] ? Number(params['pagina']) : 1;
+      this.currentPage = params['pagina'] ? Number(params['pagina']) : 0;
     });
   }
 
@@ -65,7 +65,8 @@ export class AnagraficaComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
-    const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+    // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+    const pageIndex = event.pageIndex;
     this.router.navigate([], {
       queryParams: { pagina: pageIndex },
       queryParamsHandling: 'merge',
