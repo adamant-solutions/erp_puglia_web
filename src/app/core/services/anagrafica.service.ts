@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, switchMap } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, of, retry, switchMap, throwError } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 
 @Injectable({
@@ -8,7 +8,7 @@ import { Anagrafica } from '../models/anagrafica.model';
 })
 export class AnagraficaService {
   private token: string | null = null; // Store the token here
-
+  private tokenExpiry: number | null = null;
   constructor(
     @Inject('tokenUrl') private tokenUrl: string,
     @Inject('anagraficaUrl') private anagraficaUrl: string,
@@ -17,28 +17,35 @@ export class AnagraficaService {
 
   // Fetch token
   private getToken(scope: 'erp:read' | 'erp:write'): Observable<string> {
+  
+    if (this.token && this.tokenExpiry && this.tokenExpiry > Date.now()) {
+      return of(this.token);
+    }
+
     const headers = new HttpHeaders({
-      Authorization:
-        scope === 'erp:read'
-          ? 'Basic cmVhZGVyOnNlY3JldC1yZWFkZXI='
-          : 'Basic d3JpdGVyOnNlY3JldC13cml0ZXI=',
+      Authorization: scope === 'erp:read'
+        ? 'Basic cmVhZGVyOnNlY3JldC1yZWFkZXI='
+        : 'Basic d3JpdGVyOnNlY3JldC13cml0ZXI=',
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
     const body = `grant_type=client_credentials&scope=${scope}`;
 
-    return this.http
-      .post<{ access_token: string }>(this.tokenUrl, body, { headers })
-      .pipe(
-        switchMap((response) => {
-          this.token = response.access_token; // Save the token
-          return of(this.token);
-        }),
-        catchError((error) => {
-          throw error;
-        })
-      );
+    return this.http.post<{ access_token: string, expires_in: number }>(
+      this.tokenUrl, 
+      body, 
+      { headers }
+    ).pipe(
+      switchMap(response => {
+        this.token = response.access_token;
+        this.tokenExpiry = Date.now() + (response.expires_in * 1000);
+        return of(this.token);
+      }),
+      retry(2)
+    );
   }
+
+
 
   // Helper function to add Authorization header
   private getHeaders(): HttpHeaders {
@@ -156,11 +163,22 @@ export class AnagraficaService {
   }
 
   deleteAnagrafica(id: number): Observable<Anagrafica> {
-    return this.secureApiCall<Anagrafica>(
-      'DELETE',
-      `${this.anagraficaUrl}/${id}`,
-      null,
-      'erp:write'
+    return this.getToken('erp:write').pipe(
+      switchMap(token => {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.http.delete<Anagrafica>(`${this.anagraficaUrl}/${id}`, { headers }).pipe(
+          catchError(error => {
+            if (error.status === 403) {
+      
+              this.token = null;
+              this.tokenExpiry = null;
+              return this.deleteAnagrafica(id);
+            }
+            return throwError(() => error);
+          })
+        );
+      })
     );
   }
 }
+
