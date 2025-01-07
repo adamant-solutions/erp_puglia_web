@@ -167,14 +167,23 @@ export class AnagraficaService {
       switchMap(token => {
         const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
         return this.http.delete<Anagrafica>(`${this.anagraficaUrl}/${id}`, { headers }).pipe(
+          retry(2), 
           catchError(error => {
-            if (error.status === 403) {
-      
-              this.token = null;
-              this.tokenExpiry = null;
-              return this.deleteAnagrafica(id);
+            switch (error.status) {
+              case 403:
+                this.token = null;
+                this.tokenExpiry = null;
+                return this.deleteAnagrafica(id);
+              case 404:
+                return throwError(() => new Error('record not founsd'));
+              case 500:
+              case 502:
+              case 503:
+              case 504:
+                return throwError(() => new Error('server error'));
+              default:
+                return throwError(() => new Error('failed to delete '));
             }
-            return throwError(() => error);
           })
         );
       })
