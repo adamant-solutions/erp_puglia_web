@@ -14,6 +14,7 @@ const routes: Routes = [
     path: '',
     component: AnagraficaComponent,
     resolve: { anagraficaResolver: anagraficaResolver },
+      runGuardsAndResolvers: 'always'
   },
   {
     path: 'anagrafica-dettagli/:anagraficaId',

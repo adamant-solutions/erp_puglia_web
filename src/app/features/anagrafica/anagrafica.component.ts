@@ -65,6 +65,7 @@ export class AnagraficaComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
     const pageIndex = event.pageIndex;
     this.router.navigate([], {
