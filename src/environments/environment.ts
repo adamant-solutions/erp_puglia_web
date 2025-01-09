@@ -7,6 +7,7 @@ const API_BASE_URL = '/';
 export const environment = {
   production: false,
   tokenUrl: API_BASE_URL + 'oauth2/token',
+  patrimonioUrl: API_BASE_URL + 'patrimonio',
   anagraficaUrl: API_BASE_URL + 'anagrafica',
 };
 
