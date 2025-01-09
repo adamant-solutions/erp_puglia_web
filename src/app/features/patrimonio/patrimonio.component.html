@@ -7,26 +7,41 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
-        <p class="mb-5">
-          Nobis adipisicing placeat dicta, necessitatibus voluptatibus phasellus
-          lobortis voluptatem. Ligula? Phasellus nec. Laborum dolorem tempor.
-          Occaecati integer mattis cillum repellat quia erat quibusdam cubilia.
-          Ultrices vulputate do nullam repellat impedit delectus minim, montes.
-          Etiam porttitor excepteur purus dolorem iaculis excepturi hac
-          nascetur, expedita natus cursus! Veniam torquent dignissim. Dolore
-          magnis. Dolore potenti dolorem morbi consectetur, asperiores purus
-          risus inventore saepe cursus ratione? Nibh fuga porro ratione possimus
-          commodo proident aliquam tortor, nisl.
-        </p>
+        <!-- Table - all Patrimonio -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Azioni</th>
 
-        <p class="mb-5">
-          Nobis adipisicing placeat dicta, necessitatibus voluptatibus phasellus
-          lobortis voluptatem. Ligula? Phasellus nec. Laborum dolorem tempor.
-          Occaecati integer mattis cillum repellat quia erat quibusdam cubilia.
-          Ultrices vulputate do nullam repellat impedit delectus minim, montes.
-          Etiam porttitor excepteur purus dolorem iaculis excepturi hac
-          nascetur, expedita natus cursus! Veniam torquent dignissim.
-        </p>
+                <th scope="col">Quartiere</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let patrimonioItem of patrimonioList">
+                <td scope="row">
+                  <a href="#" title="Vedi dettagli" class="me-3">
+                    <i class="bi bi-eye-fill"></i>
+                  </a>
+
+                  <a href="#" title="Modifica" class="me-3">
+                    <i class="bi bi-pencil"></i>
+                  </a>
+
+                  <a
+                    href="#"
+                    title="Cancella"
+                    style="cursor: pointer; color: #0052a3"
+                  >
+                    <i class="bi bi-trash3"></i>
+                  </a>
+                </td>
+
+                <td scope="row">{{ patrimonioItem.quartiere }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
