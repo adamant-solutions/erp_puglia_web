@@ -31,7 +31,7 @@ export class AnagraficaComponent implements OnInit {
   totalItems = 0; // Total number of items, retrieved from backend
   pageSize = 10; // Default number of items per page
   currentPage = 0; // Current page number / index
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -42,11 +42,6 @@ export class AnagraficaComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAnagraficaList();
-
-    // Watch for query parameter changes (e.g., page number)
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.currentPage = params['pagina'] ? Number(params['pagina']) : 0;
-    });
   }
 
   getAnagraficaList() {
@@ -65,13 +60,14 @@ export class AnagraficaComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
-    const pageIndex = event.pageIndex;
+    const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+
     this.router.navigate([], {
       queryParams: { pagina: pageIndex },
       queryParamsHandling: 'merge',
     });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   deleteAnagraficaModal(anagrafica: Anagrafica | any) {
