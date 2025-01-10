@@ -1,0 +1,385 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Patrimonio dettagli'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="metriQuadri">Metri quadri</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="metriQuadri"
+                    name="metriQuadri"
+                    formControlName="metriQuadri"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="quartiere">Quartiere</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="quartiere"
+                    name="quartiere"
+                    formControlName="quartiere"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="tipoAmministrazione"
+                  >Tipo amministrazione</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="tipoAmministrazione"
+                    name="tipoAmministrazione"
+                    formControlName="tipoAmministrazione"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="statoDisponibilita"
+                  >Stato disponibilita</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="statoDisponibilita"
+                    name="statoDisponibilita"
+                    formControlName="statoDisponibilita"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="comune">Comune</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="comune"
+                    name="comune"
+                    formControlName="comune"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="provincia"
+                    name="provincia"
+                    formControlName="provincia"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="indirizzo">Indirizzo</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="indirizzo"
+                    name="indirizzo"
+                    formControlName="indirizzo"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="sezioneUrbana"
+                  >Sezione urbana</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="sezioneUrbana"
+                    name="sezioneUrbana"
+                    formControlName="sezioneUrbana"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="foglio">Foglio</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="foglio"
+                    name="foglio"
+                    formControlName="foglio"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="particella">Particella</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="particella"
+                    name="particella"
+                    formControlName="particella"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="categoriaCatastale"
+                  >Categoria catastale</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="categoriaCatastale"
+                    name="categoriaCatastale"
+                    formControlName="categoriaCatastale"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="classeCatastale"
+                  >Classe catastale</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="classeCatastale"
+                    name="classeCatastale"
+                    formControlName="classeCatastale"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="renditaCatastale"
+                  >Rendita catastale</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="renditaCatastale"
+                    name="renditaCatastale"
+                    formControlName="renditaCatastale"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="consistenzaCatastale"
+                  >Consistenza catastale</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="consistenzaCatastale"
+                    name="consistenzaCatastale"
+                    formControlName="consistenzaCatastale"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="zona">Zona</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="zona"
+                    name="zona"
+                    formControlName="zona"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="classeEnergetica"
+                  >Classe energetica</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="classeEnergetica"
+                    name="classeEnergetica"
+                    formControlName="classeEnergetica"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="descrizione">Descrizione</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="descrizione"
+                    name="descrizione"
+                    formControlName="descrizione"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="civico">Civico</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="civico"
+                    name="civico"
+                    formControlName="civico"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="subalterno">Subalterno</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subalterno"
+                    name="subalterno"
+                    formControlName="subalterno"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="piano">Piano</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="piano"
+                    name="piano"
+                    formControlName="piano"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Documenti -->
+            <div
+              formArrayName="documenti"
+              *ngIf="documenti.length > 0"
+              style="margin-top: 1rem"
+            >
+              <div class="col-12 mb-3">
+                <strong>Documenti:</strong>
+              </div>
+
+              <div class="col-12 mb-3">
+                <div class="container-fluid">
+                  <div
+                    class="row d-flex mb-4 pt-3"
+                    *ngFor="let documento of documenti.controls; let i = index"
+                    [formGroupName]="i"
+                    style="background-color: #f2f2f2; border-radius: 6px"
+                  >
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Tipo documento</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          nome="tipoDocumento"
+                          formControlName="tipoDocumento"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Data documento</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="dataDocumento"
+                          formControlName="dataDocumento"
+                        />
+                        <span class="input-group-text">
+                          <i class="bi bi-calendar"></i>
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Percorso file</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          nome="percorsoFile"
+                          formControlName="percorsoFile"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Descrizione</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          nome="descrizione"
+                          formControlName="descrizione"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- buttons -->
+          <div class="col-12 mt-5">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

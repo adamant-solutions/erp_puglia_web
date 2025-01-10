@@ -1,0 +1,91 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { Patrimonio } from 'src/app/core/models/patrimonio.model';
+
+@Component({
+  selector: 'app-view-patrimonio',
+  templateUrl: './view-patrimonio.component.html',
+  styleUrls: ['./view-patrimonio.component.css'],
+})
+export class ViewPatrimonioComponent implements OnInit {
+  pageTitle: string = 'Patrimonio dettagli';
+
+  breadcrumbList = [
+    { label: 'ERP - di Regione Puglia', link: '/' },
+    { label: 'Patrimonio', link: '/patrimonio' },
+  ];
+
+  patrimonio!: Patrimonio;
+  viewForm!: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private datePipe: DatePipe
+  ) {}
+
+  ngOnInit() {
+    this.activatedRoute.data.subscribe(({ patrimonioByIdResolver }) => {
+      this.patrimonio = patrimonioByIdResolver;
+      console.log('patrimonioByIdResolver: ', patrimonioByIdResolver);
+    });
+
+    this.initForm();
+  }
+
+  // Format the date to dd/MM/yyyy
+  formatDate(date: string): string {
+    return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
+  }
+
+  initForm() {
+    this.viewForm = this.formBuilder.group({
+      metriQuadri: [this.patrimonio.metriQuadri],
+      quartiere: [this.patrimonio.quartiere],
+      tipoAmministrazione: [this.patrimonio.tipoAmministrazione],
+      statoDisponibilita: [this.patrimonio.statoDisponibilita],
+      comune: [this.patrimonio.comune],
+      provincia: [this.patrimonio.provincia],
+      indirizzo: [this.patrimonio.indirizzo],
+      sezioneUrbana: [this.patrimonio.sezioneUrbana],
+      foglio: [this.patrimonio.foglio],
+      particella: [this.patrimonio.particella],
+      categoriaCatastale: [this.patrimonio.categoriaCatastale],
+      classeCatastale: [this.patrimonio.classeCatastale],
+      renditaCatastale: [this.patrimonio.renditaCatastale],
+      consistenzaCatastale: [this.patrimonio.consistenzaCatastale],
+      zona: [this.patrimonio.zona],
+      classeEnergetica: [this.patrimonio.classeEnergetica],
+      descrizione: [this.patrimonio.descrizione],
+      civico: [this.patrimonio.civico],
+      subalterno: [this.patrimonio.subalterno],
+      piano: [this.patrimonio.piano],
+
+      documenti: this.formBuilder.array(
+        this.patrimonio.documenti
+          ? this.patrimonio.documenti.map((doc: any) =>
+              this.formBuilder.group({
+                tipoDocumento: [doc.tipoDocumento],
+                dataDocumento: [this.formatDate(doc.dataDocumento)],
+                percorsoFile: [doc.percorsoFile],
+                descrizione: [doc.descrizione],
+              })
+            )
+          : []
+      ),
+    });
+
+    this.viewForm.disable();
+  }
+
+  get documenti(): FormArray {
+    return this.viewForm.get('documenti') as FormArray;
+  }
+
+  indietro() {
+    this.router.navigate(['/patrimonio']);
+  }
+}
