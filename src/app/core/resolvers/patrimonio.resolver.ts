@@ -22,3 +22,20 @@ export const patrimonioResolver: ResolveFn<Observable<Patrimonio[]>> = (
     })
   );
 };
+
+// patrimonioByIdResolver
+export const patrimonioByIdResolver: ResolveFn<Patrimonio | null> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): Observable<Patrimonio | null> => {
+  const id = Number(route.paramMap.get('patrimonioId'));
+
+  return inject(PatrimonioService)
+    .getPatrimonioById(id)
+    .pipe(
+      catchError((error) => {
+        console.error('Error fetching patrimonio:', error); // Log the error
+        return of(null); // Return `null` in case of an error
+      })
+    );
+};

@@ -122,4 +122,8 @@ export class PatrimonioService {
   getPatrimonio(): Observable<Patrimonio[]> {
     return this.secureApiCall<Patrimonio[]>('GET', `${this.patrimonioUrl}`);
   }
+
+  getPatrimonioById(id: number): Observable<Patrimonio> {
+    return this.secureApiCall<Patrimonio>('GET', `${this.patrimonioUrl}/${id}`);
+  }
 }
