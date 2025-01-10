@@ -15,6 +15,10 @@ export class PatrimonioComponent implements OnInit {
 
   patrimonioList: Patrimonio[] = [];
 
+  patrimonio: Patrimonio | any = {
+    comune: '',
+  };
+
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -30,4 +34,14 @@ export class PatrimonioComponent implements OnInit {
         this.patrimonioList = response;
       });
   }
+
+  getDocumentTypes(documenti: any[]): string {
+    return documenti.map((doc) => doc.tipoDocumento).join(', ');
+  }
+
+  deletePatrimonioModal(patrimonio: Patrimonio | any) {}
+
+  getFilteredData() {}
+
+  cancellaCerca() {}
 }
