@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AnagraficaComponent } from './anagrafica.component';
 import {
-  anagraficaByIdResolver,
   anagraficaResolver,
+  anagraficaByIdResolver,
 } from 'src/app/core/resolvers/anagrafica.resolver';
 import { ViewAnagraficaComponent } from './view-anagrafica/view-anagrafica.component';
 import { AddAnagraficaComponent } from './add-anagrafica/add-anagrafica.component';

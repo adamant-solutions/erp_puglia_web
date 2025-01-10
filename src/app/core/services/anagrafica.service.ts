@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, retry, switchMap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 
 @Injectable({
@@ -9,6 +9,7 @@ import { Anagrafica } from '../models/anagrafica.model';
 export class AnagraficaService {
   private token: string | null = null; // Store the token here
   private tokenExpiry: number | null = null;
+
   constructor(
     @Inject('tokenUrl') private tokenUrl: string,
     @Inject('anagraficaUrl') private anagraficaUrl: string,
@@ -17,35 +18,31 @@ export class AnagraficaService {
 
   // Fetch token
   private getToken(scope: 'erp:read' | 'erp:write'): Observable<string> {
-  
-    if (this.token && this.tokenExpiry && this.tokenExpiry > Date.now()) {
-      return of(this.token);
-    }
-
     const headers = new HttpHeaders({
-      Authorization: scope === 'erp:read'
-        ? 'Basic cmVhZGVyOnNlY3JldC1yZWFkZXI='
-        : 'Basic d3JpdGVyOnNlY3JldC13cml0ZXI=',
+      Authorization:
+        scope === 'erp:read'
+          ? 'Basic cmVhZGVyOnNlY3JldC1yZWFkZXI='
+          : 'Basic d3JpdGVyOnNlY3JldC13cml0ZXI=',
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
     const body = `grant_type=client_credentials&scope=${scope}`;
 
-    return this.http.post<{ access_token: string, expires_in: number }>(
-      this.tokenUrl, 
-      body, 
-      { headers }
-    ).pipe(
-      switchMap(response => {
-        this.token = response.access_token;
-        this.tokenExpiry = Date.now() + (response.expires_in * 1000);
-        return of(this.token);
-      }),
-      retry(2)
-    );
+    return this.http
+      .post<{ access_token: string; expires_in: number }>(this.tokenUrl, body, {
+        headers,
+      })
+      .pipe(
+        switchMap((response) => {
+          this.token = response.access_token; // Save the token
+          this.tokenExpiry = Date.now() + response.expires_in * 1000 - 5000; // Buffer of 5 seconds
+          return of(this.token);
+        }),
+        catchError((error) => {
+          throw error;
+        })
+      );
   }
-
-
 
   // Helper function to add Authorization header
   private getHeaders(): HttpHeaders {
@@ -67,11 +64,26 @@ export class AnagraficaService {
     if (!this.token) {
       // If no token, fetch it first
       return this.getToken(scope).pipe(
-        switchMap(() => this.makeApiCall<T>(method, url, body))
+        switchMap(() => this.makeApiCall<T>(method, url, body)),
+        catchError((error) => {
+          console.error('Token fetch failed', error);
+          return throwError(() => new Error('Unable to fetch token.'));
+        })
       );
     } else {
-      // Token already exists, proceed to make API call
-      return this.makeApiCall<T>(method, url, body);
+      // If token has expired, re-fetch it
+      if (this.token && this.tokenExpiry && this.tokenExpiry > Date.now()) {
+        return this.getToken(scope).pipe(
+          switchMap(() => this.makeApiCall<T>(method, url, body)),
+          catchError((error) => {
+            console.error('Token fetch failed', error);
+            return throwError(() => new Error('Unable to fetch token.'));
+          })
+        );
+      } else {
+        // Token already exists, proceed to make API call
+        return this.makeApiCall<T>(method, url, body);
+      }
     }
   }
 
@@ -105,10 +117,25 @@ export class AnagraficaService {
         return this.http.delete<T>(url, { headers }).pipe(
           catchError((error) => {
             throw error;
+            /*
+            switch (error.status) {
+              case 403:
+                return throwError(() => new Error('Unauthorized access, token reset'));
+              case 404:
+                return throwError(() => new Error('Record not found'));
+              case 500:
+              case 502:
+              case 503:
+              case 504:
+                return throwError(() => new Error('Server error'));
+              default:
+                return throwError(() => new Error('Failed to delete'));
+            }
+            */
           })
         );
       default:
-        throw new Error('Unsupported HTTP method');
+        throw new Error(`Unsupported HTTP method: ${method}`);
     }
   }
 
@@ -163,31 +190,11 @@ export class AnagraficaService {
   }
 
   deleteAnagrafica(id: number): Observable<Anagrafica> {
-    return this.getToken('erp:write').pipe(
-      switchMap(token => {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.delete<Anagrafica>(`${this.anagraficaUrl}/${id}`, { headers }).pipe(
-          retry(2), 
-          catchError(error => {
-            switch (error.status) {
-              case 403:
-                this.token = null;
-                this.tokenExpiry = null;
-                return this.deleteAnagrafica(id);
-              case 404:
-                return throwError(() => new Error('record not founsd'));
-              case 500:
-              case 502:
-              case 503:
-              case 504:
-                return throwError(() => new Error('server error'));
-              default:
-                return throwError(() => new Error('failed to delete '));
-            }
-          })
-        );
-      })
+    return this.secureApiCall<Anagrafica>(
+      'DELETE',
+      `${this.anagraficaUrl}/${id}`,
+      null,
+      'erp:write'
     );
   }
 }
-
