@@ -4,7 +4,8 @@ import { map } from 'rxjs';
 import { Anagrafica } from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { PageEvent } from '@angular/material/paginator';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-anagrafica',
@@ -31,7 +32,6 @@ export class AnagraficaComponent implements OnInit {
   totalItems = 0; // Total number of items, retrieved from backend
   pageSize = 10; // Default number of items per page
   currentPage = 0; // Current page number / index
-  // @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -60,7 +60,8 @@ export class AnagraficaComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
-    const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+    // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+    const pageIndex = event.pageIndex;
 
     this.router.navigate([], {
       queryParams: { pagina: pageIndex },
@@ -92,31 +93,80 @@ export class AnagraficaComponent implements OnInit {
   }
 
   getFilteredData(pageNumber: number) {
+    if (
+      !(
+        this.anagrafica.cittadino.nome?.trim() ||
+        this.anagrafica.cittadino.cognome?.trim() ||
+        this.anagrafica.cittadino.codiceFiscale?.trim()
+      )
+    ) {
+      console.warn('At least one filter criterion must be provided.');
+      return;
+    }
+
     console.log(
-      'getFilteredData: ',
-      this.anagrafica.nome +
-        this.anagrafica.cognome +
-        this.anagrafica.codiceFiscale
+      'Data sent for filtering: ',
+      `${this.anagrafica.cittadino.nome}${this.anagrafica.cittadino.cognome}${this.anagrafica.cittadino.codiceFiscale}`
     );
 
     this.anagraficaService
       .getFilteredAnagrafica(
         pageNumber,
-        this.anagrafica.nome,
-        this.anagrafica.cognome,
-        this.anagrafica.codiceFiscale
+        this.anagrafica.cittadino.nome,
+        this.anagrafica.cittadino.cognome,
+        this.anagrafica.cittadino.codiceFiscale
       )
-      .subscribe((data) => {
-        console.log('Filtered anagrafica: ', data);
-      });
+      .subscribe({
+        next: (data: HttpResponse<Anagrafica[]> | any) => {
+          console.log('Filtered anagrafica: ', data);
+          // this.anagraficaList = data.body ?? [];
+          this.anagraficaList = data;
 
-    /*
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: { page: pageNumber },
-    });
-    */
+          this.totalItems = +(
+            data.headers.get('X-Paging-TotalRecordCount') ?? 0
+          );
+          console.log('Filtered totalItems', this.totalItems);
+
+          // Update the query parameters to reflect the filter state in the URL
+          this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: {
+              pagina: pageNumber,
+              nome: this.anagrafica.cittadino.nome,
+              cognome: this.anagrafica.cittadino.cognome,
+              codiceFiscale: this.anagrafica.cittadino.codiceFiscale,
+            },
+            queryParamsHandling: 'merge',
+          });
+        },
+        error: (error: any) => {
+          console.error('Error fetching filtered data:', error);
+        },
+      });
   }
 
-  cancellaCerca() {}
+  cancellaCerca() {
+    /*
+    this.anagrafica.cittadino.nome = '';
+    this.anagrafica.cittadino.cognome = '';
+    this.anagrafica.cittadino.codiceFiscale = '';
+    */
+
+    this.anagrafica = {
+      cittadino: {
+        nome: '',
+        cognome: '',
+        codiceFiscale: '',
+      },
+    };
+
+    // this.getFilteredData(0);
+
+    this.getAnagraficaList();
+
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { pagina: 0 },
+    });
+  }
 }

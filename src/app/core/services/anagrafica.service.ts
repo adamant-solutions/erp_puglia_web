@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 
@@ -156,10 +156,14 @@ export class AnagraficaService {
     nome: string,
     cognome: string,
     codiceFiscale: string
-  ): Observable<Anagrafica[]> {
-    return this.secureApiCall<Anagrafica[]>(
+  ): Observable<HttpResponse<Anagrafica[]>> {
+    return this.secureApiCall<HttpResponse<Anagrafica[]>>(
       'GET',
-      `${this.anagraficaUrl}?pagina=${pageNumber}&nome=${nome}&cognome=${cognome}&codiceFiscale=${codiceFiscale}`
+      `${this.anagraficaUrl}?pagina=${pageNumber}&nome=${nome}&cognome=${cognome}&codiceFiscale=${codiceFiscale}`,
+      {
+        params: { pageNumber, nome, cognome, codiceFiscale },
+        observe: 'response', // Ensures headers are included in the response
+      }
     );
   }
 

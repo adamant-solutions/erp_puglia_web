@@ -18,7 +18,7 @@
                   class="form-control"
                   id="nome"
                   name="nome"
-                  [(ngModel)]="anagrafica.nome"
+                  [(ngModel)]="anagrafica.cittadino.nome"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-person"></i>
@@ -34,7 +34,7 @@
                   class="form-control"
                   id="cognome"
                   name="cognome"
-                  [(ngModel)]="anagrafica.cognome"
+                  [(ngModel)]="anagrafica.cittadino.cognome"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-person"></i>
@@ -52,7 +52,7 @@
                   class="form-control"
                   id="codiceFiscale"
                   name="codiceFiscale"
-                  [(ngModel)]="anagrafica.codiceFiscale"
+                  [(ngModel)]="anagrafica.cittadino.codiceFiscale"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-ticket-detailed"></i>
@@ -64,7 +64,7 @@
               <button
                 type="button"
                 class="btn btn-primary me-3"
-                (click)="getFilteredData(1)"
+                (click)="getFilteredData(0)"
               >
                 Cerca
               </button>
