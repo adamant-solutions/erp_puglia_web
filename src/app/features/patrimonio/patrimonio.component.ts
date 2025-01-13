@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Patrimonio } from 'src/app/core/models/patrimonio.model';
+import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 
 @Component({
   selector: 'app-patrimonio',
@@ -19,7 +20,11 @@ export class PatrimonioComponent implements OnInit {
     comune: '',
   };
 
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private patrimonioService: PatrimonioService
+  ) {}
 
   ngOnInit(): void {
     this.getPatrimonioList();
@@ -41,7 +46,30 @@ export class PatrimonioComponent implements OnInit {
 
   deletePatrimonioModal(patrimonio: Patrimonio | any) {}
 
-  getFilteredData() {}
+  getFilteredData() {
+    console.log('Data sent for filtering: ', `${this.patrimonio.comune}`);
+
+    this.patrimonioService
+      .getFilteredPatrimonio(this.patrimonio.comune)
+      .subscribe({
+        next: (data: Patrimonio[]) => {
+          console.log('Filtered patrimonio: ', data);
+          this.patrimonioList = data;
+        },
+        error: (error: any) => {
+          console.error('Error fetching filtered data:', error);
+        },
+      });
+
+    // Update the query parameters to reflect the filter state in the URL
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        comune: this.patrimonio.comune,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
 
   cancellaCerca() {}
 }
