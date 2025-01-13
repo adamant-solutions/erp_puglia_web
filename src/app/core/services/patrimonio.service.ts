@@ -126,4 +126,13 @@ export class PatrimonioService {
   getPatrimonioById(id: number): Observable<Patrimonio> {
     return this.secureApiCall<Patrimonio>('GET', `${this.patrimonioUrl}/${id}`);
   }
+
+  addPatrimonio(patrimonio: Patrimonio): Observable<Patrimonio> {
+    return this.secureApiCall<Patrimonio>(
+      'POST',
+      `${this.patrimonioUrl}`,
+      patrimonio,
+      'erp:write'
+    );
+  }
 }
