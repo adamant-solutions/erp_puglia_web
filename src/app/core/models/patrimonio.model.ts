@@ -34,23 +34,23 @@ export interface Documento {
 }
 
 export enum TipoAmministrazione {
-  DIRETTA = 'Diretta', // String
-  INDIRETTA = 'Indiretta', // String
-  MISTA = 'Mista', // String
+  DIRETTA = 'DIRETTA', // String
+  INDIRETTA = 'INDIRETTA', // String
+  MISTA = 'MISTA', // String
 }
 
 export enum StatoDisponibilita {
-  DISPONIBILE = 'Disponibile', // String
-  OCCUPATO = 'Occupato', // String
-  IN_MANUTENZIONE = 'In manutenzione', // String
-  SFITTO = 'Sfitto', // String
-  NON_DISPONIBILE = 'Non disponibile', // String
+  DISPONIBILE = 'DISPONIBILE', // String
+  OCCUPATO = 'OCCUPATO', // String
+  IN_MANUTENZIONE = 'IN_MANUTENZIONE', // String
+  SFITTO = 'SFITTO', // String
+  NON_DISPONIBILE = 'NON_DISPONIBILE', // String
 }
 
 export enum TipoDocumento {
-  CATASTALE = 'Catastale', // String
-  CERTIFICAZIONE_ENERGETICA = 'Certificazione energetica', // String
-  TAVOLA_PROGETTO = 'Tavola progetto', // String
-  ATTO_PROVENIENZA = 'Atto provenienza', // String
-  ALTRO = 'Altro', // String
+  CATASTALE = 'CATASTALE', // String
+  CERTIFICAZIONE_ENERGETICA = 'CERTIFICAZIONE_ENERGETICA', // String
+  TAVOLA_PROGETTO = 'TAVOLA_PROGETTO', // String
+  ATTO_PROVENIENZA = 'ATTO_PROVENIENZA', // String
+  ALTRO = 'ALTRO', // String
 }
