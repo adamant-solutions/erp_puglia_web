@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { Patrimonio } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 
 @Component({
   selector: 'app-patrimonio',
@@ -16,6 +17,8 @@ export class PatrimonioComponent implements OnInit {
 
   patrimonioList: Patrimonio[] = [];
 
+  patrimonioId!: number;
+
   patrimonio: Patrimonio | any = {
     comune: '',
   };
@@ -23,7 +26,8 @@ export class PatrimonioComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private patrimonioService: PatrimonioService
+    private patrimonioService: PatrimonioService,
+    private bootstrapService: BootstrapService
   ) {}
 
   ngOnInit(): void {
@@ -44,8 +48,29 @@ export class PatrimonioComponent implements OnInit {
     return documenti.map((doc) => doc.tipoDocumento).join(', ');
   }
 
-  deletePatrimonioModal(patrimonio: Patrimonio | any) {}
+  // Delete patrimonio
+  deletePatrimonioModal(patrimonio: Patrimonio | any) {
+    this.patrimonioId = patrimonio.id;
+    this.bootstrapService.showModal('deletePatrimonioModal');
+  }
 
+  deletePatrimonio() {
+    this.patrimonioService.deletePatrimonio(this.patrimonioId).subscribe({
+      next: () => {
+        // Update the list by filtering out the deleted item
+        this.patrimonioList = this.patrimonioList.filter(
+          (patrimonio) => patrimonio.id !== this.patrimonioId
+        );
+        // this.notificationService.success(`Patrimonio "${this.patrimonioId}" deleted successfully.`);
+      },
+      error: (error) => {
+        console.error(error);
+        // this.notificationService.error(`Failed to delete patrimonio "${this.patrimonioId}". Please try again.`);
+      },
+    });
+  }
+
+  // Filter / Search
   getFilteredData() {
     console.log('Data sent for filtering: ', `${this.patrimonio.comune}`);
 
@@ -71,6 +96,7 @@ export class PatrimonioComponent implements OnInit {
     });
   }
 
+  // Reset / cancel search
   cancellaCerca() {
     /* this.patrimonio.comune = ''; */
 

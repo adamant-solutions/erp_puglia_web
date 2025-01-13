@@ -144,3 +144,68 @@
     </div>
   </div>
 </section>
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deletePatrimonioModal"
+  tabindex="-1"
+  aria-labelledby="deletePatrimonioModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="deletePatrimonioModalLabel">Elimina Patrimonio</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare Patrimonio <b>{{ patrimonioId }}</b
+          >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deletePatrimonioModal2"
+          data-bs-toggle="modal"
+          (click)="deletePatrimonio()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deletePatrimonioModal2"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-body text-center">
+        <p>
+          Patrimonio <b>{{ patrimonioId }}</b> eliminato!
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
