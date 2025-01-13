@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, retry, switchMap } from 'rxjs';
+import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { Patrimonio } from '../models/patrimonio.model';
 
 @Injectable({
@@ -18,10 +18,6 @@ export class PatrimonioService {
 
   // Fetch token
   private getToken(scope: 'erp:read' | 'erp:write'): Observable<string> {
-    if (this.token && this.tokenExpiry && this.tokenExpiry > Date.now()) {
-      return of(this.token);
-    }
-
     const headers = new HttpHeaders({
       Authorization:
         scope === 'erp:read'
@@ -38,14 +34,13 @@ export class PatrimonioService {
       })
       .pipe(
         switchMap((response) => {
-          this.token = response.access_token;
-          this.tokenExpiry = Date.now() + response.expires_in * 1000;
+          this.token = response.access_token; // Save the token
+          this.tokenExpiry = Date.now() + response.expires_in * 1000 - 5000; // Buffer of 5 seconds
           return of(this.token);
         }),
-        /* catchError((error) => {
+        catchError((error) => {
           throw error;
-        }), */
-        retry(2)
+        })
       );
   }
 
@@ -69,11 +64,26 @@ export class PatrimonioService {
     if (!this.token) {
       // If no token, fetch it first
       return this.getToken(scope).pipe(
-        switchMap(() => this.makeApiCall<T>(method, url, body))
+        switchMap(() => this.makeApiCall<T>(method, url, body)),
+        catchError((error) => {
+          console.error('Token fetch failed', error);
+          return throwError(() => new Error('Unable to fetch token.'));
+        })
       );
     } else {
-      // Token already exists, proceed to make API call
-      return this.makeApiCall<T>(method, url, body);
+      // If token has expired, re-fetch it
+      if (this.tokenExpiry && this.tokenExpiry > Date.now()) {
+        return this.getToken(scope).pipe(
+          switchMap(() => this.makeApiCall<T>(method, url, body)),
+          catchError((error) => {
+            console.error('Token fetch failed', error);
+            return throwError(() => new Error('Unable to fetch token.'));
+          })
+        );
+      } else {
+        // Token already exists, proceed to make API call
+        return this.makeApiCall<T>(method, url, body);
+      }
     }
   }
 
@@ -110,7 +120,7 @@ export class PatrimonioService {
           })
         );
       default:
-        throw new Error('Unsupported HTTP method');
+        throw new Error(`Unsupported HTTP method: ${method}`);
     }
   }
 
@@ -123,6 +133,17 @@ export class PatrimonioService {
     return this.secureApiCall<Patrimonio[]>('GET', `${this.patrimonioUrl}`);
   }
 
+  getFilteredPatrimonio(comune: string): Observable<Patrimonio[]> {
+    return this.secureApiCall<Patrimonio[]>(
+      'GET',
+      `${this.patrimonioUrl}?comune=${comune}`
+    );
+  }
+
+  getTotalItems(): Observable<any> {
+    return this.secureApiCall<any>('GET', `${this.patrimonioUrl}/count`);
+  }
+
   getPatrimonioById(id: number): Observable<Patrimonio> {
     return this.secureApiCall<Patrimonio>('GET', `${this.patrimonioUrl}/${id}`);
   }
@@ -132,6 +153,24 @@ export class PatrimonioService {
       'POST',
       `${this.patrimonioUrl}`,
       patrimonio,
+      'erp:write'
+    );
+  }
+
+  modificaPatrimonio(patrimonio: Patrimonio): Observable<Patrimonio> {
+    return this.secureApiCall<Patrimonio>(
+      'PUT',
+      `${this.patrimonioUrl}`,
+      patrimonio,
+      'erp:write'
+    );
+  }
+
+  deletePatrimonio(id: number): Observable<Patrimonio> {
+    return this.secureApiCall<Patrimonio>(
+      'DELETE',
+      `${this.patrimonioUrl}/${id}`,
+      null,
       'erp:write'
     );
   }
