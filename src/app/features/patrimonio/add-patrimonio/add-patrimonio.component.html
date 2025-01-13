@@ -25,6 +25,20 @@
                     formControlName="metriQuadri"
                   />
                 </div>
+
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('metriQuadri')?.invalid &&
+                    (addForm.get('metriQuadri')?.touched ||
+                      addForm.get('metriQuadri')?.dirty ||
+                      submitted)
+                  "
+                >
+                  <span *ngIf="addForm.get('metriQuadri')?.errors?.['pattern']">
+                    Enter a valid floating-point number.
+                  </span>
+                </span>
               </div>
 
               <!-- quartiere -->
@@ -71,7 +85,7 @@
                       "
                       [value]="tipoAmministrazione"
                     >
-                      {{ tipoAmministrazione }}
+                      {{ tipoAmministrazione.replace("_", " ") | titlecase }}
                     </option>
                   </select>
                   <span class="input-group-text">
@@ -108,7 +122,7 @@
                       *ngFor="let statoDisponibilita of statoDisponibilitaList"
                       [value]="statoDisponibilita"
                     >
-                      {{ statoDisponibilita }}
+                      {{ statoDisponibilita.replace("_", " ") | titlecase }}
                     </option>
                   </select>
                   <span class="input-group-text">
@@ -446,14 +460,26 @@
                     formControlName="renditaCatastale"
                   />
                 </div>
+
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('renditaCatastale')?.hasError('required') &&
-                    (addForm.get('renditaCatastale')?.touched || submitted)
+                    addForm.get('renditaCatastale')?.invalid &&
+                    (addForm.get('renditaCatastale')?.touched ||
+                      addForm.get('renditaCatastale')?.dirty ||
+                      submitted)
                   "
                 >
-                  Rendita catastale è obbligatoria!
+                  <span
+                    *ngIf="addForm.get('renditaCatastale')?.errors?.['required']"
+                  >
+                    Rendita catastale è obbligatoria!
+                  </span>
+                  <span
+                    *ngIf="addForm.get('renditaCatastale')?.errors?.['pattern']"
+                  >
+                    Enter a valid floating-point number.
+                  </span>
                 </span>
               </div>
 
@@ -471,14 +497,26 @@
                     formControlName="consistenzaCatastale"
                   />
                 </div>
+
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('consistenzaCatastale')?.hasError('required') &&
-                    (addForm.get('consistenzaCatastale')?.touched || submitted)
+                    addForm.get('consistenzaCatastale')?.invalid &&
+                    (addForm.get('consistenzaCatastale')?.touched ||
+                      addForm.get('consistenzaCatastale')?.dirty ||
+                      submitted)
                   "
                 >
-                  Consistenza catastale è obbligatoria!
+                  <span
+                    *ngIf="addForm.get('consistenzaCatastale')?.errors?.['required']"
+                  >
+                    Consistenza catastale è obbligatoria!
+                  </span>
+                  <span
+                    *ngIf="addForm.get('consistenzaCatastale')?.errors?.['pattern']"
+                  >
+                    Enter a valid floating-point number.
+                  </span>
                 </span>
               </div>
 
@@ -613,7 +651,7 @@
                             *ngFor="let tipo of documentTypes"
                             [value]="tipo"
                           >
-                            {{ tipo }}
+                            {{ tipo.replace("_", " ") | titlecase }}
                           </option>
                         </select>
                         <span class="input-group-text">
@@ -665,7 +703,7 @@
                           class="form-control"
                           name="percorsoFile"
                           formControlName="percorsoFile"
-                          placeholder="Example: /documenti/catasto/doc123.pdf"
+                          placeholder="Example: /documenti/doc123.pdf"
                         />
                         <span class="input-group-text">
                           <i class="bi bi-filetype-pdf"></i>
