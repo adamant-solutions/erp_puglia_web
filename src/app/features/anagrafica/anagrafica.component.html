@@ -106,6 +106,7 @@
                 <th scope="col">Genere</th>
                 <th scope="col">Cittadinanza</th>
                 <th scope="col">Data di nascita</th>
+                <th scope="col">Documenti</th>
               </tr>
             </thead>
             <tbody>
@@ -128,6 +129,7 @@
                   </a>
 
                   <a
+                  
                     (click)="deleteAnagraficaModal(anagraficaItem)"
                     title="Cancella"
                     style="cursor: pointer; color: #0052a3"
@@ -147,6 +149,14 @@
                   {{
                     anagraficaItem.cittadino.dataDiNascita | date : "dd/MM/yyyy"
                   }}
+                </td>
+                <td scope="row">
+                  <a href="javascript:void(0)" 
+                     (click)="showDownloadModal(anagraficaItem.id)"
+                     title="Download" 
+                     class="it-download">
+                    <i class="bi bi-download"></i>
+                  </a>
                 </td>
               </tr>
             </tbody>
@@ -228,6 +238,38 @@
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
           Ok
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="downloadModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-check">
+          <input name="downloadFormat" type="radio" id="doc1" value="doc1" class="form-check-input" />
+          <label class="form-check-label" for="doc1">DOCUMENT 1</label>
+        </div>
+        <div class="form-check">
+          <input name="downloadFormat" type="radio" id="doc2" value="doc2" class="form-check-input" />
+          <label class="form-check-label" for="doc2">DOCUMENT 2</label>
+        </div>
+        <div class="form-check">
+          <input name="downloadFormat" type="radio" id="doc3" value="doc3" class="form-check-input" />
+          <label class="form-check-label" for="doc3">DOCUMENT 3</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Download</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
       </div>
     </div>
   </div>

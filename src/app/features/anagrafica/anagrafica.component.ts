@@ -145,6 +145,12 @@ export class AnagraficaComponent implements OnInit {
       });
   }
 
+  showDownloadModal(id: number) {
+    // this.selectedAnagraficaId = id;
+    // this.contentType = '';
+    this.bootstrapService.showModal('downloadModal');
+  }
+
   cancellaCerca() {
     /*
     this.anagrafica.cittadino.nome = '';
