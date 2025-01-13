@@ -1,1 +1,745 @@
-<p>add-patrimonio works!</p>
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Nuova Patrimonio'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+              <!-- metriQuadri -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="metriQuadri">Metri quadri</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="metriQuadri"
+                    name="metriQuadri"
+                    formControlName="metriQuadri"
+                  />
+                </div>
+              </div>
+
+              <!-- quartiere -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="quartiere">Quartiere *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="quartiere"
+                    name="quartiere"
+                    formControlName="quartiere"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('quartiere')?.hasError('required') &&
+                    (addForm.get('quartiere')?.touched || submitted)
+                  "
+                >
+                  Quartiere è obbligatorio!
+                </span>
+              </div>
+
+              <!-- tipoAmministrazione -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="tipoAmministrazione"
+                  >Tipo amministrazione *</label
+                >
+                <div class="input-group">
+                  <select
+                    class="form-control"
+                    id="tipoAmministrazione"
+                    name="tipoAmministrazione"
+                    formControlName="tipoAmministrazione"
+                  >
+                    <option value="" disabled selected>
+                      Seleziona un tipo di amministrazione
+                    </option>
+                    <option
+                      *ngFor="
+                        let tipoAmministrazione of tipoAmministrazioneList
+                      "
+                      [value]="tipoAmministrazione"
+                    >
+                      {{ tipoAmministrazione }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('tipoAmministrazione')?.hasError('required') &&
+                    (addForm.get('tipoAmministrazione')?.touched || submitted)
+                  "
+                >
+                  Tipo amministrazione è obbligatorio!
+                </span>
+              </div>
+
+              <!-- statoDisponibilita -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="statoDisponibilita"
+                  >Stato disponibilita *</label
+                >
+                <div class="input-group">
+                  <select
+                    class="form-control"
+                    id="statoDisponibilita"
+                    name="statoDisponibilita"
+                    formControlName="statoDisponibilita"
+                  >
+                    <option value="" disabled selected>
+                      Seleziona uno stato di disponibilità
+                    </option>
+                    <option
+                      *ngFor="let statoDisponibilita of statoDisponibilitaList"
+                      [value]="statoDisponibilita"
+                    >
+                      {{ statoDisponibilita }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('statoDisponibilita')?.hasError('required') &&
+                    (addForm.get('statoDisponibilita')?.touched || submitted)
+                  "
+                >
+                  Stato disponibilita è obbligatorio!
+                </span>
+              </div>
+
+              <!-- provincia -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia *</label>
+                <div class="input-group">
+                  <select
+                    class="form-control"
+                    id="provincia"
+                    name="provincia"
+                    formControlName="provincia"
+                  >
+                    <option value="" disabled selected>
+                      Seleziona una provincia
+                    </option>
+                    <option
+                      *ngFor="let provincia of provinces"
+                      [value]="provincia.sigla"
+                    >
+                      {{ provincia.nome }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    (addForm.get('provincia')?.hasError('required') &&
+                      (addForm.get('provincia')?.touched || submitted)) ||
+                    (addForm.get('provincia')?.hasError('maxlength') &&
+                      (addForm.get('provincia')?.touched || submitted))
+                  "
+                >
+                  <!-- Display error for required field -->
+                  <ng-container
+                    *ngIf="addForm.get('provincia')?.hasError('required')"
+                  >
+                    Provincia è obbligatoria!
+                  </ng-container>
+
+                  <!-- Display error for max length exceeded -->
+                  <ng-container
+                    *ngIf="addForm.get('provincia')?.hasError('maxlength')"
+                  >
+                    Provincia non può avere più di 2 caratteri!
+                  </ng-container>
+                </span>
+              </div>
+
+              <!-- comune -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="comune">Comune *</label>
+                <div class="input-group">
+                  <select
+                    class="form-control"
+                    id="comune"
+                    name="comune"
+                    formControlName="comune"
+                    [disabled]="!addForm.get('provincia')?.value"
+                  >
+                    <option value="" disabled selected>
+                      Seleziona un comune
+                    </option>
+                    <option
+                      *ngFor="let comune of filteredComuni"
+                      [value]="comune.nome"
+                    >
+                      {{ comune.nome }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('comune')?.hasError('required') &&
+                    (addForm.get('comune')?.touched || submitted)
+                  "
+                >
+                  Comune è obbligatorio!
+                </span>
+              </div>
+
+              <!-- indirizzo -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="indirizzo">Indirizzo *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="indirizzo"
+                    name="indirizzo"
+                    formControlName="indirizzo"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('indirizzo')?.hasError('required') &&
+                    (addForm.get('indirizzo')?.touched || submitted)
+                  "
+                >
+                  Indirizzo è obbligatorio!
+                </span>
+              </div>
+
+              <!-- sezioneUrbana -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="sezioneUrbana"
+                  >Sezione urbana *</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="sezioneUrbana"
+                    name="sezioneUrbana"
+                    formControlName="sezioneUrbana"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    (addForm.get('sezioneUrbana')?.hasError('required') &&
+                      (addForm.get('sezioneUrbana')?.touched || submitted)) ||
+                    (addForm.get('sezioneUrbana')?.hasError('maxlength') &&
+                      (addForm.get('sezioneUrbana')?.touched || submitted))
+                  "
+                >
+                  <!-- Display error for required field -->
+                  <ng-container
+                    *ngIf="addForm.get('sezioneUrbana')?.hasError('required')"
+                  >
+                    Sezione urbana è obbligatoria!
+                  </ng-container>
+
+                  <!-- Display error for max length exceeded -->
+                  <ng-container
+                    *ngIf="addForm.get('sezioneUrbana')?.hasError('maxlength')"
+                  >
+                    Sezione urbana non può avere più di 3 caratteri!
+                  </ng-container>
+                </span>
+              </div>
+
+              <!-- foglio -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="foglio">Foglio *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="foglio"
+                    name="foglio"
+                    formControlName="foglio"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    (addForm.get('foglio')?.hasError('required') &&
+                      (addForm.get('foglio')?.touched || submitted)) ||
+                    (addForm.get('foglio')?.hasError('maxlength') &&
+                      (addForm.get('foglio')?.touched || submitted))
+                  "
+                >
+                  <!-- Display error for required field -->
+                  <ng-container
+                    *ngIf="addForm.get('foglio')?.hasError('required')"
+                  >
+                    Foglio è obbligatorio!
+                  </ng-container>
+
+                  <!-- Display error for max length exceeded -->
+                  <ng-container
+                    *ngIf="addForm.get('foglio')?.hasError('maxlength')"
+                  >
+                    Foglio non può avere più di 4 caratteri!
+                  </ng-container>
+                </span>
+              </div>
+
+              <!-- particella -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="particella">Particella *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="particella"
+                    name="particella"
+                    formControlName="particella"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    (addForm.get('particella')?.hasError('required') &&
+                      (addForm.get('particella')?.touched || submitted)) ||
+                    (addForm.get('particella')?.hasError('maxlength') &&
+                      (addForm.get('particella')?.touched || submitted))
+                  "
+                >
+                  <!-- Display error for required field -->
+                  <ng-container
+                    *ngIf="addForm.get('particella')?.hasError('required')"
+                  >
+                    Particella è obbligatoria!
+                  </ng-container>
+
+                  <!-- Display error for max length exceeded -->
+                  <ng-container
+                    *ngIf="addForm.get('particella')?.hasError('maxlength')"
+                  >
+                    Particella non può avere più di 5 caratteri!
+                  </ng-container>
+                </span>
+              </div>
+
+              <!-- categoriaCatastale -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="categoriaCatastale"
+                  >Categoria catastale *</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="categoriaCatastale"
+                    name="categoriaCatastale"
+                    formControlName="categoriaCatastale"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    (addForm.get('categoriaCatastale')?.hasError('required') &&
+                      (addForm.get('categoriaCatastale')?.touched ||
+                        submitted)) ||
+                    (addForm.get('categoriaCatastale')?.hasError('maxlength') &&
+                      (addForm.get('categoriaCatastale')?.touched || submitted))
+                  "
+                >
+                  <!-- Display error for required field -->
+                  <ng-container
+                    *ngIf="
+                      addForm.get('categoriaCatastale')?.hasError('required')
+                    "
+                  >
+                    Categoria catastale è obbligatoria!
+                  </ng-container>
+
+                  <!-- Display error for max length exceeded -->
+                  <ng-container
+                    *ngIf="
+                      addForm.get('categoriaCatastale')?.hasError('maxlength')
+                    "
+                  >
+                    Categoria catastale non può avere più di 3 caratteri!
+                  </ng-container>
+                </span>
+              </div>
+
+              <!-- classeCatastale -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="classeCatastale"
+                  >Classe catastale *</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="classeCatastale"
+                    name="classeCatastale"
+                    formControlName="classeCatastale"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    (addForm.get('classeCatastale')?.hasError('required') &&
+                      (addForm.get('classeCatastale')?.touched || submitted)) ||
+                    (addForm.get('classeCatastale')?.hasError('maxlength') &&
+                      (addForm.get('classeCatastale')?.touched || submitted))
+                  "
+                >
+                  <!-- Display error for required field -->
+                  <ng-container
+                    *ngIf="addForm.get('classeCatastale')?.hasError('required')"
+                  >
+                    Classe catastale è obbligatoria!
+                  </ng-container>
+
+                  <!-- Display error for max length exceeded -->
+                  <ng-container
+                    *ngIf="
+                      addForm.get('classeCatastale')?.hasError('maxlength')
+                    "
+                  >
+                    Classe catastale non può avere più di 2 caratteri!
+                  </ng-container>
+                </span>
+              </div>
+
+              <!-- renditaCatastale -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="renditaCatastale"
+                  >Rendita catastale *</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="renditaCatastale"
+                    name="renditaCatastale"
+                    formControlName="renditaCatastale"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('renditaCatastale')?.hasError('required') &&
+                    (addForm.get('renditaCatastale')?.touched || submitted)
+                  "
+                >
+                  Rendita catastale è obbligatoria!
+                </span>
+              </div>
+
+              <!-- consistenzaCatastale -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="consistenzaCatastale"
+                  >Consistenza catastale *</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="consistenzaCatastale"
+                    name="consistenzaCatastale"
+                    formControlName="consistenzaCatastale"
+                  />
+                </div>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    addForm.get('consistenzaCatastale')?.hasError('required') &&
+                    (addForm.get('consistenzaCatastale')?.touched || submitted)
+                  "
+                >
+                  Consistenza catastale è obbligatoria!
+                </span>
+              </div>
+
+              <!-- zona -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="zona">Zona</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="zona"
+                    name="zona"
+                    formControlName="zona"
+                  />
+                </div>
+              </div>
+
+              <!-- classeEnergetica -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="classeEnergetica"
+                  >Classe energetica</label
+                >
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="classeEnergetica"
+                    name="classeEnergetica"
+                    formControlName="classeEnergetica"
+                  />
+                </div>
+              </div>
+
+              <!-- descrizione -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="descrizione">Descrizione</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="descrizione"
+                    name="descrizione"
+                    formControlName="descrizione"
+                  />
+                </div>
+              </div>
+
+              <!-- civico -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="civico">Civico</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="civico"
+                    name="civico"
+                    formControlName="civico"
+                  />
+                </div>
+              </div>
+
+              <!-- subalterno -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="subalterno">Subalterno</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subalterno"
+                    name="subalterno"
+                    formControlName="subalterno"
+                  />
+                </div>
+              </div>
+
+              <!-- piano -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="piano">Piano</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="piano"
+                    name="piano"
+                    formControlName="piano"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Documenti -->
+            <div formArrayName="documenti" style="margin-top: 1rem">
+              <div class="col-12 mb-3">
+                <strong>Documenti:</strong>
+              </div>
+
+              <div class="col-12 mb-3">
+                <div class="container-fluid">
+                  <div
+                    class="row d-flex mb-4 pt-3"
+                    *ngFor="
+                      let documento of documentiList.controls;
+                      let i = index
+                    "
+                    [formGroupName]="i"
+                    style="background-color: #f2f2f2; border-radius: 6px"
+                  >
+                    <div class="col-12 mb-3 d-flex justify-content-end">
+                      <button
+                        type="button"
+                        class="btn p-0"
+                        (click)="removeDocumento(i)"
+                        title="Remove"
+                        style="font-size: 1.5rem"
+                      >
+                        <i class="bi bi-x-square-fill"></i>
+                      </button>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Tipo documento *</label>
+                      <div class="input-group">
+                        <select
+                          class="form-control"
+                          name="tipoDocumento"
+                          formControlName="tipoDocumento"
+                        >
+                          <option value="" disabled selected>
+                            Seleziona un tipo di documento
+                          </option>
+                          <option
+                            *ngFor="let tipo of documentTypes"
+                            [value]="tipo"
+                          >
+                            {{ tipo }}
+                          </option>
+                        </select>
+                        <span class="input-group-text">
+                          <i class="bi bi-caret-down-fill"></i>
+                        </span>
+                      </div>
+                      <span
+                        class="custom-error"
+                        *ngIf="
+                          addForm.get('tipoDocumento')?.hasError('required') &&
+                          (addForm.get('tipoDocumento')?.touched || submitted)
+                        "
+                      >
+                        Il tipo documento è obbligatorio!
+                      </span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Data documento *</label>
+                      <mat-form-field appearance="fill" style="width: 100%">
+                        <input
+                          matInput
+                          [matDatepicker]="picker"
+                          formControlName="dataDocumento"
+                          placeholder="dd/mm/yyyy"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="picker"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                      <span
+                        class="custom-error"
+                        *ngIf="
+                          addForm.get('dataDocumento')?.hasError('required') &&
+                          (addForm.get('dataDocumento')?.touched || submitted)
+                        "
+                      >
+                        Data documento è obbligatoria!
+                      </span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Percorso file *</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="percorsoFile"
+                          formControlName="percorsoFile"
+                          placeholder="Example: /documenti/catasto/doc123.pdf"
+                        />
+                        <span class="input-group-text">
+                          <i class="bi bi-filetype-pdf"></i>
+                        </span>
+                      </div>
+                      <span
+                        class="custom-error"
+                        *ngIf="
+                          addForm.get('percorsoFile')?.hasError('required') &&
+                          (addForm.get('percorsoFile')?.touched || submitted)
+                        "
+                      >
+                        Percorso file è obbligatorio!
+                      </span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Descrizione</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="descrizione"
+                          formControlName="descrizione"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 mb-3">
+                <button
+                  type="button"
+                  class="btn btn-primary py-2"
+                  (click)="addDocumento()"
+                >
+                  Add documento
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- buttons -->
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm()"
+              >
+                <i class="bi bi-x-circle me-1"></i>
+                Annulla
+              </button>
+
+              <button type="submit" class="btn btn-primary py-2">
+                Aggiungi
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
