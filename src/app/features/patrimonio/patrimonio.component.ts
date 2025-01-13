@@ -71,5 +71,20 @@ export class PatrimonioComponent implements OnInit {
     });
   }
 
-  cancellaCerca() {}
+  cancellaCerca() {
+    /* this.patrimonio.comune = ''; */
+
+    this.patrimonio = {
+      comune: '',
+    };
+
+    // this.getFilteredData(0);
+
+    this.getPatrimonioList();
+
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      // queryParams: { pagina: 0 },
+    });
+  }
 }
