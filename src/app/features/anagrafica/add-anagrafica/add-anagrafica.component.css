@@ -35,3 +35,13 @@ legend {
   padding-top: 2rem;
   margin-top: 2rem;
 }
+
+
+.modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border-radius: 4px;
+}

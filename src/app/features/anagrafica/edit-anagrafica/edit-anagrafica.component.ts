@@ -7,6 +7,7 @@ import {
 } from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import * as moment from 'moment';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 
 @Component({
   selector: 'app-edit-anagrafica',
@@ -15,7 +16,9 @@ import * as moment from 'moment';
 })
 export class EditAnagraficaComponent implements OnInit {
   pageTitle: string = 'Modifica Anagrafica';
-
+  uploadForm: FormGroup;
+  selectedFile: File | null = null;
+  hasUploadedFile = false;
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Anagrafica', link: '/anagrafica' },
@@ -37,8 +40,11 @@ export class EditAnagraficaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private anagraficaService: AnagraficaService
-  ) {}
+    private anagraficaService: AnagraficaService,
+    private bootstrapService: BootstrapService
+  ) { this.uploadForm = this.formBuilder.group({
+    documentType: ['', Validators.required]
+  });}
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ anagraficaByIdResolver }) => {
@@ -210,5 +216,33 @@ export class EditAnagraficaComponent implements OnInit {
           },
         });
     }
+  }
+  openUploadModal() {
+    this.uploadForm.reset();
+    this.selectedFile = null;
+    this.bootstrapService.showModal('uploadModal');
+  }
+
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+    }
+  }
+
+  saveDocument() {
+    if (this.uploadForm.valid && this.selectedFile) {
+      const formData = new FormData();
+      formData.append('file', this.selectedFile);
+      formData.append('type', this.uploadForm.get('documentType')?.value);
+
+      this.hasUploadedFile = true;
+      this.bootstrapService.hideModal('uploadModal');
+    }
+  }
+
+  removeFile() {
+    this.hasUploadedFile = false;
+    this.selectedFile = null;
   }
 }

@@ -563,7 +563,14 @@
                           </span>
                         </div>
                       </div>
-
+                      <div class="col-12 mb-3">
+                        <button type="button" class="btn btn-primary me-2" (click)="openUploadModal()">
+                          <i class="bi bi-upload me-2"></i>Upload
+                        </button>
+                        <!-- <button type="button" class="btn btn-danger" (click)="removeFile()" [disabled]="!hasUploadedFile">
+                          <i class="bi bi-trash me-2"></i>Rimuovi
+                        </button> -->
+                      </div>
                       <!--
                       <div class="col-12 mb-3">
                         <button
@@ -629,3 +636,50 @@
     </div>
   </div>
 </section>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="uploadModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Carica Documento</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="uploadForm">
+          <div class="mb-3">
+            <label class="form-label">Tipo Documento</label>
+            <select class="form-select" formControlName="documentType">
+              <option value="">Seleziona tipo</option>
+              <option value="CI">Carta d'Identità</option>
+              <option value="PP">Passaporto</option>
+              <option value="PT">Patente</option>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label class="form-label">File</label>
+            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile" >
+      <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg> 
+                        </button> 
+            <input 
+              type="file" 
+              class="form-control" 
+              (change)="onFileSelected($event)"
+              accept=".pdf">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" 
+                [disabled]="!uploadForm.valid || !selectedFile" 
+                (click)="saveDocument()">
+          Salva
+        </button>
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

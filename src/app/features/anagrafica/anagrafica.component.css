@@ -21,3 +21,24 @@ i.bi-chevron-expand {
 i.bi-chevron-expand:before {
   font-size: 16px;
 }
+
+
+/* modali */
+.modal {
+  display: none;
+}
+
+.modal.show {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  width: 100%;
+  max-width: 500px;
+  margin: 0;
+}
