@@ -27,25 +27,30 @@ export interface Patrimonio {
 export interface Documento {
   id: number;
 
-  tipoDocumento: TipoDocumento; // Required
+  tipoDocumento: TipoDocumento; // Enum, Required
   dataDocumento: string; // Required, ISO date string (yyyy-MM-dd)
   percorsoFile: string; // Required, example: "/documenti/catasto/doc123.pdf"
   descrizione?: string; // Optional string
 }
 
 export enum TipoAmministrazione {
-  DIRETTA = 'DIRETTA', // String
-  INDIRETTA = 'INDIRETTA', // String
-  // Add other possible values here
+  DIRETTA = 'Diretta', // String
+  INDIRETTA = 'Indiretta', // String
+  MISTA = 'Mista', // String
 }
 
 export enum StatoDisponibilita {
-  DISPONIBILE = 'DISPONIBILE', // String
-  NON_DISPONIBILE = 'NON DISPONIBILE', // String
-  // Add other possible values here
+  DISPONIBILE = 'Disponibile', // String
+  OCCUPATO = 'Occupato', // String
+  IN_MANUTENZIONE = 'In manutenzione', // String
+  SFITTO = 'Sfitto', // String
+  NON_DISPONIBILE = 'Non disponibile', // String
 }
 
 export enum TipoDocumento {
-  CATASTALE = 'CATASTALE',
-  // Add other possible values here
+  CATASTALE = 'Catastale', // String
+  CERTIFICAZIONE_ENERGETICA = 'Certificazione energetica', // String
+  TAVOLA_PROGETTO = 'Tavola progetto', // String
+  ATTO_PROVENIENZA = 'Atto provenienza', // String
+  ALTRO = 'Altro', // String
 }
