@@ -66,20 +66,24 @@
               <tr>
                 <th scope="col">Azioni</th>
 
+                <!--
                 <th scope="col">Metri quadri</th>
                 <th scope="col">Quartiere</th>
                 <th scope="col">Tipo amministrazione</th>
+                -->
                 <th scope="col">Stato disponibilita</th>
                 <th scope="col">Comune</th>
                 <th scope="col">Provincia</th>
                 <th scope="col">Indirizzo</th>
                 <th scope="col">Sezione urbana</th>
+                <!--
                 <th scope="col">Foglio</th>
                 <th scope="col">Particella</th>
                 <th scope="col">Categoria catastale</th>
                 <th scope="col">Classe catastale</th>
                 <th scope="col">Rendita catastale</th>
                 <th scope="col">Consistenza catastale</th>
+                -->
                 <th scope="col">Tipo documento</th>
               </tr>
             </thead>
@@ -111,20 +115,24 @@
                   </a>
                 </td>
 
+                <!--
                 <td scope="row">{{ patrimonioItem.metriQuadri }}</td>
                 <td scope="row">{{ patrimonioItem.quartiere }}</td>
                 <td scope="row">{{ patrimonioItem.tipoAmministrazione }}</td>
+                -->
                 <td scope="row">{{ patrimonioItem.statoDisponibilita }}</td>
                 <td scope="row">{{ patrimonioItem.comune }}</td>
                 <td scope="row">{{ patrimonioItem.provincia }}</td>
                 <td scope="row">{{ patrimonioItem.indirizzo }}</td>
                 <td scope="row">{{ patrimonioItem.sezioneUrbana }}</td>
+                <!--
                 <td scope="row">{{ patrimonioItem.foglio }}</td>
                 <td scope="row">{{ patrimonioItem.particella }}</td>
                 <td scope="row">{{ patrimonioItem.categoriaCatastale }}</td>
                 <td scope="row">{{ patrimonioItem.classeCatastale }}</td>
                 <td scope="row">{{ patrimonioItem.renditaCatastale }}</td>
                 <td scope="row">{{ patrimonioItem.consistenzaCatastale }}</td>
+                -->
                 <td scope="row">
                   {{ getDocumentTypes(patrimonioItem.documenti) }}
                 </td>
