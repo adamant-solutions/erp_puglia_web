@@ -640,13 +640,14 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Carica Documento</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="handleModalClose()"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="uploadForm">
           <div class="mb-3">
             <label class="form-label">Tipo Documento</label>
             <select class="form-select" formControlName="documentType">
+            
               <option value="CI">Carta d'Identità</option>
               <option value="PP">Passaporto</option>
               <option value="PT">Patente</option>
@@ -655,9 +656,9 @@
           
           <div class="mb-3">
             <label class="form-label">File</label>
-            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile">
-              <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg> 
-            </button> 
+            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile" >
+      <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg> 
+                        </button> 
             <input 
               type="file" 
               class="form-control" 
@@ -672,7 +673,7 @@
                 (click)="saveDocument()">
           Salva
         </button>
-        <button class="btn btn-secondary" data-bs-dismiss="modal" (click)="handleModalClose()">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">
           Annulla
         </button>
       </div>
