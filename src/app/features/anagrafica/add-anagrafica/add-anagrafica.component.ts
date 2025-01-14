@@ -12,7 +12,7 @@ import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { TipoDocumento } from 'src/app/core/models/anagrafica.model';
 import * as moment from 'moment';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
-
+type UploadDocumentType = 'CI' | 'PP' | 'PT';
 @Component({
   selector: 'app-add-anagrafica',
   templateUrl: './add-anagrafica.component.html',
@@ -23,10 +23,18 @@ export class AddAnagraficaComponent implements OnInit {
   uploadForm: FormGroup;
   selectedFile: File | null = null;
   hasUploadedFile = false;
+  currentDocumentIndex: number = -1;
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Anagrafica', link: '/anagrafica' },
   ];
+
+  private documentTypeMap: Record<TipoDocumento, UploadDocumentType> = {
+    [TipoDocumento.CARTA_DEL_IDENTITA]: 'CI',
+    [TipoDocumento.PASSAPORTO]: 'PP',
+    [TipoDocumento.PATENTE]: 'PT'
+  };
+
 
   addForm!: FormGroup;
   documentTypes: TipoDocumento[] = [
@@ -180,8 +188,23 @@ export class AddAnagraficaComponent implements OnInit {
       }
     }
   }
-  openUploadModal() {
-    this.uploadForm.reset();
+
+
+ openUploadModal(index: number) {
+    this.currentDocumentIndex = index;
+    const documentiFormArray = this.documentiIdentita;
+    const currentDoc = documentiFormArray.at(index);
+    const selectedType = currentDoc.get('tipo_documento')?.value as TipoDocumento;
+    
+    if (selectedType) {
+      const uploadModalType = this.documentTypeMap[selectedType];
+      this.uploadForm.patchValue({
+        documentType: uploadModalType
+      });
+    } else {
+      this.uploadForm.reset();
+    }
+    
     this.selectedFile = null;
     this.bootstrapService.showModal('uploadModal');
   }
