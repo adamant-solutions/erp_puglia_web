@@ -190,11 +190,15 @@ export class AddAnagraficaComponent implements OnInit {
   }
 
 
- openUploadModal(index: number) {
+  openUploadModal(index: number) {
     this.currentDocumentIndex = index;
     const documentiFormArray = this.documentiIdentita;
     const currentDoc = documentiFormArray.at(index);
     const selectedType = currentDoc.get('tipo_documento')?.value as TipoDocumento;
+    
+    
+    this.selectedFile = null;
+    this.hasUploadedFile = false;
     
     if (selectedType) {
       const uploadModalType = this.documentTypeMap[selectedType];
@@ -205,14 +209,24 @@ export class AddAnagraficaComponent implements OnInit {
       this.uploadForm.reset();
     }
     
-    this.selectedFile = null;
+  
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+    
     this.bootstrapService.showModal('uploadModal');
   }
+
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
+      this.hasUploadedFile = true; 
+    } else {
+      this.selectedFile = null;
+      this.hasUploadedFile = false;
     }
   }
 
@@ -226,10 +240,43 @@ export class AddAnagraficaComponent implements OnInit {
       this.bootstrapService.hideModal('uploadModal');
     }
   }
-
-  removeFile() {
-    this.hasUploadedFile = false;
+  handleModalClose() {
+  
     this.selectedFile = null;
+    this.hasUploadedFile = false;
+    
+  
+    this.uploadForm.reset();
+    
+  
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+    
+  
+    this.bootstrapService.hideModal('uploadModal');
+  }
+
+  
+  removeFile() {
+   
+    this.selectedFile = null;
+    this.hasUploadedFile = false;
+    
+ 
+    const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+    if (fileInput) {
+    
+      fileInput.value = '';
+    }
+    
+  
+    if (this.uploadForm.get('file')) {
+      this.uploadForm.patchValue({
+        file: null
+      });
+    }
   }
 
 
