@@ -124,7 +124,6 @@ export class AddAnagraficaComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // console.log('Form controls:', this.addForm.controls);
     console.log(
       'Form data before converting dataDiNascita:',
       this.addForm.value
@@ -154,21 +153,31 @@ export class AddAnagraficaComponent implements OnInit {
     console.log('Form data to be sent to BE:', this.addForm.value);
 
     if (this.addForm.invalid) {
+      const anagrafica = this.addForm.getRawValue();
+      const documenti = this.selectedFile;
+    
       return;
     } else {
-      this.anagraficaService
-        .addAnagrafica(this.addForm.getRawValue())
-        .subscribe({
-          next: (data: any) => {
-            console.log('Form data (response):', data);
-            this.addForm.reset();
-            this.submitted = false;
-            this.router.navigate(['/anagrafica']);
-          },
-          error: (error: any) => {
-            console.error('An error occurred while adding anagrafica:', error);
-          },
-        });
+      const anagrafica = this.addForm.getRawValue();
+      const documenti = this.selectedFile;
+
+      if (documenti) {
+        this.anagraficaService
+          .addAnagrafica(anagrafica, documenti)
+          .subscribe({
+            next: (data: any) => {
+              console.log('Form data (response):', data);
+              this.addForm.reset();
+              this.submitted = false;
+              this.router.navigate(['/anagrafica']);
+            },
+            error: (error: any) => {
+              console.error( error);
+            },
+          });
+      } else {
+        console.error('no docs');
+      }
     }
   }
   openUploadModal() {

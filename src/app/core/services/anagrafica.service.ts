@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -59,7 +60,8 @@ export class AnagraficaService {
     method: 'GET' | 'POST' | 'PUT' | 'DELETE',
     url: string,
     body: any = null,
-    scope: 'erp:read' | 'erp:write' = 'erp:read'
+    scope: 'erp:read' | 'erp:write' = 'erp:read',
+   
   ): Observable<T> {
     if (!this.token) {
       // If no token, fetch it first
@@ -175,15 +177,44 @@ export class AnagraficaService {
     return this.secureApiCall<Anagrafica>('GET', `${this.anagraficaUrl}/${id}`);
   }
 
-  addAnagrafica(anagrafica: Anagrafica): Observable<Anagrafica> {
+  addAnagrafica(anagrafica: Anagrafica, documenti: File): Observable<Anagrafica> {
+   
+    const anagraficaCopy = { ...anagrafica };
+    anagraficaCopy.cittadino.dataDiNascita = moment(anagraficaCopy.cittadino.dataDiNascita).format('YYYY-MM-DD');
+    
+  
+    if (anagraficaCopy.cittadino.documenti_identita?.length > 0) {
+      anagraficaCopy.cittadino.documenti_identita[0] = {
+        ...anagraficaCopy.cittadino.documenti_identita[0],
+        nomeFile: documenti.name,
+        contentType: documenti.type
+      };
+    }
+  
+  
+    const formData = new FormData();
+    
+   
+    const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
+      type: 'application/json'
+    });
+    
+   
+    formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
+    
+  
+    formData.append('documenti', documenti, documenti.name);
+  
+   
     return this.secureApiCall<Anagrafica>(
       'POST',
       `${this.anagraficaUrl}`,
-      anagrafica,
+      formData,
       'erp:write'
     );
   }
 
+  
   modificaAnagrafica(anagrafica: Anagrafica): Observable<Anagrafica> {
     return this.secureApiCall<Anagrafica>(
       'PUT',
