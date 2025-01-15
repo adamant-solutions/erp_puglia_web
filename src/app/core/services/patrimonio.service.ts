@@ -133,10 +133,10 @@ export class PatrimonioService {
     return this.secureApiCall<Patrimonio[]>('GET', `${this.patrimonioUrl}`);
   }
 
-  getFilteredPatrimonio(comune: string): Observable<Patrimonio[]> {
+  getFilteredPatrimonio(comune: string, indirizzo: string, statoDisponibilita: string): Observable<Patrimonio[]> {
     return this.secureApiCall<Patrimonio[]>(
       'GET',
-      `${this.patrimonioUrl}?comune=${comune}`
+      `${this.patrimonioUrl}?comune=${comune}&indirizzo=${indirizzo}&statoDisponibilita=${statoDisponibilita}`
     );
   }
 

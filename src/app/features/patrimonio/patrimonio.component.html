@@ -21,7 +21,41 @@
                   [(ngModel)]="patrimonio.comune"
                 />
                 <span class="input-group-text">
-                  <i class="bi bi-person"></i>
+                  <i class="bi bi-buildings"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="indirizzo">Indirizzo</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="indirizzo"
+                  name="indirizzo"
+                  [(ngModel)]="patrimonio.indirizzo"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-geo-alt"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="statoDisponibilita"
+                >Stato disponibilita</label
+              >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="statoDisponibilita"
+                  name="statoDisponibilita"
+                  [(ngModel)]="patrimonio.statoDisponibilita"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-toggles"></i>
                 </span>
               </div>
             </div>

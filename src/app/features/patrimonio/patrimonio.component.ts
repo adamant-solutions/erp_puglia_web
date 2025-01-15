@@ -21,6 +21,8 @@ export class PatrimonioComponent implements OnInit {
 
   patrimonio: Patrimonio | any = {
     comune: '',
+    indirizzo: '',
+    statoDisponibilita: '',
   };
 
   constructor(
@@ -72,10 +74,17 @@ export class PatrimonioComponent implements OnInit {
 
   // Filter / Search
   getFilteredData() {
-    console.log('Data sent for filtering: ', `${this.patrimonio.comune}`);
+    console.log(
+      'Data sent for filtering: ',
+      `${this.patrimonio.comune}${this.patrimonio.indirizzo}${this.patrimonio.statoDisponibilita}`
+    );
 
     this.patrimonioService
-      .getFilteredPatrimonio(this.patrimonio.comune)
+      .getFilteredPatrimonio(
+        this.patrimonio.comune,
+        this.patrimonio.indirizzo,
+        this.patrimonio.statoDisponibilita
+      )
       .subscribe({
         next: (data: Patrimonio[]) => {
           console.log('Filtered patrimonio: ', data);
@@ -91,6 +100,8 @@ export class PatrimonioComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParams: {
         comune: this.patrimonio.comune,
+        indirizzo: this.patrimonio.indirizzo,
+        statoDisponibilita: this.patrimonio.statoDisponibilita,
       },
       queryParamsHandling: 'merge',
     });
@@ -98,10 +109,16 @@ export class PatrimonioComponent implements OnInit {
 
   // Reset / cancel search
   cancellaCerca() {
-    /* this.patrimonio.comune = ''; */
+    /*
+    this.patrimonio.comune = '';
+    this.patrimonio.indirizzo = '';
+    this.patrimonio.statoDisponibilita = '';
+    */
 
     this.patrimonio = {
       comune: '',
+      indirizzo: '',
+      statoDisponibilita: '',
     };
 
     // this.getFilteredData(0);
