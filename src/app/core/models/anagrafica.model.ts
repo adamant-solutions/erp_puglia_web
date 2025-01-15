@@ -34,7 +34,7 @@ export interface DocumentiIdentita {
   lastUpdateDate: string;
 nomeFile: string;
 contentType: string;
-  tipo_documento: TipoDocumento[];
+  tipo_documento: TipoDocumento;
   numero_documento: string;
   data_emissione: string;
   data_scadenza: string;

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 import * as moment from 'moment';
 
@@ -223,6 +223,27 @@ export class AnagraficaService {
       'erp:write'
     );
   }
+
+  downloadDocument(anagraficaId: number, documentoId: number): Observable<Blob> {
+    return this.http.get(
+      `${this.anagraficaUrl}/${anagraficaId}/documenti/${documentoId}/download`,
+      {
+        headers: this.getHeaders(),
+        responseType: 'blob',
+        observe: 'response'
+      }
+    ).pipe(
+      map(response => {
+        const contentType = response.headers.get('content-type') || 'application/octet-stream';
+        return new Blob([response.body as BlobPart], { type: contentType });
+      }),
+      catchError(error => {
+        console.error('Download error:', error);
+        return throwError(() => new Error('Failed to download document'));
+      })
+    );
+  }
+
 
   deleteAnagrafica(id: number): Observable<Anagrafica> {
     return this.secureApiCall<Anagrafica>(

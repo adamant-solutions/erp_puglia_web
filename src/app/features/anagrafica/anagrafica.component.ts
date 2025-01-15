@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Anagrafica } from 'src/app/core/models/anagrafica.model';
+import { Anagrafica, TipoDocumento } from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -20,7 +20,9 @@ export class AnagraficaComponent implements OnInit {
   anagraficaList: Anagrafica[] = [];
 
   anagraficaId!: number;
-
+  selectedAnagraficaId: number | null = null;
+  selectedDocumentType: TipoDocumento | null = null;
+  currentAnagrafica: Anagrafica | null = null;
   anagrafica: Anagrafica | any = {
     cittadino: {
       nome: '',
@@ -145,10 +147,80 @@ export class AnagraficaComponent implements OnInit {
       });
   }
 
-  showDownloadModal(id: number) {
-    // this.selectedAnagraficaId = id;
-    // this.contentType = '';
-    this.bootstrapService.showModal('downloadModal');
+ 
+
+  downloadDocument() {
+    if (!this.selectedAnagraficaId || !this.selectedDocumentType || !this.currentAnagrafica) {
+      console.warn('No anagrafica or document type selected');
+      return;
+    }
+  
+    const selectedDocument = this.currentAnagrafica.cittadino.documenti_identita?.find(
+      doc => doc.tipo_documento === this.selectedDocumentType
+    );
+  
+    if (!selectedDocument) {
+      console.error('Selected document not found');
+      return;
+    }
+  
+    this.anagraficaService.downloadDocument(this.selectedAnagraficaId, selectedDocument.id)
+      .subscribe({
+        next: (blob: Blob) => {
+          console.log('Download response received', blob);
+          
+        
+          
+          const url = window.URL.createObjectURL(blob);
+          
+      
+          
+          const link = document.createElement('a');
+          link.style.display = 'none';
+          link.href = url;
+          
+        
+          
+          link.download = selectedDocument.nomeFile || `document-${selectedDocument.id}.pdf`;
+          
+      
+          
+          document.body.appendChild(link);
+          link.click();
+          
+       
+          
+          setTimeout(() => {
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+          }, 100);
+  
+          this.bootstrapService.hideModal('downloadModal');
+        },
+        error: (error) => {
+          console.error('Download failed:', error);
+       
+          
+        }
+      });
+  }
+
+
+  showDownloadModal(anagraficaId: number) {
+    this.selectedAnagraficaId = anagraficaId;
+    
+  
+    this.anagraficaService.getAnagraficaById(anagraficaId).subscribe({
+      next: (anagrafica) => {
+        this.currentAnagrafica = anagrafica;
+        this.selectedDocumentType = null;
+        this.bootstrapService.showModal('downloadModal');
+      },
+      error: (error) => {
+        console.error('Error fetching anagrafica details:', error);
+      
+      }
+    });
   }
 
   cancellaCerca() {

@@ -244,31 +244,37 @@
 </div>
 
 
-
 <div class="modal" tabindex="-1" role="dialog" id="downloadModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-       
         <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="form-check">
-          <input name="downloadFormat" type="radio" id="doc1" value="doc1" class="form-check-input" />
-          <label class="form-check-label" for="doc1">DOCUMENT 1</label>
+        <div class="form-check" *ngFor="let doc of currentAnagrafica?.cittadino?.documenti_identita">
+          <input name="downloadFormat" 
+                 type="radio" 
+                 [id]="'doc' + doc.id" 
+                 [value]="doc.tipo_documento" 
+                 class="form-check-input" 
+                 [(ngModel)]="selectedDocumentType" />
+          <label class="form-check-label" [for]="'doc' + doc.id">
+            {{doc.tipo_documento}}
+          </label>
         </div>
-        <div class="form-check">
-          <input name="downloadFormat" type="radio" id="doc2" value="doc2" class="form-check-input" />
-          <label class="form-check-label" for="doc2">DOCUMENT 2</label>
-        </div>
-        <div class="form-check">
-          <input name="downloadFormat" type="radio" id="doc3" value="doc3" class="form-check-input" />
-          <label class="form-check-label" for="doc3">DOCUMENT 3</label>
+        <div *ngIf="!currentAnagrafica?.cittadino?.documenti_identita?.length" 
+             class="alert alert-info">
+          Nessun documento disponibile per il download.
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Download</button>
+        <button type="button" 
+                class="btn btn-primary" 
+                [disabled]="!selectedDocumentType"
+                (click)="downloadDocument()">
+          Download
+        </button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
       </div>
     </div>
