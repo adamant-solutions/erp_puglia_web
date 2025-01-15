@@ -31,6 +31,8 @@ export interface Documento {
   dataDocumento: string; // Required, ISO date string (yyyy-MM-dd)
   percorsoFile: string; // Required, example: "/documenti/catasto/doc123.pdf"
   descrizione?: string; // Optional string
+
+  contentType: string;
 }
 
 export enum TipoAmministrazione {

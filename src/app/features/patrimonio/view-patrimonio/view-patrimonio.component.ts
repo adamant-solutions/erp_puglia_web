@@ -28,11 +28,13 @@ export class ViewPatrimonioComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Get data from resolver
     this.activatedRoute.data.subscribe(({ patrimonioByIdResolver }) => {
       this.patrimonio = patrimonioByIdResolver;
       console.log('patrimonioByIdResolver: ', patrimonioByIdResolver);
     });
 
+    // Init form
     this.initForm();
   }
 

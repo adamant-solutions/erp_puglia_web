@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import {
   TipoAmministrazione,
   StatoDisponibilita,
   TipoDocumento,
 } from 'src/app/core/models/patrimonio.model';
+import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import * as moment from 'moment';
 
 @Component({
@@ -43,8 +43,6 @@ export class AddPatrimonioComponent implements OnInit {
     TipoDocumento.ATTO_PROVENIENZA,
     TipoDocumento.ALTRO,
   ];
-
-  submitted: boolean = false;
 
   provinces = [
     { sigla: 'BA', nome: 'Bari' },
@@ -314,6 +312,8 @@ export class AddPatrimonioComponent implements OnInit {
   ];
 
   filteredComuni: any[] = [];
+
+  submitted: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
