@@ -85,6 +85,8 @@ export class ViewAnagraficaComponent implements OnInit {
                   data_emissione: [this.formatDate(doc.data_emissione)],
                   data_scadenza: [this.formatDate(doc.data_scadenza)],
                   ente_emittente: [doc.ente_emittente],
+                  nomeFile: [doc.nomeFile || ''], 
+                  contentType: [doc.contentType || ''] 
                 })
               )
             : []
