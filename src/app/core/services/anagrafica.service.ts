@@ -215,13 +215,40 @@ export class AnagraficaService {
   }
 
   
-  modificaAnagrafica(anagrafica: Anagrafica): Observable<Anagrafica> {
-    return this.secureApiCall<Anagrafica>(
-      'PUT',
-      `${this.anagraficaUrl}`,
-      anagrafica,
-      'erp:write'
-    );
+  modificaAnagrafica(anagrafica: Anagrafica, documenti?: File): Observable<Anagrafica> {
+    if (documenti) {
+      const anagraficaCopy = { ...anagrafica };
+      
+      if (anagraficaCopy.cittadino.documenti_identita?.length > 0) {
+        anagraficaCopy.cittadino.documenti_identita[0] = {
+          ...anagraficaCopy.cittadino.documenti_identita[0],
+          nomeFile: documenti.name,
+          contentType: documenti.type
+        };
+      }
+  
+      const formData = new FormData();
+      const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
+        type: 'application/json'
+      });
+      
+      formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
+      formData.append('documenti', documenti, documenti.name);
+  
+      return this.secureApiCall<Anagrafica>(
+        'PUT',
+        `${this.anagraficaUrl}`,
+        formData,
+        'erp:write'
+      );
+    } else {
+      return this.secureApiCall<Anagrafica>(
+        'PUT',
+        `${this.anagraficaUrl}`,
+        anagrafica,
+        'erp:write'
+      );
+    }
   }
 
   downloadDocument(anagraficaId: number, documentoId: number): Observable<Blob> {

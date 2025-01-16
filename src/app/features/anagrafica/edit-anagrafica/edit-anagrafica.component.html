@@ -569,7 +569,7 @@
                         </div>
                       </div>
                       <div class="col-12 mb-3">
-                        <button type="button" class="btn btn-primary me-2" (click)="openUploadModal()">
+                        <button type="button" class="btn btn-primary me-2" (click)="openUploadModal(i)">
                           <i class="bi bi-upload me-2"></i>Upload
                         </button>
                         <!-- <button type="button" class="btn btn-danger" (click)="removeFile()" [disabled]="!hasUploadedFile">
@@ -664,9 +664,9 @@
           
           <div class="mb-3">
             <label class="form-label">File</label>
-            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile" >
-      <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg> 
-                        </button> 
+            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile">
+              <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg>
+            </button>
             <input 
               type="file" 
               class="form-control" 

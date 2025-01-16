@@ -8,22 +8,28 @@ import {
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import * as moment from 'moment';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
-
+type UploadDocumentType = 'CI' | 'PP' | 'PT';
 @Component({
   selector: 'app-edit-anagrafica',
   templateUrl: './edit-anagrafica.component.html',
   styleUrls: ['./edit-anagrafica.component.css'],
 })
+
 export class EditAnagraficaComponent implements OnInit {
   pageTitle: string = 'Modifica Anagrafica';
   uploadForm: FormGroup;
   selectedFile: File | null = null;
   hasUploadedFile = false;
+  currentDocumentIndex: number = -1;
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Anagrafica', link: '/anagrafica' },
   ];
-
+  private documentTypeMap: Record<TipoDocumento, UploadDocumentType> = {
+    [TipoDocumento.CARTA_DEL_IDENTITA]: 'CI',
+    [TipoDocumento.PASSAPORTO]: 'PP',
+    [TipoDocumento.PATENTE]: 'PT'
+  };
   anagrafica!: Anagrafica;
   anagraficaId!: number;
   modificaForm!: FormGroup;
@@ -161,68 +167,72 @@ export class EditAnagraficaComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // console.log('Form controls:', this.modificaForm.controls);
-    console.log(
-      'Form data before converting dataDiNascita:',
-      this.modificaForm.value
-    );
-
-    this.documentiIdentita?.controls.forEach((control, index) => {
-      console.log(
-        `Data emissione for document ${index + 1}:`,
-        control.get('data_emissione')?.value
-      );
-      console.log(
-        `Data scadenza for document ${index + 1}:`,
-        control.get('data_scadenza')?.value
-      );
-    });
+    if (this.modificaForm.invalid) {
+      return;
+    }
 
     let sendConvertedDataDiNascita = moment(
       this.modificaForm.value.cittadino.dataDiNascita
     ).format('YYYY-MM-DD');
-    console.log('Converted dataDiNascita:', sendConvertedDataDiNascita);
 
     this.modificaForm.patchValue({
       cittadino: {
         dataDiNascita: sendConvertedDataDiNascita,
       },
     });
-    console.log('Form data to be sent to BE:', this.modificaForm.value);
 
-    if (this.modificaForm.invalid) {
-      return;
-    } else {
+    const anagrafica = this.modificaForm.getRawValue();
+    const documenti = this.selectedFile;
+
+    if (documenti) {
       this.anagraficaService
-        .modificaAnagrafica(this.modificaForm.getRawValue())
+        .modificaAnagrafica(anagrafica, documenti)
         .subscribe({
           next: (data: any) => {
-            console.log('Form data (response):', data);
-
+         
             this.submitted = false;
-
-            // Success message here ...
-
-            // this.router.navigate(['/anagrafica/modifica-anagrafica', this.anagraficaId]);
             window.location.reload();
           },
           error: (error: any) => {
-            console.error(
-              'An error occurred while modifying anagrafica:',
-              error
-            );
-            this.errorMessage =
-              'Failed to update anagrafica. Please try again.';
+          
+            this.errorMessage = 'Failed to update anagrafica.';
+          },
+        });
+    } else {
+      this.anagraficaService
+        .modificaAnagrafica(anagrafica)
+        .subscribe({
+          next: (data: any) => {
+            console.log('Form data (response):', data);
+            this.submitted = false;
+            window.location.reload();
+          },
+          error: (error: any) => {
+           
+            this.errorMessage = 'Failed to update anagrafica.';
           },
         });
     }
   }
-  openUploadModal() {
-    this.uploadForm.reset();
+
+  openUploadModal(index: number) {
+    this.currentDocumentIndex = index;
+    const documentiFormArray = this.documentiIdentita;
+    const currentDoc = documentiFormArray.at(index);
+    const selectedType = currentDoc.get('tipo_documento')?.value as TipoDocumento;
+    
+    if (selectedType) {
+      const uploadModalType = this.documentTypeMap[selectedType];
+      this.uploadForm.patchValue({
+        documentType: uploadModalType
+      });
+    } else {
+      this.uploadForm.reset();
+    }
+    
     this.selectedFile = null;
     this.bootstrapService.showModal('uploadModal');
   }
-
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -231,10 +241,20 @@ export class EditAnagraficaComponent implements OnInit {
   }
 
   saveDocument() {
-    if (this.uploadForm.valid && this.selectedFile) {
+    if (this.uploadForm.valid && this.selectedFile && this.currentDocumentIndex !== -1) {
       const formData = new FormData();
       formData.append('file', this.selectedFile);
       formData.append('type', this.uploadForm.get('documentType')?.value);
+
+      
+      const documenti = this.documentiIdentita;
+      const currentDoc = documenti.at(this.currentDocumentIndex);
+      if (currentDoc) {
+        currentDoc.patchValue({
+          nomeFile: this.selectedFile.name,
+          contentType: this.selectedFile.type
+        });
+      }
 
       this.hasUploadedFile = true;
       this.bootstrapService.hideModal('uploadModal');
@@ -244,5 +264,16 @@ export class EditAnagraficaComponent implements OnInit {
   removeFile() {
     this.hasUploadedFile = false;
     this.selectedFile = null;
+    
+    if (this.currentDocumentIndex !== -1) {
+      const documenti = this.documentiIdentita;
+      const currentDoc = documenti.at(this.currentDocumentIndex);
+      if (currentDoc) {
+        currentDoc.patchValue({
+          nomeFile: null,
+          contentType: null
+        });
+      }
+    }
   }
 }
