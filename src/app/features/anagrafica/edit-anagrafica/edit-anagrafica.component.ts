@@ -127,6 +127,8 @@ export class EditAnagraficaComponent implements OnInit {
                   data_emissione: [doc.data_emissione],
                   data_scadenza: [doc.data_scadenza],
                   ente_emittente: [doc.ente_emittente],
+                  nomeFile: [doc.nomeFile || ''], 
+          contentType: [doc.contentType || ''] 
                 })
               )
             : []
@@ -148,6 +150,8 @@ export class EditAnagraficaComponent implements OnInit {
       data_emissione: [''],
       data_scadenza: [''],
       ente_emittente: [''],
+      nomeFile: [''],
+      contentType: ['']
     });
     this.documentiIdentita.push(documentoGroup);
   }
