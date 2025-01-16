@@ -425,6 +425,7 @@ export class EditPatrimonioComponent implements OnInit {
                 tipoDocumento: [doc.tipoDocumento],
                 dataDocumento: [doc.dataDocumento],
                 percorsoFile: [doc.percorsoFile],
+                contentType: ['application/pdf'],
                 descrizione: [doc.descrizione],
               })
             )
@@ -444,6 +445,7 @@ export class EditPatrimonioComponent implements OnInit {
       tipoDocumento: ['', Validators.required],
       dataDocumento: ['', Validators.required],
       percorsoFile: ['', Validators.required],
+      contentType: ['application/pdf'],
       descrizione: [''],
     });
     this.documentiList.push(documentoGroup);

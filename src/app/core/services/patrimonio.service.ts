@@ -133,7 +133,11 @@ export class PatrimonioService {
     return this.secureApiCall<Patrimonio[]>('GET', `${this.patrimonioUrl}`);
   }
 
-  getFilteredPatrimonio(comune: string, indirizzo: string, statoDisponibilita: string): Observable<Patrimonio[]> {
+  getFilteredPatrimonio(
+    comune: string,
+    indirizzo: string,
+    statoDisponibilita: string
+  ): Observable<Patrimonio[]> {
     return this.secureApiCall<Patrimonio[]>(
       'GET',
       `${this.patrimonioUrl}?comune=${comune}&indirizzo=${indirizzo}&statoDisponibilita=${statoDisponibilita}`
@@ -158,10 +162,17 @@ export class PatrimonioService {
   }
 
   modificaPatrimonio(patrimonio: Patrimonio): Observable<Patrimonio> {
+    const formData = new FormData();
+
+    formData.append(
+      'unitaImmobiliare',
+      new Blob([JSON.stringify(patrimonio)], { type: 'application/json' })
+    );
+
     return this.secureApiCall<Patrimonio>(
       'PUT',
       `${this.patrimonioUrl}`,
-      patrimonio,
+      formData,
       'erp:write'
     );
   }
