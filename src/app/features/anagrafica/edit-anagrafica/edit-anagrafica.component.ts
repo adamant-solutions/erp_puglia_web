@@ -128,7 +128,7 @@ export class EditAnagraficaComponent implements OnInit {
                   data_scadenza: [doc.data_scadenza],
                   ente_emittente: [doc.ente_emittente],
                   nomeFile: [doc.nomeFile || ''], 
-          contentType: [doc.contentType || ''] 
+                  contentType: [doc.contentType || ''] 
                 })
               )
             : []
@@ -156,9 +156,7 @@ export class EditAnagraficaComponent implements OnInit {
     this.documentiIdentita.push(documentoGroup);
   }
 
-  removeDocumento(index: number): void {
-    this.documentiIdentita.removeAt(index);
-  }
+ 
 
   indietro() {
     this.router.navigate(['/anagrafica']);
@@ -265,18 +263,49 @@ export class EditAnagraficaComponent implements OnInit {
     }
   }
 
-  removeFile() {
-    this.hasUploadedFile = false;
-    this.selectedFile = null;
+
+  deleteDocument(index: number) {
+    const documento = this.documentiIdentita.at(index);
+    const documentoId = documento.get('id')?.value;
     
+    if (documentoId) {
+      this.anagraficaService.deleteDocument(this.anagraficaId, documentoId)
+        .subscribe({
+          next: () => {
+      
+            this.documentiIdentita.removeAt(index);
+            this.hasUploadedFile = false;
+            this.selectedFile = null;
+          },
+          error: (error) => {
+          
+            this.errorMessage = 'Failed to delete document. ';
+          }
+        });
+    } else {
+     
+      this.documentiIdentita.removeAt(index);
+      this.hasUploadedFile = false;
+      this.selectedFile = null;
+    }
+  }
+
+  removeFile() {
     if (this.currentDocumentIndex !== -1) {
-      const documenti = this.documentiIdentita;
-      const currentDoc = documenti.at(this.currentDocumentIndex);
-      if (currentDoc) {
-        currentDoc.patchValue({
+      const documento = this.documentiIdentita.at(this.currentDocumentIndex);
+      const documentoId = documento.get('id')?.value;
+      
+      if (documentoId) {
+        
+        this.deleteDocument(this.currentDocumentIndex);
+      } else {
+      
+        documento.patchValue({
           nomeFile: null,
           contentType: null
         });
+        this.hasUploadedFile = false;
+        this.selectedFile = null;
       }
     }
   }

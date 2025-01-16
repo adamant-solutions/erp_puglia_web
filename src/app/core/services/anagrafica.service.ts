@@ -242,10 +242,19 @@ export class AnagraficaService {
         'erp:write'
       );
     } else {
+      const anagraficaCopy = { ...anagrafica };
+      
+      const formData = new FormData();
+      const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
+        type: 'application/json'
+      });
+      
+      formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
+
       return this.secureApiCall<Anagrafica>(
         'PUT',
         `${this.anagraficaUrl}`,
-        anagrafica,
+        formData,
         'erp:write'
       );
     }
@@ -276,8 +285,23 @@ export class AnagraficaService {
     return this.secureApiCall<Anagrafica>(
       'DELETE',
       `${this.anagraficaUrl}/${id}`,
+      
       null,
       'erp:write'
+    );
+  }
+
+  deleteDocument(anagraficaId: number, documentoId: number): Observable<any> {
+    return this.secureApiCall<any>(
+      'DELETE',
+      `${this.anagraficaUrl}/${anagraficaId}/documenti/${documentoId}`,
+      null,
+      'erp:write'
+    ).pipe(
+      catchError(error => {
+     
+        return throwError(() => new Error('Failed to delete document'));
+      })
     );
   }
 }

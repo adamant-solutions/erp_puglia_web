@@ -476,7 +476,7 @@
                         <button
                           type="button"
                           class="btn p-0"
-                          (click)="removeDocumento(i)"
+                          (click)="deleteDocument(i)"
                           title="Remove"
                           style="font-size: 1.5rem"
                         >
@@ -568,7 +568,8 @@
                           </span>
                         </div>
                       </div>
-                      <div class="col-md-4 mb-3">
+                    
+                      <div class="col-md-3 mb-3">
                         <label class="form-label">File</label>
                         <div class="input-group">
                           <input
@@ -581,28 +582,25 @@
                             <i class="bi bi-folder"></i>
                           </span>
                         </div>
+                  
                       </div>
+                      <div class="col-md-1 mb-3">
+                        <button 
+                        type="button" 
+                        class="btn btn-danger" 
+                        (click)="deleteDocument(i)" 
+                        [disabled]="!documentiIdentita.at(i).get('id')?.value">
+                        <i class="bi bi-trash me-2"></i>
+                      </button>
+                        </div>
                       <div class="col-12 mb-3">
                         <button type="button" class="btn btn-primary me-2" (click)="openUploadModal(i)">
                           <i class="bi bi-upload me-2"></i>Upload
                         </button>
-                        <!-- <button type="button" class="btn btn-danger" (click)="removeFile()" [disabled]="!hasUploadedFile">
-                          <i class="bi bi-trash me-2"></i>Rimuovi
-                        </button> -->
+                   
                       </div>
 
-                      <!--
-                      <div class="col-12 mb-3">
-                        <button
-                          type="button"
-                          class="btn btn-outline-primary py-2"
-                          (click)="removeDocumento(i)"
-                        >
-                          <i class="bi bi-x-circle me-1"></i>
-                          Remove
-                        </button>
-                      </div>
-                      -->
+              
                     </div>
                   </div>
                 </div>
