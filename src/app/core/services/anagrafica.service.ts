@@ -216,50 +216,44 @@ export class AnagraficaService {
 
   
   modificaAnagrafica(anagrafica: Anagrafica, documenti?: File): Observable<Anagrafica> {
-    if (documenti) {
-      const anagraficaCopy = { ...anagrafica };
-      
-      if (anagraficaCopy.cittadino.documenti_identita?.length > 0) {
-        anagraficaCopy.cittadino.documenti_identita[0] = {
-          ...anagraficaCopy.cittadino.documenti_identita[0],
+    const anagraficaCopy = { ...anagrafica };
+    const formData = new FormData();
+  
+    
+    if (documenti && anagraficaCopy.cittadino.documenti_identita?.length > 0) {
+    
+      const documentIndex = anagraficaCopy.cittadino.documenti_identita.findIndex(
+        doc => doc.nomeFile === documenti.name
+      );
+  
+      if (documentIndex !== -1) {
+       
+        anagraficaCopy.cittadino.documenti_identita[documentIndex] = {
+          ...anagraficaCopy.cittadino.documenti_identita[documentIndex],
           nomeFile: documenti.name,
           contentType: documenti.type
         };
       }
-  
-      const formData = new FormData();
-      const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
-        type: 'application/json'
-      });
-      
-      formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
-      formData.append('documenti', documenti, documenti.name);
-  
-      return this.secureApiCall<Anagrafica>(
-        'PUT',
-        `${this.anagraficaUrl}`,
-        formData,
-        'erp:write'
-      );
-    } else {
-      const anagraficaCopy = { ...anagrafica };
-      
-      const formData = new FormData();
-      const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
-        type: 'application/json'
-      });
-      
-      formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
-
-      return this.secureApiCall<Anagrafica>(
-        'PUT',
-        `${this.anagraficaUrl}`,
-        formData,
-        'erp:write'
-      );
     }
+  
+   
+    const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
+      type: 'application/json'
+    });
+    
+    formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
+    
+    if (documenti) {
+      formData.append('documenti', documenti, documenti.name);
+    }
+  
+    return this.secureApiCall<Anagrafica>(
+      'PUT',
+      `${this.anagraficaUrl}`,
+      formData,
+      'erp:write'
+    );
   }
-
   downloadDocument(anagraficaId: number, documentoId: number): Observable<Blob> {
     return this.http.get(
       `${this.anagraficaUrl}/${anagraficaId}/documenti/${documentoId}/download`,

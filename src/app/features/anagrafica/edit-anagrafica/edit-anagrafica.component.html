@@ -584,7 +584,7 @@
                         </div>
                   
                       </div>
-                      <div class="col-md-1 mb-3">
+                      <!-- <div class="col-md-1 mb-3">
                         <button 
                         type="button" 
                         class="btn btn-danger" 
@@ -592,7 +592,7 @@
                         [disabled]="!documentiIdentita.at(i).get('id')?.value">
                         <i class="bi bi-trash me-2"></i>
                       </button>
-                        </div>
+                        </div> -->
                       <div class="col-12 mb-3">
                         <button type="button" class="btn btn-primary me-2" (click)="openUploadModal(i)">
                           <i class="bi bi-upload me-2"></i>Upload
@@ -644,7 +644,7 @@
                 Reset
               </button>
 
-              <button type="submit" class="btn btn-primary py-2">Salva</button>
+              <button type="submit" class="btn btn-primary py-2" [routerLink]="['/anagrafica/anagrafica-dettagli/'+ anagrafica.id]">Salva</button>
             </div>
           </div>
         </form>
