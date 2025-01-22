@@ -647,7 +647,6 @@
           <div class="mb-3">
             <label class="form-label">Tipo Documento</label>
             <select class="form-select" formControlName="documentType">
-            
               <option value="CI">Carta d'Identità</option>
               <option value="PP">Passaporto</option>
               <option value="PT">Patente</option>
@@ -656,20 +655,25 @@
           
           <div class="mb-3">
             <label class="form-label">File</label>
-            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile" >
-      <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg> 
-                        </button> 
-            <input 
-              type="file" 
-              class="form-control" 
-              (change)="onFileSelected($event)"
-              accept=".pdf">
+            <div class="d-flex align-items-center">
+              <input 
+                type="file" 
+                class="form-control" 
+                (change)="onFileSelected($event)"
+                accept=".pdf">
+              <button type="button" class="btn ms-2" (click)="removeFile()" [disabled]="!hasUploadedFile">
+                <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg>
+              </button>
+            </div>
+            <small class="text-muted" *ngIf="displayFileNames[currentDocumentIndex]">
+              File selezionato: {{ displayFileNames[currentDocumentIndex] }}
+            </small>
           </div>
         </form>
       </div>
       <div class="modal-footer">
         <button class="btn btn-primary" 
-                [disabled]="!uploadForm.valid || !selectedFile" 
+                [disabled]="!uploadForm.valid || !selectedFiles[currentDocumentIndex]" 
                 (click)="saveDocument()">
           Salva
         </button>

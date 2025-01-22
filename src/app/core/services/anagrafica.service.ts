@@ -177,35 +177,7 @@ export class AnagraficaService {
     return this.secureApiCall<Anagrafica>('GET', `${this.anagraficaUrl}/${id}`);
   }
 
-  addAnagrafica(anagrafica: Anagrafica, documenti: File): Observable<Anagrafica> {
-   
-    const anagraficaCopy = { ...anagrafica };
-    anagraficaCopy.cittadino.dataDiNascita = moment(anagraficaCopy.cittadino.dataDiNascita).format('YYYY-MM-DD');
-    
-  
-    if (anagraficaCopy.cittadino.documenti_identita?.length > 0) {
-      anagraficaCopy.cittadino.documenti_identita[0] = {
-        ...anagraficaCopy.cittadino.documenti_identita[0],
-        nomeFile: documenti.name,
-        contentType: documenti.type
-      };
-    }
-  
-  
-    const formData = new FormData();
-    
-   
-    const anagraficaBlob = new Blob([JSON.stringify(anagraficaCopy)], {
-      type: 'application/json'
-    });
-    
-   
-    formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
-    
-  
-    formData.append('documenti', documenti, documenti.name);
-  
-   
+  addAnagrafica(anagrafica: Anagrafica, formData: FormData): Observable<Anagrafica> {
     return this.secureApiCall<Anagrafica>(
       'POST',
       `${this.anagraficaUrl}`,
