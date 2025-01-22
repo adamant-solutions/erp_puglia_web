@@ -21,6 +21,7 @@ export class EditAnagraficaComponent implements OnInit {
   selectedFile: File | null = null;
   hasUploadedFile = false;
   currentDocumentIndex: number = -1;
+  deleteFileIndex: number = -1;
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Anagrafica', link: '/anagrafica' },
@@ -279,41 +280,54 @@ export class EditAnagraficaComponent implements OnInit {
 
 
   deleteDocument(index: number) {
-    const documento = this.documentiIdentita.at(index);
-    const documentoId = documento.get('id')?.value;
-    
-    if (documentoId) {
-      this.anagraficaService.deleteDocument(this.anagraficaId, documentoId)
-        .subscribe({
-          next: () => {
+    this.showDeleteFileModal(index);
+  }
+
+  showDeleteFileModal(index: number) {
+    this.deleteFileIndex = index;
+    this.bootstrapService.showModal('deleteFileModal');
+  }
+
+  confirmDeleteFile() {
+    if (this.deleteFileIndex !== -1) {
+      const documento = this.documentiIdentita.at(this.deleteFileIndex);
+      const documentoId = documento.get('id')?.value;
       
-            this.documentiIdentita.removeAt(index);
-            this.hasUploadedFile = false;
-            this.selectedFile = null;
-          },
-          error: (error) => {
-          
-            this.errorMessage = 'Failed to delete document. ';
-          }
-        });
-    } else {
-     
-      this.documentiIdentita.removeAt(index);
-      this.hasUploadedFile = false;
-      this.selectedFile = null;
+      if (documentoId) {
+        this.anagraficaService.deleteDocument(this.anagraficaId, documentoId)
+          .subscribe({
+            next: () => {
+              this.documentiIdentita.removeAt(this.deleteFileIndex);
+              this.hasUploadedFile = false;
+              this.selectedFile = null;
+              this.bootstrapService.hideModal('deleteFileModal');
+              this.deleteFileIndex = -1;
+            },
+            error: (error) => {
+              this.errorMessage = 'Failed to delete document. ';
+              this.bootstrapService.hideModal('deleteFileModal');
+              this.deleteFileIndex = -1;
+            }
+          });
+      } else {
+        this.documentiIdentita.removeAt(this.deleteFileIndex);
+        this.hasUploadedFile = false;
+        this.selectedFile = null;
+        this.bootstrapService.hideModal('deleteFileModal');
+        this.deleteFileIndex = -1;
+      }
     }
   }
 
-  removeFile() {
+
+   removeFile() {
     if (this.currentDocumentIndex !== -1) {
       const documento = this.documentiIdentita.at(this.currentDocumentIndex);
       const documentoId = documento.get('id')?.value;
       
       if (documentoId) {
-        
-        this.deleteDocument(this.currentDocumentIndex);
+        this.showDeleteFileModal(this.currentDocumentIndex);
       } else {
-      
         documento.patchValue({
           nomeFile: null,
           contentType: null

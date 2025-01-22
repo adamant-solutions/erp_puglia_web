@@ -700,3 +700,41 @@
     </div>
   </div>
 </div>
+
+<div
+  class="modal fade"
+  id="deleteFileModal"
+  tabindex="-1"
+  aria-labelledby="deleteFileModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare questo documento?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="confirmDeleteFile()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
