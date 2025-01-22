@@ -39,6 +39,7 @@
         <a
           class="nav-link"
           [routerLink]="['/patrimonio']"
+          [queryParams]="{ pagina: 0 }"
           [ngClass]="{ active: isCurrentRoute('patrimonio') }"
         >
           <span>Patrimonio</span>

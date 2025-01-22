@@ -15,7 +15,11 @@ export const patrimonioResolver: ResolveFn<Observable<Patrimonio[]>> = (
 ) => {
   const patrimonioService = inject(PatrimonioService);
 
-  return patrimonioService.getPatrimonio().pipe(
+  const pageNumber = route.queryParamMap.get('pagina')
+    ? Number(route.queryParamMap.get('pagina'))
+    : 0;
+
+  return patrimonioService.getPatrimonio(pageNumber).pipe(
     catchError((error) => {
       console.error('Error fetching patrimonio data:', error);
       return of([]);

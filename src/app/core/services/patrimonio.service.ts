@@ -128,19 +128,27 @@ export class PatrimonioService {
 
   // Using secureApiCall
 
-  // get patrimonio list
-  getPatrimonio(): Observable<Patrimonio[]> {
-    return this.secureApiCall<Patrimonio[]>('GET', `${this.patrimonioUrl}`);
+  // get patrimonio list by pagination
+  getPatrimonio(pageNumber: number): Observable<Patrimonio[]> {
+    return this.secureApiCall<Patrimonio[]>(
+      'GET',
+      `${this.patrimonioUrl}?pagina=${pageNumber}`
+    );
   }
 
   getFilteredPatrimonio(
+    pageNumber: number,
     comune: string,
     indirizzo: string,
     statoDisponibilita: string
   ): Observable<Patrimonio[]> {
     return this.secureApiCall<Patrimonio[]>(
       'GET',
-      `${this.patrimonioUrl}?comune=${comune}&indirizzo=${indirizzo}&statoDisponibilita=${statoDisponibilita}`
+      `${this.patrimonioUrl}?pagina=${pageNumber}&comune=${comune}&indirizzo=${indirizzo}&statoDisponibilita=${statoDisponibilita}`,
+      {
+        params: { pageNumber, comune, indirizzo, statoDisponibilita },
+        observe: 'response', // Ensures headers are included in the response
+      }
     );
   }
 

@@ -4,6 +4,8 @@ import { map } from 'rxjs';
 import { Patrimonio } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { PageEvent } from '@angular/material/paginator';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-patrimonio',
@@ -25,6 +27,10 @@ export class PatrimonioComponent implements OnInit {
     statoDisponibilita: '',
   };
 
+  totalItems = 0; // Total number of items, retrieved from backend
+  pageSize = 10; // Default number of items per page
+  currentPage = 0; // Current page number / index
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -43,11 +49,28 @@ export class PatrimonioComponent implements OnInit {
       .subscribe((response) => {
         console.log('Response from resolver:', response);
         this.patrimonioList = response;
+
+        this.patrimonioService.getTotalItems().subscribe((data) => {
+          this.totalItems = data.nrPatrimonio;
+          console.log('Total items: ', this.totalItems);
+        });
       });
   }
 
   getDocumentTypes(documenti: any[]): string {
     return documenti.map((doc) => doc.tipoDocumento).join(', ');
+  }
+
+  onPageChange(event: PageEvent): void {
+    // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+    const pageIndex = event.pageIndex;
+
+    this.router.navigate([], {
+      queryParams: { pagina: pageIndex },
+      queryParamsHandling: 'merge',
+    });
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // Delete patrimonio
@@ -73,7 +96,13 @@ export class PatrimonioComponent implements OnInit {
   }
 
   // Filter / Search
-  getFilteredData() {
+  getFilteredData(pageNumber: number) {
+    /*
+    this.patrimonio.comune?.trim()
+    this.patrimonio.indirizzo?.trim()
+    this.patrimonio.statoDisponibilita?.trim()
+    */
+
     console.log(
       'Data sent for filtering: ',
       `${this.patrimonio.comune}${this.patrimonio.indirizzo}${this.patrimonio.statoDisponibilita}`
@@ -81,14 +110,21 @@ export class PatrimonioComponent implements OnInit {
 
     this.patrimonioService
       .getFilteredPatrimonio(
+        pageNumber,
         this.patrimonio.comune,
         this.patrimonio.indirizzo,
         this.patrimonio.statoDisponibilita
       )
       .subscribe({
-        next: (data: Patrimonio[]) => {
+        next: (data: HttpResponse<Patrimonio[]> | any) => {
           console.log('Filtered patrimonio: ', data);
+          // this.patrimonioList = data.body ?? [];
           this.patrimonioList = data;
+
+          this.totalItems = +(
+            data.headers.get('X-Paging-TotalRecordCount') ?? 0
+          );
+          console.log('Filtered totalItems', this.totalItems);
         },
         error: (error: any) => {
           console.error('Error fetching filtered data:', error);
@@ -99,6 +135,7 @@ export class PatrimonioComponent implements OnInit {
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
+        pagina: pageNumber,
         comune: this.patrimonio.comune,
         indirizzo: this.patrimonio.indirizzo,
         statoDisponibilita: this.patrimonio.statoDisponibilita,
@@ -109,12 +146,6 @@ export class PatrimonioComponent implements OnInit {
 
   // Reset / cancel search
   cancellaCerca() {
-    /*
-    this.patrimonio.comune = '';
-    this.patrimonio.indirizzo = '';
-    this.patrimonio.statoDisponibilita = '';
-    */
-
     this.patrimonio = {
       comune: '',
       indirizzo: '',
@@ -127,7 +158,7 @@ export class PatrimonioComponent implements OnInit {
 
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
-      // queryParams: { pagina: 0 },
+      queryParams: { pagina: 0 },
     });
   }
 }
