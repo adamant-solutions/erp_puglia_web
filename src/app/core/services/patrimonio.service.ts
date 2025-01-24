@@ -160,11 +160,11 @@ export class PatrimonioService {
     return this.secureApiCall<Patrimonio>('GET', `${this.patrimonioUrl}/${id}`);
   }
 
-  addPatrimonio(patrimonio: Patrimonio): Observable<Patrimonio> {
+  addPatrimonio(formData: FormData): Observable<any> {
     return this.secureApiCall<Patrimonio>(
       'POST',
       `${this.patrimonioUrl}`,
-      patrimonio,
+      formData,
       'erp:write'
     );
   }

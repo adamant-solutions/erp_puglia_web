@@ -16,7 +16,7 @@ import * as moment from 'moment';
 })
 export class AddPatrimonioComponent implements OnInit {
   pageTitle: string = 'Nuova Patrimonio';
-
+  fileToUpload: File[] = [];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Patrimonio', link: '/patrimonio' },
@@ -398,81 +398,56 @@ export class AddPatrimonioComponent implements OnInit {
     this.addForm.reset();
   }
 
+  onFileSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    this.fileToUpload[index] = file;
+    
+   
+    this.documentiList.at(index).patchValue({
+      percorsoFile: file.name
+    });
+  }
+
   onSubmit() {
     this.submitted = true;
 
-    // console.log('Form controls:', this.addForm.controls);
-    console.log(
-      'Form data before converting metriQuadri, renditaCatastale, consistenzaCatastale & dataDocumento:',
-      this.addForm.value
-    );
-
-    // Convert dataDocumento before submitting
-    this.documentiList?.controls.forEach((control, index) => {
-      console.log(
-        `Data documento for document ${index + 1}:`,
-        control.get('dataDocumento')?.value
-      );
-
-      // Convert the date and update the individual control
-      const sendConvertedDataDocumento = moment(
-        control.get('dataDocumento')?.value
-      ).format('YYYY-MM-DD');
-      console.log('Converted dataDocumento:', sendConvertedDataDocumento);
-
-      control.patchValue({
-        dataDocumento: sendConvertedDataDocumento,
-      });
-    });
-
-    // Convert float values before submitting
-    const formValue = this.addForm.getRawValue();
-
-    /*
-    formValue.metriQuadri = parseFloat(formValue.metriQuadri as string) || 0;
-    formValue.renditaCatastale = parseFloat(formValue.renditaCatastale as string) || 0;
-    formValue.consistenzaCatastale = parseFloat(formValue.consistenzaCatastale as string) || 0;
-    */
-
-    // Convert to float and ensure they have floating point format (e.g., 1.00)
-    formValue.metriQuadri = parseFloat(formValue.metriQuadri as string).toFixed(
-      2
-    ); // 2 decimal points
-    formValue.renditaCatastale = parseFloat(
-      formValue.renditaCatastale as string
-    ).toFixed(2); // 2 decimal points
-    formValue.consistenzaCatastale = parseFloat(
-      formValue.consistenzaCatastale as string
-    ).toFixed(2); // 2 decimal points
-
-    // Ensure the values are valid floats
-    formValue.metriQuadri =
-      formValue.metriQuadri === 'NaN' ? 0.0 : parseFloat(formValue.metriQuadri);
-    formValue.renditaCatastale =
-      formValue.renditaCatastale === 'NaN'
-        ? 0.0
-        : parseFloat(formValue.renditaCatastale);
-    formValue.consistenzaCatastale =
-      formValue.consistenzaCatastale === 'NaN'
-        ? 0.0
-        : parseFloat(formValue.consistenzaCatastale);
-
-    console.log('Form data to be sent to BE:', formValue);
-
     if (this.addForm.invalid) {
       return;
-    } else {
-      this.patrimonioService.addPatrimonio(formValue).subscribe({
-        next: (data: any) => {
-          console.log('Form data (response):', data);
-          this.addForm.reset();
-          this.submitted = false;
-          this.router.navigate(['/patrimonio']);
-        },
-        error: (error: any) => {
-          console.error('An error occurred while adding patrimonio:', error);
-        },
-      });
     }
+
+    const formData = new FormData();
+
+    const patrimonio = this.addForm.getRawValue();
+    
+   
+    ['metriQuadri', 'renditaCatastale', 'consistenzaCatastale'].forEach(field => {
+      patrimonio[field] = parseFloat(patrimonio[field]).toFixed(2);
+    });
+
+  
+    patrimonio.documenti.forEach((doc: any, index: number) => {
+      doc.dataDocumento = moment(doc.dataDocumento).format('YYYY-MM-DD');
+      
+   
+      if (this.fileToUpload[index]) {
+        formData.append(`documenti`, this.fileToUpload[index], this.fileToUpload[index].name);
+      }
+    });
+
+  
+    formData.append('unitaImmobiliare', new Blob([JSON.stringify(patrimonio)], { 
+      type: 'application/json' 
+    }));
+
+    
+    this.patrimonioService.addPatrimonio(formData).subscribe({
+      next: (response) => {
+     
+        this.router.navigate(['/patrimonio']);
+      },
+      error: (error) => {
+      
+      }
+    });
   }
 }
