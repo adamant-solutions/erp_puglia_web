@@ -442,7 +442,7 @@ export class AddPatrimonioComponent implements OnInit {
     
     this.patrimonioService.addPatrimonio(formData).subscribe({
       next: (response) => {
-     
+     console.log(response);
         this.router.navigate(['/patrimonio']);
       },
       error: (error) => {
