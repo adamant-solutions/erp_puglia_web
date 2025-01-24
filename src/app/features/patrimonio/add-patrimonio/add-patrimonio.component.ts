@@ -446,7 +446,7 @@ export class AddPatrimonioComponent implements OnInit {
         this.router.navigate(['/patrimonio']);
       },
       error: (error) => {
-      
+      console.log(error);
       }
     });
   }
