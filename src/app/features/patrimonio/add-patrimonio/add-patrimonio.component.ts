@@ -418,7 +418,7 @@ export class AddPatrimonioComponent implements OnInit {
     const formData = new FormData();
 
     const patrimonio = this.addForm.getRawValue();
-    
+console.log(patrimonio);    
    
     ['metriQuadri', 'renditaCatastale', 'consistenzaCatastale'].forEach(field => {
       patrimonio[field] = parseFloat(patrimonio[field]).toFixed(2);
