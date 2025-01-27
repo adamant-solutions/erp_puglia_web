@@ -213,12 +213,29 @@ export class PatrimonioService {
     );
   }
 
-  deletePatrimonio(id: number): Observable<Patrimonio> {
-    return this.secureApiCall<Patrimonio>(
+  deletePatrimonio(patrimonioId: number): Observable<any> {
+    return this.secureApiCall<any>(
       'DELETE',
-      `${this.patrimonioUrl}/${id}`,
+      `${this.patrimonioUrl}/${patrimonioId}`,
       null,
       'erp:write'
+    ).pipe(
+      catchError(error => {
+        console.error('Delete error:', error);
+        return throwError(() => new Error('Failed to delete patrimonio and its documents'));
+      })
+    );
+  }
+  deleteDocument(patrimonioId: number, documentoId: number): Observable<any> {
+    return this.secureApiCall<any>(
+      'DELETE',
+      `${this.patrimonioUrl}/${patrimonioId}/documenti/${documentoId}`,
+      null,
+      'erp:write'
+    ).pipe(
+      catchError(error => {
+        return throwError(() => new Error('Failed to delete document'));
+      })
     );
   }
 }

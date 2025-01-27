@@ -9,6 +9,7 @@ import {
 } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import * as moment from 'moment';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 
 @Component({
   selector: 'app-edit-patrimonio',
@@ -17,7 +18,7 @@ import * as moment from 'moment';
 })
 export class EditPatrimonioComponent implements OnInit {
   pageTitle: string = 'Modifica Patrimonio';
-  selectedFiles: File[] = [];
+  selectedFiles: any[] = [];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Patrimonio', link: '/patrimonio' },
@@ -25,7 +26,8 @@ export class EditPatrimonioComponent implements OnInit {
 
   patrimonio!: Patrimonio;
   patrimonioId!: number;
-
+  deleteFileIndex: number = -1;
+  
   modificaForm!: FormGroup;
 
   tipoAmministrazioneList: TipoAmministrazione[] = [
@@ -326,7 +328,8 @@ export class EditPatrimonioComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private patrimonioService: PatrimonioService
+    private patrimonioService: PatrimonioService,
+    private bootstrapService: BootstrapService
   ) {}
 
   ngOnInit() {
@@ -467,8 +470,57 @@ export class EditPatrimonioComponent implements OnInit {
     }
   }
 
-  removeDocumento(index: number): void {
-    this.documentiList.removeAt(index);
+  deleteDocument(index: number) {
+    this.showDeleteFileModal(index);
+  }
+
+  showDeleteFileModal(index: number) {
+    this.deleteFileIndex = index;
+    this.bootstrapService.showModal('deleteFileModal');
+  }
+
+  confirmDeleteFile() {
+    if (this.deleteFileIndex !== -1) {
+      const documento = this.documentiList.at(this.deleteFileIndex);
+      const documentoId = documento.get('id')?.value;
+      
+      if (documentoId) {
+        this.patrimonioService.deleteDocument(this.patrimonioId, documentoId)
+          .subscribe({
+            next: () => {
+              this.documentiList.removeAt(this.deleteFileIndex);
+              this.selectedFiles[this.deleteFileIndex] = null;
+              this.bootstrapService.hideModal('deleteFileModal');
+              this.deleteFileIndex = -1;
+            },
+            error: (error) => {
+              this.errorMessage = 'Failed to delete document.';
+              this.bootstrapService.hideModal('deleteFileModal');
+              this.deleteFileIndex = -1;
+            }
+          });
+      } else {
+       
+        this.documentiList.removeAt(this.deleteFileIndex);
+        this.selectedFiles[this.deleteFileIndex] = null;
+        this.bootstrapService.hideModal('deleteFileModal');
+        this.deleteFileIndex = -1;
+      }
+    }
+  }
+  removeFile(index: number) {
+    const documento = this.documentiList.at(index);
+    const documentoId = documento.get('id')?.value;
+    
+    if (documentoId) {
+      this.showDeleteFileModal(index);
+    } else {
+      this.selectedFiles[index] = null;
+      documento.patchValue({
+        percorsoFile: null,
+        contentType: null
+      });
+    }
   }
 
   indietro() {

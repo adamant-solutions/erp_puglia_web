@@ -90,7 +90,7 @@ export class PatrimonioComponent implements OnInit {
         );
         // this.notificationService.success(`Patrimonio "${this.patrimonioId}" deleted successfully.`);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error(error);
         // this.notificationService.error(`Failed to delete patrimonio "${this.patrimonioId}". Please try again.`);
       },
