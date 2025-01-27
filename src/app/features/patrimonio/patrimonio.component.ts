@@ -18,8 +18,7 @@ export class PatrimonioComponent implements OnInit {
   selectedDocumentoId!: any;
   documentsToDownload: Documento[] = [];
   breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
- 
- 
+
   patrimonioList: Patrimonio[] = [];
 
   patrimonioId!: number;
@@ -54,7 +53,7 @@ export class PatrimonioComponent implements OnInit {
         this.patrimonioList = response;
 
         this.patrimonioService.getTotalItems().subscribe((data) => {
-          this.totalItems = data.nrPatrimonio;
+          this.totalItems = data.nrUnitaImmobiliari;
           console.log('Total items: ', this.totalItems);
         });
       });
@@ -168,35 +167,39 @@ export class PatrimonioComponent implements OnInit {
   showDownloadModal(patrimonioId: number, documents: Documento[]) {
     this.selectedPatrimonioId = patrimonioId;
     this.documentsToDownload = documents;
-    this.selectedDocumentoId = documents.length > 0 ? documents[0].id : null; 
+    this.selectedDocumentoId = documents.length > 0 ? documents[0].id : null;
     this.bootstrapService.showModal('downloadModal');
   }
 
   downloadDocument() {
-    if (!this.selectedDocumentoId) { 
+    if (!this.selectedDocumentoId) {
       console.error('No document selected');
       return;
     }
 
-    const selectedDocument = this.documentsToDownload.find(doc => doc.id === this.selectedDocumentoId); 
+    const selectedDocument = this.documentsToDownload.find(
+      (doc) => doc.id === this.selectedDocumentoId
+    );
     if (!selectedDocument) {
       console.error('Selected document not found');
       return;
     }
 
-    this.patrimonioService.downloadDocument(this.selectedPatrimonioId, this.selectedDocumentoId).subscribe(
-      (blob: Blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${selectedDocument.tipoDocumento}_${selectedDocument.dataDocumento}.pdf`; 
-        a.click();
-        window.URL.revokeObjectURL(url);
-        this.bootstrapService.hideModal('downloadModal');
-      },
-      (error) => {
-        console.error('Error downloading document:', error);
-      }
-    );
+    this.patrimonioService
+      .downloadDocument(this.selectedPatrimonioId, this.selectedDocumentoId)
+      .subscribe(
+        (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${selectedDocument.tipoDocumento}_${selectedDocument.dataDocumento}.pdf`;
+          a.click();
+          window.URL.revokeObjectURL(url);
+          this.bootstrapService.hideModal('downloadModal');
+        },
+        (error) => {
+          console.error('Error downloading document:', error);
+        }
+      );
   }
 }
