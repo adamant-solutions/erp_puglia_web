@@ -119,6 +119,8 @@
                 <th scope="col">Consistenza catastale</th>
                 -->
                 <th scope="col">Tipo documento</th>
+                <th scope="col">Documenti</th>
+              
               </tr>
             </thead>
             <tbody>
@@ -147,6 +149,7 @@
                   >
                     <i class="bi bi-trash3"></i>
                   </a>
+                
                 </td>
 
                 <!--
@@ -169,6 +172,24 @@
                 -->
                 <td scope="row">
                   {{ getDocumentTypes(patrimonioItem.documenti) }}
+                </td>
+                <td scope="row">
+                  <ng-container *ngIf="patrimonioItem.documenti.length > 0; else noDocuments">
+                    <a
+                      href="javascript:void(0)"
+                      (click)="showDownloadModal(patrimonioItem.id, patrimonioItem.documenti)"
+                      title="Download"
+                      class="me-3"
+                    >
+                    
+                      <i class="bi bi-download"></i> 
+                      <!-- TO DO  -->
+                    </a>
+                  </ng-container>
+                  <ng-template #noDocuments>
+                    <!-- TO DO -->
+                    <i class="bi bi-ban"></i>
+                  </ng-template>
                 </td>
               </tr>
             </tbody>
@@ -250,6 +271,64 @@
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
           Ok
         </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="downloadPatrimonioModal" tabindex="-1" aria-labelledby="downloadPatrimonioModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="downloadPatrimonioModalLabel">Download Document</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to download this document?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="downloadDocument()">Download</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="downloadModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-check" *ngFor="let doc of documentsToDownload">
+          <input
+            name="downloadFormat"
+            type="radio"
+            [id]="'doc' + doc.id"
+            [value]="doc.id"
+            class="form-check-input"
+            [(ngModel)]="selectedDocumentoId" 
+          />
+          <label class="form-check-label" [for]="'doc' + doc.id">
+            {{ doc.tipoDocumento }} - {{ doc.dataDocumento }}
+          </label>
+        </div>
+        <div *ngIf="!documentsToDownload.length" class="alert alert-info">
+          Nessun documento disponibile per il download.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!selectedDocumentoId" 
+          (click)="downloadDocument()"
+        >
+          Download
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
       </div>
     </div>
   </div>

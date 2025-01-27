@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { catchError, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { Patrimonio } from '../models/patrimonio.model';
 
 @Injectable({
@@ -166,6 +166,26 @@ export class PatrimonioService {
       `${this.patrimonioUrl}`,
       formData,
       'erp:write'
+    );
+  }
+
+  downloadDocument(patrimonioId: number, documentoId: number): Observable<Blob> {
+    return this.http.get(
+      `${this.patrimonioUrl}/${patrimonioId}/documenti/${documentoId}/download`,
+      {
+        headers: this.getHeaders(),
+        responseType: 'blob',
+        observe: 'response'
+      }
+    ).pipe(
+      map((response: HttpResponse<Blob>) => {
+        const contentType = response.headers.get('content-type') || 'application/octet-stream';
+        return new Blob([response.body as BlobPart], { type: contentType });
+      }),
+      catchError(error => {
+        console.error('Download error:', error);
+        return throwError(() => new Error('Failed to download document'));
+      })
     );
   }
 

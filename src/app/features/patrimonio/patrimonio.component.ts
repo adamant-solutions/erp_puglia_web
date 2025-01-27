@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Patrimonio } from 'src/app/core/models/patrimonio.model';
+import { Documento, Patrimonio } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -14,9 +14,12 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class PatrimonioComponent implements OnInit {
   pageTitle: string = 'Patrimonio';
-
+  selectedPatrimonioId!: number;
+  selectedDocumentoId!: any;
+  documentsToDownload: Documento[] = [];
   breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
-
+ 
+ 
   patrimonioList: Patrimonio[] = [];
 
   patrimonioId!: number;
@@ -160,5 +163,40 @@ export class PatrimonioComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParams: { pagina: 0 },
     });
+  }
+
+  showDownloadModal(patrimonioId: number, documents: Documento[]) {
+    this.selectedPatrimonioId = patrimonioId;
+    this.documentsToDownload = documents;
+    this.selectedDocumentoId = documents.length > 0 ? documents[0].id : null; 
+    this.bootstrapService.showModal('downloadModal');
+  }
+
+  downloadDocument() {
+    if (!this.selectedDocumentoId) { 
+      console.error('No document selected');
+      return;
+    }
+
+    const selectedDocument = this.documentsToDownload.find(doc => doc.id === this.selectedDocumentoId); 
+    if (!selectedDocument) {
+      console.error('Selected document not found');
+      return;
+    }
+
+    this.patrimonioService.downloadDocument(this.selectedPatrimonioId, this.selectedDocumentoId).subscribe(
+      (blob: Blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${selectedDocument.tipoDocumento}_${selectedDocument.dataDocumento}.pdf`; 
+        a.click();
+        window.URL.revokeObjectURL(url);
+        this.bootstrapService.hideModal('downloadModal');
+      },
+      (error) => {
+        console.error('Error downloading document:', error);
+      }
+    );
   }
 }
