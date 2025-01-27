@@ -189,14 +189,22 @@ export class PatrimonioService {
     );
   }
 
-  modificaPatrimonio(patrimonio: Patrimonio): Observable<Patrimonio> {
+  modificaPatrimonio(patrimonio: Patrimonio, documenti?: File[]): Observable<Patrimonio> {
     const formData = new FormData();
-
-    formData.append(
-      'unitaImmobiliare',
-      new Blob([JSON.stringify(patrimonio)], { type: 'application/json' })
-    );
-
+  
+    
+    const unitaImmobiliareBlob = new Blob([JSON.stringify(patrimonio)], {
+      type: 'application/json'
+    });
+    formData.append('unitaImmobiliare', unitaImmobiliareBlob, 'unitaImmobiliare.json');
+  
+ 
+    if (documenti && documenti.length > 0) {
+      documenti.forEach((file, index) => {
+        formData.append('documenti', file, file.name);
+      });
+    }
+  
     return this.secureApiCall<Patrimonio>(
       'PUT',
       `${this.patrimonioUrl}`,

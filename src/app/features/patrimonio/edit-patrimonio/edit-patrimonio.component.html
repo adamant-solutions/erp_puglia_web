@@ -740,20 +740,29 @@
                           class="form-control"
                           name="percorsoFile"
                           formControlName="percorsoFile"
-                          placeholder="Example: /documenti/doc123.pdf"
+                          placeholder="Selected file"
+                          readonly
                         />
-                        <span class="input-group-text">
-                          <i class="bi bi-filetype-pdf"></i>
-                        </span>
+                        <input 
+                          type="file" 
+                          #fileInput 
+                          style="display: none"
+                          (change)="onFileSelected($event, i)"
+                          accept=".pdf,.txt"
+                        />
+                        <button 
+                          type="button" 
+                          class="btn btn-outline-secondary" 
+                          (click)="fileInput.click()"
+                        >
+                          <i class="bi bi-upload me-1"></i>Upload
+                        </button>
                       </div>
                       <span
                         class="custom-error"
                         *ngIf="
-                          modificaForm
-                            .get('percorsoFile')
-                            ?.hasError('required') &&
-                          (modificaForm.get('percorsoFile')?.touched ||
-                            submitted)
+                          modificaForm.get('documenti')?.get(i.toString())?.get('percorsoFile')?.hasError('required') &&
+                          (modificaForm.get('documenti')?.get(i.toString())?.get('percorsoFile')?.touched || submitted)
                         "
                       >
                         Percorso file è obbligatorio!

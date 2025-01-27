@@ -174,7 +174,7 @@
                   {{ getDocumentTypes(patrimonioItem.documenti) }}
                 </td>
                 <td scope="row">
-                  <ng-container *ngIf="patrimonioItem.documenti.length > 0; else noDocuments">
+                  <ng-container *ngIf="patrimonioItem.documenti.length > 0;">
                     <a
                       href="javascript:void(0)"
                       (click)="showDownloadModal(patrimonioItem.id, patrimonioItem.documenti)"
@@ -183,13 +183,10 @@
                     >
                     
                       <i class="bi bi-download"></i> 
-                      <!-- TO DO  -->
+               
                     </a>
                   </ng-container>
-                  <ng-template #noDocuments>
-                    <!-- TO DO -->
-                    <i class="bi bi-ban"></i>
-                  </ng-template>
+                 
                 </td>
               </tr>
             </tbody>
