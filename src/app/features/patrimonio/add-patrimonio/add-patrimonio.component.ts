@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators, AbstractControl, ValidatorFn, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
   TipoAmministrazione,
@@ -16,7 +16,8 @@ import * as moment from 'moment';
 })
 export class AddPatrimonioComponent implements OnInit {
   pageTitle: string = 'Nuova Patrimonio';
-  fileToUpload: File[] = [];
+  fileToUpload: File[][] = [];
+  maxFiles = 2; 
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Patrimonio', link: '/patrimonio' },
@@ -324,7 +325,7 @@ export class AddPatrimonioComponent implements OnInit {
   ngOnInit() {
     this.initForm();
 
-    // Watch for changes in the provincia field and filter comuni accordingly
+    
     this.addForm
       .get('provincia')
       ?.valueChanges.subscribe((selectedProvincia) => {
@@ -332,16 +333,14 @@ export class AddPatrimonioComponent implements OnInit {
           (comune) => comune.provincia === selectedProvincia
         );
 
-        // Reset the comune field when provincia changes
+       
         this.addForm.get('comune')?.reset();
       });
   }
 
   initForm() {
     this.addForm = this.formBuilder.group({
-      // id: null,
-
-      metriQuadri: [null, Validators.pattern(/^-?\d+(\.\d+)?$/)], // Regex for floating-point numbers
+      metriQuadri: [null, Validators.pattern(/^-?\d+(\.\d+)?$/)],
       quartiere: ['', Validators.required],
       tipoAmministrazione: ['', Validators.required],
       statoDisponibilita: ['', Validators.required],
@@ -353,41 +352,47 @@ export class AddPatrimonioComponent implements OnInit {
       particella: ['', [Validators.required, Validators.maxLength(5)]],
       categoriaCatastale: ['', [Validators.required, Validators.maxLength(3)]],
       classeCatastale: ['', [Validators.required, Validators.maxLength(2)]],
-      renditaCatastale: [
-        null,
-        [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)],
-      ], // Regex for floating-point numbers
-      consistenzaCatastale: [
-        null,
-        [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)],
-      ], // Regex for floating-point numbers
+      renditaCatastale: [null, [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)]],
+      consistenzaCatastale: [null, [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)]],
       zona: [''],
       classeEnergetica: [''],
       descrizione: [''],
       civico: [''],
       subalterno: [''],
       piano: [''],
-
-      documenti: this.formBuilder.array([]),
+      documenti: this.formBuilder.array([])
     });
   }
-
+ 
   get documentiList(): FormArray {
     return this.addForm.get('documenti') as FormArray;
   }
 
+  
   addDocumento(): void {
     const documentoGroup = this.formBuilder.group({
       tipoDocumento: ['', Validators.required],
       dataDocumento: ['', Validators.required],
       percorsoFile: ['', Validators.required],
-      descrizione: [''],
+      descrizione: ['']
     });
     this.documentiList.push(documentoGroup);
+    this.fileToUpload.push([]);
+  }
+
+  getPercorsoFileArray(index: number): FormArray {
+    return this.documentiList.at(index).get('percorsoFile') as FormArray;
+  }
+
+  removeFile(documentoIndex: number, fileIndex: number): void {
+    this.fileToUpload[documentoIndex].splice(fileIndex, 1);
+    const fileNames = this.fileToUpload[documentoIndex].map(f => f.name);
+    this.documentiList.at(documentoIndex).get('percorsoFile')?.setValue(fileNames);
   }
 
   removeDocumento(index: number): void {
     this.documentiList.removeAt(index);
+    this.fileToUpload.splice(index, 1);
   }
 
   indietro() {
@@ -398,14 +403,23 @@ export class AddPatrimonioComponent implements OnInit {
     this.addForm.reset();
   }
 
-  onFileSelected(event: any, index: number) {
-    const file = event.target.files[0];
-    this.fileToUpload[index] = file;
-    
-   
-    this.documentiList.at(index).patchValue({
-      percorsoFile: file.name
-    });
+  onFileSelected(event: any, documentoIndex: number): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.fileToUpload[documentoIndex] = [file];
+      this.documentiList.at(documentoIndex).patchValue({
+        percorsoFile: file.name
+      });
+    }
+  }
+
+
+  getUploadedFiles(documentoIndex: number): File[] {
+    return this.fileToUpload[documentoIndex] || [];
+  }
+  
+  getFileNames(documentoIndex: number): string {
+    return this.fileToUpload[documentoIndex]?.[0]?.name || '';
   }
 
   onSubmit() {
@@ -416,38 +430,57 @@ export class AddPatrimonioComponent implements OnInit {
     }
 
     const formData = new FormData();
-
     const patrimonio = this.addForm.getRawValue();
-console.log(patrimonio);    
-   
+    
+ 
     ['metriQuadri', 'renditaCatastale', 'consistenzaCatastale'].forEach(field => {
-      patrimonio[field] = parseFloat(patrimonio[field]).toFixed(2);
+      if (patrimonio[field]) {
+        patrimonio[field] = parseFloat(patrimonio[field]).toFixed(2);
+      }
     });
 
-  
+    
     patrimonio.documenti.forEach((doc: any, index: number) => {
+ 
       doc.dataDocumento = moment(doc.dataDocumento).format('YYYY-MM-DD');
       
-   
-      if (this.fileToUpload[index]) {
-        formData.append(`documenti`, this.fileToUpload[index], this.fileToUpload[index].name);
+    
+      if (this.fileToUpload[index]?.[0]) {
+        const file = this.fileToUpload[index][0];
+        formData.append('documenti', file, file.name);
       }
     });
 
   
-    formData.append('unitaImmobiliare', new Blob([JSON.stringify(patrimonio)], { 
-      type: 'application/json' 
+    const patrimonioToSend = {
+      ...patrimonio,
+      documenti: patrimonio.documenti.map((doc: any, index: number) => ({
+        tipoDocumento: doc.tipoDocumento,
+        dataDocumento: doc.dataDocumento,
+        percorsoFile: this.fileToUpload[index]?.[0]?.name || '',
+        descrizione: doc.descrizione
+      }))
+    };
+
+  
+    formData.append('unitaImmobiliare', new Blob([JSON.stringify(patrimonioToSend)], {
+      type: 'application/json'
     }));
 
-    
+   
+    formData.forEach((value, key) => {
+      console.log(`${key}:`, value);
+    });
+
     this.patrimonioService.addPatrimonio(formData).subscribe({
       next: (response) => {
-     console.log(response);
+      
         this.router.navigate(['/patrimonio']);
       },
       error: (error) => {
-      console.log(error);
+        console.error('Error:', error);
       }
     });
   }
+
 }

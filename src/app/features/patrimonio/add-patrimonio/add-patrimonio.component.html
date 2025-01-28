@@ -626,14 +626,13 @@
                   >
                     <div class="col-12 mb-3 d-flex justify-content-end">
                       <button
-                        type="button"
-                        class="btn p-0"
-                        (click)="removeDocumento(i)"
-                        title="Remove"
-                        style="font-size: 1.5rem"
-                      >
-                        <i class="bi bi-x-square-fill"></i>
-                      </button>
+                      type="button"
+                      class="btn p-0"
+                      (click)="removeDocumento(i)"
+                      title="Remove"
+                      style="font-size: 1.5rem">
+                      <i class="bi bi-x-square-fill"></i>
+                    </button>
                     </div>
 
                     <div class="col-md-4 mb-3">
@@ -696,14 +695,13 @@
                     </div>
 
                     <div class="col-md-4 mb-3">
-                      <label class="form-label">Percorso file *</label>
-                      <div class="input-group">
+                      <label class="form-label">Files *</label>
+                      <div class="input-group mb-2">
                         <input
                           type="text"
                           class="form-control"
-                          name="percorsoFile"
-                          formControlName="percorsoFile"
-                          placeholder="Selected file"
+                          [value]="getFileNames(i)"
+                          placeholder="No files selected"
                           readonly
                         />
                         <input 
@@ -712,23 +710,40 @@
                           style="display: none"
                           (change)="onFileSelected($event, i)"
                           accept=".pdf,.txt"
+                          multiple
+                          [disabled]="documentiList.at(i).get('percorsoFile')?.value?.length >= 2"
                         />
                         <button 
                           type="button" 
                           class="btn btn-outline-secondary" 
                           (click)="fileInput.click()"
-                        >
-                          <i class="bi bi-upload me-1"></i>Upload
+                          [disabled]="documentiList.at(i).get('percorsoFile')?.value?.length >= 2">
+                          <i class="bi bi-upload me-1"></i>Browse
                         </button>
                       </div>
+                      <div *ngFor="let file of getUploadedFiles(i); let fileIndex = index" 
+                           class="d-flex align-items-center mb-1">
+                        <small class="text-muted me-2">{{ file.name }}</small>
+                        <button
+                          type="button"
+                          class="btn btn-link p-0 text-danger"
+                          (click)="removeFile(i, fileIndex)">
+                          <i class="bi bi-x-circle"></i>
+                        </button>
+                      </div>
+                      <!-- <div *ngIf="documentiList.at(i).get('percorsoFile')?.value?.length >= 2" 
+                           class="text-muted small">
+                      
+                      </div> -->
                       <span
                         class="custom-error"
-                        *ngIf="
-                          addForm.get('percorsoFile')?.hasError('required') &&
-                          (addForm.get('percorsoFile')?.touched || submitted)
-                        "
-                      >
-                        Percorso file è obbligatorio!
+                        *ngIf="documentiList.at(i).get('percorsoFile')?.hasError('required') && submitted">
+                        È richiesto almeno un file
+                      </span>
+                      <span
+                        class="custom-error"
+                        *ngIf="documentiList.at(i).get('percorsoFile')?.hasError('maxlength')">
+                        Sono consentiti al massimo 2 file
                       </span>
                     </div>
 
@@ -751,8 +766,7 @@
                 <button
                   type="button"
                   class="btn btn-primary py-2"
-                  (click)="addDocumento()"
-                >
+                  (click)="addDocumento()">
                   Add documento
                 </button>
               </div>
