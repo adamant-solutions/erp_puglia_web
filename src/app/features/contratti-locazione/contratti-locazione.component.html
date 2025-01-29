@@ -1,3 +1,331 @@
-<div class="py-4">
-  <h1 id="main-content">{{ pageTitle }}</h1>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Contratti'">
+</app-breadcrumbs>
+
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+
+        <!-- Filter -->
+        <div class="col-12 mb-5">
+          <form class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="nome">Indirizzo</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome"
+                  name="nome"
+                  [(ngModel)]="searchIndirizzoParam"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-geo-alt"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="cognome">Canone Mensile Min</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  inputmode="numeric"
+                  [(ngModel)]="searchCanoneMensileMinParam"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-currency-euro"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="cognome">Canone Mensile Max</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  inputmode="numeric"
+                  [(ngModel)]="searchCanoneMensileMaxParam"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-currency-euro"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="cognome">Data Inizio Da</label>
+              <div class="input-group">
+                <input
+                  type="date"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  [(ngModel)]="searchDataInizioFromParam"
+                />
+                <span class="input-group-text">
+                <!--   <i class="bi bi-calendar"></i> -->
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="cognome">Data Inizio A</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  [(ngModel)]="searchDataInizioToParam"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-calendar"></i>
+                </span>
+              </div>
+            </div>
+
+
+            <div class="col-md-3">
+              <label class="form-label" for="cognome">Data Fine A</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cognome"
+                  name="cognome"
+                  [(ngModel)]="searchDataFineToParam"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-calendar"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3 search-form-buttons d-flex align-items-end">
+              <button
+                type="button"
+                class="btn btn-primary me-3"
+                (click)="getFilteredData(0)"
+              >
+                Cerca
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="cancellaCerca()"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Aggiungi contratto btn -->
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-3"
+            [routerLink]="['nuovo-contratto']"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+            </svg>
+            <span>Aggiungi contratto</span>
+          </button>
+        </div>
+
+        <!-- Table - all Contratto -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Azioni</th>
+
+                <th scope="col">Stato contratto</th>
+                <th scope="col">Data inizio</th>
+                <th scope="col">Data fine</th>
+                <th scope="col">Canone mensile</th>
+                <th scope="col">Unita immobiliare</th>
+              <!--   <th scope="col">Intestatari attuali</th> -->
+                <th scope="col">Documenti</th> 
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let contrattoItem of contrattiList">
+                <td scope="row">
+                  <a
+                    [routerLink]="['contratto-dettagli', contrattoItem.id]"
+                    title="Vedi dettagli"
+                    class="me-3"
+                  >
+                    <i class="bi bi-eye-fill"></i>
+                  </a>
+
+                  <a
+                    [routerLink]="['modifica-contratto', contrattoItem.id]"
+                    title="Modifica"
+                    class="me-3"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </a>
+
+                  <a
+                  
+                    (click)="deleteContrattoModal(contrattoItem)"
+                    title="Cancella"
+                    style="cursor: pointer; color: #0052a3"
+                  >
+                    <i class="bi bi-trash3"></i>
+                  </a>
+                </td>
+
+                <td scope="row">{{ contrattoItem.statoContratto | titlecase }}</td>
+                <td scope="row">{{ contrattoItem.dataInizio | date : "dd/MM/yyyy" }}</td>
+                <td scope="row">
+                  {{ contrattoItem.dataFine }}
+                </td>
+                <td scope="row">{{ contrattoItem.canoneMensile }}</td>
+                <td scope="row">{{ contrattoItem.unitaImmobiliare }}</td>
+               <!--  <td scope="row">
+                  {{
+                    contrattoItem.intestatariAttuali
+                  }}
+                </td> -->
+                <td scope="row">
+                 <!--  <a href="javascript:void(0)" 
+                     (click)="showDownloadModal(contrattoItem.id)"
+                     title="Download" 
+                     class="it-download">
+                    <i class="bi bi-download"></i>
+                  </a> -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- paginator -->
+        <mat-paginator
+          #paginator
+          [length]="totalPages"
+          [pageSize]="pageSize"
+          [pageIndex]="currentPage"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deleteContrattoModal"
+  tabindex="-1"
+  aria-labelledby="deleteContrattoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="deleteContrattoModalLabel">Elimina Contratto</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare l'contratto <b>{{ contrattoId }}</b
+          >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deleteAnagraficaModal2"
+          data-bs-toggle="modal"
+     
+        >  <!--    (click)="deleteAnagrafica()" -->
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<div
+  class="modal fade"
+  id="deleteAnagraficaModal2"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-body text-center">
+        <p>
+          Contratto <b>{{ contrattoId }}</b> eliminata!
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Ok
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 
+<div class="modal" tabindex="-1" role="dialog" id="downloadModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="form-check" *ngFor="let doc of currentAnagrafica?.cittadino?.documenti_identita">
+          <input name="downloadFormat" 
+                 type="radio" 
+                 [id]="'doc' + doc.id" 
+                 [value]="doc.tipo_documento" 
+                 class="form-check-input" 
+                 [(ngModel)]="selectedDocumentType" />
+          <label class="form-check-label" [for]="'doc' + doc.id">
+            {{doc.tipo_documento}}
+          </label>
+        </div>
+        <div *ngIf="!currentAnagrafica?.cittadino?.documenti_identita?.length" 
+             class="alert alert-info">
+          Nessun documento disponibile per il download.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+                class="btn btn-primary" 
+                [disabled]="!selectedDocumentType"
+                (click)="downloadDocument()">
+          Download
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+      </div>
+    </div>
+  </div>
+</div> -->
