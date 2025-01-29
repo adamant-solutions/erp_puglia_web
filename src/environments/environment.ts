@@ -9,6 +9,7 @@ export const environment = {
   tokenUrl: API_BASE_URL + 'oauth2/token',
   patrimonioUrl: API_BASE_URL + 'patrimonio',
   anagraficaUrl: API_BASE_URL + 'anagrafica',
+  contrattiUrl: API_BASE_URL + 'contratti'
 };
 
 /*
