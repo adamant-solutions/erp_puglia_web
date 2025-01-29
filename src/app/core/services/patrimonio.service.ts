@@ -191,18 +191,25 @@ export class PatrimonioService {
 
   modificaPatrimonio(patrimonio: Patrimonio, documenti?: File[]): Observable<Patrimonio> {
     const formData = new FormData();
-  
     
+
     const unitaImmobiliareBlob = new Blob([JSON.stringify(patrimonio)], {
       type: 'application/json'
     });
     formData.append('unitaImmobiliare', unitaImmobiliareBlob, 'unitaImmobiliare.json');
-  
- 
+    
+
     if (documenti && documenti.length > 0) {
-      documenti.forEach((file, index) => {
+      documenti.forEach((file) => {
+     
         formData.append('documenti', file, file.name);
       });
+    }
+  
+  
+    console.log('FormData contents:');
+    for (let pair of (formData as any).entries()) {
+      console.log(pair[0], pair[1]);
     }
   
     return this.secureApiCall<Patrimonio>(
@@ -210,6 +217,11 @@ export class PatrimonioService {
       `${this.patrimonioUrl}`,
       formData,
       'erp:write'
+    ).pipe(
+      catchError(error => {
+        console.error('Error in modificaPatrimonio:', error);
+        return throwError(() => new Error('Failed to update patrimonio'));
+      })
     );
   }
 

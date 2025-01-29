@@ -463,10 +463,19 @@ export class EditPatrimonioComponent implements OnInit {
   onFileSelected(event: any, index: number): void {
     const file = event.target.files[0];
     if (file) {
-      this.selectedFiles[index] = file; 
-      this.documentiList.at(index).patchValue({
-        percorsoFile: file.name, 
+  
+      this.selectedFiles[index] = file;
+      
+ 
+      const documentControl = this.documentiList.at(index);
+      documentControl.patchValue({
+        percorsoFile: file.name,
+        contentType: file.type || 'application/pdf'
       });
+      
+   
+      documentControl.markAsDirty();
+      console.log(`File selected at index ${index}:`, file.name);
     }
   }
 
@@ -541,25 +550,45 @@ export class EditPatrimonioComponent implements OnInit {
       return;
     }
   
-   
-    this.documentiList.controls.forEach((control) => {
+ 
+    const filesToUpload: File[] = [];
+    
+    this.documentiList.controls.forEach((control, index) => {
+
       const dataDocumento = control.get('dataDocumento')?.value;
       if (dataDocumento) {
         control.patchValue({
           dataDocumento: moment(dataDocumento).format('YYYY-MM-DD'),
         });
       }
+      
+     
+      if (this.selectedFiles[index]) {
+        filesToUpload.push(this.selectedFiles[index]);
+      }
     });
   
     const formValue = this.modificaForm.getRawValue();
   
-   
-    this.patrimonioService.modificaPatrimonio(formValue, this.selectedFiles).subscribe({
+    
+    formValue.documenti = formValue.documenti.map((doc: any, index: number) => {
+     
+      if (this.selectedFiles[index]) {
+        return {
+          ...doc,
+          percorsoFile: this.selectedFiles[index].name
+        };
+      }
+      return doc;
+    }).filter((doc: any) => doc.percorsoFile);
+  
+    this.patrimonioService.modificaPatrimonio(formValue, filesToUpload).subscribe({
       next: () => {
         this.router.navigate(['/patrimonio']);
       },
       error: (err) => {
         this.errorMessage = 'Failed to update patrimonio. Please try again.';
+        console.error('Error updating patrimonio:', err);
       },
     });
   }
