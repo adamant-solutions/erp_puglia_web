@@ -6,11 +6,17 @@ import {ContrattiLocazioneComponent} from './contratti-locazione.component';
 import { ContrattiService } from 'src/app/core/services/contratti.service';
 import { environment } from 'src/environments/environment';
 import { SharedModule } from "../../shared/shared.module";
+import { AddContrattiComponent } from './add-contratti/add-contratti.component';
+import { EditContrattiComponent } from './edit-contratti/edit-contratti.component';
+import { ViewContrattiComponent } from './view-contratti/view-contratti.component';
 
 
 @NgModule({
   declarations: [
-    ContrattiLocazioneComponent
+    ContrattiLocazioneComponent,
+    AddContrattiComponent,
+    EditContrattiComponent,
+    ViewContrattiComponent
   ],
   imports: [
     CommonModule,
