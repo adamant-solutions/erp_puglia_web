@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { StatoContratto } from 'src/app/core/models/contratto.model';
 import { ContrattiService } from 'src/app/core/services/contratti.service';
 interface SelectOption {
   id: number;
@@ -13,6 +14,7 @@ interface SelectOption {
 })
 export class EditContrattiComponent {
   @ViewChild('fileInput') fileInput!: ElementRef;
+  statoContrattoOptions: StatoContratto[] = ['ATTIVO', 'SCADUTO', 'DISDETTO', 'ANNULLATO'];
   id: number | null = null;
   documenti: any[] = [];
   unitaImmobiliariOptions: SelectOption[] = [];
