@@ -1,1 +1,202 @@
-<p>view-contratti works!</p>
+
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Dettagli Contratto'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mb-5">Dettagli Contratto</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Stato Contratto</label>
+                <input type="text" class="form-control" formControlName="statoContratto" readonly>
+              </div>
+        
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Canone Mensile</label>
+            <input type="text" class="form-control" formControlName="canoneMensile" readonly>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Inizio</label>
+            <input type="text" class="form-control" formControlName="dataInizio" readonly>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Fine</label>
+            <input type="text" class="form-control" formControlName="dataFine" readonly>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Descrizione</label>
+            <input type="text" class="form-control" formControlName="descrizione" readonly>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Unita Immobiliare</label>
+            <input type="text" class="form-control" formControlName="unitaImmobiliare" readonly>
+          </div>
+
+
+         
+          <div class="accordion accordion-background-hover" id="accordionExampleHh">
+           
+            <div class="accordion-item">
+              <h2 class="accordion-header" id="heading1d">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
+                        data-bs-target="#collapse1d" aria-expanded="true" 
+                        aria-controls="collapse1d">
+                  Intestatari Attuali
+                </button>
+              </h2>
+              <div id="collapse1d" class="accordion-collapse collapse show" 
+                   data-bs-parent="#accordionExampleHh" role="region" 
+                   aria-labelledby="heading1d">
+                <div class="accordion-body">
+                  <div class="row">
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Nome</label>
+                      <input type="text" class="form-control" 
+                             formControlName="nomeIntestatario" readonly>
+                    </div>
+          
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Cognome</label>
+                      <input type="text" class="form-control" 
+                             formControlName="cognomeIntestatario" readonly>
+                    </div>
+          
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Codice Fiscale</label>
+                      <input type="text" class="form-control" 
+                             formControlName="cfIntestatario" readonly>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">Cittadinanza</label>
+                        <input type="text" class="form-control" 
+                               formControlName="cittadinanzaIntestatario" readonly>
+                      </div>
+                      
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Genere</label>
+                        <input type="text" class="form-control" 
+                               formControlName="genereIntestatario" readonly>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading2d">
+                  <button class="accordion-button collapsed" type="button" 
+                          data-bs-toggle="collapse" data-bs-target="#collapse2d" 
+                          aria-expanded="false" aria-controls="collapse2d">
+                    Intestatari Residenza
+                  </button>
+                </h2>
+                <div id="collapse2d" class="accordion-collapse collapse" 
+                     data-bs-parent="#accordionExampleHh" role="region" 
+                     aria-labelledby="heading2d">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Indirizzo</label>
+                        <input type="text" class="form-control" 
+                               formControlName="residenzaIndirizzo" readonly>
+                      </div>
+                      
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Civico</label>
+                        <input type="text" class="form-control" 
+                               formControlName="residenzaCivico" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">CAP</label>
+                        <input type="text" class="form-control" 
+                               formControlName="residenzaCap" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Comune Residenza</label>
+                        <input type="text" class="form-control" 
+                               formControlName="residenzaComune" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Provincia Residenza</label>
+                        <input type="text" class="form-control" 
+                               formControlName="residenzaProvincia" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Stato Residenza</label>
+                        <input type="text" class="form-control" 
+                               formControlName="residenzaStato" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading3d">
+                  <button class="accordion-button collapsed" type="button" 
+                          data-bs-toggle="collapse" data-bs-target="#collapse3d" 
+                          aria-expanded="false" aria-controls="collapse3d">
+                    Contatti
+                  </button>
+                </h2>
+                <div id="collapse3d" class="accordion-collapse collapse" 
+                     data-bs-parent="#accordionExampleHh" role="region" 
+                     aria-labelledby="heading3d">
+                  <div class="accordion-body">
+                    <div class="row">
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Telefono</label>
+                        <input type="text" class="form-control" 
+                               formControlName="contattiTelefono" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Cellulare</label>
+                        <input type="text" class="form-control" 
+                               formControlName="contattiCellulare" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="text" class="form-control" 
+                               formControlName="contattiEmail" readonly>
+                      </div>
+              
+                      <div class="col-md-4 mb-3">
+                        <label class="form-label">PEC</label>
+                        <input type="text" class="form-control" 
+                               formControlName="contattiPec" readonly>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+          
+         
+          </div>
+
+         
+
+          <div class="col-12 mt-5">
+            <button type="button" class="btn btn-outline-primary" (click)="indietroC()" >
+              <i class="bi bi-arrow-left me-1"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
