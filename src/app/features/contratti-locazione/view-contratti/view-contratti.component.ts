@@ -9,6 +9,7 @@ import { ContrattiService } from 'src/app/core/services/contratti.service';
   styleUrls: ['./view-contratti.component.css']
 })
 export class ViewContrattiComponent {
+  documenti: any[] = [];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
@@ -53,6 +54,7 @@ export class ViewContrattiComponent {
     if (id) {
       this.contrattiService.getContrattiById(+id).subscribe(contratto => {
         this.populateForm(contratto);
+        this.documenti = contratto.documenti || [];
       });
     }
   }

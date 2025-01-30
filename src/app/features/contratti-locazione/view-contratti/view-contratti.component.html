@@ -187,7 +187,13 @@
          
           </div>
 
-         
+          <div class="mt-4">
+            <h3>Documenti</h3>
+            <div *ngIf="documenti.length === 0" class="text-muted">Nessun documento presente</div>
+            <ul *ngIf="documenti.length > 0" class="list-unstyled">
+              <li *ngFor="let doc of documenti">{{ doc.nomeFile }}</li>
+            </ul>
+          </div>
 
           <div class="col-12 mt-5">
             <button type="button" class="btn btn-outline-primary" (click)="indietroC()" >
