@@ -1,1 +1,152 @@
-<p>edit-contratti works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Contratto'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mb-5">Modifica Contratto</h1>
+
+    
+        <form [formGroup]="editForm"  class="row g-3">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Stato Contratto</label>
+            <input type="text" class="form-control" formControlName="statoContratto"
+                   [class.is-invalid]="editForm.get('statoContratto')?.invalid && editForm.get('statoContratto')?.touched">
+            <div class="invalid-feedback">
+              {{ getErrorMessage('statoContratto') }}
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Canone Mensile</label>
+            <input type="number" class="form-control" formControlName="canoneMensile"
+                   [class.is-invalid]="editForm.get('canoneMensile')?.invalid && editForm.get('canoneMensile')?.touched">
+            <div class="invalid-feedback">
+              {{ getErrorMessage('canoneMensile') }}
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Inizio</label>
+            <input type="date" class="form-control" formControlName="dataInizio"
+                   [class.is-invalid]="editForm.get('dataInizio')?.invalid && editForm.get('dataInizio')?.touched">
+            <div class="invalid-feedback">
+              {{ getErrorMessage('dataInizio') }}
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Fine</label>
+            <input type="date" class="form-control" formControlName="dataFine"
+                   [class.is-invalid]="editForm.get('dataFine')?.invalid && editForm.get('dataFine')?.touched">
+            <div class="invalid-feedback">
+              {{ getErrorMessage('dataFine') }}
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Descrizione</label>
+            <input type="text" class="form-control" formControlName="descrizione"
+                   [class.is-invalid]="editForm.get('descrizione')?.invalid && editForm.get('descrizione')?.touched">
+            <div class="invalid-feedback">
+              {{ getErrorMessage('descrizione') }}
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Unita Immobiliare</label>
+            <input type="text" class="form-control" formControlName="unitaImmobiliare"
+                   [class.is-invalid]="editForm.get('unitaImmobiliare')?.invalid && editForm.get('unitaImmobiliare')?.touched">
+            <div class="invalid-feedback">
+              {{ getErrorMessage('unitaImmobiliare') }}
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="unitaImmobiliareId">Unità Immobiliare</label>
+              <div class="input-group">
+                <select
+                  class="form-control"
+                  id="unitaImmobiliareId"
+                  formControlName="unitaImmobiliareId"
+                >
+                 
+                  <option *ngFor="let unita of unitaImmobiliariOptions" [value]="unita.id">
+                    {{ unita.descrizione }}
+                  </option>
+                </select>
+                <span class="input-group-text">
+                  <i class="bi bi-caret-down-fill"></i>
+                </span>
+              </div>
+              <span
+                class="custom-error"
+                *ngIf="editForm.get('unitaImmobiliareId')?.invalid && editForm.get('unitaImmobiliareId')?.touched"
+              >
+                {{ getErrorMessage('unitaImmobiliareId') }}
+              </span>
+            </div>
+          
+            <div class="col-md-6 mb-3">
+              <label class="form-label" for="intestatarioId">Intestatario</label>
+              <div class="input-group">
+                <select
+                  class="form-control"
+                  id="intestatarioId"
+                  formControlName="intestatarioId"
+                >
+                 
+                  <option *ngFor="let intestatario of intestatariOptions" [value]="intestatario.id">
+                    {{ intestatario.descrizione }}
+                  </option>
+                </select>
+                <span class="input-group-text">
+                  <i class="bi bi-caret-down-fill"></i>
+                </span>
+              </div>
+              <span
+                class="custom-error"
+                *ngIf="editForm.get('intestatarioId')?.invalid && editForm.get('intestatarioId')?.touched"
+              >
+                {{ getErrorMessage('intestatarioId') }}
+              </span>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <h3>Documenti</h3>
+            <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx">
+            <div *ngIf="documenti.length === 0; else documentsPresent">
+              <div class="text-muted">Nessun documento presente</div>
+              <button type="button" class="btn btn-secondary mt-2" (click)="uploadDocument()">
+                <i class="bi bi-upload me-1"></i>
+                Carica Documento
+              </button>
+            </div>
+            <ng-template #documentsPresent>
+              <ul class="list-unstyled">
+                <li *ngFor="let doc of documenti">{{ doc.nomeFile }}</li>
+              </ul>
+              <button type="button" class="btn btn-secondary" (click)="uploadDocument()">
+                <i class="bi bi-upload me-1"></i>
+                Carica Nuovo Documento
+              </button>
+            </ng-template>
+          </div>
+
+          <div class="col-12 mt-5">
+            <button type="submit" class="btn btn-primary me-2">
+              <i class="bi bi-save me-1"></i>
+              Salva
+            </button>
+            <button type="button" class="btn btn-outline-primary" (click)="indietroC()">
+              <i class="bi bi-arrow-left me-1"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

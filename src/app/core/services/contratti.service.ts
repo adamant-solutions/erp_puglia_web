@@ -155,4 +155,10 @@ export class ContrattiService {
       { observe: 'response' }
     );
   }
+
+  uploadDocument(contrattoId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.contrattiUrl}/contratti/${contrattoId}/documenti`, formData);
+  }
+
+  updateContratto(){}
 }
