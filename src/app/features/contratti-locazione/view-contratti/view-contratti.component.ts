@@ -10,6 +10,7 @@ import { ContrattiService } from 'src/app/core/services/contratti.service';
 })
 export class ViewContrattiComponent {
   documenti: any[] = [];
+  patrimonio: any
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
@@ -50,23 +51,33 @@ export class ViewContrattiComponent {
   ) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.contrattiService.getContrattiById(+id).subscribe(contratto => {
-        this.populateForm(contratto);
-        this.documenti = contratto.documenti || [];
-      });
-    }
+   
+    this.contrattiService.getUnitaImmobiliare().subscribe(response => {
+      this.patrimonio = response.body || [];
+      
+    
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
+        this.contrattiService.getContrattiById(+id).subscribe(contratto => {
+          this.populateForm(contratto);
+          this.documenti = contratto.documenti || [];
+        });
+      }
+    });
   }
 
   private populateForm(contratto: any) {
+    const unitaId = contratto.unitaImmobiliare;
+
+ 
+  const unita = this.patrimonio.find((item: { id: any; }) => item.id === unitaId);
     this.viewForm.patchValue({
       descrizione: contratto.descrizione,
       canoneMensile: contratto.canoneMensile,
       dataInizio: this.formatDate(contratto.dataInizio),
       dataFine: this.formatDate(contratto.dataFine),
       statoContratto: contratto.statoContratto,
-      unitaImmobiliare: contratto.unitaImmobiliare,
+      unitaImmobiliare: unita?.descrizione || 'N/A'
     });
 
     if (contratto.intestatariAttuali?.length > 0) {
