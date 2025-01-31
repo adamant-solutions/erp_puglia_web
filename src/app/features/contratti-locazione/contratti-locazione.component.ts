@@ -71,7 +71,7 @@ export class ContrattiLocazioneComponent {
   }
 
     onPageChange(event: PageEvent): void {
-      // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
+      // const pageIndex = event.pageIndex + 1; 
       const pageIndex = event.pageIndex;
   
       this.router.navigate([], {
@@ -105,11 +105,20 @@ export class ContrattiLocazioneComponent {
 
 
   cancellaCerca() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { 
+        pagina: 0,
+        indirizzo: '',
+        canoneMensileMin: '',
+        canoneMensileMax: '',
+        dataInizioFrom: '',
+        dataInizioTo: '',
+        dataFineTo: '',
+      },
+    });
   }
 
-  deleteContrattoModal(contratto: Contratti | any) {
-    
-  }
 
 
 
