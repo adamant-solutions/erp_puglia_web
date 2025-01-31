@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContrattiService } from 'src/app/core/services/contratti.service';
-
+interface PatrimonioItem {
+  id: number;
+  descrizione: any;
+}
 @Component({
   selector: 'app-view-contratti',
   templateUrl: './view-contratti.component.html',
@@ -10,7 +13,7 @@ import { ContrattiService } from 'src/app/core/services/contratti.service';
 })
 export class ViewContrattiComponent {
   documenti: any[] = [];
-  patrimonio: any
+  patrimonio: PatrimonioItem[] = [];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
@@ -51,58 +54,71 @@ export class ViewContrattiComponent {
   ) {}
 
   ngOnInit() {
-   
-    this.contrattiService.getUnitaImmobiliare().subscribe(response => {
-      this.patrimonio = response.body || [];
-      
-    
-      const id = this.route.snapshot.paramMap.get('id');
-      if (id) {
-        this.contrattiService.getContrattiById(+id).subscribe(contratto => {
-          this.populateForm(contratto);
-          this.documenti = contratto.documenti || [];
-        });
+    this.route.data.subscribe(({ contrattiByIdResolver, unitaImmobiliari }) => {
+      if (!contrattiByIdResolver) {
+       
+        return;
       }
+  
+     
+      this.patrimonio = unitaImmobiliari?.body || [];
+  
+  
+      this.populateForm(contrattiByIdResolver);
+  
+     
+      this.documenti = contrattiByIdResolver.documenti || [];
     });
+  }
+  private findPatrimonioDescription(unitaId: number): string {
+    const unita = this.patrimonio.find((item: { id: number }) => item.id === unitaId);
+    return unita?.descrizione;
   }
 
   private populateForm(contratto: any) {
-    const unitaId = contratto.unitaImmobiliare;
-
+   
+    const unitaDescrizione = contratto.unitaImmobiliare?.descrizione 
+      || this.findPatrimonioDescription(contratto.unitaImmobiliare);
+  
  
-  const unita = this.patrimonio.find((item: { id: any; }) => item.id === unitaId);
     this.viewForm.patchValue({
       descrizione: contratto.descrizione,
       canoneMensile: contratto.canoneMensile,
       dataInizio: this.formatDate(contratto.dataInizio),
       dataFine: this.formatDate(contratto.dataFine),
       statoContratto: contratto.statoContratto,
-      unitaImmobiliare: unita?.descrizione || 'N/A'
+      unitaImmobiliare: unitaDescrizione || 'N/A'
     });
-
+  
+  
     if (contratto.intestatariAttuali?.length > 0) {
       const intestatario = contratto.intestatariAttuali[0].cittadino;
       const residenza = intestatario.residenza;
       const contatti = intestatario.contatti;
+  
       this.viewForm.patchValue({
         nomeIntestatario: intestatario.nome,
         cognomeIntestatario: intestatario.cognome,
         cfIntestatario: intestatario.codiceFiscale,
-        cittadinanzaIntestatario: intestatario.cittadinanza,  
-      genereIntestatario: intestatario.genere,
-      residenzaIndirizzo: residenza?.indirizzo,
-      residenzaCivico: residenza?.civico,
-      residenzaCap: residenza?.cap,
-      residenzaComune: residenza?.comuneResidenza,
-      residenzaProvincia: residenza?.provinciaResidenza,
-      residenzaStato: residenza?.statoResidenza,
-      contattiTelefono: contatti?.telefono,
-      contattiCellulare: contatti?.cellulare,
-      contattiEmail: contatti?.email,
-      contattiPec: contatti?.pec     
+        cittadinanzaIntestatario: intestatario.cittadinanza,
+        genereIntestatario: intestatario.genere,
+        residenzaIndirizzo: residenza?.indirizzo,
+        residenzaCivico: residenza?.civico,
+        residenzaCap: residenza?.cap,
+        residenzaComune: residenza?.comuneResidenza,
+        residenzaProvincia: residenza?.provinciaResidenza,
+        residenzaStato: residenza?.statoResidenza,
+        contattiTelefono: contatti?.telefono,
+        contattiCellulare: contatti?.cellulare,
+        contattiEmail: contatti?.email,
+        contattiPec: contatti?.pec
       });
     }
   }
+
+
+
+
 
   private formatDate(dateString: string): string {
     return dateString ? new Date(dateString).toLocaleDateString() : '';

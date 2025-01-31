@@ -18,6 +18,7 @@ const routes: Routes = [
     component: ContrattiLocazioneComponent,
     resolve: {
       contrattiResolver,
+      unitaImmobiliareResolver
      
     },
     runGuardsAndResolvers: 'always',
