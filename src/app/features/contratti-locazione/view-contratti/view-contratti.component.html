@@ -8,10 +8,15 @@
         <h1 class="mb-5">Dettagli Contratto</h1>
 
         <form [formGroup]="viewForm" class="row g-3">
-            <div class="col-md-4 mb-3">
-                <label class="form-label">Stato Contratto</label>
-                <input type="text" class="form-control" formControlName="statoContratto" readonly>
-              </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Stato Contratto</label>
+            <div class="input-group">
+              <input type="text" class="form-control" formControlName="statoContratto" readonly>
+              <span class="input-group-text">
+                <i class="bi bi-clipboard-check"></i>
+              </span>
+            </div>
+          </div>
         
           <div class="col-md-4 mb-3">
             <label class="form-label">Canone Mensile</label>
