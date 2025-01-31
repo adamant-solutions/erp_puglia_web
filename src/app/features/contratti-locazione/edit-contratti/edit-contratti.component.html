@@ -7,7 +7,7 @@
         <h1 class="mb-5">Modifica Contratto</h1>
 
     
-        <form [formGroup]="editForm"  class="row g-3">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()"  class="row g-3">
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato Contratto</label>
             <div class="input-group">
@@ -26,7 +26,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <label class="form-label">Canone Mensile</label>
-            <input type="number" class="form-control" formControlName="canoneMensile"
+            <input type="number" class="form-control" formControlName="canoneMensile" 
                    [class.is-invalid]="editForm.get('canoneMensile')?.invalid && editForm.get('canoneMensile')?.touched">
             <div class="invalid-feedback">
               {{ getErrorMessage('canoneMensile') }}
@@ -60,27 +60,21 @@
             </div>
           </div>
 
-          <div class="col-md-4 mb-3">
-            <label class="form-label">Unita Immobiliare</label>
-            <input type="text" class="form-control" formControlName="unitaImmobiliare"
-                   [class.is-invalid]="editForm.get('unitaImmobiliare')?.invalid && editForm.get('unitaImmobiliare')?.touched">
-            <div class="invalid-feedback">
-              {{ getErrorMessage('unitaImmobiliare') }}
-            </div>
-          </div>
+       
 
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label class="form-label" for="unitaImmobiliareId">Unità Immobiliare</label>
+              <label class="form-label" for="unitaImmobiliare">Unità Immobiliare</label>
               <div class="input-group">
                 <select
                   class="form-control"
-                  id="unitaImmobiliareId"
-                  formControlName="unitaImmobiliareId"
+                  id="unitaImmobiliare"
+                  formControlName="unitaImmobiliare"
+                  (change)="onUnitaImmobiliareChange($event)"
                 >
                  
-                  <option *ngFor="let unita of unitaImmobiliariOptions" [value]="unita.id">
-                    {{ unita.descrizione }}
+                  <option *ngFor="let unita of unitaImmobiliariOptions" [value]="unita" [selected]="unita.id === editForm.get('unitaImmobiliare')?.value.id">
+                    {{ unita.descrizione }} 
                   </option>
                 </select>
                 <span class="input-group-text">
@@ -89,63 +83,74 @@
               </div>
               <span
                 class="custom-error"
-                *ngIf="editForm.get('unitaImmobiliareId')?.invalid && editForm.get('unitaImmobiliareId')?.touched"
+                *ngIf="editForm.get('unitaImmobiliare')?.invalid && editForm.get('unitaImmobiliare')?.touched"
               >
-                {{ getErrorMessage('unitaImmobiliareId') }}
-              </span>
-            </div>
-          
-            <div class="col-md-6 mb-3">
-              <label class="form-label" for="intestatarioId">Intestatario</label>
-              <div class="input-group">
-                <select
-                  class="form-control"
-                  id="intestatarioId"
-                  formControlName="intestatarioId"
-                >
-                 
-                  <option *ngFor="let intestatario of intestatariOptions" [value]="intestatario.id">
-                    {{ intestatario.descrizione }}
-                  </option>
-                </select>
-                <span class="input-group-text">
-                  <i class="bi bi-caret-down-fill"></i>
-                </span>
-              </div>
-              <span
-                class="custom-error"
-                *ngIf="editForm.get('intestatarioId')?.invalid && editForm.get('intestatarioId')?.touched"
-              >
-                {{ getErrorMessage('intestatarioId') }}
+                {{ getErrorMessage('unitaImmobiliare') }}
               </span>
             </div>
           </div>
+        <div formArrayName="intestatari" class="row">
+          <div class="col-md-6 mb-3">
+            <!-- <button class="btn" type="button" (click)="addIntestatario()">Add Intestatario</button> -->
+        
+            <div *ngFor="let intestatarioGroup of intestatari?.controls; let i = index" [formGroupName]="i">
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="form-label">Intestatario {{ i + 1 }}</label>
+                <!-- <button class="btn btn-clear-danger btn-sm" type="button" (click)="removeIntestatario(i)">
+                  Remove
+                </button> -->
+              </div>
+              <div class="input-group" formGroupName="intestatario">
+                <select class="form-control" formControlName="id" (change)="onIntestatariChange($event,i)"
+                  [id]="'intestatarioId_' + i">
+                  <option [value]="null" disabled>Select Intestatario</option>
+                  <option *ngFor="let option of intestatariOptions" [value]="option.id">
+                    {{ option.descrizione }}
+        
+                  </option>
+                </select>
+                <span class="input-group-text">
+                  <i class="bi bi-caret-down-fill"></i>
+                </span>
+              </div>
+        
+              <span class="custom-error"
+                *ngIf="intestatarioGroup.invalid && (intestatarioGroup.touched || intestatarioGroup.dirty)">
+        
+              </span>
+            <br>
+          
+            <div class="col-md-12 mb-3">
+              <label class="form-label">Data Inizio</label>
+              <input type="date" class="form-control" formControlName="dataInizio" [id]="'data-inizio-'+i"
+                [class.is-invalid]="editForm.get('dataInizio')?.invalid && editForm.get('dataInizio')?.touched">
+              <!-- <div class="invalid-feedback">
+                {{ getErrorMessage('dataInizio') }}
+              </div> -->
+            </div>
+          </div>
+        </div>
+ </div>
+        
 
           <div class="mt-4">
             <h3>Documenti</h3>
             <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx">
-            <div *ngIf="documenti.length === 0; else documentsPresent">
+            <div *ngIf="documenti.length === 0; ">
               <div class="text-muted">Nessun documento presente</div>
-              <button type="button" class="btn btn-secondary mt-2" (click)="uploadDocument()">
-                <i class="bi bi-upload me-1"></i>
-                Carica Documento
-              </button>
+            
             </div>
-            <ng-template #documentsPresent>
-              <ul class="list-unstyled">
-                <li *ngFor="let doc of documenti">{{ doc.nomeFile }}</li>
-              </ul>
-              <button type="button" class="btn btn-secondary" (click)="uploadDocument()">
-                <i class="bi bi-upload me-1"></i>
-                Carica Nuovo Documento
-              </button>
-            </ng-template>
+           
           </div>
 
           <div class="col-12 mt-5">
             <button type="submit" class="btn btn-primary me-2">
               <i class="bi bi-save me-1"></i>
-              Salva
+              Salva Stato
+            </button>
+            <button type="button" class="btn btn-danger me-2" (click)="openConfermaModal()">
+              <i class="bi bi-stop-circle me-1"></i>
+              Termina Contratto
             </button>
             <button type="button" class="btn btn-outline-primary" (click)="indietroC()">
               <i class="bi bi-arrow-left me-1"></i>
@@ -157,3 +162,38 @@
     </div>
   </div>
 </section>
+
+
+<div class="modal fade" #confermaModal tabindex="-1" aria-labelledby="confermaTerminazioneModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confermaTerminazioneModalLabel">Conferma Terminazione</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Sei sicuro di voler terminare questo contratto? Questa azione non può essere annullata.</p>
+        <div class="form-group">
+          <textarea 
+            class="form-control" 
+            [(ngModel)]="motivoFine" 
+            placeholder="Inserisci il motivo..."
+            required
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button 
+          type="button" 
+          class="btn btn-danger" 
+          (click)="confirmTermina()"
+          [disabled]="!motivoFine.trim()"
+        >
+          Conferma
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,61 +1,36 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StatoContratto } from 'src/app/core/models/contratto.model';
+
+import { Contratti, StatoContratto } from 'src/app/core/models/contratto.model';
 import { ContrattiService } from 'src/app/core/services/contratti.service';
 interface SelectOption {
   id: number;
   descrizione: string;
 }
+declare var bootstrap: any;
 @Component({
   selector: 'app-edit-contratti',
   templateUrl: './edit-contratti.component.html',
   styleUrls: ['./edit-contratti.component.css']
 })
 export class EditContrattiComponent {
+  
+  @ViewChild('confermaModal') confermaModal!: ElementRef;
+  motivoFine: string = '';
   @ViewChild('fileInput') fileInput!: ElementRef;
   statoContrattoOptions: StatoContratto[] = ['ATTIVO', 'SCADUTO', 'DISDETTO', 'ANNULLATO'];
   id: number | null = null;
   documenti: any[] = [];
   unitaImmobiliariOptions: SelectOption[] = [];
   intestatariOptions: SelectOption[] = [];
-  
+  contratto!:Contratti
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
   ];
-
-  editForm = this.fb.group({
-    descrizione: ['', Validators.required],
-    canoneMensile: ['', [Validators.required, Validators.min(0)]],
-    dataInizio: ['', Validators.required],
-    dataFine: ['', Validators.required],
-    statoContratto: ['', Validators.required],
-    unitaImmobiliare: ['', Validators.required],
-    
-    nomeIntestatario: ['', Validators.required],
-    cognomeIntestatario: ['', Validators.required],
-    cfIntestatario: ['', [Validators.required, Validators.pattern(/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/)]],
-    cittadinanzaIntestatario: ['', Validators.required],
-    genereIntestatario: ['', Validators.required],
-    
-    residenzaIndirizzo: ['', Validators.required],
-    residenzaCivico: ['', Validators.required],
-    residenzaCap: ['', [Validators.required, Validators.pattern(/^\d{5}$/)]],
-    residenzaComune: ['', Validators.required],
-    residenzaProvincia: ['', Validators.required],
-    residenzaStato: ['', Validators.required],
-    
-    contattiTelefono: ['', Validators.pattern(/^\d{10}$/)],
-    contattiCellulare: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-    contattiEmail: ['', [Validators.required, Validators.email]],
-    contattiPec: ['', [Validators.required, Validators.email]],
-
-
-    unitaImmobiliareId: ['', Validators.required],
-    intestatarioId: ['', Validators.required],
-  });
-
+editForm!:FormGroup
+private modal: any;
   constructor(
     private route: ActivatedRoute,
     private contrattiService: ContrattiService,
@@ -64,99 +39,120 @@ export class EditContrattiComponent {
   ) {}
 
   ngOnInit() {
-  
+   
+    this.route.paramMap.subscribe(params => {
+      const idParam = params.get('id');
+      if (idParam) {
+        this.id = +idParam;
+      }
+    });
+
     this.route.data.subscribe(data => {
       this.unitaImmobiliariOptions = data['unitaImmobiliari'].body || [];
       this.intestatariOptions = data['intestatari'].body || [];
+      this.contratto = data['contratto'] || [];
     });
-
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.contrattiService.getContrattiById(+id).subscribe(contratto => {
-        this.populateForm(contratto);
-        this.documenti = contratto.documenti || [];
-      });
-    }
+    
+    this.initForm();
+    this.documenti = this.contratto.documenti || [];
+  }
+  ngAfterViewInit() {
+ 
+    this.modal = new bootstrap.Modal(this.confermaModal.nativeElement, {
+      keyboard: false
+    });
+  }
+ 
+  private initForm() {
+    this.editForm = this.fb.group({
+      dataInizio: { value: this.contratto.dataInizio, disabled: true },
+    dataFine: { value: this.contratto.dataFine, disabled: true },
+      canoneMensile: { value: this.contratto.canoneMensile, disabled: true },
+      statoContratto: this.contratto.statoContratto,
+      descrizione: { value: this.contratto.descrizione, disabled: true },
+      unitaImmobiliare: { value: { id: this.contratto.unitaImmobiliare }, disabled: true },
+      intestatari: this.fb.array([]),
+      documenti: this.fb.array([] ),
+  
+    });
+    const intestatariArray = this.editForm.get('intestatari') as FormArray;
+    this.contratto.intestatari.forEach((intestatario: any) => {
+      intestatariArray.push(this.createIntestatarioGroup(intestatario));
+    });
+     
   }
 
-  private populateForm(contratto: any) {
-    this.editForm.patchValue({
-      descrizione: contratto.descrizione,
-      canoneMensile: contratto.canoneMensile,
-      dataInizio: this.formatDateForInput(contratto.dataInizio),
-      dataFine: this.formatDateForInput(contratto.dataFine),
-      statoContratto: contratto.statoContratto,
-      unitaImmobiliare: contratto.unitaImmobiliare,
-      unitaImmobiliareId: contratto.unitaImmobiliareId,
-      intestatarioId: contratto.intestatarioId
-    });
-
-    if (contratto.intestatariAttuali?.length > 0) {
-      const intestatario = contratto.intestatariAttuali[0].cittadino;
-      const residenza = intestatario.residenza;
-      const contatti = intestatario.contatti;
-      
-      this.editForm.patchValue({
-        nomeIntestatario: intestatario.nome,
-        cognomeIntestatario: intestatario.cognome,
-        cfIntestatario: intestatario.codiceFiscale,
-        cittadinanzaIntestatario: intestatario.cittadinanza,
-        genereIntestatario: intestatario.genere,
-        
-        residenzaIndirizzo: residenza?.indirizzo,
-        residenzaCivico: residenza?.civico,
-        residenzaCap: residenza?.cap,
-        residenzaComune: residenza?.comuneResidenza,
-        residenzaProvincia: residenza?.provinciaResidenza,
-        residenzaStato: residenza?.statoResidenza,
-        
-        contattiTelefono: contatti?.telefono,
-        contattiCellulare: contatti?.cellulare,
-        contattiEmail: contatti?.email,
-        contattiPec: contatti?.pec
-      });
-    }
+  get intestatari(): FormArray {
+    return this.editForm.get('intestatari') as FormArray;
   }
 
+  addIntestatario() {
+    this.intestatari.push(this.createIntestatarioGroup());
+    console.log(this.intestatari)
+  }
+  
+  removeIntestatario(index: number) {
+    this.intestatari.removeAt(index);
+  }
+
+  private createIntestatarioGroup(intestatario?: any): FormGroup {
+    return this.fb.group({
+      intestatario: this.fb.group({
+        id: [{ value: intestatario?.intestatario || null, disabled: true }, Validators.required]
+      }),
+      dataInizio: [{ value: intestatario?.dataInizio || null, disabled: true }, Validators.required]
+    });
+  }
+
+
+ 
   private formatDateForInput(dateString: string): string {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toISOString().split('T')[0];
   }
 
-  // onSubmit() {
-  //   if (this.editForm.valid) {
-  //     const id = this.route.snapshot.paramMap.get('id');
-  //     if (id) {
-  //       const formData = this.editForm.value;
-  //       this.contrattiService.updateContratto(+id, formData).subscribe({
-  //         next: () => {
-  //         
-  //           this.router.navigate(['/contratti-locazione']);
-  //         },
-  //         error: (error) => {
-  //         
-  //           console.error('Error updating contract:', error);
-  //         }
-  //       });
-  //     }
-  //   } else {
-  //     Object.keys(this.editForm.controls).forEach(key => {
-  //       const control = this.editForm.get(key);
-  //       if (control?.invalid) {
-  //         control.markAsTouched();
-  //       }
-  //     });
-  //   }
-  // }
+
+  onUnitaImmobiliareChange(event: Event) {
+    const selectedId = (event.target as HTMLSelectElement).value;
+    this.editForm.get('unitaImmobiliare')?.setValue(selectedId);
+    
+  }
+ 
+  onIntestatariChange(anagrafica: any, index: number) {
+    this.intestatari.at(index).get('intestatario.id')?.setValue(anagrafica.id);
+    
+  }
+
+  
+  confirmTermina() {
+    if (this.motivoFine && this.contratto?.id) {
+      this.contrattiService.terminaContratto(this.contratto.id, this.motivoFine).subscribe({
+        next: () => {
+          if (this.modal) {
+            this.modal.hide();
+          }
+          this.router.navigate(['/contratti-locazione']);
+        },
+        error: (error) => {
+   
+        }
+      });
+    }
+  }
+
 
   indietroC() {
     window.scrollTo({top: 0, behavior: 'smooth'});
     this.router.navigate(['/contratti-locazione']);
   }
+
+
   uploadDocument() {
     this.fileInput.nativeElement.click();
   }
+
+
   onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file && this.id) {
@@ -175,6 +171,34 @@ export class EditContrattiComponent {
     }
   }
 
+  onSubmit() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id && this.editForm.valid) {
+      const statoContratto = this.editForm.get('statoContratto')?.value;
+      
+      if (statoContratto) {
+       
+        this.contrattiService.updateStato(+id, statoContratto).subscribe({
+          next: (response) => {
+            console.log('Stato updated successfully:', response);
+            this.router.navigate(['/contratti-locazione']);
+          },
+          error: (error) => {
+            console.error('Errore nell\'aggiornamento dello stato:', error);
+          }
+        });
+      }
+    }
+  }
+
+  openConfermaModal() {
+    if (!this.modal) {
+      this.modal = new bootstrap.Modal(this.confermaModal.nativeElement, {
+        keyboard: false
+      });
+    }
+    this.modal.show();
+  }
 
   getErrorMessage(controlName: string): string {
     const control = this.editForm.get(controlName);

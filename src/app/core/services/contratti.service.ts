@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { catchError, Observable, of, switchMap, throwError, map } from 'rxjs';
-import { Contratti, ModelLight } from '../models/contratto.model';
+import { Contratti, ModelLight, StatoContratto } from '../models/contratto.model';
 import { ContrattiSearchParams } from '../resolvers/contratti.resolver';
 
 @Injectable({
@@ -10,6 +10,7 @@ import { ContrattiSearchParams } from '../resolvers/contratti.resolver';
 export class ContrattiService {
   private token: string | null = null;
   private tokenExpiry: number | null = null;
+  private currentScope: 'erp:read' | 'erp:write' | null = null; // Track scope
 
   constructor(
     @Inject('tokenUrl') private tokenUrl: string,
@@ -37,11 +38,8 @@ export class ContrattiService {
       switchMap(response => {
         this.token = response.access_token;
         this.tokenExpiry = Date.now() + (response.expires_in * 1000) - 5000;
+        this.currentScope = scope; // Store the scope
         return of(this.token);
-      }),
-      catchError(error => {
-        console.error('Token fetch failed:', error);
-        return throwError(() => new Error('Failed to fetch authentication token'));
       })
     );
   }
@@ -58,14 +56,15 @@ export class ContrattiService {
   }
 
   private secureApiCall<T>(
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH', 
     url: string,
     body: any = null,
     options: any = {},
-    scope: 'erp:read' | 'erp:write' = 'erp:read'
+    requiredScope: 'erp:read' | 'erp:write' = 'erp:read'
   ): Observable<T> {
-    if (this.isTokenExpired()) {
-      return this.getToken(scope).pipe(
+   
+    if (this.isTokenExpired() || this.currentScope !== requiredScope) {
+      return this.getToken(requiredScope).pipe(
         switchMap(() => this.makeApiCall<T>(method, url, body, options)),
         catchError(error => {
           console.error('API call failed:', error);
@@ -75,20 +74,40 @@ export class ContrattiService {
     }
     return this.makeApiCall<T>(method, url, body, options);
   }
+  
 
   private makeApiCall<T>(
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
     url: string,
     body: any = null,
     options: any = {}
   ): Observable<T> {
-    const headers = this.getHeaders();
-    const requestOptions = { ...options, headers };
+ 
+    const authHeaders = this.getHeaders();
     
-   
+ 
+    const mergedHeaders = new HttpHeaders({
+      ...authHeaders.keys().reduce((acc: any, key) => {
+        acc[key] = authHeaders.get(key);
+        return acc;
+      }, {}),
+      ...(options.headers ? 
+        options.headers.keys().reduce((acc: any, key: string) => {
+          acc[key] = options.headers.get(key);
+          return acc;
+        }, {}) : 
+        {})
+    });
+  
+ 
+    const requestOptions = { 
+      ...options, 
+      headers: mergedHeaders
+    };
+    
     const needsFullResponse = options.observe === 'response';
     const baseOptions = needsFullResponse ? requestOptions : { ...requestOptions, observe: 'body' };
-
+  
     switch (method) {
       case 'GET':
         return this.http.get(url, baseOptions) as Observable<T>;
@@ -98,10 +117,13 @@ export class ContrattiService {
         return this.http.put(url, body, baseOptions) as Observable<T>;
       case 'DELETE':
         return this.http.delete(url, baseOptions) as Observable<T>;
+      case 'PATCH':
+        return this.http.patch(url, body, baseOptions) as Observable<T>;
       default:
         return throwError(() => new Error(`Unsupported HTTP method: ${method}`));
     }
   }
+
 
   getContratti(pageNumber: number): Observable<Contratti[]> {
     return this.secureApiCall<Contratti[]>(
@@ -155,6 +177,36 @@ export class ContrattiService {
       { observe: 'response' }
     );
   }
+
+
+  terminaContratto(id: number, motivoFine: string): Observable<void> {
+    const params = new HttpParams().set('motivoFine', motivoFine);
+    
+    return this.secureApiCall<void>(
+      'PUT',
+      `${this.contrattiUrl}/${id}/termina`,
+      null,
+      {
+        params,
+       
+      },
+      'erp:write'  
+    );
+  }
+  
+updateStato(id: number, statoContratto: string): Observable<Contratti> {
+  return this.secureApiCall<Contratti>(
+    'PATCH',
+    `${this.contrattiUrl}/${id}/stato`,
+    JSON.stringify(statoContratto), 
+    {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    },
+    'erp:write'
+  );
+}
 
   uploadDocument(contrattoId: number, formData: FormData): Observable<any> {
     return this.http.post(`${this.contrattiUrl}/contratti/${contrattoId}/documenti`, formData);
