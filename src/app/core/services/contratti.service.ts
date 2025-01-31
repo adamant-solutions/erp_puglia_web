@@ -10,7 +10,7 @@ import { ContrattiSearchParams } from '../resolvers/contratti.resolver';
 export class ContrattiService {
   private token: string | null = null;
   private tokenExpiry: number | null = null;
-  private currentScope: 'erp:read' | 'erp:write' | null = null; // Track scope
+  private currentScope: 'erp:read' | 'erp:write' | null = null; 
 
   constructor(
     @Inject('tokenUrl') private tokenUrl: string,
@@ -38,7 +38,7 @@ export class ContrattiService {
       switchMap(response => {
         this.token = response.access_token;
         this.tokenExpiry = Date.now() + (response.expires_in * 1000) - 5000;
-        this.currentScope = scope; // Store the scope
+        this.currentScope = scope; 
         return of(this.token);
       })
     );
@@ -213,4 +213,6 @@ updateStato(id: number, statoContratto: string): Observable<Contratti> {
   }
 
   updateContratto(){}
+
+  addContratti(_data: any){}
 }

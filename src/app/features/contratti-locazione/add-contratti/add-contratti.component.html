@@ -1,1 +1,129 @@
-<p>add-contratti works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="pageTitle"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mb-5">{{pageTitle}}</h1>
+
+        <form [formGroup]="contratoForm" (ngSubmit)="onSubmit()" class="row g-3">
+        
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Stato Contratto*</label>
+            <div class="input-group">
+              <select class="form-control" formControlName="statoContratto"
+                [class.is-invalid]="submitted && contratoForm.get('statoContratto')?.invalid">
+                <option *ngFor="let stato of statoContrattoOptions" [value]="stato">
+                  {{stato.charAt(0) + stato.slice(1).toLowerCase()}}
+                </option>
+              </select>
+              <span class="input-group-text">
+                <i class="bi bi-caret-down-fill"></i>
+              </span>
+            </div>
+            <div class="invalid-feedback">
+              <!-- {{ getErrorMessage('statoContratto') }} -->
+            </div>
+          </div>
+
+   
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Canone Mensile*</label>
+            <input type="number" class="form-control" formControlName="canoneMensile"
+              [class.is-invalid]="submitted && contratoForm.get('canoneMensile')?.invalid">
+            <div class="invalid-feedback">
+              <!-- {{ getErrorMessage('canoneMensile') }} -->
+            </div>
+          </div>
+
+     
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Inizio*</label>
+            <input type="date" class="form-control" formControlName="dataInizio"
+              [class.is-invalid]="submitted && contratoForm.get('dataInizio')?.invalid">
+            <div class="invalid-feedback">
+              <!-- {{ getErrorMessage('dataInizio') }} -->
+            </div>
+          </div>
+
+       
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Fine</label>
+            <input type="date" class="form-control" formControlName="dataFine">
+          </div>
+
+       
+          <div class="col-md-8 mb-3">
+            <label class="form-label">Descrizione</label>
+            <input type="text" class="form-control" formControlName="descrizione">
+          </div>
+
+      
+          <div class="col-md-6 mb-3">
+            <label class="form-label">Unità Immobiliare*</label>
+            <div class="input-group">
+              <select class="form-control" formControlName="unitaImmobiliare"
+                [class.is-invalid]="submitted && contratoForm.get('unitaImmobiliare')?.invalid">
+                <option [ngValue]="null">Seleziona unità immobiliare</option>
+                <option *ngFor="let unita of unitaImmobiliariOptions" [ngValue]="unita">
+                  {{unita.descrizione}}
+                </option>
+              </select>
+              <span class="input-group-text">
+                <i class="bi bi-caret-down-fill"></i>
+              </span>
+            </div>
+            <div class="invalid-feedback">
+              <!-- {{ getErrorMessage('unitaImmobiliare') }} -->
+            </div>
+          </div>
+
+          <!-- Intestatari -->
+          <div class="col-12 mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <label class="form-label">Intestatari</label>
+              <button type="button" class="btn btn-outline-primary btn-sm" (click)="addIntestatario()">
+                <i class="bi bi-plus-circle me-1"></i>Aggiungi Intestatario
+              </button>
+            </div>
+
+            <div formArrayName="intestatari">
+              <div *ngFor="let intestatarioGroup of intestatari.controls; let i=index" [formGroupName]="i"
+                class="row mb-3">
+                <div class="col-md-6">
+                  <div class="input-group" formGroupName="intestatario">
+                    <select class="form-control" formControlName="id"
+                      [class.is-invalid]="submitted && intestatarioGroup.get('intestatario.id')?.invalid">
+                      <option [ngValue]="null">Seleziona intestatario</option>
+                      <option *ngFor="let intestatario of intestatariOptions" [ngValue]="intestatario">
+                        {{intestatario.descrizione}}
+                      </option>
+                    </select>
+                    <button type="button" class="btn btn-outline-danger" (click)="removeIntestatario(i)">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <input type="date" class="form-control" formControlName="dataInizio"
+                    [class.is-invalid]="submitted && intestatarioGroup.get('dataInizio')?.invalid">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Buttons -->
+          <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary me-2">
+              <i class="bi bi-save me-1"></i>Salva
+            </button>
+            <!-- <button type="button" class="btn btn-outline-secondary" (click)="cancelForm()">
+              <i class="bi bi-x-circle me-1"></i>Annulla
+            </button> -->
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
