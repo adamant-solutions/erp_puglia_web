@@ -35,7 +35,7 @@ const routes: Routes = [
     path: 'modifica-contratto/:id',
     component: EditContrattiComponent,
     resolve: {
-      contrattiByIdResolver,
+      contratto: contrattiByIdResolver,
       unitaImmobiliari: unitaImmobiliareResolver,
       intestatari: intestatariResolver
     }
@@ -44,9 +44,9 @@ const routes: Routes = [
     path: 'contratto-dettagli/:id',
     component: ViewContrattiComponent,
     resolve: {
-      contrattiByIdResolver,
-      unitaImmobiliari: unitaImmobiliareResolver,
-      intestatari: intestatariResolver
+      contratto: contrattiByIdResolver,
+      unitaImmobiliareResolver: unitaImmobiliareResolver,
+      intestatariResolver: intestatariResolver
     }
   }
 ];

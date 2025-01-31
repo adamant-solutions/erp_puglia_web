@@ -54,20 +54,20 @@ export class ViewContrattiComponent {
   ) {}
 
   ngOnInit() {
-    this.route.data.subscribe(({ contrattiByIdResolver, unitaImmobiliari }) => {
-      if (!contrattiByIdResolver) {
+    this.route.data.subscribe(({ contratto, unitaImmobiliareResolver }) => {
+      if (!contratto) {
        
         return;
       }
   
      
-      this.patrimonio = unitaImmobiliari?.body || [];
+      this.patrimonio = unitaImmobiliareResolver?.body || [];
   
   
-      this.populateForm(contrattiByIdResolver);
+      this.populateForm(contratto);
   
      
-      this.documenti = contrattiByIdResolver.documenti || [];
+      this.documenti = contratto.documenti || [];
     });
   }
   private findPatrimonioDescription(unitaId: number): string {
