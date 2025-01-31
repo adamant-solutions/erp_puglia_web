@@ -214,5 +214,18 @@ updateStato(id: number, statoContratto: string): Observable<Contratti> {
 
   updateContratto(){}
 
-  addContratti(_data: any){}
+ 
+ addContratto(contrattoData: FormData): Observable<Contratti> {
+  return this.secureApiCall<Contratti>(
+    'POST',
+    this.contrattiUrl,
+    contrattoData,
+    {
+      headers: new HttpHeaders({
+        'Accept': 'application/json'
+      })
+    },
+    'erp:write'
+  );
+}
 }

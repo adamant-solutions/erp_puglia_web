@@ -25,7 +25,7 @@ export class AddContrattiComponent {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
-    { label: 'Nuovo Contratto', link: '' }
+   
   ];
 
   @ViewChild('confermaModal') confermaModal!: ElementRef;
@@ -49,11 +49,12 @@ export class AddContrattiComponent {
     return this.fb.group({
       dataInizio: ['', Validators.required],
       dataFine: [''],
-      canoneMensile: ['', [Validators.required, Validators.min(0), Validators.pattern('^[0-9]*\.?[0-9]+$')]],
+     
       statoContratto: ['ATTIVO', Validators.required],
       descrizione: [''],
-      unitaImmobiliare: ['', Validators.required],
-      intestatari: this.fb.array([])
+      canoneMensile: [null, [Validators.required, Validators.min(1)]],
+      unitaImmobiliare: [null, Validators.required],
+      intestatari: this.fb.array([], Validators.required)
     });
   }
 
@@ -93,25 +94,51 @@ export class AddContrattiComponent {
     if (this.contratoForm.valid) {
       const formData = this.prepareFormData();
       
- 
+      this.contrattiService.addContratto(formData).subscribe({
+        next: (createdContratto) => {
+          this.router.navigate(['/contratti-locazione']);
+        },
+        error: (error) => {
+          this.handleError(error);
+     
+          if (error.error && error.error.errors) {
+            this.handleValidationErrors(error.error.errors);
+          }
+        }
+      });
     }
   }
 
-  private prepareFormData() {
+  private prepareFormData(): FormData {
     const formValue = this.contratoForm.getRawValue();
-    return {
-      ...formValue,
-      unitaImmobiliare: { id: formValue.unitaImmobiliare.id },
+    const formData = new FormData();
+    
+    const contratto = {
+      dataInizio: this.formatDate(formValue.dataInizio),
+      dataFine: formValue.dataFine ? this.formatDate(formValue.dataFine) : null,
+      canoneMensile: formValue.canoneMensile,
+      statoContratto: formValue.statoContratto,
+      descrizione: formValue.descrizione || '',
+      unitaImmobiliare: {
+        id: formValue.unitaImmobiliare.id 
+      },
       intestatari: formValue.intestatari.map((int: any) => ({
-        intestatario: { id: int.intestatario.id },
+        intestatario: {
+          id: int.intestatario.id 
+        },
         dataInizio: this.formatDate(int.dataInizio)
       })),
-      dataInizio: this.formatDate(formValue.dataInizio),
-      dataFine: formValue.dataFine ? this.formatDate(formValue.dataFine) : null
+      documenti: []
     };
+  
+    formData.append(
+      'contratto',
+      new Blob([JSON.stringify(contratto)], { type: 'application/json' }),
+      'contratto.json'
+    );
+  
+    return formData;
   }
-
-
 
   private handleError(error: any) {
     switch (error.status) {
@@ -129,9 +156,18 @@ export class AddContrattiComponent {
     }
     // this.messageService.error(this.errorMsg);
   }
-
+  private handleValidationErrors(errors: any[]) {
+    errors.forEach(err => {
+      const field = this.contratoForm.get(err.fieldName);
+      if (field) {
+        field.setErrors({ serverError: err.message });
+      }
+    });
+  }
   private formatDate(date: string): string {
-    return new Date(date).toISOString().split('T')[0];
+    if (!date) return '';
+    const d = new Date(date);
+    return d.toISOString().split('T')[0];
   }
 
 
