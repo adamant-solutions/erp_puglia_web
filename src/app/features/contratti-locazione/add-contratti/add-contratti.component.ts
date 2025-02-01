@@ -124,7 +124,7 @@ export class AddContrattiComponent {
       },
       intestatari: formValue.intestatari.map((int: any) => ({
         intestatario: {
-          id: int.intestatario.id 
+          id: int.intestatario.id.id 
         },
         dataInizio: this.formatDate(int.dataInizio)
       })),
