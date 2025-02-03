@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
 import { Documento, Patrimonio, StatoDisponibilita } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
-import { HttpResponse } from '@angular/common/http';
+import { PatrimonioSearchParams } from 'src/app/core/resolvers/patrimonio.resolver';
 
 @Component({
   selector: 'app-patrimonio',
@@ -23,7 +22,7 @@ export class PatrimonioComponent implements OnInit {
 
   patrimonioId!: number;
 
-  patrimonio: Patrimonio | any = {
+  patrimonioSearchParams: PatrimonioSearchParams = {
     comune: '',
     indirizzo: '',
     statoDisponibilita: '',
@@ -49,21 +48,27 @@ export class PatrimonioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPatrimonioList();
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.currentPage = +params['pagina'] || 0;
+      this.patrimonioSearchParams.comune = params['comune'] || '';
+      this.patrimonioSearchParams.indirizzo = params['indirizzo'] || '';
+      this.patrimonioSearchParams.statoDisponibilita = params['statoDisponibilita'] || '';
+
+      this.getPatrimonioList();
+     
+    });
+ 
   }
 
   getPatrimonioList() {
-    // Load initial data from resolver
-    this.activatedRoute.data
-      .pipe(map((data) => data['patrimonioResolver']))
-      .subscribe((response) => {
-        console.log('Response from resolver:', response);
-        this.patrimonioList = response;
-
-        this.patrimonioService.getTotalItems().subscribe((data) => {
-          this.totalItems = data.nrUnitaImmobiliari;
-          console.log('Total items: ', this.totalItems);
-        });
+    this.activatedRoute.data.subscribe({
+      next: (data) => {
+        const response = data['patrimonioResolver']
+       //  console.log('Response from resolver:', response);
+        this.patrimonioList = response.body;
+        this.totalItems = response.headers.get('X-Paging-TotalRecordCount');
+        //  console.log('Total items: ', this.totalItems);
+      }
       });
   }
 
@@ -107,48 +112,14 @@ export class PatrimonioComponent implements OnInit {
 
   // Filter / Search
   getFilteredData(pageNumber: number) {
-    /*
-    this.patrimonio.comune?.trim()
-    this.patrimonio.indirizzo?.trim()
-    this.patrimonio.statoDisponibilita?.trim()
-    */
-
-    console.log(
-      'Data sent for filtering: ',
-      `${this.patrimonio.comune}${this.patrimonio.indirizzo}${this.patrimonio.statoDisponibilita}`
-    );
-
-    this.patrimonioService
-      .getFilteredPatrimonio(
-        pageNumber,
-        this.patrimonio.comune,
-        this.patrimonio.indirizzo,
-        this.patrimonio.statoDisponibilita
-      )
-      .subscribe({
-        next: (data: HttpResponse<Patrimonio[]> | any) => {
-          console.log('Filtered patrimonio: ', data);
-          // this.patrimonioList = data.body ?? [];
-          this.patrimonioList = data;
-
-          this.totalItems = +(
-            data.headers.get('X-Paging-TotalRecordCount') ?? 0
-          );
-          console.log('Filtered totalItems', this.totalItems);
-        },
-        error: (error: any) => {
-          console.error('Error fetching filtered data:', error);
-        },
-      });
-
     // Update the query parameters to reflect the filter state in the URL
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
         pagina: pageNumber,
-        comune: this.patrimonio.comune,
-        indirizzo: this.patrimonio.indirizzo,
-        statoDisponibilita: this.patrimonio.statoDisponibilita,
+        comune: this.patrimonioSearchParams.comune,
+        indirizzo: this.patrimonioSearchParams.indirizzo,
+        statoDisponibilita: this.patrimonioSearchParams.statoDisponibilita,
       },
       queryParamsHandling: 'merge',
     });
@@ -156,16 +127,11 @@ export class PatrimonioComponent implements OnInit {
 
   // Reset / cancel search
   cancellaCerca() {
-    this.patrimonio = {
+    this.patrimonioSearchParams = {
       comune: '',
       indirizzo: '',
       statoDisponibilita: '',
     };
-
-    // this.getFilteredData(0);
-
-    this.getPatrimonioList();
-
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: { pagina: 0 },

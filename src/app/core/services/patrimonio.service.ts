@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Patrimonio } from '../models/patrimonio.model';
+import { PatrimonioSearchParams } from '../resolvers/patrimonio.resolver';
 
 @Injectable({
   providedIn: 'root',
@@ -12,33 +13,27 @@ export class PatrimonioService {
     @Inject('patrimonioUrl') private patrimonioUrl: string,
   ) {}
 
-  getPatrimonio(pageNumber: number): Observable<Patrimonio[]> {
-    return this.http.get<Patrimonio[]>(`${this.patrimonioUrl}?pagina=${pageNumber}`)
-      .pipe(
-        catchError(error => throwError(() => error))
-      );
-  }
+      getFilteredPatrimonio(params: PatrimonioSearchParams): Observable<any> {
+        let httpParams = new HttpParams()
+          .set('pagina', (params.pagina || 0).toString());
 
-  getFilteredPatrimonio(
-    pageNumber: number,
-    comune: string,
-    indirizzo: string,
-    statoDisponibilita: string
-  ): Observable<Patrimonio[]> {
-    const queryParams = `?pagina=${pageNumber}&comune=${comune}&indirizzo=${indirizzo}&statoDisponibilita=${statoDisponibilita}`;
-    return this.http.get<Patrimonio[]>(`${this.patrimonioUrl}${queryParams}`, { observe: 'response' })
-      .pipe(
-        map(response => response.body ?? []),
-        catchError(error => throwError(() => error))
-      );
-  }
+        if (params.comune) {
+          httpParams = httpParams.set('comune', params.comune);
+        }
+        if (params.indirizzo) {
+          httpParams = httpParams.set('indirizzo', params.indirizzo);
+        }
+        if(params.statoDisponibilita){
+          httpParams = httpParams.set('statoDisponibilita', params.statoDisponibilita);
+        }
 
-  getTotalItems(): Observable<any> {
-    return this.http.get(`${this.patrimonioUrl}/count`)
-      .pipe(
-        catchError(error => throwError(() => error))
-      );
-  }
+          return this.http.get<Patrimonio[]>(this.patrimonioUrl, {
+            params: httpParams,
+            observe: 'response'
+          }).pipe(
+            catchError(error => { throw error; })
+          );
+  }  
 
   getPatrimonioById(id: number): Observable<Patrimonio> {
     return this.http.get<Patrimonio>(`${this.patrimonioUrl}/${id}`)

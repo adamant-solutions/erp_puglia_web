@@ -5,21 +5,31 @@ import {
 } from '@angular/router';
 import { inject } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
-import { Patrimonio } from '../models/patrimonio.model';
+import { Patrimonio, StatoDisponibilita } from '../models/patrimonio.model';
 import { PatrimonioService } from '../services/patrimonio.service';
 
-// patrimonioResolver
-export const patrimonioResolver: ResolveFn<Observable<Patrimonio[]>> = (
+export interface PatrimonioSearchParams {
+  pagina?: number;
+  indirizzo?: string;
+  comune?: string;
+  statoDisponibilita?: StatoDisponibilita | string
+}
+
+export const patrimonioResolver: ResolveFn<Observable<any>> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
   const patrimonioService = inject(PatrimonioService);
 
-  const pageNumber = route.queryParamMap.get('pagina')
-    ? Number(route.queryParamMap.get('pagina'))
-    : 0;
+    const searchParams: PatrimonioSearchParams = {
+      pagina: route.queryParams['pagina'] ? +route.queryParams['pagina'] : 0,
+      indirizzo: route.queryParams['indirizzo'] || '',
+      comune: route.queryParams['comune'] || '',
+      statoDisponibilita: route.queryParams['statoDisponibilita'] || '',
+    };
 
-  return patrimonioService.getPatrimonio(pageNumber).pipe(
+
+  return patrimonioService.getFilteredPatrimonio(searchParams).pipe(
     catchError((error) => {
       console.error('Error fetching patrimonio data:', error);
       return of([]);

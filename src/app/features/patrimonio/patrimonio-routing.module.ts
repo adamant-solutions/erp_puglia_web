@@ -13,7 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: PatrimonioComponent,
-    resolve: { patrimonioResolver: patrimonioResolver },
+    resolve: { patrimonioResolver },
     runGuardsAndResolvers: 'always',
   },
   {
