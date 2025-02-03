@@ -17,4 +17,8 @@ export class MorositaService {
   getAllMorosita(): Observable<Morosita[]> {
     return this.http.get<Morosita[]>(this.morositaUrl);
   }
+  getMorositaById(id: number): Observable<Morosita> {
+    const url = `${this.morositaUrl}/${id}`; 
+    return this.http.get<Morosita>(url);
+  }
 }
