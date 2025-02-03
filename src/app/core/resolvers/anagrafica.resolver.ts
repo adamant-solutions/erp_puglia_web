@@ -8,18 +8,31 @@ import { catchError, Observable, of } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
 import { AnagraficaService } from '../services/anagrafica.service';
 
+
+export interface AnagraficaSearchParams {
+  pagina?: number;
+  codiceFiscale?: string;
+  nome?: string;
+  cognome?: string;
+}
+
+
 // anagraficaResolver
-export const anagraficaResolver: ResolveFn<Observable<Anagrafica[]>> = (
+export const anagraficaResolver: ResolveFn<Observable<any>> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
   const anagraficaService = inject(AnagraficaService);
 
-  const pageNumber = route.queryParamMap.get('pagina')
-    ? Number(route.queryParamMap.get('pagina'))
-    : 0;
+  const searchParams: AnagraficaSearchParams = {    
+    pagina: route.queryParams['pagina'] ? +route.queryParams['pagina'] : 0,
+    codiceFiscale: route.queryParams['codiceFiscale'] || '',
+    nome: route.queryParams['nome'] || '',
+    cognome: route.queryParams['cognome'] || ''
+  };
+ 
 
-  return anagraficaService.getAnagrafica(pageNumber).pipe(
+  return anagraficaService.getFilteredAnagrafica(searchParams).pipe(
     catchError((error) => {
       console.error('Error fetching anagrafica data:', error);
       return of([]);
