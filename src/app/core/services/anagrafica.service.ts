@@ -1,7 +1,8 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { Anagrafica } from '../models/anagrafica.model';
+import { AnagraficaSearchParams } from '../resolvers/anagrafica.resolver';
 
 @Injectable({
   providedIn: 'root',
@@ -20,25 +21,24 @@ export class AnagraficaService {
       catchError(this.handleError)
     );
   }
+  
+  getFilteredAnagrafica(params: AnagraficaSearchParams) {
+    let httpParams = new HttpParams().set('pagina', (params.pagina || 0).toString())
 
+    if (params.codiceFiscale) {
+      httpParams = httpParams.set('codiceFiscale', params.codiceFiscale);
+    }
+    if (params.nome) {
+      httpParams = httpParams.set('nome', params.nome);
+    }
+    if (params.cognome) {
+      httpParams = httpParams.set('cognome', params.cognome);
+    }
 
-  getFilteredAnagrafica(
-    pageNumber: number,
-    nome: string,
-    cognome: string,
-    codiceFiscale: string
-  ): Observable<HttpResponse<Anagrafica[]>> {
-    const queryParams = `?pagina=${pageNumber}&nome=${nome}&cognome=${cognome}&codiceFiscale=${codiceFiscale}`;
-    return this.http.get<Anagrafica[]>(`${this.anagraficaUrl}${queryParams}`, { observe: 'response' }).pipe(
+    return this.http.get<Anagrafica[]>(`${this.anagraficaUrl}`, { params: httpParams, observe: 'response' }).pipe(
       catchError(this.handleError)
     );
-  }
 
-
-  getTotalItems(): Observable<any> {
-    return this.http.get(`${this.anagraficaUrl}/count`).pipe(
-      catchError(this.handleError)
-    );
   }
 
 

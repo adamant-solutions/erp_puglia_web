@@ -6,6 +6,7 @@ import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
 import { HttpResponse } from '@angular/common/http';
+import { AnagraficaSearchParams } from 'src/app/core/resolvers/anagrafica.resolver';
 
 @Component({
   selector: 'app-anagrafica',
@@ -23,13 +24,12 @@ export class AnagraficaComponent implements OnInit {
   selectedAnagraficaId: number | null = null;
   selectedDocumentType: TipoDocumento | null = null;
   currentAnagrafica: Anagrafica | null = null;
-  anagrafica: Anagrafica | any = {
-    cittadino: {
+  anagraficaSearchParams: AnagraficaSearchParams = {
       nome: '',
       cognome: '',
       codiceFiscale: '',
-    },
   };
+
 
   totalItems = 0; // Total number of items, retrieved from backend
   pageSize = 10; // Default number of items per page
@@ -43,23 +43,32 @@ export class AnagraficaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getAnagraficaList();
-  }
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.currentPage = +params['pagina'] || 0;
+      this.anagraficaSearchParams.nome = params['nome'] || '';
+      this.anagraficaSearchParams.cognome = params['cognome'] || '';
+      this.anagraficaSearchParams.codiceFiscale = params['codiceFiscale'] || '';
 
+      this.getAnagraficaList();
+     
+    });
+ 
+  }
   getAnagraficaList() {
     // Load initial data from resolver
     this.activatedRoute.data
       .pipe(map((data) => data['anagraficaResolver']))
       .subscribe((response) => {
         console.log('Response from resolver:', response);
-        this.anagraficaList = response;
-
-        this.anagraficaService.getTotalItems().subscribe((data) => {
-          this.totalItems = data.nrAnagrafica;
+        this.anagraficaList = response.body;
+        this.totalItems = response.headers.get('X-Paging-TotalRecordCount');
+        //this.totalPages = responseData.headers.get('X-Paging-PageCount') 
+  
           console.log('Total items: ', this.totalItems);
-        });
+       
       });
   }
+
 
   onPageChange(event: PageEvent): void {
     // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
@@ -95,58 +104,30 @@ export class AnagraficaComponent implements OnInit {
   }
 
   getFilteredData(pageNumber: number) {
-    if (
-      !(
-        this.anagrafica.cittadino.nome?.trim() ||
-        this.anagrafica.cittadino.cognome?.trim() ||
-        this.anagrafica.cittadino.codiceFiscale?.trim()
-      )
-    ) {
-      console.warn('At least one filter criterion must be provided.');
-      return;
-    }
-
-    console.log(
-      'Data sent for filtering: ',
-      `${this.anagrafica.cittadino.nome}${this.anagrafica.cittadino.cognome}${this.anagrafica.cittadino.codiceFiscale}`
-    );
-
-    this.anagraficaService
-      .getFilteredAnagrafica(
-        pageNumber,
-        this.anagrafica.cittadino.nome,
-        this.anagrafica.cittadino.cognome,
-        this.anagrafica.cittadino.codiceFiscale
-      )
-      .subscribe({
-        next: (data: HttpResponse<Anagrafica[]> | any) => {
-          console.log('Filtered anagrafica: ', data);
-          // this.anagraficaList = data.body ?? [];
-          this.anagraficaList = data;
-
-          this.totalItems = +(
-            data.headers.get('X-Paging-TotalRecordCount') ?? 0
-          );
-          console.log('Filtered totalItems', this.totalItems);
-
-          // Update the query parameters to reflect the filter state in the URL
-          this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: {
-              pagina: pageNumber,
-              nome: this.anagrafica.cittadino.nome,
-              cognome: this.anagrafica.cittadino.cognome,
-              codiceFiscale: this.anagrafica.cittadino.codiceFiscale,
-            },
-            queryParamsHandling: 'merge',
-          });
-        },
-        error: (error: any) => {
-          console.error('Error fetching filtered data:', error);
-        },
-      });
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        pagina: pageNumber,
+        nome: this.anagraficaSearchParams.nome,
+        cognome: this.anagraficaSearchParams.cognome,
+        codiceFiscale: this.anagraficaSearchParams.codiceFiscale,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
+  
+  cancellaCerca() {
+    this.anagraficaSearchParams = {
+      nome: '',
+      cognome: '',
+      codiceFiscale: '',
+    };
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { pagina: 0 },
+    });
+  }
  
 
   downloadDocument() {
@@ -223,28 +204,4 @@ export class AnagraficaComponent implements OnInit {
     });
   }
 
-  cancellaCerca() {
-    /*
-    this.anagrafica.cittadino.nome = '';
-    this.anagrafica.cittadino.cognome = '';
-    this.anagrafica.cittadino.codiceFiscale = '';
-    */
-
-    this.anagrafica = {
-      cittadino: {
-        nome: '',
-        cognome: '',
-        codiceFiscale: '',
-      },
-    };
-
-    // this.getFilteredData(0);
-
-    this.getAnagraficaList();
-
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: { pagina: 0 },
-    });
-  }
 }
