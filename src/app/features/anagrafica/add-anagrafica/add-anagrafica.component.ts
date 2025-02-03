@@ -66,14 +66,14 @@ export class AddAnagraficaComponent implements OnInit {
         nome: ['', Validators.required],
         cognome: ['', Validators.required],
         codiceFiscale: ['', Validators.required],
-        genere: ['', Validators.required],
+        genere: ['M', Validators.required],
         cittadinanza: ['', Validators.required],
         dataDiNascita: ['', [Validators.required]],
 
         residenza: this.formBuilder.group({
           indirizzo: [''],
           civico: [''],
-          cap: [''],
+          cap: ['',[Validators.pattern('^[0-9]{5}$')]],
           comuneResidenza: [''],
           provinciaResidenza: [''],
           statoResidenza: [''],
