@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Documento, Patrimonio } from 'src/app/core/models/patrimonio.model';
+import { Documento, Patrimonio, StatoDisponibilita } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -32,6 +32,14 @@ export class PatrimonioComponent implements OnInit {
   totalItems = 0; // Total number of items, retrieved from backend
   pageSize = 10; // Default number of items per page
   currentPage = 0; // Current page number / index
+
+  statoDisponibilitaList: StatoDisponibilita[] = [
+    StatoDisponibilita.DISPONIBILE,
+    StatoDisponibilita.OCCUPATO,
+    StatoDisponibilita.IN_MANUTENZIONE,
+    StatoDisponibilita.SFITTO,
+    StatoDisponibilita.NON_DISPONIBILE,
+  ];
 
   constructor(
     private activatedRoute: ActivatedRoute,

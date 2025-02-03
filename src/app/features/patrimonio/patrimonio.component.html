@@ -42,21 +42,30 @@
               </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-3 select-wrapper">
               <label class="form-label" for="statoDisponibilita"
                 >Stato disponibilita</label
               >
               <div class="input-group">
-                <input
-                  type="text"
+                <select
                   class="form-control"
                   id="statoDisponibilita"
                   name="statoDisponibilita"
                   [(ngModel)]="patrimonio.statoDisponibilita"
-                />
-                <span class="input-group-text">
-                  <i class="bi bi-toggles"></i>
-                </span>
+                >
+                  <option value="" selected="">
+                    Seleziona uno stato di disponibilità
+                  </option>
+                  <option
+                    *ngFor="let statoDisponibilita of statoDisponibilitaList"
+                    [value]="statoDisponibilita"
+                  >
+                    {{ statoDisponibilita.replace("_", " ") | titlecase }}
+                  </option>
+                </select>
+           <!--      <span class="input-group-text">
+                  <i class="bi bi-caret-down-fill"></i>
+                </span> -->
               </div>
             </div>
 
