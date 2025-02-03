@@ -1,3 +1,179 @@
-<div class="py-4">
-  <h1 id="main-content">{{ pageTitle }}</h1>
-</div>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Morosità'">
+</app-breadcrumbs>
+
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+
+        <!-- Filter -->
+        <div class="col-12 mb-5">
+          <form class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="contrattoId">Contratto ID</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="contrattoId"
+                  name="contrattoId"
+                
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-file-earmark-text"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="stato">Stato</label>
+              <div class="input-group">
+                <select
+                  class="form-select"
+                  id="stato"
+                  name="stato"
+               
+                >
+                  <option value="">Tutti</option>
+                  <option value="ACCERTATA">Accertata</option>
+                  <option value="IN_VERIFICA">In verifica</option>
+                  <option value="PAGATA">Pagata</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="importoMin">Importo Minimo</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="importoMin"
+                  name="importoMin"
+                
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-currency-euro"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="importoMax">Importo Massimo</label>
+              <div class="input-group">
+                <input
+                  type="number"
+                  class="form-control"
+                  id="importoMax"
+                  name="importoMax"
+            
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-currency-euro"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3 search-form-buttons d-flex align-items-end">
+              <button
+                type="button"
+                class="btn btn-primary me-3"
+             
+              >
+                Cerca
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+             
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Aggiungi morosità btn -->
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-3"
+            [routerLink]="['nuova-morosita']"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+            </svg>
+            <span>Aggiungi Morosità</span>
+          </button>
+        </div>
+
+        <!-- Table - all Morosità -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Azioni</th>
+                <th scope="col">Contratto ID</th>
+                <th scope="col">Data Rilevazione</th>
+                <th scope="col">Data Scadenza</th>
+                <th scope="col">Importo Dovuto</th>
+                <th scope="col">Importo Versato</th>
+                <th scope="col">Importo Morosità</th>
+                <th scope="col">Stato</th>
+                <th scope="col">Tentativi Contatto</th>
+                <th scope="col">Modalità Contatto</th>
+                <th scope="col">Esito Contatto</th>
+                <th scope="col">Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let morositaItem of morositaList">
+                <td scope="row">
+                  <a
+                    [routerLink]="['morosita-dettagli', morositaItem.id]"
+                    title="Vedi dettagli"
+                    class="me-3"
+                  >
+                    <i class="bi bi-eye-fill"></i>
+                  </a>
+
+                  <a
+                    [routerLink]="['modifica-morosita', morositaItem.id]"
+                    title="Modifica"
+                    class="me-3"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </td>
+
+                <td>{{ morositaItem.contrattoId }}</td>
+                <td>{{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}</td>
+                <td>{{ morositaItem.dataScadenza | date : "dd/MM/yyyy" }}</td>
+                <td>{{ morositaItem.importoDovuto | currency:'EUR' }}</td>
+                <td>{{ morositaItem.importoVersato | currency:'EUR' }}</td>
+                <td>{{ morositaItem.importoMorosita | currency:'EUR' }}</td>
+                <td>{{ morositaItem.stato }}</td>
+                <td>{{ morositaItem.tentativiContatto }}</td>
+                <td>{{ morositaItem.modalitaContatto }}</td>
+                <td>{{ morositaItem.esitoContatto }}</td>
+                <td>{{ morositaItem.note }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- paginator -->
+        <!-- <mat-paginator
+          #paginator
+          [length]="totalPages"
+          [pageSize]="pageSize"
+          [pageIndex]="currentPage"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator> -->
+      </div>
+    </div>
+  </div>
+</section>
