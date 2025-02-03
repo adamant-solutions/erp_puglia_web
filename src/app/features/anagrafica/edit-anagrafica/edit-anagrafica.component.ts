@@ -67,76 +67,77 @@ export class EditAnagraficaComponent implements OnInit {
 
   initForm() {
     this.modificaForm = this.formBuilder.group({
-      id: [this.anagrafica.id],
-
+      id: [this.anagrafica.id || ''],
       cittadino: this.formBuilder.group({
-        id: [this.anagrafica.cittadino.id],
-
-        nome: [this.anagrafica.cittadino.nome, Validators.required],
-        cognome: [this.anagrafica.cittadino.cognome, Validators.required],
+        id: [this.anagrafica.cittadino?.id || ''],
+        nome: [this.anagrafica.cittadino?.nome || '', Validators.required],
+        cognome: [this.anagrafica.cittadino?.cognome || '', Validators.required],
         codiceFiscale: [
-          this.anagrafica.cittadino.codiceFiscale,
+          this.anagrafica.cittadino?.codiceFiscale || '',
           Validators.required,
         ],
-        genere: [this.anagrafica.cittadino.genere, Validators.required],
+        genere: [this.anagrafica.cittadino?.genere || '', Validators.required],
         cittadinanza: [
-          this.anagrafica.cittadino.cittadinanza,
+          this.anagrafica.cittadino?.cittadinanza || '',
           Validators.required,
         ],
         dataDiNascita: [
-          this.anagrafica.cittadino.dataDiNascita,
+          this.anagrafica.cittadino?.dataDiNascita || '',
           [Validators.required],
         ],
-
         residenza: this.formBuilder.group({
-          id: [this.anagrafica.cittadino.residenza.id],
-
-          indirizzo: [this.anagrafica.cittadino.residenza.indirizzo],
-          civico: [this.anagrafica.cittadino.residenza.civico],
-          cap: [this.anagrafica.cittadino.residenza.cap],
+          id: [this.anagrafica.cittadino?.residenza?.id || ''],
+          indirizzo: [this.anagrafica.cittadino?.residenza?.indirizzo || ''],
+          civico: [this.anagrafica.cittadino?.residenza?.civico || ''],
+          cap: [this.anagrafica.cittadino?.residenza?.cap || ''],
           comuneResidenza: [
-            this.anagrafica.cittadino.residenza.comuneResidenza,
+            this.anagrafica.cittadino?.residenza?.comuneResidenza || '',
           ],
           provinciaResidenza: [
-            this.anagrafica.cittadino.residenza.provinciaResidenza,
+            this.anagrafica.cittadino?.residenza?.provinciaResidenza || '',
           ],
-          statoResidenza: [this.anagrafica.cittadino.residenza.statoResidenza],
+          statoResidenza: [
+            this.anagrafica.cittadino?.residenza?.statoResidenza || '',
+          ],
         }),
         contatti: this.formBuilder.group({
-          id: [this.anagrafica.cittadino.contatti.id],
-
-          telefono: [this.anagrafica.cittadino.contatti.telefono],
-          cellulare: [this.anagrafica.cittadino.contatti.cellulare],
-          email: [this.anagrafica.cittadino.contatti.email],
-          pec: [this.anagrafica.cittadino.contatti.pec],
+          id: [this.anagrafica.cittadino?.contatti?.id || ''],
+          telefono: [this.anagrafica.cittadino?.contatti?.telefono || ''],
+          cellulare: [this.anagrafica.cittadino?.contatti?.cellulare || ''],
+          email: [this.anagrafica.cittadino?.contatti?.email || ''],
+          pec: [this.anagrafica.cittadino?.contatti?.pec || ''],
         }),
         luogo_nascita: this.formBuilder.group({
           comune: [
-            this.anagrafica.cittadino.luogo_nascita.comune,
+            this.anagrafica.cittadino?.luogo_nascita?.comune || '',
             Validators.required,
           ],
-          provincia: [this.anagrafica.cittadino.luogo_nascita.provincia],
-          stato: [this.anagrafica.cittadino.luogo_nascita.stato],
+          provincia: [
+            this.anagrafica.cittadino?.luogo_nascita?.provincia || '',
+          ],
+          stato: [this.anagrafica.cittadino?.luogo_nascita?.stato || ''],
         }),
         documenti_identita: this.formBuilder.array(
-          this.anagrafica.cittadino.documenti_identita
-            ? this.anagrafica.cittadino.documenti_identita.map((doc: any) =>
-                this.formBuilder.group({
-                  id: [doc.id],
-                  tipo_documento: [doc.tipo_documento],
-                  numero_documento: [doc.numero_documento],
-                  data_emissione: [doc.data_emissione ? this.formatDateForBE(doc.data_emissione) : ''],
-                  data_scadenza: [doc.data_scadenza ? this.formatDateForBE(doc.data_scadenza) : ''],
-                  ente_emittente: [doc.ente_emittente],
-                  nomeFile: [doc.nomeFile || ''],
-                  contentType: [doc.contentType || '']
-                })
-              )
-            : []
+          (this.anagrafica.cittadino?.documenti_identita || []).map((doc: any) =>
+            this.formBuilder.group({
+              id: [doc.id || ''],
+              tipo_documento: [doc.tipo_documento || ''],
+              numero_documento: [doc.numero_documento || ''],
+              data_emissione: [
+                doc.data_emissione ? this.formatDateForBE(doc.data_emissione) : '',
+              ],
+              data_scadenza: [
+                doc.data_scadenza ? this.formatDateForBE(doc.data_scadenza) : '',
+              ],
+              ente_emittente: [doc.ente_emittente || ''],
+              nomeFile: [doc.nomeFile || ''],
+              contentType: [doc.contentType || '']
+            })
+          )
         ),
       }),
     });
-
+  
     this.initialFormValues = this.modificaForm.getRawValue();
   }
 
@@ -179,7 +180,7 @@ export class EditAnagraficaComponent implements OnInit {
     
    
     formValue.cittadino.dataDiNascita = moment(formValue.cittadino.dataDiNascita)
-      .format('YYYY-MM-DDTHH:mm:ss.SSSZ');
+      .format('YYYY-MM-DD');
 
  
     if (formValue.cittadino.documenti_identita) {

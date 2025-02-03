@@ -115,14 +115,7 @@ export class AddAnagraficaComponent implements OnInit {
     this.documentiIdentita.removeAt(index);
   }
 
-  // recheck
-  /*
-  dateValidator(control: AbstractControl): ValidationErrors | null {
-    const inputValue = control.value;
-    const isValid = moment(inputValue, 'DD/MM/YYYY', true).isValid();
-    return isValid ? null : { invalidDate: true };
-  }
-  */
+
 
   indietro() {
     this.router.navigate(['/anagrafica']);
@@ -140,13 +133,14 @@ export class AddAnagraficaComponent implements OnInit {
   onSubmit() {
     window.scrollTo(0, 0);
     this.submitted = true;
-
+   
     if (this.addForm.invalid) {
       return;
     }
-
     const formValue = this.addForm.getRawValue();
-    formValue.cittadino.dataDiNascita = this.formatDateForBackend(formValue.cittadino.dataDiNascita);
+    console.log(formValue.cittadino.dataDiNascita)
+
+     formValue.cittadino.dataDiNascita = this.formatDateForBackend(formValue.cittadino.dataDiNascita);
 
   
     if (formValue.cittadino.documenti_identita) {
@@ -175,7 +169,7 @@ export class AddAnagraficaComponent implements OnInit {
     });
 
 
-    this.anagraficaService.addAnagrafica(formValue, formData)
+    this.anagraficaService.addAnagrafica(formData)
       .subscribe({
         next: (response) => {
           this.submitted = false;

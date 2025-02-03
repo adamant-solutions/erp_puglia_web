@@ -20,9 +20,8 @@ import { environment } from 'src/environments/environment';
   ],
   imports: [CommonModule, AnagraficaRoutingModule, SharedModule],
   providers: [
-    AnagraficaService,
-    { provide: 'tokenUrl', useValue: environment.tokenUrl },
-    { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
+    AnagraficaService
+    
   ],
 })
 export class AnagraficaModule {}

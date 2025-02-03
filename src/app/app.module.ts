@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './shared/shared.module';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { DatePipe, registerLocaleData } from '@angular/common';
 
 import { AppComponent } from './app.component';
@@ -12,6 +12,12 @@ import { TabsComponent } from './core/components/header/tabs/tabs.component';
 import { FooterComponent } from './core/components/footer/footer.component';
 
 import localeIt from '@angular/common/locales/it';
+import { authInterceptor } from './core/interceptors/authorization.interceptor';
+import { AuthorizationService } from './core/services/authorization.service';
+import { PatrimonioService } from './core/services/patrimonio.service';
+import { AnagraficaService } from './core/services/anagrafica.service';
+import { ContrattiService } from './core/services/contratti.service';
+import { environment } from 'src/environments/environment';
 registerLocaleData(localeIt);
 
 @NgModule({
@@ -22,7 +28,17 @@ registerLocaleData(localeIt);
     AppRoutingModule,
     SharedModule,
   ],
-  providers: [provideHttpClient(), DatePipe, { provide: LOCALE_ID, useValue: 'it' },],
+  providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'it' },
+    provideHttpClient(withInterceptors([authInterceptor])),
+  AuthorizationService,
+  PatrimonioService,
+  AnagraficaService,
+  ContrattiService,
+  { provide: 'tokenUrl', useValue: environment.tokenUrl },
+  { provide: 'patrimonioUrl', useValue: environment.patrimonioUrl },
+  { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
+  { provide: 'contrattiUrl', useValue: environment.contrattiUrl },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
