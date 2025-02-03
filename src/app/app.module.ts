@@ -38,6 +38,7 @@ registerLocaleData(localeIt);
   { provide: 'patrimonioUrl', useValue: environment.patrimonioUrl },
   { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
   { provide: 'contrattiUrl', useValue: environment.contrattiUrl },
+  {provide: 'morositaUrl', useValue:environment.morositaUrl}
   ],
   bootstrap: [AppComponent],
 })
