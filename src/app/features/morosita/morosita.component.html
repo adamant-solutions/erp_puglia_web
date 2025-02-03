@@ -7,7 +7,7 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
-        <!-- Filter -->
+ 
         <div class="col-12 mb-5">
           <form class="row g-3">
             <div class="col-md-3">
@@ -35,10 +35,14 @@
                   name="stato"
                
                 >
-                  <option value="">Tutti</option>
+                  <option value="">Intimata</option>
                   <option value="ACCERTATA">Accertata</option>
-                  <option value="IN_VERIFICA">In verifica</option>
-                  <option value="PAGATA">Pagata</option>
+                  <option value="IN_VERIFICA">In Rateizzazione</option>
+                  <option value="PAGATA">In Riscossione</option>
+                  <option value="PAGATA">In Contenzioso</option>
+                  <option value="PAGATA">Inesigibile</option>
+                  <option value="PAGATA">Estinta</option>
+                  <option value="PAGATA">Sospesa</option>
                 </select>
               </div>
             </div>
@@ -121,10 +125,10 @@
                 <th scope="col">Importo Versato</th>
                 <th scope="col">Importo Morosità</th>
                 <th scope="col">Stato</th>
-                <th scope="col">Tentativi Contatto</th>
-                <th scope="col">Modalità Contatto</th>
-                <th scope="col">Esito Contatto</th>
-                <th scope="col">Note</th>
+                <!-- <th scope="col">Tentativi Contatto</th> -->
+                <!-- <th scope="col">Modalità Contatto</th> -->
+                <!-- <th scope="col">Esito Contatto</th> -->
+                <!-- <th scope="col">Note</th> -->
               </tr>
             </thead>
             <tbody>
@@ -154,10 +158,10 @@
                 <td>{{ morositaItem.importoVersato | currency:'EUR' }}</td>
                 <td>{{ morositaItem.importoMorosita | currency:'EUR' }}</td>
                 <td>{{ morositaItem.stato }}</td>
-                <td>{{ morositaItem.tentativiContatto }}</td>
-                <td>{{ morositaItem.modalitaContatto }}</td>
-                <td>{{ morositaItem.esitoContatto }}</td>
-                <td>{{ morositaItem.note }}</td>
+                <!-- <td>{{ morositaItem.tentativiContatto }}</td> -->
+                <!-- <td>{{ morositaItem.modalitaContatto }}</td> -->
+                <!-- <td>{{ morositaItem.esitoContatto }}</td> -->
+                <!-- <td>{{ morositaItem.note }}</td> -->
               </tr>
             </tbody>
           </table>
