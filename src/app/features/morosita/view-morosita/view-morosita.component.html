@@ -44,67 +44,39 @@
           </div>
 
      
-          <div class="accordion accordion-background-hover" id="accordionMorosita">
-         
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingTentativi">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#collapseTentativi" aria-expanded="true" 
-                        aria-controls="collapseTentativi">
-                  Tentativi di Contatto
-                </button>
-              </h2>
-              <div id="collapseTentativi" class="accordion-collapse collapse show" 
-                   data-bs-parent="#accordionMorosita" role="region" 
-                   aria-labelledby="headingTentativi">
-                <div class="accordion-body">
-                  <div class="row">
-                    <div class="col-md-4 mb-3">
-                      <label class="form-label">Tentativi Effettuati</label>
-                      <input type="text" class="form-control" 
-                             formControlName="tentativiContatto" readonly>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                      <label class="form-label">Modalità Contatto</label>
-                      <input type="text" class="form-control" 
-                             formControlName="modalitaContatto" readonly>
-                    </div>
-
-                    <div class="col-md-4 mb-3">
-                      <label class="form-label">Esito Contatto</label>
-                      <input type="text" class="form-control" 
-                             formControlName="esitoContatto" readonly>
-                    </div>
-                  </div>
-                </div>
+          <div class="col-12 mt-4">
+            <h3 class="mb-3">Tentativi di Contatto</h3>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Tentativi Effettuati</label>
+                <input type="text" class="form-control" 
+                      formControlName="tentativiContatto" readonly>
               </div>
-            </div>
 
-        
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingNote">
-                <button class="accordion-button collapsed" type="button" 
-                        data-bs-toggle="collapse" data-bs-target="#collapseNote" 
-                        aria-expanded="false" aria-controls="collapseNote">
-                  Note
-                </button>
-              </h2>
-              <div id="collapseNote" class="accordion-collapse collapse" 
-                   data-bs-parent="#accordionMorosita" role="region" 
-                   aria-labelledby="headingNote">
-                <div class="accordion-body">
-                  <div class="row">
-                    <div class="col-12 mb-3">
-                      <label class="form-label">Note</label>
-                      <textarea class="form-control" formControlName="note" readonly></textarea>
-                    </div>
-                  </div>
-                </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Modalità Contatto</label>
+                <input type="text" class="form-control" 
+                      formControlName="modalitaContatto" readonly>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Esito Contatto</label>
+                <input type="text" class="form-control" 
+                      formControlName="esitoContatto" readonly>
               </div>
             </div>
           </div>
 
+          <!-- Note Section -->
+          <div class="col-12 mt-4">
+            <h3 class="mb-3">Note</h3>
+            <div class="row">
+              <div class="col-12 mb-3">
+                <label class="form-label">Note</label>
+                <textarea class="form-control" formControlName="note" readonly></textarea>
+              </div>
+            </div>
+          </div>
       
           <div class="col-12 mt-5">
             <button type="button" class="btn btn-outline-primary" (click)="indietroM()">
