@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./view-interventi.component.css']
 })
 export class ViewInterventiComponent {
-
+  pageTitle: string = 'Interventi';
+  breadcrumbList = [
+    { label: 'ERP - di Regione Puglia', link: '/' },
+    { label: 'Manutenzione', link: '/manutenzione' },
+  ];
 }

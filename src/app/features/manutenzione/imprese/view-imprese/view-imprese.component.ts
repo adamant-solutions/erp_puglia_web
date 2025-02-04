@@ -6,5 +6,17 @@ import { Component } from '@angular/core';
   styleUrls: ['./view-imprese.component.css']
 })
 export class ViewImpreseComponent {
+ 
+  pageTitle: string = 'Imprese';
+  breadcrumbList = [
+    { label: 'ERP - di Regione Puglia', link: '/' },
+    { label: 'Manutenzione', link: '/manutenzione' },
+  ];
 
+
+  constructor() {
+
+  }
+  ngOnInit() {
+  }
 }
