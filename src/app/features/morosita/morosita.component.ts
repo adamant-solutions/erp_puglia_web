@@ -1,22 +1,25 @@
-import {Component} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Morosita, MorositaSearchParams } from 'src/app/core/models/morosita.model';
+import { ModelLight } from 'src/app/core/models/contratto.model';
 
 @Component({
   selector: 'app-morosita',
   templateUrl: './morosita.component.html',
   styleUrls: ['./morosita.component.css'],
 })
-export class MorositaComponent {
+export class MorositaComponent implements OnInit {
   pageTitle: string = 'Morosità';
   morositaList: Morosita[] = [];
-  searchForm:FormGroup
+  searchForm: FormGroup;
   breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
   currentPage = 0;
   pageSize = 10;
   totalItems = 0;
+  contrattiLight: ModelLight[] = [];
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -29,8 +32,12 @@ export class MorositaComponent {
       importoMax: ['']
     });
   }
+
   ngOnInit(): void {
     this.route.data.subscribe((data) => {
+   
+      this.contrattiLight = data['contrattiLightResolver'] || [];
+
       if (data['morositaResolver']) {
         this.morositaList = data['morositaResolver'] || [];
         this.totalItems = data['morositaResolver'].totalElements || 0;
@@ -39,7 +46,7 @@ export class MorositaComponent {
 
     this.route.queryParams.subscribe(params => {
       this.currentPage = Number(params['pagina']) || 0;
-      this.pageSize = Number(params['dimensionePagina']) || 10;
+     
       
       this.searchForm.patchValue({
         contrattoId: params['contrattoId'] || '',
@@ -49,24 +56,34 @@ export class MorositaComponent {
       });
     });
   }
+
   onSearch(): void {
     const searchParams: MorositaSearchParams = {
-      contrattoId: this.searchForm.get('contrattoId')?.value,
-      stato: this.searchForm.get('stato')?.value,
-      importoMinimo: this.searchForm.get('importoMin')?.value,
-      importoMassimo: this.searchForm.get('importoMax')?.value
+      contrattoId: this.searchForm.get('contrattoId')?.value 
+        ? this.searchForm.get('contrattoId')?.value.toString() 
+        : "",
+      stato: this.searchForm.get('stato')?.value || "",
+      importoMinimo: this.searchForm.get('importoMin')?.value 
+        ? this.searchForm.get('importoMin')?.value.toString() 
+        : "",
+      importoMassimo: this.searchForm.get('importoMax')?.value 
+        ? this.searchForm.get('importoMax')?.value.toString() 
+        : ""
     };
-
+  
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        ...searchParams,
+        ...Object.entries(searchParams)
+          .filter(([_, value]) => value !== undefined)
+          .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}),
         pagina: 0,
-        dimensionePagina: this.pageSize
+        
       },
       queryParamsHandling: 'merge'
     });
   }
+
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex;
     this.pageSize = event.pageSize;
@@ -75,22 +92,12 @@ export class MorositaComponent {
       relativeTo: this.route,
       queryParams: {
         pagina: this.currentPage,
-        dimensionePagina: this.pageSize
+     
       },
       queryParamsHandling: 'merge'
     });
   }
+
   onReset(): void {
     this.searchForm.reset();
-    this.currentPage = 0;
-    
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {
-        pagina: 0,
-        dimensionePagina: this.pageSize
-      }
-    });
-  }
-}
-
+    this.currentPage = 0; } }

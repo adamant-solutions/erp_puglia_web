@@ -14,6 +14,7 @@ export interface Morosita {
   }
   
   export interface MorositaSearchParams {
+    pagina?: number;
     contrattoId?: string;
     stato?: string;
     importoMinimo?: string;

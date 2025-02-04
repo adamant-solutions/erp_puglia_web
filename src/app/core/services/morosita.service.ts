@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Morosita, MorositaSearchParams } from '../models/morosita.model'; 
+import { ModelLight } from '../models/contratto.model';
 
 @Injectable({
   providedIn: 'root',
@@ -10,14 +11,15 @@ export class MorositaService {
 
 
   constructor(private http: HttpClient,
-    @Inject('morositaUrl') private morositaUrl: string
+    @Inject('morositaUrl') private morositaUrl: string,
+    @Inject('contrattiUrl') private contrattiUrl: string
   ) {}
 
  
-  getAllMorosita(page: number = 0, size: number = 10): Observable<any> {
+  getAllMorosita(searchMorosita:MorositaSearchParams): Observable<any> {
     let params = new HttpParams()
-      .set('pagina', page.toString())
-      .set('dimensionePagina', size.toString());
+      .set('pagina', searchMorosita.pagina || 0)
+    
 
     return this.http.get<any>(this.morositaUrl, { params });
   }
@@ -33,11 +35,10 @@ export class MorositaService {
   }
 
 
-  searchMorosita(params: MorositaSearchParams, page: number = 0, size: number = 10): Observable<any> {
+  searchMorosita(params: MorositaSearchParams): Observable<any> {
     let queryParams = new HttpParams()
-      .set('pagina', page.toString())
-      .set('dimensionePagina', size.toString());
-
+      .set('pagina', params.pagina?.toString() || '0');
+  
     if (params.contrattoId) {
       queryParams = queryParams.set('contrattoId', params.contrattoId);
     }
@@ -50,7 +51,11 @@ export class MorositaService {
     if (params.importoMassimo) {
       queryParams = queryParams.set('importoMassimo', params.importoMassimo);
     }
-
+  
     return this.http.get<any>(this.morositaUrl, { params: queryParams });
+  }
+
+  getContrattiLight(): Observable<ModelLight[]> {
+    return this.http.get<ModelLight[]>(`${this.contrattiUrl}/light`);
   }
 }

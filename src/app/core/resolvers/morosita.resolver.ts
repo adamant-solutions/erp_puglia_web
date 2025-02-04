@@ -2,22 +2,11 @@ import { ResolveFn, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular
 import { MorositaService } from '../services/morosita.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Morosita } from '../models/morosita.model';
+import { Morosita, MorositaSearchParams } from '../models/morosita.model';
 import { inject } from '@angular/core';
+import { ModelLight } from '../models/contratto.model';
 
-export const morositaResolver: ResolveFn<any> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): Observable<any> => {
-  const page = Number(route.queryParamMap.get('pagina')) || 0;
-  const size = Number(route.queryParamMap.get('dimensionePagina')) || 10;
-  
-  return inject(MorositaService).getAllMorosita(page, size).pipe(
-    catchError((error) => {
-      return of(null);
-    })
-  );
-};
+
 
 export const morositaByIdResolver: ResolveFn<Morosita | null> = (
   route: ActivatedRouteSnapshot,
@@ -39,23 +28,30 @@ export const morositaByIdResolver: ResolveFn<Morosita | null> = (
 };
 
 
-export const morositaSearchResolver: ResolveFn<any> = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): Observable<any> => {
-  const page = Number(route.queryParamMap.get('pagina')) || 0;
-  const size = Number(route.queryParamMap.get('dimensionePagina')) || 10;
-  
-  const searchParams = {
-    contrattoId: route.queryParamMap.get('contrattoId') || "",
-    stato: route.queryParamMap.get('stato') || "",
-    importoMinimo: route.queryParamMap.get('importoMinimo') || "",
-    importoMassimo: route.queryParamMap.get('importoMassimo') || ""
+export const morositaResolver: ResolveFn<any> = (route) => {
+  const morositaService = inject(MorositaService);
+
+  const searchParams: MorositaSearchParams = {
+    pagina: Number(route.queryParamMap.get('pagina')) || 0,
+    contrattoId: route.queryParamMap.get('contrattoId') || undefined,
+    stato: route.queryParamMap.get('stato') || undefined,
+    importoMinimo: route.queryParamMap.get('importoMinimo') || undefined,
+    importoMassimo: route.queryParamMap.get('importoMassimo') || undefined
   };
 
-  return inject(MorositaService).searchMorosita(searchParams, page, size).pipe(
+  return morositaService.searchMorosita(searchParams).pipe(
     catchError((error) => {
+     
       return of(null);
+    })
+  );
+};
+
+export const contrattiLightResolver: ResolveFn<ModelLight[]> = (): Observable<ModelLight[]> => {
+  return inject(MorositaService).getContrattiLight().pipe(
+    catchError((error) => {
+     
+      return of([]);
     })
   );
 };

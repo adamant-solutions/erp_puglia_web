@@ -11,22 +11,20 @@
         <div class="col-12 mb-5">
           <form [formGroup]="searchForm" class="row g-3" (ngSubmit)="onSearch()">
             <div class="col-md-3">
-              <label class="form-label" for="contrattoId">Contratto ID</label>
-              <div class="input-group">
-                <input
-                  type="number"
-                  class="form-control"
-                  id="contrattoId"
-                  formControlName="contrattoId"
-                  placeholder="Inserisci ID contratto"
-                />
-                <span class="input-group-text">
-                  <i class="bi bi-file-earmark-text"></i>
-                </span>
-              </div>
-              <div class="invalid-feedback" *ngIf="searchForm.get('contrattoId')?.errors?.['min']">
-                Il valore deve essere maggiore di 0
-              </div>
+              <label class="form-label" for="contrattoId">Contratto</label>
+              <select 
+                class="form-control" 
+                id="contrattoId" 
+                formControlName="contrattoId"
+              >
+                <option value="">Seleziona un contratto</option>
+                <option 
+                  *ngFor="let contratto of contrattiLight" 
+                  [value]="contratto.id"
+                >
+                  {{ contratto.descrizione }}
+                </option>
+              </select>
             </div>
 
             <div class="col-md-3">
@@ -128,7 +126,7 @@
           <div class="col-12 d-flex justify-content-end">
             <button
               class="btn btn-primary btn-icon btn-xs mb-3"
-              [routerLink]="['nuova-morosita']"
+              [routerLink]="['add-morosita']"
             >
               <svg class="icon icon-white me-1">
                 <use href="assets/svg/sprites.svg#it-plus-circle"></use>
@@ -137,7 +135,7 @@
             </button>
           </div>
 
-          <!-- Results Table -->
+        
           <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered">
               <thead>
@@ -169,6 +167,13 @@
                       class="me-3"
                     >
                       <i class="bi bi-pencil"></i>
+                    </a>
+                    <a
+                      [routerLink]="[]"
+                      title="Modifica"
+                      class="me-3"
+                    >
+                      <i class="bi bi-trash"></i>
                     </a>
                   </td>
                   <td scope="row">{{ morositaItem.contrattoId }}</td>

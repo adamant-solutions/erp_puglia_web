@@ -1,15 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MorositaComponent} from './morosita.component';
-import {  morositaByIdResolver, morositaResolver } from 'src/app/core/resolvers/morosita.resolver';
+import {  contrattiLightResolver, morositaByIdResolver, morositaResolver } from 'src/app/core/resolvers/morosita.resolver';
 import { ViewMorositaComponent } from './view-morosita/view-morosita.component';
 import { EditMorositaComponent } from './edit-morosita/edit-morosita.component';
+import { AddMorositaComponent } from './add-morosita/add-morosita.component';
 const routes:Routes = [
   {
      path: '',
      component: MorositaComponent,
      resolve: {
-       morositaResolver,
+      morositaResolver,
+      contrattiLightResolver
        
      },
      runGuardsAndResolvers: 'always',
@@ -28,6 +30,10 @@ const routes:Routes = [
     resolve: {
       morositaByIdResolver
     }
+  },
+  {
+    path:'add-morosita',
+    component:AddMorositaComponent
   }
 ]
 
