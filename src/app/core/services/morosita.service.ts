@@ -58,4 +58,8 @@ export class MorositaService {
   getContrattiLight(): Observable<ModelLight[]> {
     return this.http.get<ModelLight[]>(`${this.contrattiUrl}/light`);
   }
+
+  addMorosita(morosita: Morosita): Observable<any> {
+    return this.http.post<any>(this.morositaUrl, morosita);
+  }
 }

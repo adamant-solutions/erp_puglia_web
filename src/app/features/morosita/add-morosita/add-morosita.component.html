@@ -1,1 +1,117 @@
-<p>add-morosita works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="pageTitle"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mb-5">{{pageTitle}}</h1>
+
+        <form [formGroup]="morositaForm" (ngSubmit)="onSubmit()" class="row g-3">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Contratto*</label>
+                <div class="input-group">
+                  <select class="form-select" formControlName="contrattoId"
+                    [class.is-invalid]="submitted && morositaForm.get('contrattoId')?.invalid">
+                    <option [ngValue]="null">Seleziona contratto</option>
+                    <option *ngFor="let contratto of contratti" [value]="contratto.id">
+                      {{contratto.descrizione}}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+              </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Rilevazione*</label>
+            <input type="date" class="form-control" formControlName="dataRilevazione"
+              [class.is-invalid]="submitted && morositaForm.get('dataRilevazione')?.invalid">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Scadenza*</label>
+            <input type="date" class="form-control" formControlName="dataScadenza"
+              [class.is-invalid]="submitted && morositaForm.get('dataScadenza')?.invalid">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Importo Dovuto*</label>
+            <input type="number" class="form-control" formControlName="importoDovuto"
+              [class.is-invalid]="submitted && morositaForm.get('importoDovuto')?.invalid">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Importo Versato*</label>
+            <input type="number" class="form-control" formControlName="importoVersato"
+              [class.is-invalid]="submitted && morositaForm.get('importoVersato')?.invalid">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Importo Morosità*</label>
+            <input type="number" class="form-control" formControlName="importoMorosita"
+              [class.is-invalid]="submitted && morositaForm.get('importoMorosita')?.invalid">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Stato*</label>
+            <div class="input-group">
+              <select class="form-select" formControlName="stato"
+                [class.is-invalid]="submitted && morositaForm.get('stato')?.invalid">
+                <option value="">Seleziona stato</option>
+             
+                <option *ngFor="let stato of statoOptions" [value]="stato.value">
+                  {{ stato.label }}
+                </option>
+              </select>
+              <span class="input-group-text">
+                <i class="bi bi-caret-down-fill"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Tentativi Contatto*</label>
+            <input type="number" class="form-control" formControlName="tentativiContatto"
+              [class.is-invalid]="submitted && morositaForm.get('tentativiContatto')?.invalid">
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Modalità Contatto</label>
+            <div class="input-group">
+              <select class="form-select" formControlName="modalitaContatto">
+                <option value="">Seleziona modalità</option>
+                <option *ngFor="let modalita of modalitaContattoOptions" [value]="modalita">
+                  {{modalita}}
+                </option>
+              </select>
+              <span class="input-group-text">
+                <i class="bi bi-caret-down-fill"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-md-8 mb-3">
+            <label class="form-label">Note</label>
+            <textarea class="form-control" formControlName="note" rows="3"></textarea>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Esito Contatto</label>
+            <input type="text" class="form-control" formControlName="esitoContatto">
+          </div>
+
+          <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary me-2">
+              <i class="bi bi-save me-1"></i>Salva
+            </button>
+            <button type="button" class="btn btn-outline-secondary" routerLink="/morosita">
+              <i class="bi bi-x-circle me-1"></i>Annulla
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>

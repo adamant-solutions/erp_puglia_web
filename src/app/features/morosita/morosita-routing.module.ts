@@ -33,7 +33,8 @@ const routes:Routes = [
   },
   {
     path:'add-morosita',
-    component:AddMorositaComponent
+    component:AddMorositaComponent,
+    resolve:{contratti:contrattiLightResolver}
   }
 ]
 
