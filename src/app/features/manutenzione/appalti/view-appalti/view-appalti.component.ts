@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./view-appalti.component.css']
 })
 export class ViewAppaltiComponent {
-
+  pageTitle: string = 'Richieste manutenzione';
+  breadcrumbList = [
+    { label: 'ERP - di Regione Puglia', link: '/' },
+    { label: 'Manutenzione', link: '/manutenzione' },
+  ];
 }
