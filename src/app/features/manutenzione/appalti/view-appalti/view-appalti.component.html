@@ -5,7 +5,162 @@
       <div class="row">
         <div class="col-12">
           <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+              <!-- Filter -->
+              <div class="col-12 mb-5">
+                <form class="row g-3">
+                  <div class="col-md-3">
+                    <label class="form-label" for="codiceCIG">Codice CIG</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="codiceCIG"
+                        name="codiceCIG"
+                        [(ngModel)]="appaltiSearchParams.codiceCIG"
+                      />
+                      <span class="input-group-text">
+                        <i class="bi bi-ticket-detailed"></i>
+                      </span>
+                    </div>
+                  </div>
 
+                  <div class="col-md-3">
+                    <label class="form-label" for="codiceCUP">Codice CUP</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="codiceCUP"
+                        name="codiceCUP"
+                        [(ngModel)]="appaltiSearchParams.codiceCUP"
+                      />
+                      <span class="input-group-text">
+                        <i class="bi bi-ticket-detailed"></i>
+                      </span>
+                    </div>
+                  </div>
+      
+                  <div class="col-md-3 select-wrapper">
+                    <label class="form-label" for="stato"
+                      >Stato</label
+                    >
+                    <div class="input-group">
+                      <select
+                        class="form-control"
+                        id="stato"
+                        name="stato"
+                        [(ngModel)]="appaltiSearchParams.stato"
+                      >
+                        <option value="" selected="">
+                          Seleziona stato
+                        </option>
+                        <option
+                          *ngFor="let stato of statoList"
+                          [value]="stato"
+                        >
+                          {{ stato.replace("_", " ") | titlecase }}
+                        </option>
+                      </select>
+                 <!--      <span class="input-group-text">
+                        <i class="bi bi-caret-down-fill"></i>
+                      </span> -->
+                    </div>
+                  </div>
+      
+
+      
+                  <div class="col-md-3 search-form-buttons d-flex align-items-end">
+                    <button
+                      type="button"
+                      class="btn btn-primary me-3"
+                      (click)="getFilteredData(0)"
+                    >
+                      Cerca
+                    </button>
+      
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      (click)="cancellaCerca()"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                </form>
+              </div>
+      
+              <!-- Aggiungi btn -->
+              <div class="col-12 d-flex justify-content-end">
+                <button
+                  class="btn btn-primary btn-icon btn-xs mb-3"
+                  [routerLink]="['nuovo-appalto']"
+                >
+                  <svg class="icon icon-white me-1">
+                    <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+                  </svg>
+                  <span>Aggiungi appalto</span>
+                </button>
+              </div>
+              <!-- Table -->
+              <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Azioni</th>
+                      <th scope="col">Codice CIG</th>
+                      <th scope="col">Codice CUP</th>
+                      <th scope="col">Tipo Appalto</th>
+                      <th scope="col">Stato</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of appaltiList">
+                      <td scope="row">
+                          <a
+                            [routerLink]="['appalto-dettagli', item.id]"
+                            title="Vedi dettagli"
+                            class="text-decoration-none me-3"
+                          >
+                            <i class="bi bi-eye-fill align-middle"></i>
+                          </a>
+                      
+                          <a
+                            [routerLink]="['modifica-appalto', item.id]"
+                            title="Modifica"
+                            class="text-decoration-none me-3"
+                          >
+                            <i class="bi bi-pencil align-middle"></i>
+                          </a>
+                                 <!--    (click)="deletePatrimonioModal(item)" -->
+                          <a
+              
+                            title="Cancella"
+                            class="text-decoration-none me-3"
+                            style="cursor: pointer; color: #0052a3"
+                          >
+                            <i class="bi bi-trash3 align-middle"></i>
+                          </a>         
+                      </td>
+                      <td scope="row">{{ item.codiceCIG }}</td>
+                      <td scope="row">{{ item.codiceCUP }}</td>
+                      <td scope="row">{{ item.tipoAppalto }}</td>
+                      <td scope="row">{{ item.stato }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+      
+              <!-- paginator -->
+              <mat-paginator
+                #paginator
+                [length]="totalItems"
+                [pageSize]="pageSize"
+                [pageIndex]="currentPage"
+                (page)="onPageChange($event)"
+                aria-label="Select page"
+              >
+              </mat-paginator>
+      
         </div>
       </div>
     </div>

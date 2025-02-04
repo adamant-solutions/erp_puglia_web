@@ -79,16 +79,16 @@ export enum PrioritaIntervento {
 
 
 export enum StatoAppalto {
-    IN_PROGRAMMAZIONE,    // Fase iniziale di pianificazione
-    IN_PROGETTAZIONE,     // Fase di progettazione tecnica
-    BANDO_IN_CORSO,       // Pubblicazione e gestione del bando
-    VALUTAZIONE_OFFERTE,  // Analisi delle offerte ricevute
-    AGGIUDICATO,          // Appalto assegnato
-    IN_ESECUZIONE,        // Lavori in corso
-    SOSPESO,              // Lavori temporaneamente sospesi
-    COLLAUDATO,           // Collaudo tecnico completato
-    CHIUSO,               // Procedura completata
-    ANNULLATO             // Procedura annullata
+    IN_PROGRAMMAZIONE = "IN_PROGRAMMAZIONE",    // Fase iniziale di pianificazione
+    IN_PROGETTAZIONE = "IN_PROGETTAZIONE",     // Fase di progettazione tecnica
+    BANDO_IN_CORSO = "BANDO_IN_CORSO",       // Pubblicazione e gestione del bando
+    VALUTAZIONE_OFFERTE = "VALUTAZIONE_OFFERTE",  // Analisi delle offerte ricevute
+    AGGIUDICATO = "AGGIUDICATO",          // Appalto assegnato
+    IN_ESECUZIONE = "IN_ESECUZIONE",        // Lavori in corso
+    SOSPESO = "SOSPESO",              // Lavori temporaneamente sospesi
+    COLLAUDATO = "COLLAUDATO",           // Collaudo tecnico completato
+    CHIUSO = "CHIUSO",               // Procedura completata
+    ANNULLATO = "ANNULLATO"            // Procedura annullata
 }
 
 
