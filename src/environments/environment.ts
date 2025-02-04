@@ -10,7 +10,8 @@ export const environment = {
   patrimonioUrl: API_BASE_URL + 'patrimonio',
   anagraficaUrl: API_BASE_URL + 'anagrafica',
   contrattiUrl: API_BASE_URL + 'contratti',
-  morositaUrl: API_BASE_URL + 'morosita'
+  morositaUrl: API_BASE_URL + 'morosita',
+  manutenzioneUrl: API_BASE_URL + 'manutenzione'
 };
 
 /*
