@@ -6,6 +6,137 @@
         <div class="col-12">
           <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
+               <!-- Filter -->
+         <div class="col-12 mb-5">
+          <form class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label" for="ragioneSociale">Ragione Sociale</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="ragioneSociale"
+                  name="ragioneSociale"
+                  [(ngModel)]="impreseSearchParams.ragioneSociale"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-buildings"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label" for="partitaIva">Partita Iva</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="partitaIva"
+                  name="partitaIva"
+                  [(ngModel)]="impreseSearchParams.partitaIva"
+                />
+                <span class="input-group-text">
+                  <i class="bi bi-cash"></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-3 search-form-buttons d-flex align-items-end">
+              <button
+                type="button"
+                class="btn btn-primary me-3"
+                (click)="getFilteredData(0)"
+              >
+                Cerca
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary"
+                (click)="cancellaCerca()"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Aggiungi btn -->
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-3"
+            [routerLink]="['nuova-imprese']"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+            </svg>
+            <span>Aggiungi imprese</span>
+          </button>
+        </div>
+        <!-- Table -->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Azioni</th>
+                <th scope="col">Ragione Sociale</th>
+                <th scope="col">Partita Iva</th>
+                <th scope="col">Codice Fiscale</th>
+                <th scope="col">Indirizzo</th>
+                <th scope="col">Citta</th>            
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let impreseItem of impreseList">
+                <td scope="row">
+                 
+                    <a
+                      [routerLink]="['imprese-dettagli', impreseItem.id]"
+                      title="Vedi dettagli"
+                      class="text-decoration-none me-3"
+                    >
+                      <i class="bi bi-eye-fill align-middle"></i>
+                    </a>
+                
+                    <a
+                      [routerLink]="['modifica-imprese', impreseItem.id]"
+                      title="Modifica"
+                      class="text-decoration-none me-3"
+                    >
+                      <i class="bi bi-pencil align-middle"></i>
+                    </a>
+                           <!--    (click)="deletePatrimonioModal(impreseItem)" -->
+                    <a
+        
+                      title="Cancella"
+                      class="text-decoration-none me-3"
+                      style="cursor: pointer; color: #0052a3"
+                    >
+                      <i class="bi bi-trash3 align-middle"></i>
+                    </a>
+                
+                </td>
+                <td scope="row">{{ impreseItem.ragioneSociale }}</td>
+                <td scope="row">{{ impreseItem.partitaIva }}</td>
+                <td scope="row">{{ impreseItem.codiceFiscale }}</td>
+                <td scope="row">{{ impreseItem.indirizzo }}</td>
+                <td scope="row">{{ impreseItem.citta }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- paginator -->
+        <mat-paginator
+          #paginator
+          [length]="totalItems"
+          [pageSize]="pageSize"
+          [pageIndex]="currentPage"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+
         </div>
       </div>
     </div>
