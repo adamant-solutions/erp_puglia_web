@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { Morosita, MorositaSearchParams } from '../models/morosita.model'; 
 import { ModelLight } from '../models/contratto.model';
 
@@ -62,4 +62,12 @@ export class MorositaService {
   addMorosita(morosita: Morosita): Observable<any> {
     return this.http.post<any>(this.morositaUrl, morosita);
   }
+
+  deleteMorosita(id: number): Observable<any> {
+    return this.http.delete(`${this.morositaUrl}/${id}`).pipe(
+      catchError(error => throwError(() => new Error('Failed to delete morosita')))
+    );
+  }
+  
+
 }

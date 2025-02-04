@@ -4,6 +4,8 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Morosita, MorositaSearchParams } from 'src/app/core/models/morosita.model';
 import { ModelLight } from 'src/app/core/models/contratto.model';
+import { MorositaService } from 'src/app/core/services/morosita.service';
+import { Modal } from 'bootstrap';
 
 @Component({
   selector: 'app-morosita',
@@ -19,11 +21,14 @@ export class MorositaComponent implements OnInit {
   pageSize = 10;
   totalItems = 0;
   contrattiLight: ModelLight[] = [];
+  morositaToDelete: number | null = null;
+  private deleteModal: Modal | null = null;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private morositaService: MorositaService
   ) {
     this.searchForm = this.fb.group({
       contrattoId: [''],
@@ -34,10 +39,20 @@ export class MorositaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.data.subscribe((data) => {
-   
-      this.contrattiLight = data['contrattiLightResolver'] || [];
+    this.loadData();
+    this.initializeModal();
+  }
 
+  private initializeModal(): void {
+    const modalElement = document.getElementById('deleteModal');
+    if (modalElement) {
+      this.deleteModal = new Modal(modalElement);
+    }
+  }
+
+  private loadData(): void {
+    this.route.data.subscribe((data) => {
+      this.contrattiLight = data['contrattiLightResolver'] || [];
       if (data['morositaResolver']) {
         this.morositaList = data['morositaResolver'] || [];
         this.totalItems = data['morositaResolver'].totalElements || 0;
@@ -46,8 +61,6 @@ export class MorositaComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.currentPage = Number(params['pagina']) || 0;
-     
-      
       this.searchForm.patchValue({
         contrattoId: params['contrattoId'] || '',
         stato: params['stato'] || '',
@@ -59,29 +72,40 @@ export class MorositaComponent implements OnInit {
 
   onSearch(): void {
     const searchParams: MorositaSearchParams = {
-      contrattoId: this.searchForm.get('contrattoId')?.value 
-        ? this.searchForm.get('contrattoId')?.value.toString() 
-        : "",
-      stato: this.searchForm.get('stato')?.value || "",
-      importoMinimo: this.searchForm.get('importoMin')?.value 
-        ? this.searchForm.get('importoMin')?.value.toString() 
-        : "",
-      importoMassimo: this.searchForm.get('importoMax')?.value 
-        ? this.searchForm.get('importoMax')?.value.toString() 
-        : ""
+      contrattoId: this.searchForm.get('contrattoId')?.value?.toString() || '',
+      stato: this.searchForm.get('stato')?.value || '',
+      importoMinimo: this.searchForm.get('importoMin')?.value?.toString() || '',
+      importoMassimo: this.searchForm.get('importoMax')?.value?.toString() || ''
     };
-  
+
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
         ...Object.entries(searchParams)
-          .filter(([_, value]) => value !== undefined)
+          .filter(([_, value]) => value !== '')
           .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {}),
         pagina: 0,
-        
       },
       queryParamsHandling: 'merge'
     });
+  }
+
+  openDeleteModal(id: number): void {
+    this.morositaToDelete = id;
+    this.deleteModal?.show();
+  }
+
+  confirmDelete(): void {
+    if (this.morositaToDelete) {
+      this.morositaService.deleteMorosita(this.morositaToDelete).subscribe({
+        next: () => {
+          this.deleteModal?.hide();
+          this.loadData();
+          // window.location.reload()
+        },
+        error: (error) => console.error('Delete failed:', error)
+      });
+    }
   }
 
   onPageChange(event: PageEvent): void {
@@ -90,14 +114,17 @@ export class MorositaComponent implements OnInit {
     
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: {
-        pagina: this.currentPage,
-     
-      },
+      queryParams: { pagina: this.currentPage },
       queryParamsHandling: 'merge'
     });
   }
 
   onReset(): void {
     this.searchForm.reset();
-    this.currentPage = 0; } }
+    this.currentPage = 0;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {}
+    });
+  }
+}
