@@ -110,13 +110,12 @@
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="genere">Genere *</label>
                   <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="genere"
-                      name="genere"
-                      formControlName="genere"
-                    />
+                    <select class="form-control" id="genere" name="genere" formControlName="genere">
+                
+                      <option value="M">M</option>
+                      <option value="F">F</option>
+                      <option value="N">Nonbinario</option>
+                    </select>
                     <span class="input-group-text">
                       <i class="bi bi-gender-neuter"></i>
                     </span>
