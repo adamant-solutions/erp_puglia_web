@@ -5,13 +5,15 @@ import { catchError } from 'rxjs/operators';
 import { Morosita } from '../models/morosita.model';
 import { inject } from '@angular/core';
 
-export const morositaResolver: ResolveFn<Morosita[] | null> = (
+export const morositaResolver: ResolveFn<any> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
-): Observable<Morosita[] | null> => {
-  return inject(MorositaService).getAllMorosita().pipe(
+): Observable<any> => {
+  const page = Number(route.queryParamMap.get('pagina')) || 0;
+  const size = Number(route.queryParamMap.get('dimensionePagina')) || 10;
+  
+  return inject(MorositaService).getAllMorosita(page, size).pipe(
     catchError((error) => {
-
       return of(null);
     })
   );
@@ -37,4 +39,23 @@ export const morositaByIdResolver: ResolveFn<Morosita | null> = (
 };
 
 
+export const morositaSearchResolver: ResolveFn<any> = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): Observable<any> => {
+  const page = Number(route.queryParamMap.get('pagina')) || 0;
+  const size = Number(route.queryParamMap.get('dimensionePagina')) || 10;
+  
+  const searchParams = {
+    contrattoId: route.queryParamMap.get('contrattoId') || "",
+    stato: route.queryParamMap.get('stato') || "",
+    importoMinimo: route.queryParamMap.get('importoMinimo') || "",
+    importoMassimo: route.queryParamMap.get('importoMassimo') || ""
+  };
 
+  return inject(MorositaService).searchMorosita(searchParams, page, size).pipe(
+    catchError((error) => {
+      return of(null);
+    })
+  );
+};

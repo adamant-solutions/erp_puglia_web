@@ -13,3 +13,9 @@ export interface Morosita {
     esitoContatto: string
   }
   
+  export interface MorositaSearchParams {
+    contrattoId?: string;
+    stato?: string;
+    importoMinimo?: string;
+    importoMassimo?: string;
+  }

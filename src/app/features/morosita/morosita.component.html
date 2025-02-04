@@ -7,9 +7,9 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
- 
+
         <div class="col-12 mb-5">
-          <form class="row g-3">
+          <form [formGroup]="searchForm" class="row g-3" (ngSubmit)="onSearch()">
             <div class="col-md-3">
               <label class="form-label" for="contrattoId">Contratto ID</label>
               <div class="input-group">
@@ -17,12 +17,15 @@
                   type="number"
                   class="form-control"
                   id="contrattoId"
-                  name="contrattoId"
-                
+                  formControlName="contrattoId"
+                  placeholder="Inserisci ID contratto"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-file-earmark-text"></i>
                 </span>
+              </div>
+              <div class="invalid-feedback" *ngIf="searchForm.get('contrattoId')?.errors?.['min']">
+                Il valore deve essere maggiore di 0
               </div>
             </div>
 
@@ -32,18 +35,21 @@
                 <select
                   class="form-select"
                   id="stato"
-                  name="stato"
-               
+                  formControlName="stato"
                 >
-                  <option value="">Intimata</option>
+                  <option value="">Seleziona stato</option>
+                  <option value="INTIMATA">Intimata</option>
                   <option value="ACCERTATA">Accertata</option>
-                  <option value="IN_VERIFICA">In Rateizzazione</option>
-                  <option value="PAGATA">In Riscossione</option>
-                  <option value="PAGATA">In Contenzioso</option>
-                  <option value="PAGATA">Inesigibile</option>
-                  <option value="PAGATA">Estinta</option>
-                  <option value="PAGATA">Sospesa</option>
+                  <option value="IN_RATEIZZAZIONE">In Rateizzazione</option>
+                  <option value="IN_RISCOSSIONE">In Riscossione</option>
+                  <option value="IN_CONTENZIOSO">In Contenzioso</option>
+                  <option value="INESIGIBILE">Inesigibile</option>
+                  <option value="ESTINTA">Estinta</option>
+                  <option value="SOSPESA">Sospesa</option>
                 </select>
+                <span class="input-group-text">
+                  <i class="bi bi-funnel"></i>
+                </span>
               </div>
             </div>
 
@@ -54,12 +60,15 @@
                   type="number"
                   class="form-control"
                   id="importoMin"
-                  name="importoMin"
-                
+                  formControlName="importoMin"
+                  placeholder="Importo minimo"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-currency-euro"></i>
                 </span>
+              </div>
+              <div class="invalid-feedback" *ngIf="searchForm.get('importoMin')?.errors?.['min']">
+                Il valore deve essere maggiore o uguale a 0
               </div>
             </div>
 
@@ -70,113 +79,125 @@
                   type="number"
                   class="form-control"
                   id="importoMax"
-                  name="importoMax"
-            
+                  formControlName="importoMax"
+                  placeholder="Importo massimo"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-currency-euro"></i>
                 </span>
               </div>
+              <div class="invalid-feedback" *ngIf="searchForm.get('importoMax')?.errors?.['min']">
+                Il valore deve essere maggiore o uguale a 0
+              </div>
             </div>
 
             <div class="col-md-3 search-form-buttons d-flex align-items-end">
               <button
-                type="button"
+                type="submit"
                 class="btn btn-primary me-3"
-             
+                [disabled]="searchForm.invalid "
               >
+                <i class="bi bi-search me-1"></i>
                 Cerca
               </button>
 
               <button
                 type="button"
                 class="btn btn-secondary"
-             
+                (click)="onReset()"
+              
               >
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
                 Reset
               </button>
             </div>
           </form>
         </div>
 
-        <!-- Aggiungi morosità btn -->
-        <div class="col-12 d-flex justify-content-end">
-          <button
-            class="btn btn-primary btn-icon btn-xs mb-3"
-            [routerLink]="['nuova-morosita']"
-          >
-            <svg class="icon icon-white me-1">
-              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
-            </svg>
-            <span>Aggiungi Morosità</span>
-          </button>
+      
+     
+   
+        <div *ngIf="morositaList.length === 0" class="alert alert-info" role="alert">
+          <i class="bi bi-info-circle me-2"></i>
+          Nessun risultato trovato
         </div>
 
-        <!-- Table - all Morosità -->
-        <div class="table-responsive">
-          <table class="table table-striped table-hover table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Azioni</th>
-                <th scope="col">Contratto ID</th>
-                <th scope="col">Data Rilevazione</th>
-                <th scope="col">Data Scadenza</th>
-                <th scope="col">Importo Dovuto</th>
-                <th scope="col">Importo Versato</th>
-                <th scope="col">Importo Morosità</th>
-                <th scope="col">Stato</th>
-                <!-- <th scope="col">Tentativi Contatto</th> -->
-                <!-- <th scope="col">Modalità Contatto</th> -->
-                <!-- <th scope="col">Esito Contatto</th> -->
-                <!-- <th scope="col">Note</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let morositaItem of morositaList">
-                <td scope="row">
-                  <a
-                    [routerLink]="['view-morosita', morositaItem.id]"
-                    title="Vedi dettagli"
-                    class="me-3"
-                  >
-                    <i class="bi bi-eye-fill"></i>
-                  </a>
+     
+        <ng-container *ngIf="morositaList.length > 0">
+        
+          <div class="col-12 d-flex justify-content-end">
+            <button
+              class="btn btn-primary btn-icon btn-xs mb-3"
+              [routerLink]="['nuova-morosita']"
+            >
+              <svg class="icon icon-white me-1">
+                <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+              </svg>
+              <span>Aggiungi Morosità</span>
+            </button>
+          </div>
 
-                  <a
-                    [routerLink]="['edit-morosita', morositaItem.id]"
-                    title="Modifica"
-                    class="me-3"
-                  >
-                    <i class="bi bi-pencil"></i>
-                  </a>
-                </td>
+          <!-- Results Table -->
+          <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Azioni</th>
+                  <th scope="col">Contratto ID</th>
+                  <th scope="col">Data Rilevazione</th>
+                  <th scope="col">Data Scadenza</th>
+                  <th scope="col">Importo Dovuto</th>
+                  <th scope="col">Importo Versato</th>
+                  <th scope="col">Importo Morosità</th>
+                  <th scope="col">Stato</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let morositaItem of morositaList">
+                  <td scope="row">
+                    <a
+                      [routerLink]="['view-morosita', morositaItem.id]"
+                      title="Vedi dettagli"
+                      class="me-3"
+                    >
+                      <i class="bi bi-eye-fill"></i>
+                    </a>
 
-                <td>{{ morositaItem.contrattoId }}</td>
-                <td>{{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}</td>
-                <td>{{ morositaItem.dataScadenza | date : "dd/MM/yyyy" }}</td>
-                <td>{{ morositaItem.importoDovuto | currency:'EUR' }}</td>
-                <td>{{ morositaItem.importoVersato | currency:'EUR' }}</td>
-                <td>{{ morositaItem.importoMorosita | currency:'EUR' }}</td>
-                <td>{{ morositaItem.stato }}</td>
-                <!-- <td>{{ morositaItem.tentativiContatto }}</td> -->
-                <!-- <td>{{ morositaItem.modalitaContatto }}</td> -->
-                <!-- <td>{{ morositaItem.esitoContatto }}</td> -->
-                <!-- <td>{{ morositaItem.note }}</td> -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                    <a
+                      [routerLink]="['edit-morosita', morositaItem.id]"
+                      title="Modifica"
+                      class="me-3"
+                    >
+                      <i class="bi bi-pencil"></i>
+                    </a>
+                  </td>
+                  <td scope="row">{{ morositaItem.contrattoId }}</td>
+                  <td scope="row">{{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}</td>
+                  <td scope="row">{{ morositaItem.dataScadenza | date : "dd/MM/yyyy" }}</td>
+                  <td scope="row">{{ morositaItem.importoDovuto | currency:'EUR' }}</td>
+                  <td scope="row">{{ morositaItem.importoVersato | currency:'EUR' }}</td>
+                  <td scope="row">{{ morositaItem.importoMorosita | currency:'EUR' }}</td>
+                  <td scope="row">{{ morositaItem.stato }}</td>
+               
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-        <!-- paginator -->
-        <!-- <mat-paginator
-          #paginator
-          [length]="totalPages"
-          [pageSize]="pageSize"
-          [pageIndex]="currentPage"
-          (page)="onPageChange($event)"
-          aria-label="Select page"
-        >
-        </mat-paginator> -->
+         
+          <ng-container *ngIf="totalItems > pageSize">
+            <mat-paginator
+              #paginator
+              [length]="totalItems"
+              [pageSize]="pageSize"
+              [pageIndex]="currentPage"
+              (page)="onPageChange($event)"
+              aria-label="Seleziona pagina"
+            >
+            </mat-paginator>
+          </ng-container>
+        </ng-container>
+
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Morosita } from '../models/morosita.model'; 
+import { Morosita, MorositaSearchParams } from '../models/morosita.model'; 
 
 @Injectable({
   providedIn: 'root',
@@ -14,13 +14,16 @@ export class MorositaService {
   ) {}
 
  
-  getAllMorosita(): Observable<Morosita[]> {
-    return this.http.get<Morosita[]>(this.morositaUrl);
+  getAllMorosita(page: number = 0, size: number = 10): Observable<any> {
+    let params = new HttpParams()
+      .set('pagina', page.toString())
+      .set('dimensionePagina', size.toString());
+
+    return this.http.get<any>(this.morositaUrl, { params });
   }
 
-
   getMorositaById(id: number): Observable<Morosita> {
-    const url = `${this.morositaUrl}/${id}`; 
+    const url = `${this.morositaUrl}/${id}`;
     return this.http.get<Morosita>(url);
   }
 
@@ -29,4 +32,25 @@ export class MorositaService {
     return this.http.put<Morosita>(url, morosita);
   }
 
+
+  searchMorosita(params: MorositaSearchParams, page: number = 0, size: number = 10): Observable<any> {
+    let queryParams = new HttpParams()
+      .set('pagina', page.toString())
+      .set('dimensionePagina', size.toString());
+
+    if (params.contrattoId) {
+      queryParams = queryParams.set('contrattoId', params.contrattoId);
+    }
+    if (params.stato) {
+      queryParams = queryParams.set('stato', params.stato);
+    }
+    if (params.importoMinimo) {
+      queryParams = queryParams.set('importoMinimo', params.importoMinimo);
+    }
+    if (params.importoMassimo) {
+      queryParams = queryParams.set('importoMassimo', params.importoMassimo);
+    }
+
+    return this.http.get<any>(this.morositaUrl, { params: queryParams });
+  }
 }
