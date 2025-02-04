@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {MorositaComponent} from './morosita.component';
-import { morositaByIdResolver, morositaResolver } from 'src/app/core/resolvers/morosita.resolver';
+import {  morositaByIdResolver, morositaResolver } from 'src/app/core/resolvers/morosita.resolver';
 import { ViewMorositaComponent } from './view-morosita/view-morosita.component';
+import { EditMorositaComponent } from './edit-morosita/edit-morosita.component';
 const routes:Routes = [
   {
      path: '',
@@ -20,7 +21,14 @@ const routes:Routes = [
       morositaByIdResolver
     }
    
-   }
+   },
+  {
+    path:'edit-morosita/:id',
+    component:EditMorositaComponent,
+    resolve: {
+      morositaByIdResolver
+    }
+  }
 ]
 
 @NgModule({
