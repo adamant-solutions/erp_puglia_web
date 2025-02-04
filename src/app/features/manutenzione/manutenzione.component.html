@@ -1,3 +1,89 @@
-<div class="py-4">
-  <h1 id="main-content">{{ pageTitle }}</h1>
-</div>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Manutenzione'">
+</app-breadcrumbs>
+
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+
+        <div class="row">
+          <div class="col-12 col-lg-3">
+            <!--start card-->
+            <div class="card-wrapper card-space">
+              <div class="card card-bg border-bottom-card">
+                <div class="card-body">
+                  <h3 class="card-title h5">Impresse</h3>
+               
+                  <a class="read-more" [routerLink]="['imprese']">
+                    <span class="text">Dettagli</span>
+                    <span class="visually-hidden">Imprese edili che effettuano restauri e interventi.</span>
+                    <svg class="icon"><use href="assets/svg/sprites.svg#it-arrow-right"></use></svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!--end card-->
+          </div>
+          <div class="col-12 col-lg-3">
+            <!--start card-->
+            <div class="card-wrapper card-space">
+              <div class="card card-bg border-bottom-card">
+                <div class="card-body">
+                  <h3 class="card-title h5 ">Piani</h3>
+                
+                  <a class="read-more" [routerLink]="['piani']">
+                    <span class="text">Dettagli</span>
+                    <span class="visually-hidden">Piani di manutenzione</span>
+                    <svg class="icon">
+                      <use href="assets/svg/sprites.svg#it-arrow-right"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!--end card-->
+          </div>
+          <div class="col-12 col-lg-3">
+            <!--start card-->
+            <div class="card-wrapper card-space">
+              <div class="card card-bg border-bottom-card">
+                <div class="card-body">
+                  <h3 class="card-title h5 ">Richieste manutenzione</h3>
+                 
+                  <a class="read-more" [routerLink]="['appalti']">
+                    <span class="text">Dettagli</span>
+                    <span class="visually-hidden">Gare d'appalto per progetti di restauro per la selezione delle imprese.</span>
+                    <svg class="icon">
+                      <use href="assets/svg/sprites.svg#it-arrow-right"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!--end card-->
+          </div>
+          <div class="col-12 col-lg-3">
+            <!--start card-->
+            <div class="card-wrapper card-space">
+              <div class="card card-bg border-bottom-card">
+                <div class="card-body">
+                  <h3 class="card-title h5 ">Interventi</h3>
+               
+                  <a class="read-more" [routerLink]="['interventi']">
+                    <span class="text">Dettagli</span>
+                    <span class="visually-hidden">Interventi</span>
+                    <svg class="icon">
+                      <use href="assets/svg/sprites.svg#it-arrow-right"></use>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <!--end card-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

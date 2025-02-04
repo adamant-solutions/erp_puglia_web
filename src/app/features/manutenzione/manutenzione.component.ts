@@ -7,4 +7,5 @@ import {Component} from '@angular/core';
 })
 export class ManutenzioneComponent {
   pageTitle: string = 'Manutenzione';
+  breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
 }
