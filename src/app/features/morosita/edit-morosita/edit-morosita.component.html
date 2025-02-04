@@ -1,1 +1,129 @@
-<p>edit-morosita works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Morosità'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 class="mb-5">Modifica Morosità</h1>
+
+        <form [formGroup]="editForm" class="row g-3" (ngSubmit)="onSubmit()">
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Contratto ID</label>
+            <input type="text" class="form-control" formControlName="contrattoId">
+            <div class="invalid-feedback" *ngIf="editForm.get('contrattoId')?.errors?.['required'] && editForm.get('contrattoId')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Rilevazione</label>
+            <input type="date" class="form-control" formControlName="dataRilevazione">
+            <div class="invalid-feedback" *ngIf="editForm.get('dataRilevazione')?.errors?.['required'] && editForm.get('dataRilevazione')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Data Scadenza</label>
+            <input type="date" class="form-control" formControlName="dataScadenza">
+            <div class="invalid-feedback" *ngIf="editForm.get('dataScadenza')?.errors?.['required'] && editForm.get('dataScadenza')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Importo Dovuto</label>
+            <input type="number" class="form-control" formControlName="importoDovuto">
+            <div class="invalid-feedback" *ngIf="editForm.get('importoDovuto')?.errors?.['required'] && editForm.get('importoDovuto')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Importo Versato</label>
+            <input type="number" class="form-control" formControlName="importoVersato">
+            <div class="invalid-feedback" *ngIf="editForm.get('importoVersato')?.errors?.['required'] && editForm.get('importoVersato')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Importo Morosità</label>
+            <input type="number" class="form-control" formControlName="importoMorosita">
+            <div class="invalid-feedback" *ngIf="editForm.get('importoMorosita')?.errors?.['required'] && editForm.get('importoMorosita')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label class="form-label">Stato</label>
+            <select class="form-select" formControlName="stato">
+              <option value="ACCERTATA">Accertata</option>
+              <option value="IN_CORSO">In Corso</option>
+              <option value="RISOLTA">Risolta</option>
+            </select>
+            <div class="invalid-feedback" *ngIf="editForm.get('stato')?.errors?.['required'] && editForm.get('stato')?.touched">
+              Campo obbligatorio
+            </div>
+          </div>
+
+          <div class="col-12 mt-4">
+            <h3 class="mb-3">Tentativi di Contatto</h3>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Tentativi Effettuati</label>
+                <input type="number" class="form-control" formControlName="tentativiContatto">
+                <div class="invalid-feedback" *ngIf="editForm.get('tentativiContatto')?.errors?.['required'] && editForm.get('tentativiContatto')?.touched">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Modalità Contatto</label>
+                <select class="form-select" formControlName="modalitaContatto">
+                  <option value="TELEFONO">Telefono</option>
+                  <option value="EMAIL">Email</option>
+                  <option value="SMS">SMS</option>
+                </select>
+                <div class="invalid-feedback" *ngIf="editForm.get('modalitaContatto')?.errors?.['required'] && editForm.get('modalitaContatto')?.touched">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Esito Contatto</label>
+                <input type="text" class="form-control" formControlName="esitoContatto">
+                <div class="invalid-feedback" *ngIf="editForm.get('esitoContatto')?.errors?.['required'] && editForm.get('esitoContatto')?.touched">
+                  Campo obbligatorio
+                </div>
+              </div>
+            </div>
+          </div>
+           <div class="col-12 mt-4">
+            <h3 class="mb-3">Note</h3>
+            <div class="row">
+              <div class="col-12 mb-3">
+                <label class="form-label">Note</label>
+                <textarea class="form-control" formControlName="note" rows="3"></textarea>
+                <div class="invalid-feedback" *ngIf="editForm.get('note')?.errors?.['required'] && editForm.get('note')?.touched">
+                  Campo obbligatorio
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-5">
+            <button type="submit" class="btn btn-primary me-2" [disabled]="!editForm.valid">
+              <i class="bi bi-save me-1"></i>
+              Salva
+            </button>
+            <button type="button" class="btn btn-outline-primary" (click)="indietroM()">
+              <i class="bi bi-arrow-left me-1"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
