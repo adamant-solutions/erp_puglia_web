@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Imprese } from 'src/app/core/models/manutenzione.model';
-import { ImpreseSearchParams } from 'src/app/core/services/manutenzione-services/imprese.service';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { ImpreseSearchParams, ImpreseService } from 'src/app/core/services/manutenzione-services/imprese.service';
 
 @Component({
   selector: 'app-view-imprese',
@@ -18,7 +19,8 @@ export class ViewImpreseComponent {
   ];
 
   impreseList: Imprese[] = [];
-
+  impreseId!: number;
+  impreseNome: string = '';
   currentPage = 0;
   pageSize = 10; 
   totalItems!: number;
@@ -33,7 +35,7 @@ export class ViewImpreseComponent {
   private router = inject(Router);
 
 
-  constructor() { }
+  constructor(private impreseSrc: ImpreseService,private bootstrap: BootstrapService) { }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['pagina'] || 0;
@@ -92,4 +94,27 @@ export class ViewImpreseComponent {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+
+  deleteModal(item: Imprese | any) {
+    this.impreseId = item.id;
+    this.impreseNome = item.ragioneSociale;
+    this.bootstrap.showModal('deleteImpreseModal');
+  }
+
+  deleteImprese() {
+    this.impreseSrc.deleteImprese(this.impreseId).subscribe({
+      next: () => {
+        this.impreseList = this.impreseList.filter(
+          (item) => item.id !== this.impreseId
+        );
+        // this.notificationService.success(`"${this.impreseId}" deleted successfully.`);
+      },
+      error: (error: any) => {
+        console.error(error);
+        // this.notificationService.error(`Failed to delete "${this.impreseId}". Please try again.`);
+      },
+    });
+  }
+
 }

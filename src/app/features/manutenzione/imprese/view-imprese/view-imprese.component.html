@@ -105,9 +105,9 @@
                     >
                       <i class="bi bi-pencil align-middle"></i>
                     </a>
-                           <!--    (click)="deletePatrimonioModal(impreseItem)" -->
+                
                     <a
-        
+                     (click)="deleteModal(impreseItem)"
                       title="Cancella"
                       class="text-decoration-none me-3"
                       style="cursor: pointer; color: #0052a3"
@@ -141,3 +141,48 @@
       </div>
     </div>
 </section>
+
+
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deleteImpreseModal"
+  tabindex="-1"
+  aria-labelledby="deleteImpreseModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="deleteImpreseModalLabel">Elimina Imprese</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare <b>{{ impreseNome }}</b
+          >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deleteImpreseModal2"
+          data-bs-toggle="modal"
+          (click)="deleteImprese()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

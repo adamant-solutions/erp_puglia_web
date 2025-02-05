@@ -54,6 +54,11 @@ editImprese(imprese: Imprese): Observable<Imprese>{
       catchError(error => { throw error; })
     );
 }
+deleteImprese(id: number): Observable<Imprese>{
+  return this.http.delete<Imprese>(`${this.url}/imprese/`+id).pipe(
+      catchError(error => { throw error; })
+    );
+}
 
  
 }
