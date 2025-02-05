@@ -13,3 +13,10 @@ export const impreseResolver: ResolveFn<any> = (route, state, impreseService: Im
   return impreseService.getImpresse(searchParams)
 
 }
+
+export const impreseByIdResolver: ResolveFn<any> = (route, state, impreseService: ImpreseService = inject(ImpreseService)) => {
+  const ID = route.params['id'];
+  return impreseService.getImpreseByid(ID)
+
+}
+

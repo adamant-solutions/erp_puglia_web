@@ -1,0 +1,117 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Visualizza Imprese'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+
+              <!-- Ragione Sociale -->
+              <div class="col-md-4 mb-3">
+                <label for="ragioneSociale" class="form-label">Ragione Sociale*</label>
+                <div class="input-group">
+                <input type="text" id="ragioneSociale" class="form-control" formControlName="ragioneSociale" />
+                </div>
+              </div>
+
+              <!-- Partita IVA -->
+              <div class="col-md-4 mb-3">
+                <label for="partitaIva" class="form-label">Partita IVA*</label>
+                <div class="input-group">
+                <input type="text" id="partitaIva" class="form-control" formControlName="partitaIva" maxlength="11" />
+                </div>
+              </div>
+
+              <!-- Codice Fiscale -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceFiscale" class="form-label">Codice Fiscale*</label>
+                <div class="input-group">
+                <input type="text" id="codiceFiscale" class="form-control" formControlName="codiceFiscale" />
+                </div>
+          
+              </div>
+
+              <!-- Indirizzo -->
+              <div class="col-md-4 mb-3">
+                <label for="indirizzo" class="form-label">Indirizzo</label>
+                <div class="input-group">
+                <input type="text" id="indirizzo" class="form-control" formControlName="indirizzo" />
+                </div>
+              </div>
+
+              <!-- Città -->
+              <div class="col-md-4 mb-3">
+                <label for="citta" class="form-label">Città</label>
+                <div class="input-group">
+                <input type="text" id="citta" class="form-control" formControlName="citta" />
+                </div>
+              </div>
+
+              <!-- Provincia -->
+              <div class="col-md-4 mb-3">
+                <label for="provincia" class="form-label">Provincia</label>
+                <div class="input-group">
+                <input type="text" id="provincia" class="form-control" formControlName="provincia" />
+                </div>
+              </div>
+
+              <!-- CAP -->
+              <div class="col-md-4 mb-3">
+                <label for="cap" class="form-label">CAP</label>
+                <div class="input-group">
+                <input type="text" id="cap" class="form-control" formControlName="cap" maxlength="5" />
+                </div>
+              </div>
+
+              <!-- Telefono -->
+              <div class="col-md-4 mb-3">
+                <label for="telefono" class="form-label">Telefono</label>
+                <div class="input-group">
+                <input type="tel" id="telefono" class="form-control" formControlName="telefono" />
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-4 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                <input type="text" id="email" class="form-control" formControlName="email" />
+                </div>
+              </div>
+
+              <!-- PEC -->
+              <div class="col-md-4 mb-3">
+                <label for="pec" class="form-label">PEC*</label>
+                <div class="input-group">
+                <input type="email" id="pec" class="form-control" formControlName="pec" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

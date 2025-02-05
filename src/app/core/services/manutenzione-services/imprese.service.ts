@@ -38,9 +38,19 @@ export class ImpreseService {
         );
 }  
 
+ getImpreseByid(id: number): Observable<Imprese>{
+  return this.http.get<Imprese>(`${this.url}/imprese/`+id).pipe(
+    catchError(error => { throw error; })
+  );
+}
 
-addImprese(imprese: Imprese): Observable<Imprese>{
+ addImprese(imprese: Imprese): Observable<Imprese>{
   return this.http.post<Imprese>(`${this.url}/imprese`,imprese).pipe(
+      catchError(error => { throw error; })
+    );
+}
+editImprese(imprese: Imprese): Observable<Imprese>{
+  return this.http.put<Imprese>(`${this.url}/imprese`,imprese).pipe(
       catchError(error => { throw error; })
     );
 }

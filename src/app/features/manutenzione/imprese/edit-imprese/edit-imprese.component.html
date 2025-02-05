@@ -1,0 +1,156 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Imprese'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="impresaForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+
+              <!-- Ragione Sociale -->
+              <div class="col-md-4 mb-3">
+                <label for="ragioneSociale" class="form-label">Ragione Sociale*</label>
+                <div class="input-group">
+                <input type="text" id="ragioneSociale" class="form-control" formControlName="ragioneSociale" />
+              </div>
+                <span class="custom-error" *ngIf="impresaForm.get('ragioneSociale')?.invalid && impresaForm.get('ragioneSociale')?.touched">
+                  Ragione Sociale è obbligatoria!
+                </span>
+               
+              </div>
+
+              <!-- Partita IVA -->
+              <div class="col-md-4 mb-3">
+                <label for="partitaIva" class="form-label">Partita IVA*</label>
+                <div class="input-group">
+                <input type="text" id="partitaIva" class="form-control" formControlName="partitaIva" maxlength="11" />
+                </div>
+                <span class="custom-error" *ngIf="impresaForm.get('partitaIva')?.hasError('required')">
+                  Partita IVA è obbligatoria!
+                </span>
+                <span class="custom-error" *ngIf="impresaForm.get('partitaIva')?.hasError('pattern')">
+                  Partita IVA non valida!
+                </span>
+              </div>
+
+              <!-- Codice Fiscale -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceFiscale" class="form-label">Codice Fiscale*</label>
+                <div class="input-group">
+                <input type="text" id="codiceFiscale" class="form-control" formControlName="codiceFiscale" />
+                </div>
+                <span class="custom-error" *ngIf="impresaForm.get('codiceFiscale')?.hasError('required')">
+                  Codice Fiscale è obbligatorio!
+                </span>
+                <span class="custom-error" *ngIf="impresaForm.get('codiceFiscale')?.hasError('pattern')">
+                  Codice Fiscale non valido!
+                </span>
+              </div>
+
+              <!-- Indirizzo -->
+              <div class="col-md-4 mb-3">
+                <label for="indirizzo" class="form-label">Indirizzo</label>
+                <div class="input-group">
+                <input type="text" id="indirizzo" class="form-control" formControlName="indirizzo" />
+                </div>
+              </div>
+
+              <!-- Città -->
+              <div class="col-md-4 mb-3">
+                <label for="citta" class="form-label">Città</label>
+                <div class="input-group">
+                <input type="text" id="citta" class="form-control" formControlName="citta" />
+                </div>
+              </div>
+
+              <!-- Provincia -->
+              <div class="col-md-4 mb-3">
+                <label for="provincia" class="form-label">Provincia</label>
+                <div class="input-group">
+                <input type="text" id="provincia" class="form-control" formControlName="provincia" />
+                </div>
+              </div>
+
+              <!-- CAP -->
+              <div class="col-md-4 mb-3">
+                <label for="cap" class="form-label">CAP</label>
+                <div class="input-group">
+                <input type="text" id="cap" class="form-control" formControlName="cap" maxlength="5" /></div>
+                <span class="custom-error" *ngIf="impresaForm.get('cap')?.hasError('pattern')">
+                  CAP non valido!
+                </span>
+              </div>
+
+              <!-- Telefono -->
+              <div class="col-md-4 mb-3">
+                <label for="telefono" class="form-label">Telefono</label>
+                <div class="input-group">
+                <input type="tel" id="telefono" class="form-control" formControlName="telefono" />
+                </div>
+                <span class="custom-error" *ngIf="impresaForm.get('telefono')?.hasError('pattern')">
+                  Telefono non valido!
+                </span>
+              </div>
+
+              <!-- Email -->
+              <div class="col-md-4 mb-3">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                <input type="text" id="email" class="form-control" formControlName="email" />
+                </div>
+                <span class="custom-error" *ngIf="impresaForm.get('email')?.hasError('pattern')">
+                  Email non valido!
+                </span>
+              </div>
+
+              <!-- PEC -->
+              <div class="col-md-4 mb-3">
+                <label for="pec" class="form-label">PEC*</label>
+                <div class="input-group">
+                <input type="email" id="pec" class="form-control" formControlName="pec" />
+                </div>
+                <span class="custom-error" *ngIf="impresaForm.get('pec')?.hasError('required')">
+                  PEC è obbligatoria!
+                </span>
+              </div>
+
+            </div>
+          </div>
+                      <!-- buttons -->
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm()"
+              >
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                Reset
+              </button>
+
+              <button type="submit" class="btn btn-primary py-2" [disabled]="impresaForm.invalid">
+                Salva
+              </button>
+            </div>
+          
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
