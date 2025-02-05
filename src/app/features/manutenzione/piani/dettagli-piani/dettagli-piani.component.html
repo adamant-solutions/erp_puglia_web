@@ -1,0 +1,97 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Visualizza Piano'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+
+              <!-- Anno -->
+              <div class="col-md-4 mb-3">
+                <label for="anno" class="form-label">Anno</label>
+                <div class="input-group">
+                <input type="text" id="anno" class="form-control" formControlName="anno" />
+                </div>
+              </div>
+
+              <!-- Descrizione -->
+              <div class="col-md-4 mb-3">
+                <label for="descrizione" class="form-label">Descrizione</label>
+                <div class="input-group">
+                <input type="text" id="descrizione" class="form-control" formControlName="descrizione"/>
+                </div>
+              </div>
+
+              <!-- Budget Totale -->
+              <div class="col-md-4 mb-3">
+                <label for="budgetTotale" class="form-label">Budget Totale</label>
+                <div class="input-group">
+                <input type="text" id="budgetTotale" class="form-control" formControlName="budgetTotale" />
+                </div>
+          
+              </div>
+
+              <!-- Budget Utilizzato -->
+              <div class="col-md-4 mb-3">
+                <label for="budgetUtilizzato" class="form-label">Budget Utilizzato</label>
+                <div class="input-group">
+                <input type="text" id="budgetUtilizzato" class="form-control" formControlName="budgetUtilizzato" />
+                </div>
+              </div>
+
+              <!-- Budget Residuo -->
+              <div class="col-md-4 mb-3">
+                <label for="budgetResiduo" class="form-label">Budget Residuo</label>
+                <div class="input-group">
+                <input type="text" id="budgetResiduo" class="form-control" formControlName="budgetResiduo" />
+                </div>
+              </div>
+
+              <!-- Data Approvazione -->
+              <div class="col-md-4 mb-3">
+                <label for="dataApprovazione" class="form-label">Data Approvazione</label>
+                <div class="input-group">
+                <input type="text" id="dataApprovazione" class="form-control" formControlName="dataApprovazione" />
+                </div>
+              </div>
+
+              <!-- Note -->
+              <div class="col-md-12 mb-3">
+                <label for="note" class="form-label">Note</label>
+                <div class="input-group">
+                <textarea 
+                id="note"
+                class="form-control" 
+                formControlName="note" 
+                rows="3"
+              ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
+
+            
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

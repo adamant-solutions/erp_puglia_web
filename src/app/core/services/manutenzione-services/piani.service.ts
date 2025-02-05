@@ -34,4 +34,11 @@ constructor(
       );
 }  
 
+
+getPianiByid(id: number): Observable<Piani>{
+  return this.http.get<Piani>(`${this.url}/piani/`+id).pipe(
+    catchError(error => { throw error; })
+  );
+}
+
 }

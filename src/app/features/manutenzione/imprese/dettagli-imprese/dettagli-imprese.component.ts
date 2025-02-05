@@ -10,7 +10,7 @@ import { ImpreseService } from 'src/app/core/services/manutenzione-services/impr
   styleUrls: ['./dettagli-imprese.component.css']
 })
 export class DettagliImpreseComponent {
-  pageTitle: string = 'Modifica Imprese';
+  pageTitle: string = 'Visualizza Imprese';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Imprese', link: '/manutenzione/imprese' },

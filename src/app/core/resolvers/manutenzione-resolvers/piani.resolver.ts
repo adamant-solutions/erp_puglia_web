@@ -11,3 +11,10 @@ export const pianiResolver: ResolveFn<any> = (route, state, pianiService: PianiS
   return pianiService.getPiani(searchParams)
 
 }
+
+export const pianiByIdResolver: ResolveFn<any> = (route, state, pService: PianiService = inject(PianiService)) => {
+  const ID = route.params['id'];
+  return pService.getPianiByid(ID)
+
+}
+
