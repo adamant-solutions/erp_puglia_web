@@ -39,5 +39,11 @@ export class ImpreseService {
 }  
 
 
+addImprese(imprese: Imprese): Observable<Imprese>{
+  return this.http.post<Imprese>(`${this.url}/imprese`,imprese).pipe(
+      catchError(error => { throw error; })
+    );
+}
+
  
 }
