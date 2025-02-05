@@ -7,6 +7,10 @@ import { ViewMorositaComponent } from './view-morosita/view-morosita.component';
 import { EditMorositaComponent } from './edit-morosita/edit-morosita.component';
 import { AddMorositaComponent } from './add-morosita/add-morosita.component';
 import { SharedModule } from "../../shared/shared.module";
+import { ViewSollecitiComponent } from './solleciti/view-solleciti/view-solleciti.component';
+import { SollecitiComponent } from './solleciti/solleciti/solleciti.component';
+import { EditSollecitiComponent } from './solleciti/edit-solleciti/edit-solleciti.component';
+import { AddSollecitiComponent } from './solleciti/add-solleciti/add-solleciti.component';
 
 
 @NgModule({
@@ -14,7 +18,11 @@ import { SharedModule } from "../../shared/shared.module";
     MorositaComponent,
     ViewMorositaComponent,
     EditMorositaComponent,
-    AddMorositaComponent
+    AddMorositaComponent,
+    ViewSollecitiComponent,
+    SollecitiComponent,
+    EditSollecitiComponent,
+    AddSollecitiComponent
   ],
   imports: [
     CommonModule,
