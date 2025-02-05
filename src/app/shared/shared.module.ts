@@ -22,6 +22,7 @@ import {
 
 // paginator
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { CapitalizePipe } from '../core/pipes/capitalize.pipe';
 
 // Date format configuration
 export const MY_DATE_FORMATS = {
@@ -37,7 +38,7 @@ export const MY_DATE_FORMATS = {
 };
 
 @NgModule({
-  declarations: [BreadcrumbsComponent],
+  declarations: [BreadcrumbsComponent,CapitalizePipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -61,8 +62,9 @@ export const MY_DATE_FORMATS = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatPaginatorModule,
-
+   
     BreadcrumbsComponent,
+    CapitalizePipe,
   ],
   providers: [
     // Set default locale for date pickers to Italian

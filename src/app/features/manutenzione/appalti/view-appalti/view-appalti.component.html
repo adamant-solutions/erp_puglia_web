@@ -58,7 +58,7 @@
                           *ngFor="let stato of statoList"
                           [value]="stato"
                         >
-                          {{ stato.replace("_", " ") | titlecase }}
+                          {{ stato | capitalize }}
                         </option>
                       </select>
                  <!--      <span class="input-group-text">
@@ -143,8 +143,8 @@
                       </td>
                       <td scope="row">{{ item.codiceCIG }}</td>
                       <td scope="row">{{ item.codiceCUP }}</td>
-                      <td scope="row">{{ item.tipoAppalto }}</td>
-                      <td scope="row">{{ item.stato }}</td>
+                      <td scope="row">{{ item.tipoAppalto | capitalize }}</td>
+                      <td scope="row">{{ item.stato | capitalize }}</td>
                     </tr>
                   </tbody>
                 </table>
