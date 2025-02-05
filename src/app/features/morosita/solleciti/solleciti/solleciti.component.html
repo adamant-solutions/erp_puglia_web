@@ -1,1 +1,73 @@
-<p>solleciti works!</p>
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Solleciti'"
+>
+</app-breadcrumbs>
+<section class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 id="main-content" class="mb-4">Solleciti</h1>
+  
+          <div *ngIf="sollecitiList.length === 0" class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle me-2"></i>
+            Nessun sollecito trovato
+          </div>
+  
+          <ng-container *ngIf="sollecitiList.length > 0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">Azioni</th>
+                    <th scope="col">Data Invio</th>
+                    <th scope="col">Data Scadenza</th>
+                    <th scope="col">Tipo Sollecito</th>
+                    <th scope="col">Costo Sollecito</th>
+                    <th scope="col">Costo Notifica</th>
+                    <th scope="col">Costo Legale</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let sollecito of sollecitiList">
+                    <td scope="row">
+                        <a
+                          [routerLink]="['']"
+                          title="Dettagli"
+                          class="me-3"
+                        >
+                          <i class="bi bi-eye-fill"></i>
+                        </a>
+      
+                        <a
+                          [routerLink]="['']"
+                          title="Modifica"
+                          class="me-3"
+                        >
+                          <i class="bi bi-pencil"></i>
+                        </a>
+      
+                        <a
+                        
+                          
+                          title="Cancella"
+                          style="cursor: pointer; color: #0052a3"
+                        >
+                          <i class="bi bi-trash3"></i>
+                        </a> 
+                      </td>
+                      <td>{{ sollecito.dataInvio | date:'dd/MM/yyyy' | na }}</td>
+                      <td>{{ sollecito.dataScadenza | date:'dd/MM/yyyy' | na }}</td>
+                      <td>{{ sollecito.tipoSollecito | capitalize | na }}</td>
+                      <td>{{ sollecito.costoSollecito !== null ? (sollecito.costoSollecito | currency:'EUR') : 'N/A' }}</td>
+                      <td>{{ sollecito.costoNotifica !== null ? (sollecito.costoNotifica | currency:'EUR') : 'N/A' }}</td>
+                      <td>{{ sollecito.costoLegale !== null ? (sollecito.costoLegale | currency:'EUR') : 'N/A' }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </section>

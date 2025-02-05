@@ -5,6 +5,9 @@ import {  contrattiLightResolver, morositaByIdResolver, morositaResolver } from 
 import { ViewMorositaComponent } from './view-morosita/view-morosita.component';
 import { EditMorositaComponent } from './edit-morosita/edit-morosita.component';
 import { AddMorositaComponent } from './add-morosita/add-morosita.component';
+import { ViewSollecitiComponent } from './solleciti/view-solleciti/view-solleciti.component';
+import { SollecitiComponent } from './solleciti/solleciti/solleciti.component';
+import { sollecitiResolver } from 'src/app/core/resolvers/sollecito.resolver';
 const routes:Routes = [
   {
      path: '',
@@ -17,13 +20,25 @@ const routes:Routes = [
      runGuardsAndResolvers: 'always',
    },
    {
-    path:'view-morosita/:id',
-    component:ViewMorositaComponent,
-    resolve: {
-      morositaByIdResolver
-    }
+    path: 'view-morosita/:id',
    
-   },
+    children: [ 
+      {
+        path: '',
+        component: ViewMorositaComponent,
+        resolve: {
+          morositaByIdResolver
+        },
+      },
+      {
+        path: 'solleciti',
+        component: SollecitiComponent,
+        resolve:{
+          sollecitiResolver
+        }
+      }
+    ]
+  },
   {
     path:'edit-morosita/:id',
     component:EditMorositaComponent,
@@ -35,6 +50,9 @@ const routes:Routes = [
     path:'add-morosita',
     component:AddMorositaComponent,
     resolve:{contratti:contrattiLightResolver}
+  },
+  {path:'solleciti',
+    component:SollecitiComponent
   }
 ]
 
