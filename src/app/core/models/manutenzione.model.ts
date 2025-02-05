@@ -94,10 +94,10 @@ export enum StatoAppalto {
 
 
 export enum StatoIntervento {
-    PROGRAMMATO,  // Intervento pianificato
-    IN_CORSO,     // Intervento in esecuzione
-    COMPLETATO,   // Intervento completato
-    ANNULLATO     // Intervento annullato
+    PROGRAMMATO = "PROGRAMMATO",  // Intervento pianificato
+    IN_CORSO = "IN_CORSO",     // Intervento in esecuzione
+    COMPLETATO = "COMPLETATO",   // Intervento completato
+    ANNULLATO  = "ANNULLATO"  // Intervento annullato
 }
 
 
