@@ -32,7 +32,7 @@
                   <tr *ngFor="let sollecito of sollecitiList">
                     <td scope="row">
                         <a
-                        [routerLink]="[sollecito.id]"
+                        [routerLink]="[sollecito.id,'visualizza']"
                           title="Dettagli"
                           class="me-3"
                         >
@@ -40,12 +40,12 @@
                         </a>
       
                         <a
-                          [routerLink]="[ sollecito.id]"
-                          title="Modifica"
-                          class="me-3"
-                        >
-                          <i class="bi bi-pencil"></i>
-                        </a>
+                        [routerLink]="[sollecito.id,'modifica']"
+                        title="Modifica"
+                        class="me-3"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </a>
       
                         <a
                         

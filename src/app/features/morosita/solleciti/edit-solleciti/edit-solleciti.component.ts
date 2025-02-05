@@ -44,11 +44,11 @@ export class EditSollecitiComponent {
   }
 
   onCancel() {
-    this.navigateBack();
+    this.router.navigate(['/solleciti']);
   }
 
   private navigateBack() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['/solleciti']);
   }
 }
 

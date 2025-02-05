@@ -38,19 +38,19 @@ const routes:Routes = [
         }
       },
       {
-        path: 'solleciti/:sollecitoId',
+        path: 'solleciti/:sollecitoId/visualizza',
         component: ViewSollecitiComponent,
         resolve: {
           sollecitiResolver
         }
       },
-      // {
-      //   path: 'morosita/:id/solleciti/:sollecitoId/edit',
-      //   component: EditSollecitiComponent,
-      //   resolve: {
-      //     sollecito: sollecitiResolver
-      //   }
-      // }
+      {
+        path: 'solleciti/:sollecitoId/modifica',
+        component: EditSollecitiComponent,
+        resolve: {
+          sollecito: sollecitiResolver
+        }
+      }
     ]
   },
   {
