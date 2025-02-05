@@ -141,7 +141,7 @@
               <thead>
                 <tr>
                   <th scope="col">Azioni</th>
-                  <th scope="col">Contratto ID</th>
+                  <th scope="col">Contratto</th>
                   <th scope="col">Data Rilevazione</th>
                   <th scope="col">Data Scadenza</th>
                   <th scope="col">Importo Dovuto</th>
@@ -172,13 +172,13 @@
                       <i class="bi bi-trash"></i>
                     </a>
                   </td>
-                  <td scope="row">{{ morositaItem.contrattoId }}</td>
+                  <td scope="row">{{ getContrattoDescrizione(morositaItem.contrattoId) }}</td>
                   <td scope="row">{{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}</td>
                   <td scope="row">{{ morositaItem.dataScadenza | date : "dd/MM/yyyy" }}</td>
                   <td scope="row">{{ morositaItem.importoDovuto | currency:'EUR' }}</td>
                   <td scope="row">{{ morositaItem.importoVersato | currency:'EUR' }}</td>
                   <td scope="row">{{ morositaItem.importoMorosita | currency:'EUR' }}</td>
-                  <td scope="row">{{ morositaItem.stato }}</td>
+                  <td scope="row">{{ morositaItem.stato | capitalize}}</td>
                
                 </tr>
               </tbody>

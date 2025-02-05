@@ -31,9 +31,9 @@ export class AnagraficaComponent implements OnInit {
   };
 
 
-  totalItems = 0; // Total number of items, retrieved from backend
-  pageSize = 10; // Default number of items per page
-  currentPage = 0; // Current page number / index
+  totalItems = 0; 
+  pageSize = 10; 
+  currentPage = 0; 
 
   constructor(
     private activatedRoute: ActivatedRoute,

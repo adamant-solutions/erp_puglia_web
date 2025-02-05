@@ -23,6 +23,7 @@ export class MorositaComponent implements OnInit {
   contrattiLight: ModelLight[] = [];
   morositaToDelete: number | null = null;
   private deleteModal: Modal | null = null;
+  private contrattoMap: Map<number, string> = new Map();
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +54,7 @@ export class MorositaComponent implements OnInit {
   private loadData(): void {
     this.route.data.subscribe((data) => {
       this.contrattiLight = data['contrattiLightResolver'] || [];
+      this.createContrattoMap(); 
       if (data['morositaResolver']) {
         this.morositaList = data['morositaResolver'] || [];
         this.totalItems = data['morositaResolver'].totalElements || 0;
@@ -101,7 +103,7 @@ export class MorositaComponent implements OnInit {
         next: () => {
           this.deleteModal?.hide();
           this.loadData();
-          // window.location.reload()
+          window.location.reload()
         },
         error: (error) => console.error('Delete failed:', error)
       });
@@ -127,4 +129,15 @@ export class MorositaComponent implements OnInit {
       queryParams: {}
     });
   }
+
+  private createContrattoMap(): void {
+    this.contrattiLight.forEach(contratto => {
+      this.contrattoMap.set(contratto.id, contratto.descrizione);
+    });
+  }
+  
+  getContrattoDescrizione(contrattoId: number): string {
+    return this.contrattoMap.get(contrattoId) || 'N/A';
+  }
+
 }
