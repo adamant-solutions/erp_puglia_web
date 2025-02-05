@@ -18,6 +18,7 @@ export class SollecitiComponent {
   ngOnInit() {
     this.route.data.subscribe(data => {
       this.sollecitiList = data['sollecitiResolver'] || [];
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 }

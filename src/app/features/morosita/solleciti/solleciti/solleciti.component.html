@@ -32,7 +32,7 @@
                   <tr *ngFor="let sollecito of sollecitiList">
                     <td scope="row">
                         <a
-                          [routerLink]="['']"
+                        [routerLink]="[sollecito.id]"
                           title="Dettagli"
                           class="me-3"
                         >

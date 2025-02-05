@@ -21,8 +21,7 @@ const routes:Routes = [
    },
    {
     path: 'view-morosita/:id',
-   
-    children: [ 
+    children: [
       {
         path: '',
         component: ViewMorositaComponent,
@@ -33,7 +32,14 @@ const routes:Routes = [
       {
         path: 'solleciti',
         component: SollecitiComponent,
-        resolve:{
+        resolve: {
+          sollecitiResolver
+        }
+      },
+      {
+        path: 'solleciti/:sollecitoId',
+        component: ViewSollecitiComponent,
+        resolve: {
           sollecitiResolver
         }
       }
@@ -50,9 +56,6 @@ const routes:Routes = [
     path:'add-morosita',
     component:AddMorositaComponent,
     resolve:{contratti:contrattiLightResolver}
-  },
-  {path:'solleciti',
-    component:SollecitiComponent
   }
 ]
 

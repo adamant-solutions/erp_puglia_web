@@ -15,4 +15,8 @@ export class SollecitoService {
   getSollecitiByMorositaId(morositaId: number): Observable<Sollecito[]> {
     return this.http.get<Sollecito[]>(`${this.morositaUrl}/${morositaId}/solleciti`);
   }
+
+  getSollecitoById(morositaId: number, sollecitoId: number): Observable<Sollecito> {
+    return this.http.get<Sollecito>(`${this.morositaUrl}/${morositaId}/solleciti/${sollecitoId}`);
+  }
 }
