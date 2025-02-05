@@ -54,11 +54,37 @@ const routes:Routes = [
     ]
   },
   {
-    path:'edit-morosita/:id',
-    component:EditMorositaComponent,
-    resolve: {
-      morositaByIdResolver
-    }
+    path: 'edit-morosita/:id',
+    children: [  // Changed from component to children
+      {
+        path: '',
+        component: EditMorositaComponent,
+        resolve: {
+          morositaByIdResolver
+        }
+      },
+      {
+        path: 'solleciti',
+        component: SollecitiComponent,
+        resolve: {
+          sollecitiResolver
+        }
+      },
+      {
+        path: 'solleciti/:sollecitoId/visualizza',
+        component: ViewSollecitiComponent,
+        resolve: {
+          sollecitiResolver
+        }
+      },
+      {
+        path: 'solleciti/:sollecitoId/modifica',
+        component: EditSollecitiComponent,
+        resolve: {
+          sollecito: sollecitiResolver
+        }
+      }
+    ]
   },
   {
     path:'add-morosita',
