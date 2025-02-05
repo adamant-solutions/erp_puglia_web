@@ -1,1 +1,45 @@
-<p>edit-solleciti works!</p>
+<div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h2>Modifica Sollecito</h2>
+      </div>
+      <div class="card-body">
+        <form #sollecitoForm="ngForm" (ngSubmit)="onSubmit()">
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="esitoInvio" class="form-label">Esito Invio</label>
+              <select 
+                id="esitoInvio"
+                class="form-select"
+                [(ngModel)]="sollecito.esitoInvio"
+                name="esitoInvio"
+                required>
+                <option *ngFor="let esito of esitoInvioOptions" [value]="esito">
+                  {{esito}}
+                </option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="esitoRisposta" class="form-label">Risposta</label>
+              <input 
+                type="text"
+                id="esitoRisposta"
+                class="form-control"
+                [(ngModel)]="sollecito.esitoRisposta"
+                name="esitoRisposta">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <button type="submit" class="btn btn-primary" [disabled]="!sollecitoForm.form.valid">
+                Salva
+              </button>
+              <button type="button" class="btn btn-secondary ms-2" (click)="onCancel()">
+                Annulla
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

@@ -8,6 +8,7 @@ import { AddMorositaComponent } from './add-morosita/add-morosita.component';
 import { ViewSollecitiComponent } from './solleciti/view-solleciti/view-solleciti.component';
 import { SollecitiComponent } from './solleciti/solleciti/solleciti.component';
 import { sollecitiResolver } from 'src/app/core/resolvers/sollecito.resolver';
+import { EditSollecitiComponent } from './solleciti/edit-solleciti/edit-solleciti.component';
 const routes:Routes = [
   {
      path: '',
@@ -42,7 +43,14 @@ const routes:Routes = [
         resolve: {
           sollecitiResolver
         }
-      }
+      },
+      // {
+      //   path: 'morosita/:id/solleciti/:sollecitoId/edit',
+      //   component: EditSollecitiComponent,
+      //   resolve: {
+      //     sollecito: sollecitiResolver
+      //   }
+      // }
     ]
   },
   {
