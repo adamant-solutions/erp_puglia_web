@@ -91,7 +91,7 @@
                       "
                       [value]="tipoAmministrazione"
                     >
-                      {{ tipoAmministrazione.replace("_", " ") | titlecase }}
+                      {{ tipoAmministrazione | capitalize }}
                     </option>
                   </select>
                   <span class="input-group-text">
@@ -131,7 +131,7 @@
                       *ngFor="let statoDisponibilita of statoDisponibilitaList"
                       [value]="statoDisponibilita"
                     >
-                      {{ statoDisponibilita.replace("_", " ") | titlecase }}
+                      {{ statoDisponibilita | capitalize }}
                     </option>
                   </select>
                   <span class="input-group-text">
@@ -683,7 +683,7 @@
                             *ngFor="let tipo of documentTypes"
                             [value]="tipo"
                           >
-                            {{ tipo.replace("_", " ") | titlecase }}
+                            {{ tipo | capitalize }}
                           </option>
                         </select>
                         <span class="input-group-text">

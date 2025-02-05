@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Patrimonio } from 'src/app/core/models/patrimonio.model';
+import { CapitalizePipe } from 'src/app/core/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-view-patrimonio',
@@ -19,12 +20,13 @@ export class ViewPatrimonioComponent implements OnInit {
 
   patrimonio!: Patrimonio;
   viewForm!: FormGroup;
-
+  
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private capitalizePipe: CapitalizePipe
   ) {}
 
   ngOnInit() {
@@ -43,12 +45,16 @@ export class ViewPatrimonioComponent implements OnInit {
     return this.datePipe.transform(date, 'dd/MM/yyyy') || '';
   }
 
+  transformText(text: string): string {
+    return this.capitalizePipe.transform(text);
+  }
+
   initForm() {
     this.viewForm = this.formBuilder.group({
       metriQuadri: [this.patrimonio.metriQuadri],
       quartiere: [this.patrimonio.quartiere],
-      tipoAmministrazione: [this.patrimonio.tipoAmministrazione],
-      statoDisponibilita: [this.patrimonio.statoDisponibilita],
+      tipoAmministrazione: [this.transformText(this.patrimonio.tipoAmministrazione)],
+      statoDisponibilita: [this.transformText(this.patrimonio.statoDisponibilita)],
       comune: [this.patrimonio.comune],
       provincia: [this.patrimonio.provincia],
       indirizzo: [this.patrimonio.indirizzo],
@@ -70,7 +76,7 @@ export class ViewPatrimonioComponent implements OnInit {
         this.patrimonio.documenti
           ? this.patrimonio.documenti.map((doc: any) =>
               this.formBuilder.group({
-                tipoDocumento: [doc.tipoDocumento],
+                tipoDocumento: [this.transformText(doc.tipoDocumento)],
                 dataDocumento: [this.formatDate(doc.dataDocumento)],
                 percorsoFile: [doc.percorsoFile],
                 descrizione: [doc.descrizione],

@@ -79,6 +79,7 @@ export const MY_DATE_FORMATS = {
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
+    CapitalizePipe
   ],
 })
 export class SharedModule {}

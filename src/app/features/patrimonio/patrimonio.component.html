@@ -60,7 +60,7 @@
                     *ngFor="let statoDisponibilita of statoDisponibilitaList"
                     [value]="statoDisponibilita"
                   >
-                    {{ statoDisponibilita.replace("_", " ") | titlecase }}
+                    {{ statoDisponibilita | capitalize}}
                   </option>
                 </select>
            <!--      <span class="input-group-text">
@@ -168,7 +168,7 @@
                 <td scope="row">{{ patrimonioItem.quartiere }}</td>
                 <td scope="row">{{ patrimonioItem.tipoAmministrazione }}</td>
                 -->
-                <td scope="row">{{ patrimonioItem.statoDisponibilita }}</td>
+                <td scope="row">{{ patrimonioItem.statoDisponibilita | capitalize}}</td>
                 <td scope="row">{{ patrimonioItem.comune }}</td>
                 <td scope="row">{{ patrimonioItem.provincia }}</td>
                 <td scope="row">{{ patrimonioItem.indirizzo }}</td>
@@ -182,7 +182,7 @@
                 <td scope="row">{{ patrimonioItem.consistenzaCatastale }}</td>
                 -->
                 <td scope="row">
-                  {{ getDocumentTypes(patrimonioItem.documenti) }}
+                  {{ getDocumentTypes(patrimonioItem.documenti) | capitalize }}
                 </td>
                 <td scope="row">
                   <ng-container *ngIf="patrimonioItem.documenti.length > 0;">
