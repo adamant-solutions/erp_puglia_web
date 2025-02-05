@@ -58,9 +58,14 @@
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato</label>
             <select class="form-select" formControlName="stato">
+              <option value="INTIMATA">Intimata</option>
               <option value="ACCERTATA">Accertata</option>
-              <option value="IN_CORSO">In Corso</option>
-              <option value="RISOLTA">Risolta</option>
+              <option value="IN_RATEIZZAZIONE">In Rateizzazione</option>
+              <option value="IN_RISCOSSIONE">In Riscossione</option>
+              <option value="IN_CONTENZIOSO">In Contenzioso</option>
+              <option value="INESIGIBILE">Inesigibile</option>
+              <option value="ESTINTA">Estinta</option>
+              <option value="SOSPESA">Sospesa</option>
             </select>
             <div class="invalid-feedback" *ngIf="editForm.get('stato')?.errors?.['required'] && editForm.get('stato')?.touched">
               Campo obbligatorio
@@ -84,6 +89,9 @@
                   <option value="TELEFONO">Telefono</option>
                   <option value="EMAIL">Email</option>
                   <option value="SMS">SMS</option>
+                  <option value="LETTERA">Lettera</option>
+                  <option value="VISITA">Visita</option>
+                  <option value="ALTRO">Altro</option>
                 </select>
                 <div class="invalid-feedback" *ngIf="editForm.get('modalitaContatto')?.errors?.['required'] && editForm.get('modalitaContatto')?.touched">
                   Campo obbligatorio
