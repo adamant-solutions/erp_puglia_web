@@ -44,11 +44,12 @@ export class EditSollecitiComponent {
   }
 
   onCancel() {
-    this.router.navigate(['/solleciti']);
+    this.router.navigate(['/morosita/view-morosita', this.morositaId, 'solleciti']);
   }
 
   private navigateBack() {
-    this.router.navigate(['/solleciti']);
+   
+    this.router.navigate(['/morosita/view-morosita', this.morositaId, 'solleciti']);
   }
 }
 
