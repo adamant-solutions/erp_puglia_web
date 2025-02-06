@@ -18,16 +18,16 @@ import { PatrimonioService } from './core/services/patrimonio.service';
 import { AnagraficaService } from './core/services/anagrafica.service';
 import { ContrattiService } from './core/services/contratti.service';
 import { environment } from 'src/environments/environment';
+import { LoaderComponent } from './shared/loader.component';
 registerLocaleData(localeIt);
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, TabsComponent, FooterComponent],
+  declarations: [AppComponent, HeaderComponent, TabsComponent, FooterComponent,LoaderComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule,
-    
+    SharedModule
   ],
   providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'it' },
     provideHttpClient(withInterceptors([authInterceptor])),
