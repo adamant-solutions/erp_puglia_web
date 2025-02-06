@@ -9,6 +9,7 @@ import { ViewSollecitiComponent } from './solleciti/view-solleciti/view-sollecit
 import { SollecitiComponent } from './solleciti/solleciti/solleciti.component';
 import { sollecitiResolver } from 'src/app/core/resolvers/sollecito.resolver';
 import { EditSollecitiComponent } from './solleciti/edit-solleciti/edit-solleciti.component';
+import { AddSollecitiComponent } from './solleciti/add-solleciti/add-solleciti.component';
 const routes:Routes = [
   {
      path: '',
@@ -38,6 +39,10 @@ const routes:Routes = [
         }
       },
       {
+        path: 'solleciti/add',  
+        component: AddSollecitiComponent
+      },
+      {
         path: 'solleciti/:sollecitoId/visualizza',
         component: ViewSollecitiComponent,
         resolve: {
@@ -55,7 +60,7 @@ const routes:Routes = [
   },
   {
     path: 'edit-morosita/:id',
-    children: [  // Changed from component to children
+    children: [  
       {
         path: '',
         component: EditMorositaComponent,
@@ -69,6 +74,10 @@ const routes:Routes = [
         resolve: {
           sollecitiResolver
         }
+      },
+      {
+        path: 'solleciti/:sollecitoId/add',  
+        component: AddSollecitiComponent
       },
       {
         path: 'solleciti/:sollecitoId/visualizza',

@@ -11,6 +11,7 @@ import { ViewSollecitiComponent } from './solleciti/view-solleciti/view-sollecit
 import { SollecitiComponent } from './solleciti/solleciti/solleciti.component';
 import { EditSollecitiComponent } from './solleciti/edit-solleciti/edit-solleciti.component';
 import { AddSollecitiComponent } from './solleciti/add-solleciti/add-solleciti.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { AddSollecitiComponent } from './solleciti/add-solleciti/add-solleciti.c
   imports: [
     CommonModule,
     MorositaRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
 ]
 })
 export class MorositaModule {

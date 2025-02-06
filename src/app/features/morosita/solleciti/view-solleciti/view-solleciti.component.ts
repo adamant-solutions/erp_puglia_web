@@ -8,7 +8,21 @@ import { Sollecito } from 'src/app/core/models/sollecito.model';
   styleUrls: ['./view-solleciti.component.css']
 })
 export class ViewSollecitiComponent implements OnInit {
-  sollecito: Sollecito | null = null;
+  sollecito: Sollecito = {
+    id: 0,
+    dataInvio: '',
+    dataScadenza: '',
+    tipoSollecito: '',
+    esitoInvio: '',
+    dataRisposta: '',
+    esitoRisposta: '',
+    costoSollecito: '',
+    costoNotifica: '',
+    costoLegale: '',
+    dettaglioCosti: '',
+    note: '',
+    numeroProtocollo: ''
+  }
   currentMorositaId: number | null = null;
 
   constructor(
@@ -19,6 +33,7 @@ export class ViewSollecitiComponent implements OnInit {
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.sollecito = data['sollecitiResolver'];
+      
     });
 
     this.currentMorositaId = Number(this.route.parent?.snapshot.paramMap.get('id'));

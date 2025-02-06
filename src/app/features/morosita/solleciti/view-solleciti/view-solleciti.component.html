@@ -9,37 +9,37 @@
               <h3 class="mb-3">Dettagli Sollecito</h3>
               <div class="col-md-4 mb-3">
                 <label class="form-label">ID Sollecito</label>
-                <input type="text" class="form-control" value="21" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.id" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Data Invio</label>
-                <input type="text" class="form-control" value="2024-03-20" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.dataInvio" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Data Scadenza</label>
-                <input type="text" class="form-control" value="2024-04-20" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.dataScadenza" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Tipo Sollecito</label>
-                <input type="text" class="form-control" value="BONARIO" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.tipoSollecito" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Esito Invio</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.esitoInvio" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Data Risposta</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.dataRisposta" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Esito Risposta</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.esitoRisposta" [ngModelOptions]="{standalone: true}" disabled>
               </div>
             </div>
   
@@ -47,22 +47,22 @@
               <h3 class="mb-3">Costi</h3>
               <div class="col-md-4 mb-3">
                 <label class="form-label">Costo Sollecito</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.costoSollecito" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Costo Notifica</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.costoNotifica" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Costo Legale</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.costoLegale" [ngModelOptions]="{standalone: true}" disabled>
               </div>
   
               <div class="col-md-12 mb-3">
                 <label class="form-label">Dettaglio Costi</label>
-                <textarea class="form-control" disabled></textarea>
+                <textarea class="form-control" [(ngModel)]="sollecito.dettaglioCosti" [ngModelOptions]="{standalone: true}" disabled></textarea>
               </div>
             </div>
   
@@ -70,12 +70,12 @@
               <h3 class="mb-3">Note</h3>
               <div class="col-md-12 mb-3">
                 <label class="form-label">Note</label>
-                <textarea class="form-control" disabled>Prima comunicazione</textarea>
+                <textarea class="form-control" [(ngModel)]="sollecito.note" [ngModelOptions]="{standalone: true}" disabled></textarea>
               </div>
   
               <div class="col-md-4 mb-3">
                 <label class="form-label">Numero Protocollo</label>
-                <input type="text" class="form-control" value="" disabled>
+                <input type="text" class="form-control" [(ngModel)]="sollecito.numeroProtocollo" [ngModelOptions]="{standalone: true}" disabled>
               </div>
             </div>
   
