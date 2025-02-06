@@ -27,6 +27,7 @@ registerLocaleData(localeIt);
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
+    
   ],
   providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'it' },
     provideHttpClient(withInterceptors([authInterceptor])),

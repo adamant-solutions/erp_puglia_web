@@ -46,4 +46,9 @@ export class SollecitoService {
     return this.http.post<Sollecito>(`${this.morositaUrl}/${morositaId}/solleciti`, sollecito);
   }
 
+ 
+deleteSollecito(morositaId: number, sollecitoId: number): Observable<any> {
+  return this.http.delete(`${this.morositaUrl}/${morositaId}/solleciti/${sollecitoId}`);
+}
+
 }

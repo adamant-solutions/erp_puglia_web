@@ -23,7 +23,8 @@ import { FormsModule } from '@angular/forms';
     ViewSollecitiComponent,
     SollecitiComponent,
     EditSollecitiComponent,
-    AddSollecitiComponent
+    AddSollecitiComponent,
+    
   ],
   imports: [
     CommonModule,
