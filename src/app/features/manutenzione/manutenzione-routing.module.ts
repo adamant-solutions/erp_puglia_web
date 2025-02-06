@@ -28,6 +28,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'richieste',
+    loadChildren: () =>
+      import('./richieste/richieste.module').then(
+        (m) => m.RichiesteModule
+      ),
+  },
+  {
     path: 'interventi',
     loadChildren: () =>
       import('./interventi/interventi.module').then(
