@@ -13,6 +13,7 @@ export class EditImpreseComponent {
   pageTitle: string = 'Modifica Imprese';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
+    { label: 'Manuntenzione', link: '/manutenzione' },
     { label: 'Imprese', link: '/manutenzione/imprese' },
   ];
   impresaForm!: FormGroup;

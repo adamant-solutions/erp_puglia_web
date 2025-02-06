@@ -15,6 +15,7 @@ export class EditPianiComponent {
 pageTitle: string = 'Modifica Piano';
 breadcrumbList = [
   { label: 'ERP - di Regione Puglia', link: '/' },
+  { label: 'Manuntenzione', link: '/manutenzione' },
   { label: 'Piani', link: '/manutenzione/piani' },
 ];
 editForm!: FormGroup;

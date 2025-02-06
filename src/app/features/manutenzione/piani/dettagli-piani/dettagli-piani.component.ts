@@ -14,6 +14,7 @@ export class DettagliPianiComponent {
   pageTitle: string = 'Visualizza Piano';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
+    { label: 'Manuntenzione', link: '/manutenzione' },
     { label: 'Piani', link: '/manutenzione/piani' },
   ];
   viewForm!: FormGroup;
