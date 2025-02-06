@@ -12,56 +12,85 @@
           <form [formGroup]="searchForm" class="row g-3" (ngSubmit)="onSearch()">
             <div class="col-md-3">
               <label class="form-label" for="contrattoId">Contratto</label>
-              <select 
-                class="form-control" 
-                id="contrattoId" 
-                formControlName="contrattoId"
-              >
-                <option value="">Seleziona un contratto</option>
-                <option 
-                  *ngFor="let contratto of contrattiLight" 
-                  [value]="contratto.id"
+              <div class="select-container">
+                <select 
+                  class="custom-select"
+                  id="contrattoId" 
+                  formControlName="contrattoId"
                 >
-                  {{ contratto.descrizione }}
-                </option>
-              </select>
+                  <option value="" disabled>Seleziona un contratto</option>
+                  <option 
+                    *ngFor="let contratto of contrattiLight" 
+                    [value]="contratto.id"
+                  >
+                    {{ contratto.descrizione }}
+                  </option>
+                </select>
+                <div class="select-arrow">
+                  <i class="bi bi-chevron-down"></i>
+                </div>
+              </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label" for="stato">Stato</label>
-              <div class="input-group">
+              <div class="select-container">
                 <select
-                  class="form-select"
+                  class=" custom-select"
                   id="stato"
                   formControlName="stato"
                 >
-                  <option value="">Seleziona stato</option>
-                  <option value="INTIMATA">Intimata</option>
-                  <option value="ACCERTATA">Accertata</option>
-                  <option value="IN_RATEIZZAZIONE">In Rateizzazione</option>
-                  <option value="IN_RISCOSSIONE">In Riscossione</option>
-                  <option value="IN_CONTENZIOSO">In Contenzioso</option>
-                  <option value="INESIGIBILE">Inesigibile</option>
-                  <option value="ESTINTA">Estinta</option>
-                  <option value="SOSPESA">Sospesa</option>
+                  <option value="" disabled>Seleziona stato</option>
+                  <option value="INTIMATA">
+                    <i class="bi bi-circle-fill status-dot intimata"></i>
+                    Intimata
+                  </option>
+                  <option value="ACCERTATA">
+                    <i class="bi bi-circle-fill status-dot accertata"></i>
+                    Accertata
+                  </option>
+                  <option value="IN_RATEIZZAZIONE">
+                    <i class="bi bi-circle-fill status-dot rateizzazione"></i>
+                    In Rateizzazione
+                  </option>
+                  <option value="IN_RISCOSSIONE">
+                    <i class="bi bi-circle-fill status-dot riscossione"></i>
+                    In Riscossione
+                  </option>
+                  <option value="IN_CONTENZIOSO">
+                    <i class="bi bi-circle-fill status-dot contenzioso"></i>
+                    In Contenzioso
+                  </option>
+                  <option value="INESIGIBILE">
+                    <i class="bi bi-circle-fill status-dot inesigibile"></i>
+                    Inesigibile
+                  </option>
+                  <option value="ESTINTA">
+                    <i class="bi bi-circle-fill status-dot estinta"></i>
+                    Estinta
+                  </option>
+                  <option value="SOSPESA">
+                    <i class="bi bi-circle-fill status-dot sospesa"></i>
+                    Sospesa
+                  </option>
                 </select>
-                <span class="input-group-text">
+                <div class="select-arrow">
                   <i class="bi bi-funnel"></i>
-                </span>
+                </div>
               </div>
             </div>
 
             <div class="col-md-3">
               <label class="form-label" for="importoMin">Importo Minimo</label>
-              <div class="input-group">
+              <div class="input-group custom-input-group">
                 <input
                   type="number"
-                  class="form-control"
+                  class="form-control custom-input"
                   id="importoMin"
                   formControlName="importoMin"
                   placeholder="Importo minimo"
                 />
-                <span class="input-group-text">
+                <span class="input-group-text custom-addon">
                   <i class="bi bi-currency-euro"></i>
                 </span>
               </div>
@@ -69,18 +98,18 @@
                 Il valore deve essere maggiore o uguale a 0
               </div>
             </div>
-
+            
             <div class="col-md-3">
               <label class="form-label" for="importoMax">Importo Massimo</label>
-              <div class="input-group">
+              <div class="input-group custom-input-group">
                 <input
                   type="number"
-                  class="form-control"
+                  class="form-control custom-input"
                   id="importoMax"
                   formControlName="importoMax"
                   placeholder="Importo massimo"
                 />
-                <span class="input-group-text">
+                <span class="input-group-text custom-addon">
                   <i class="bi bi-currency-euro"></i>
                 </span>
               </div>
