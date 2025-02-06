@@ -13,7 +13,7 @@ export class DettagliImpreseComponent {
   pageTitle: string = 'Visualizza Imprese';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Manuntenzione', link: '/manutenzione' },
+    { label: 'Manutenzione', link: '/manutenzione' },
     { label: 'Imprese', link: '/manutenzione/imprese' },
   ];
   viewForm!: FormGroup;

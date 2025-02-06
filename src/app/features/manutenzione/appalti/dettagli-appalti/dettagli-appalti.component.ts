@@ -15,7 +15,7 @@ export class DettagliAppaltiComponent {
   pageTitle: string = 'Visualizza Appalto';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Manuntenzione', link: '/manutenzione' },
+    { label: 'Manutenzione', link: '/manutenzione' },
     { label: 'Appalti', link: '/manutenzione/appalti' },
   ];
   viewForm!: FormGroup;
@@ -62,6 +62,7 @@ export class DettagliAppaltiComponent {
      this.viewForm = this.fb.group({
       codiceCIG: [this.appalto.codiceCIG],
       codiceCUP: [this.appalto.codiceCUP],
+      oggetto: [this.appalto.oggetto],
       tipoAppalto: [this.transformText(this.appalto.tipoAppalto)],
       stato: [this.transformText(this.appalto.stato)],
       importoBaseAsta: [this.appalto.importoBaseAsta],
