@@ -26,7 +26,7 @@ statoOptions = [
   { value: 'ESTINTA', label: 'Estinta' },
   { value: 'SOSPESA', label: 'Sospesa' }
 ];
-  modalitaContattoOptions = ['TELEFONO', 'EMAIL', 'SMS'];
+  modalitaContattoOptions = [{value:'TELEFONO', label:'Telefono'}, {value:'EMAIL', label:'E-mail',}, {value:'SMS', label:'SMS'}];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Morosità', link: '/morosita' }

@@ -81,8 +81,8 @@
             <div class="input-group">
               <select class="form-select" formControlName="modalitaContatto">
                 <option value="">Seleziona modalità</option>
-                <option *ngFor="let modalita of modalitaContattoOptions" [value]="modalita">
-                  {{modalita}}
+                <option *ngFor="let modalita of modalitaContattoOptions" [value]="modalita.value">
+                  {{modalita.label}}
                 </option>
               </select>
               <span class="input-group-text">
