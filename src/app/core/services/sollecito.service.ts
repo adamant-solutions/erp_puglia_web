@@ -42,4 +42,8 @@ export class SollecitoService {
     );
   }
 
+  createSollecito(morositaId: number, sollecito: Sollecito): Observable<Sollecito> {
+    return this.http.post<Sollecito>(`${this.morositaUrl}/${morositaId}/solleciti`, sollecito);
+  }
+
 }

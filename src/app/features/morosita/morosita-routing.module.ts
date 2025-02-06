@@ -76,7 +76,7 @@ const routes:Routes = [
         }
       },
       {
-        path: 'solleciti/:sollecitoId/add',  
+        path: 'solleciti/add',  
         component: AddSollecitiComponent
       },
       {

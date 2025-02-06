@@ -14,10 +14,10 @@
             Nessun sollecito trovato
           </div>
 
-          <div *ngFor="let sollecito of sollecitiList" class="col-12 d-flex justify-content-end">
+          <div  class="col-12 d-flex justify-content-end">
             <button
               class="btn btn-primary btn-icon btn-xs mb-3"
-              [routerLink]="['solleciti',sollecito.id,'add']"
+              [routerLink]="['add']"
             >
               <svg class="icon icon-white me-1">
                 <use href="assets/svg/sprites.svg#it-plus-circle"></use>

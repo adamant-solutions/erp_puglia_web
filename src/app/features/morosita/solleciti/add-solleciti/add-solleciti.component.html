@@ -1,1 +1,181 @@
-<p>add-solleciti works!</p>
+
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Nuovo Sollecito'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">Nuovo Sollecito</h1>
+
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-12">
+            <fieldset>
+              <legend>DETTAGLI SOLLECITO:</legend>
+
+              <div class="row d-flex">
+           
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="tipoSollecito">Tipo Sollecito *</label>
+                  <div class="input-group">
+                    <select 
+                      class="form-control" 
+                      id="tipoSollecito" 
+                      formControlName="tipoSollecito"
+                    >
+                      <option value="">Seleziona tipo</option>
+                      <option *ngFor="let tipo of tipiSollecito" [value]="tipo">
+                        {{tipo}}
+                      </option>
+                    </select>
+                    <span class="input-group-text">
+                      <i class="bi bi-file-text"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="addForm.get('tipoSollecito')?.hasError('required') && 
+                          (addForm.get('tipoSollecito')?.touched || submitted)"
+                  >
+                    Tipo sollecito è obbligatorio!
+                  </span>
+                </div>
+
+          
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Data Invio *</label>
+                  <mat-form-field appearance="fill" style="width: 100%">
+                    <input
+                      matInput
+                      [matDatepicker]="pickerInvio"
+                      formControlName="dataInvio"
+                      placeholder="dd/mm/yyyy"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="pickerInvio"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #pickerInvio></mat-datepicker>
+                  </mat-form-field>
+                  <span
+                    class="custom-error"
+                    *ngIf="addForm.get('dataInvio')?.hasError('required') && 
+                          (addForm.get('dataInvio')?.touched || submitted)"
+                  >
+                    Data invio è obbligatoria!
+                  </span>
+                </div>
+
+            
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Data Scadenza *</label>
+                  <mat-form-field appearance="fill" style="width: 100%">
+                    <input
+                      matInput
+                      [matDatepicker]="pickerScadenza"
+                      formControlName="dataScadenza"
+                      placeholder="dd/mm/yyyy"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="pickerScadenza"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #pickerScadenza></mat-datepicker>
+                  </mat-form-field>
+                  <span
+                    class="custom-error"
+                    *ngIf="addForm.get('dataScadenza')?.hasError('required') && 
+                          (addForm.get('dataScadenza')?.touched || submitted)"
+                  >
+                    Data scadenza è obbligatoria!
+                  </span>
+                </div>
+
+     
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="note">Note</label>
+                  <div class="input-group">
+                    <textarea
+                      class="form-control"
+                      id="note"
+                      formControlName="note"
+                      rows="3"
+                    ></textarea>
+                    <span class="input-group-text">
+                      <i class="bi bi-chat-text"></i>
+                    </span>
+                  </div>
+                </div>
+
+             
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="esitoInvio">Esito Invio</label>
+                  <div class="input-group">
+                    <select 
+                      class="form-control" 
+                      id="esitoInvio" 
+                      formControlName="esitoInvio"
+                    >
+                      <option value="">Seleziona esito</option>
+                      <option *ngFor="let esito of esitiInvio" [value]="esito">
+                        {{esito}}
+                      </option>
+                    </select>
+                    <span class="input-group-text">
+                      <i class="bi bi-envelope-check"></i>
+                    </span>
+                  </div>
+                </div>
+
+           
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="esitoRisposta">Esito Risposta</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="esitoRisposta"
+                      formControlName="esitoRisposta"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-reply"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm()"
+              >
+                <i class="bi bi-x-circle me-1"></i>
+                Annulla
+              </button>
+
+              <button type="submit" class="btn btn-primary py-2">
+                Aggiungi
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
