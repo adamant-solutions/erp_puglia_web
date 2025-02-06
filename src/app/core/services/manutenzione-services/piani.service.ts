@@ -41,4 +41,20 @@ getPianiByid(id: number): Observable<Piani>{
   );
 }
 
+ addPiani(piani: Piani): Observable<Piani>{
+  return this.http.post<Piani>(`${this.url}/piani`,piani).pipe(
+      catchError(error => { throw error; })
+    );
+}
+editPiani(piani: Piani): Observable<Piani>{
+  return this.http.put<Piani>(`${this.url}/piani`,piani).pipe(
+      catchError(error => { throw error; })
+    );
+}
+deletePiani(id: number): Observable<Piani>{
+  return this.http.delete<Piani>(`${this.url}/piani/`+id).pipe(
+      catchError(error => { throw error; })
+    );
+
+  }
 }

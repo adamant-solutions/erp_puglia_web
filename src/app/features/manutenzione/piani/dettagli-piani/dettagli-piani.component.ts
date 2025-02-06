@@ -19,7 +19,7 @@ export class DettagliPianiComponent {
   viewForm!: FormGroup;
   piano: Piani = {
     id: 0,
-    anno: 0,
+    anno: '',
     descrizione: '',
     budgetTotale: 0,
     budgetUtilizzato: 0,

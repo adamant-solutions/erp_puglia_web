@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Piani } from 'src/app/core/models/manutenzione.model';
-import { PianiSearchParams } from 'src/app/core/services/manutenzione-services/piani.service';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { PianiSearchParams, PianiService } from 'src/app/core/services/manutenzione-services/piani.service';
 
 @Component({
   selector: 'app-view-piani',
@@ -17,7 +18,8 @@ export class ViewPianiComponent {
   ];
 
   pianiList: Piani[] = [];
-
+  pianoId!: number;
+  pianoNome: string = '';
   currentPage = 0;
   pageSize = 10; 
   totalItems!: number;
@@ -31,7 +33,7 @@ export class ViewPianiComponent {
   private router = inject(Router);
 
 
-  constructor() { }
+  constructor(private pianiService: PianiService,private bootstrap: BootstrapService) { }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['pagina'] || 0;
@@ -85,6 +87,29 @@ export class ViewPianiComponent {
     });
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+
+  
+  deleteModal(item: Piani) {
+    this.pianoId = item.id;
+    this.pianoNome = item.descrizione;
+    this.bootstrap.showModal('deletePianoModal');
+  }
+
+  deletePiano() {
+    this.pianiService.deletePiani(this.pianoId).subscribe({
+      next: () => {
+        this.pianiList = this.pianiList.filter(
+          (item) => item.id !== this.pianoId
+        );
+        // this.notificationService.success(`"${this.pianoId}" deleted successfully.`);
+      },
+      error: (error: any) => {
+        console.error(error);
+        // this.notificationService.error(`Failed to delete "${this.pianoId}". Please try again.`);
+      },
+    });
   }
 
 }

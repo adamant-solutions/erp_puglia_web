@@ -1,1 +1,141 @@
-<p>add-piani works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Aggiungi Piano'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+    <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <h1 id="main-content" class="mb-5">Aggiungi Piano</h1>
+    
+            <form #addForm="ngForm" (ngSubmit)="onSubmit(addForm)" class="row g-3">
+              <div class="col-12">
+                <div class="row d-flex">
+    
+                  <input type="text" name="id" [(ngModel)]="piano.id" hidden/>
+                  <!-- Anno -->
+                  <div class="col-md-4 mb-3">
+                    <label for="anno" class="form-label">Anno*</label>
+                    <div class="input-group">
+                      <input type="text" id="anno" class="form-control" name="anno"
+                        [(ngModel)]="piano.anno" required pattern="^\d{4}$" #annoRef="ngModel" />
+                    </div>
+                    <span class="custom-error" *ngIf="annoRef?.errors?.['required'] && (annoRef.dirty || annoRef.touched)">
+                     Anno è obbligatorio!
+                    </span>
+                    <span class="custom-error" *ngIf="annoRef?.errors?.['pattern'] && (annoRef.dirty || annoRef.touched)">
+                      Inserisci un anno valido (es. 2024)!
+                    </span>
+                  </div>
+    
+                  <!-- Descrizione -->
+                  <div class="col-md-4 mb-3">
+                    <label for="descrizione" class="form-label">Descrizione*</label>
+                    <div class="input-group">
+                      <input type="text" id="descrizione" class="form-control" name="descrizione"
+                        [(ngModel)]="piano.descrizione" required minlength="3" #descrizioneRef="ngModel" />
+                    </div>
+                    <span class="custom-error" *ngIf="descrizioneRef.invalid && (descrizioneRef.dirty || descrizioneRef.touched)">
+                      Inserisci almeno 3 caratteri!
+                    </span>
+                  </div>
+    
+                  <!-- Budget Totale -->
+                  <div class="col-md-4 mb-3">
+                    <label for="budgetTotale" class="form-label">Budget Totale*</label>
+                    <div class="input-group">
+                      <input type="text" id="budgetTotale" class="form-control" name="budgetTotale"
+                        [(ngModel)]="piano.budgetTotale" required pattern="^\d+(\.\d+)?$"
+                        #budgetTotaleRef="ngModel" />
+                    </div>
+                    <span class="custom-error" *ngIf="budgetTotaleRef?.errors?.['required'] && (budgetTotaleRef.dirty || budgetTotaleRef.touched)">
+                      Budget Totale è obbligatorio!
+                    </span>
+                    <span class="custom-error" *ngIf="budgetTotaleRef?.errors?.['pattern'] && (budgetTotaleRef.dirty || budgetTotaleRef.touched)">
+                      Inserisci un budget valido!
+                    </span>
+                  </div>
+    
+                  <!-- Budget Utilizzato -->
+                  <div class="col-md-4 mb-3">
+                    <label for="budgetUtilizzato" class="form-label">Budget Utilizzato*</label>
+                    <div class="input-group">
+                      <input type="text" id="budgetUtilizzato" class="form-control" name="budgetUtilizzato"
+                        [(ngModel)]="piano.budgetUtilizzato" required pattern="^\d+(\.\d+)?$"
+                        #budgetUtilizzatoRef="ngModel" />
+                    </div>
+                    <span class="custom-error" *ngIf="budgetUtilizzatoRef?.errors?.['required'] && (budgetUtilizzatoRef.dirty || budgetUtilizzatoRef.touched)">
+                      Budget Totale è obbligatorio!
+                    </span>
+                    <span class="custom-error" *ngIf="budgetUtilizzatoRef?.errors?.['pattern'] && (budgetUtilizzatoRef.dirty || budgetUtilizzatoRef.touched)">
+                      Inserisci un budget valido!
+                    </span>
+                  </div>
+    
+                  <!-- Budget Residuo -->
+                  <div class="col-md-4 mb-3">
+                    <label for="budgetResiduo" class="form-label">Budget Residuo*</label>
+                    <div class="input-group">
+                      <input type="text" id="budgetResiduo" class="form-control" name="budgetResiduo"
+                        [(ngModel)]="piano.budgetResiduo" required pattern="^\d+(\.\d+)?$"
+                        #budgetResiduoRef="ngModel" />
+                    </div>
+                    <span class="custom-error" *ngIf="budgetResiduoRef?.errors?.['required'] && (budgetResiduoRef.dirty || budgetResiduoRef.touched)">
+                      Budget Totale è obbligatorio!
+                    </span>
+                    <span class="custom-error" *ngIf="budgetResiduoRef?.errors?.['pattern'] && (budgetResiduoRef.dirty || budgetResiduoRef.touched)">
+                      Inserisci un budget valido!
+                    </span>
+                  </div>
+    
+                  <!-- Data Approvazione -->
+                  <div class="col-md-4 mb-3">
+                    <label class="form-label">Data Approvazione</label>
+                    
+                    <mat-form-field appearance="fill" style="width: 100%">
+                      <input matInput [matDatepicker]="picker" name="dataApprovazione"
+                        [(ngModel)]="piano.dataApprovazione" #dataApprovazioneRef="ngModel" />
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                    <span class="custom-error" *ngIf="dataApprovazioneRef?.errors?.['matDatepickerParse']
+                     && (dataApprovazioneRef.dirty || dataApprovazioneRef.touched)">
+                        Data Approvazione non valido
+                      </span>
+                  </div>
+    
+                  <!-- Note -->
+                  <div class="col-md-12 mb-3">
+                    <label for="note" class="form-label">Note</label>
+                    <div class="input-group">
+                      <textarea id="note" class="form-control" name="note"
+                        [(ngModel)]="piano.note" rows="3"></textarea>
+                    </div>
+                  </div>
+    
+                </div>
+              </div>
+    
+              <!-- Buttons -->
+              <div class="col-12 mt-5 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+                  <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+                  Indietro
+                </button>
+    
+                <div>
+                  <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm(addForm)">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>
+                    Reset
+                  </button>
+    
+                  <button type="submit" class="btn btn-primary py-2" [disabled]="addForm.invalid">
+                    Salva
+                  </button>
+                </div>
+              
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+</section>

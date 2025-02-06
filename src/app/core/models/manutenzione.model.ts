@@ -14,11 +14,11 @@ export interface Imprese {
 
 export interface Piani {
     id: number
-    anno: number
+    anno: string
     descrizione: string
-    budgetTotale: number
-    budgetUtilizzato: number
-    budgetResiduo: number
+    budgetTotale: number | string
+    budgetUtilizzato: number | string
+    budgetResiduo: number | string
     dataApprovazione?: string
     note: string
 }

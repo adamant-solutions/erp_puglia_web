@@ -64,8 +64,8 @@
                       <th scope="col">Azioni</th>
                       <th scope="col">Anno</th>
                       <th scope="col">Descrizione</th>
-                      <th scope="col">Budget Totale</th>
-                      <th scope="col">Budget Utilizzato</th>
+                 <!--      <th scope="col">Budget Totale</th>
+                      <th scope="col">Budget Utilizzato</th> -->
                       <th scope="col">Data Approvazione</th>            
                     </tr>
                   </thead>
@@ -87,9 +87,9 @@
                           >
                             <i class="bi bi-pencil align-middle"></i>
                           </a>
-                                 <!--    (click)="deletePatrimonioModal(pianoItem)" -->
+                                 
                           <a
-              
+                            (click)="deleteModal(pianoItem)"
                             title="Cancella"
                             class="text-decoration-none me-3"
                             style="cursor: pointer; color: #0052a3"
@@ -99,8 +99,8 @@
                       </td>
                       <td scope="row">{{ pianoItem.anno }}</td>
                       <td scope="row">{{ pianoItem.descrizione }}</td>
-                      <td scope="row">{{ pianoItem.budgetTotale }}</td>
-                      <td scope="row">{{ pianoItem.budgetUtilizzato }}</td>
+                    <!--   <td scope="row">{{ pianoItem.budgetTotale }}</td>
+                      <td scope="row">{{ pianoItem.budgetUtilizzato }}</td> -->
                       <td scope="row">{{ pianoItem.dataApprovazione || '' }}</td>
                     </tr>
                   </tbody>
@@ -122,3 +122,47 @@
       </div>
     </div>
 </section>
+
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deletePianoModal"
+  tabindex="-1"
+  aria-labelledby="deletePianoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="deletePianoModalLabel">Elimina Piano</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare <b>{{ pianoNome }}</b
+          >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deletePianoModal2"
+          data-bs-toggle="modal"
+          (click)="deletePiano()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
