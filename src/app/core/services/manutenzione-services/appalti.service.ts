@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { Appaltio } from '../../models/manutenzione.model';
+import { Appalto } from '../../models/manutenzione.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
 
@@ -34,7 +34,7 @@ constructor(
       httpParams = httpParams.set('stato', params.stato);
     }
  
-      return this.http.get<Appaltio[]>(`${this.url}/appalti`, {
+      return this.http.get<Appalto[]>(`${this.url}/appalti`, {
         params: httpParams,
         observe: 'response'
       }).pipe(
@@ -42,4 +42,25 @@ constructor(
       );
 }  
 
+  getAppaltoByid(id: number): Observable<Appalto>{
+    return this.http.get<Appalto>(`${this.url}/appalti/`+id).pipe(
+      catchError(error => { throw error; })
+    );
+  }
+
+  addAppalto(appalto: Appalto): Observable<Appalto>{
+    return this.http.post<Appalto>(`${this.url}/appalti`,appalto).pipe(
+        catchError(error => { throw error; })
+      );
+  }
+  editAppalto(appalto: Appalto): Observable<Appalto>{
+    return this.http.put<Appalto>(`${this.url}/appalti`,appalto).pipe(
+        catchError(error => { throw error; })
+      );
+  }
+  deleteAppalto(id: number): Observable<Appalto>{
+    return this.http.delete<Appalto>(`${this.url}/appalti`+id).pipe(
+        catchError(error => { throw error; })
+      );
+  }
 }

@@ -1,8 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Appaltio, StatoAppalto } from 'src/app/core/models/manutenzione.model';
-import { AppaltiSearchParams } from 'src/app/core/services/manutenzione-services/appalti.service';
+import { Appalto, StatoAppalto } from 'src/app/core/models/manutenzione.model';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { AppaltiSearchParams, AppaltiService } from 'src/app/core/services/manutenzione-services/appalti.service';
 
 @Component({
   selector: 'app-view-appalti',
@@ -10,13 +11,16 @@ import { AppaltiSearchParams } from 'src/app/core/services/manutenzione-services
   styleUrls: ['./view-appalti.component.css'],
 })
 export class ViewAppaltiComponent {
-  pageTitle: string = 'Richieste manutenzione';
+  pageTitle: string = 'Appalti';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Manutenzione', link: '/manutenzione' },
   ];
 
-  appaltiList: Appaltio[] = [];
+  appaltiList: Appalto[] = [];
+  appaltoId!: number;
+  appaltoCIG: string = '';
+  appaltoCUP: string = '';
   currentPage = 0;
   pageSize = 10; 
   totalItems!: number;
@@ -46,7 +50,7 @@ export class ViewAppaltiComponent {
   private router = inject(Router);
 
 
-  constructor() { }
+  constructor(private appSrc: AppaltiService,private bootstrap: BootstrapService) { }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['pagina'] || 0;
@@ -108,37 +112,27 @@ export class ViewAppaltiComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  
+  deleteModal(item: Appalto) {
+    this.appaltoId = item.id;
+    this.appaltoCIG = item.codiceCIG;
+    this.appaltoCUP = item.codiceCUP;
+    this.bootstrap.showModal('deleteAppaltoModal');
+  }
+
+  deleteAppalto() {
+    this.appSrc.deleteAppalto(this.appaltoId).subscribe({
+      next: () => {
+        this.appaltiList = this.appaltiList.filter(
+          (item) => item.id !== this.appaltoId
+        );
+        // this.notificationService.success(`"${this.appaltoId}" deleted successfully.`);
+      },
+      error: (error: any) => {
+        console.error(error);
+        // this.notificationService.error(`Failed to delete "${this.appaltoId}". Please try again.`);
+      },
+    });
+  }
 
 }
-
-/* 
-[
-  {
-      "id": 7,
-      "codiceCIG": "ZA12B3C4Dk",
-      "codiceCUP": "J71H2300000000p",
-      "oggetto": "Manutenzione straordinaria degli impianti di riscaldamento degli edifici del lotto 3",
-      "tipoAppalto": "LAVORI",  // select 
-      "stato": "IN_ESECUZIONE", // select 
-      "importoBaseAsta": 150000,
-      "importoAggiudicazione": null,
-      "dataPubblicazione": "2024-03-20",
-      "dataScadenza": "2024-04-20",
-      "dataAggiudicazione": null,
-      "impresaAggiudicatariaId": null
-  },
-  {
-      "id": 5,
-      "codiceCIG": "ZA12B3C4D5",
-      "codiceCUP": "J71H23000000001",
-      "oggetto": "Manutenzione ordinaria degli impianti - Piano 2024",
-      "tipoAppalto": "LAVORI",
-      "stato": "AGGIUDICATO",
-      "importoBaseAsta": 150000,
-      "importoAggiudicazione": null,
-      "dataPubblicazione": "2024-01-01",
-      "dataScadenza": "2024-02-01",
-      "dataAggiudicazione": "2024-02-15",
-      "impresaAggiudicatariaId": 1
-  }
-] */

@@ -20,3 +20,9 @@ export const impreseByIdResolver: ResolveFn<any> = (route, state, impreseService
 
 }
 
+export const impreseLightResolver: ResolveFn<any> = (route, state, impreseService: ImpreseService = inject(ImpreseService)) => {
+  return impreseService.getImpreseLight()
+
+}
+
+

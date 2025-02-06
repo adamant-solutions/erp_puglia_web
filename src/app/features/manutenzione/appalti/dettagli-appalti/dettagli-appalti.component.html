@@ -1,0 +1,99 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Visualizza Appalto'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+              
+              <!-- Codice CIG -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceCIG" class="form-label">Codice CIG</label>
+                <div class="input-group">
+                <input type="text" id="codiceCIG" class="form-control" formControlName="codiceCIG" />
+                </div>
+              </div>
+
+              <!-- Codice CUP -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceCUP" class="form-label">Codice CUP</label>
+                <div class="input-group">
+                <input type="text" id="codiceCUP" class="form-control" formControlName="codiceCUP" />
+                </div>
+              </div>
+
+              <!-- Tipo Appalto -->
+              <div class="col-md-4 mb-3">
+                <label for="tipoAppalto" class="form-label">Tipo Appalto</label>
+                <div class="input-group">
+                <input type="text" id="tipoAppalto" class="form-control" formControlName="tipoAppalto" />
+                </div>
+              </div>
+
+              <!-- Stato -->
+              <div class="col-md-4 mb-3">
+                <label for="stato" class="form-label">Stato</label>
+                <div class="input-group">
+                <input type="text" id="stato" class="form-control" formControlName="stato" />
+                </div>
+              </div>
+
+              <!-- Importo Base Asta -->
+              <div class="col-md-4 mb-3">
+                <label for="importoBaseAsta" class="form-label">Importo Base Asta</label>
+                <div class="input-group">
+                <input type="text" id="importoBaseAsta" class="form-control" formControlName="importoBaseAsta" /></div>
+              </div>
+
+              <!-- Importo Aggiudicazione -->
+              <div class="col-md-4 mb-3">
+                <label for="importoAggiudicazione" class="form-label">Importo Aggiudicazione</label>
+                <div class="input-group">
+                <input type="text" id="importoAggiudicazione" class="form-control" formControlName="importoAggiudicazione" /></div>
+              </div>
+
+              <!-- Data Pubblicazione -->
+              <div class="col-md-4 mb-3">
+                <label for="dataPubblicazione" class="form-label">Data Pubblicazione</label>
+                <div class="input-group">
+                <input type="text" id="dataPubblicazione" class="form-control" formControlName="dataPubblicazione" /></div>
+              </div>
+
+              <!-- Data Scadenza -->
+              <div class="col-md-4 mb-3">
+                <label for="dataScadenza" class="form-label">Data Scadenza</label>
+                <div class="input-group">
+                <input type="text" id="dataScadenza" class="form-control" formControlName="dataScadenza" /></div>
+              </div>
+
+              <!-- Data Aggiudicazione -->
+              <div class="col-md-4 mb-3">
+                <label for="dataAggiudicazione" class="form-label">Data Aggiudicazione</label>
+                <div class="input-group">
+                <input type="text" id="dataAggiudicazione" class="form-control" formControlName="dataAggiudicazione" /></div>
+              </div>
+
+                <!-- Impresa Aggiudicataria -->
+                <div class="col-md-4 mb-3">
+                  <label for="impresaAggiudicatariaId" class="form-label">Impresa Aggiudicataria</label>
+                  <div class="input-group">
+                  <input type="text" id="impresaAggiudicatariaId" class="form-control" formControlName="impresaAggiudicatariaId" /></div>
+                </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

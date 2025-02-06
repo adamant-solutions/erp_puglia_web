@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Imprese } from '../../models/manutenzione.model';
 import { catchError, Observable } from 'rxjs';
+import { ModelLight } from '../../models/contratto.model';
 
 export interface ImpreseSearchParams {
   pagina?: number;
@@ -42,6 +43,10 @@ export class ImpreseService {
   return this.http.get<Imprese>(`${this.url}/imprese/`+id).pipe(
     catchError(error => { throw error; })
   );
+}
+
+getImpreseLight(): Observable<ModelLight[]>{
+  return this.http.get<ModelLight[]>(`${this.url}/imprese/light`);
 }
 
  addImprese(imprese: Imprese): Observable<Imprese>{

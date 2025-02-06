@@ -13,3 +13,10 @@ export const appaltiResolver: ResolveFn<any> = (route, state, apService: Appalti
   return apService.getAppalti(searchParams)
 
 }
+
+export const appaltoByIdResolver: ResolveFn<any> = (route, state, appaltioService: AppaltiService = inject(AppaltiService)) => {
+  const ID = route.params['id'];
+  return appaltioService.getAppaltoByid(ID)
+
+}
+

@@ -1,4 +1,4 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Richieste manutenzione'">
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Appalti'">
 </app-breadcrumbs>
 <section class="py-4">
     <div class="container">
@@ -131,9 +131,9 @@
                           >
                             <i class="bi bi-pencil align-middle"></i>
                           </a>
-                                 <!--    (click)="deletePatrimonioModal(item)" -->
+                                    
                           <a
-              
+                            (click)="deleteModal(item)" 
                             title="Cancella"
                             class="text-decoration-none me-3"
                             style="cursor: pointer; color: #0052a3"
@@ -165,3 +165,48 @@
       </div>
     </div>
 </section>
+
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deleteAppaltoModal"
+  tabindex="-1"
+  aria-labelledby="deleteAppaltoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="deleteAppaltoModalLabel">Elimina Appalto</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare appalto con codice CIG : <b>{{ appaltoCIG }}</b
+          > and codice CUP  <b>{{ appaltoCUP }}</b
+            >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deleteAppaltoModal2"
+          data-bs-toggle="modal"
+          (click)="deleteAppalto()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

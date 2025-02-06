@@ -23,7 +23,7 @@ export interface Piani {
     note: string
 }
 
-export interface Appaltio {
+export interface Appalto {
     id: number
     codiceCIG: string
     codiceCUP: string
@@ -34,8 +34,8 @@ export interface Appaltio {
     importoAggiudicazione: any
     dataPubblicazione: string
     dataScadenza: string
-    dataAggiudicazione?: string
-    impresaAggiudicatariaId?: number
+    dataAggiudicazione: string
+    impresaAggiudicatariaId: number
 }
 
 export interface Interventi {
