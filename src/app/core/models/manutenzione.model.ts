@@ -38,6 +38,30 @@ export interface Appalto {
     impresaAggiudicatariaId: number
 }
 
+export interface Richiesta {
+    id: number
+    unitaImmobiliareId: number
+    richiedenteId: number
+    dataRichiesta: string
+    descrizione: string
+    tipoManutenzione: string
+    stato: string
+    priorita: string
+    noteVerifica: string
+    dataApprovazione: string
+    dataPianificazione: string
+    dataInizioLavori: string
+    dataFineLavori: string
+    esitoCollaudo: string
+    pianoId: any
+    appaltoId: any
+    origineRichiesta: string
+    budgetStimato: number
+    budgetEffettivo: number
+    periodoPianificato: string
+  }
+  
+
 export interface Interventi {
     id: number
     richiestaId: number
@@ -59,20 +83,20 @@ export interface Interventi {
 
 
 export enum OrigineRichiesta {
-    PIANO_MANUTENZIONE,    // Richiesta originata dal piano
-    SEGNALAZIONE,          // Richiesta da inquilino/utente
-    EMERGENZA,             // Richiesta urgente non pianificata
-    ISPEZIONE              // Richiesta da controllo tecnico
+    PIANO_MANUTENZIONE = "PIANO_MANUTENZIONE",    // Richiesta originata dal piano
+    SEGNALAZIONE = "SEGNALAZIONE",          // Richiesta da inquilino/utente
+    EMERGENZA = "EMERGENZA",             // Richiesta urgente non pianificata
+    ISPEZIONE =  "ISPEZIONE"           // Richiesta da controllo tecnico
 
 }
 
 
 
 export enum PrioritaIntervento {
-    EMERGENZA,      // Intervento immediato necessario
-    ALTA,           // Priorità elevata
-    MEDIA,          // Priorità normale
-    BASSA           // Può essere pianificato nel lungo termine
+    EMERGENZA = "EMERGENZA",      // Intervento immediato necessario
+    ALTA= "ALTA",           // Priorità elevata
+    MEDIA= "MEDIA",          // Priorità normale
+    BASSA = "BASSA"          // Può essere pianificato nel lungo termine
 
 }
 
@@ -103,15 +127,15 @@ export enum StatoIntervento {
 
 
 export enum StatoRichiesta {
-    RICEVUTA,     // Fase iniziale - ricezione richiesta
-    IN_VERIFICA,  // Fase di verifica preliminare
-    APPROVATA,    // Verifica completata positivamente
-    PIANIFICATA,  // Inserita nel piano di interventi
-    IN_ESECUZIONE,// Lavori in corso
-    COMPLETATA,   // Lavori terminati
-    IN_COLLAUDO,  // Fase di controllo finale
-    CHIUSA,       // Processo completato
-    RIFIUTATA     // Richiesta non approvata
+    RICEVUTA= "RICEVUTA",     // Fase iniziale - ricezione richiesta
+    IN_VERIFICA= "IN_VERIFICA",  // Fase di verifica preliminare
+    APPROVATA= "APPROVATA",    // Verifica completata positivamente
+    PIANIFICATA= "PIANIFICATA",  // Inserita nel piano di interventi
+    IN_ESECUZIONE= "IN_ESECUZIONE",// Lavori in corso
+    COMPLETATA= "COMPLETATA",   // Lavori terminati
+    IN_COLLAUDO= "IN_COLLAUDO",  // Fase di controllo finale
+    CHIUSA= "CHIUSA",       // Processo completato
+    RIFIUTATA  = "RIFIUTATA"   // Richiesta non approvata
 
 }
 
@@ -119,9 +143,9 @@ export enum StatoRichiesta {
 
 export enum TipoAppalto {
 
-    LAVORI,   // Appalto per lavori
-    SERVIZI,  // Appalto per servizi
-    FORNITURE // Appalto per forniture
+    LAVORI= "LAVORI",   // Appalto per lavori
+    SERVIZI= "SERVIZI",  // Appalto per servizi
+    FORNITURE= "FORNITURE" // Appalto per forniture
 
 }
 
@@ -129,8 +153,8 @@ export enum TipoAppalto {
 
 export enum TipoManutenzione {
 
-    ORDINARIA,      // Interventi di routine e piccole riparazioni
-    STRAORDINARIA   // Interventi strutturali o di grande entità
+    ORDINARIA= "ORDINARIA",      // Interventi di routine e piccole riparazioni
+    STRAORDINARIA= "STRAORDINARIA"   // Interventi strutturali o di grande entità
 
 }
 
