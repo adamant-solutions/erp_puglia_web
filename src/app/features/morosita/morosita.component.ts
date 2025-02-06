@@ -13,6 +13,16 @@ import { Modal } from 'bootstrap';
   styleUrls: ['./morosita.component.css'],
 })
 export class MorositaComponent implements OnInit {
+  statoOptions = [
+    { value: 'INTIMATA', label: 'Intimata' },
+    { value: 'ACCERTATA', label: 'Accertata' },
+    { value: 'IN_RATEIZZAZIONE', label: 'In Rateizzazione' },
+    { value: 'IN_RISCOSSIONE', label: 'In Riscossione' },
+    { value: 'IN_CONTENZIOSO', label: 'In Contenzioso' },
+    { value: 'INESIGIBILE', label: 'Inesigibile' },
+    { value: 'ESTINTA', label: 'Estinta' },
+    { value: 'SOSPESA', label: 'Sospesa' }
+  ];
   pageTitle: string = 'Morosità';
   morositaList: Morosita[] = [];
   searchForm: FormGroup;
