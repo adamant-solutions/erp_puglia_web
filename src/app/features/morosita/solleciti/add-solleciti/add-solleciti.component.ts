@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SollecitoService } from 'src/app/core/services/sollecito.service';
+
+
 export enum TipoSollecito {
   BONARIO = 'BONARIO',
   RACCOMANDATA = 'RACCOMANDATA',
@@ -16,6 +18,23 @@ export enum EsitoInvioSollecito {
   IN_CONSEGNA = 'IN_CONSEGNA',
   SMARRITO = 'SMARRITO'
 }
+
+
+const tipiSollecitoOptions = [
+  { value: TipoSollecito.BONARIO, label: 'Bonario' },
+  { value: TipoSollecito.RACCOMANDATA, label: 'Raccomandata' },
+  { value: TipoSollecito.DIFFIDA, label: 'Diffida' },
+  { value: TipoSollecito.LEGALE, label: 'Legale' }
+];
+
+const esitiInvioOptions = [
+  { value: EsitoInvioSollecito.CONSEGNATO, label: 'Consegnato' },
+  { value: EsitoInvioSollecito.NON_CONSEGNATO, label: 'Non Consegnato' },
+  { value: EsitoInvioSollecito.RIFIUTATO, label: 'Rifiutato' },
+  { value: EsitoInvioSollecito.IN_CONSEGNA, label: 'In Consegna' },
+  { value: EsitoInvioSollecito.SMARRITO, label: 'Smarrito' }
+];
+
 @Component({
   selector: 'app-add-solleciti',
   templateUrl: './add-solleciti.component.html',
@@ -24,15 +43,15 @@ export enum EsitoInvioSollecito {
 export class AddSollecitiComponent implements OnInit {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    
-   
   ];
+  
   addForm!: FormGroup;
   submitted = false;
   morositaId!: number;
   
-  tipiSollecito = Object.values(TipoSollecito);
-  esitiInvio = Object.values(EsitoInvioSollecito);
+
+  tipiSollecitoOptions = tipiSollecitoOptions;
+  esitiInvioOptions = esitiInvioOptions;
 
   constructor(
     private fb: FormBuilder,
