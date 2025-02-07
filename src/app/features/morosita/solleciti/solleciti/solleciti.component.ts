@@ -10,9 +10,7 @@ declare var bootstrap: any;
   styleUrls: ['./solleciti.component.css']
 })
 export class SollecitiComponent {
-  breadcrumbList = [
-    { label: 'ERP - di Regione Puglia', link: '/' }
-  ];
+  breadcrumbList : any=   []
   sollecitiList: Sollecito[] = [];
   morositaId: number;
   private deleteModal: any;
@@ -22,7 +20,7 @@ export class SollecitiComponent {
     this.morositaId = this.route.snapshot.params['morositaId'];
   }
   ngOnInit() {
-   
+ 
     this.route.parent?.params.subscribe(params => {
       this.morositaId = +params['id']; 
     });
@@ -32,7 +30,11 @@ export class SollecitiComponent {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-   
+    this.breadcrumbList = [
+      { label: 'ERP - di Regione Puglia', link: '/' },
+      { label: 'Morosità', link: '/morosita' },
+      { label: 'Dettagli Morosità', link: `/morosita/view-morosita/${this.morositaId}` }
+    ];
     this.deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
   }
 
