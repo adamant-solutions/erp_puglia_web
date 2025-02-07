@@ -20,7 +20,7 @@
                 name="esitoInvio"
                 required>
                 <option *ngFor="let esito of esitoInvioOptions" [value]="esito">
-                  {{esito}}
+                  {{ esito | esitoFormat }}
                 </option>
               </select>
             </div>
