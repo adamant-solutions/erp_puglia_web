@@ -1,0 +1,124 @@
+
+.container .form-label {
+  margin-left: 1rem;
+  color: #0075bf;
+  font-size: 14px;
+}
+
+
+.container .form-control,
+.container .form-select {
+  border: 1px solid #0075bf;
+  border-radius: 3px;
+  padding: 0.375rem 1rem;
+  background-color: transparent;
+}
+
+.container .form-control:disabled,
+.container .form-control[readonly],
+.container .form-select:disabled {
+  background-color: #fff;
+  opacity: 1;
+  border: 1px solid #0075bf;
+  color: #212529;
+  cursor: default;
+}
+
+
+.container textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+
+.container h3 {
+  color: #0075bf;
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+
+.container h1.mb-5 {
+  color: #0075bf;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.container .btn {
+  padding: 0.5rem 1rem;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.container .btn-outline-primary {
+  color: #0075bf;
+  border-color: #0075bf;
+  transition: all 0.2s ease-in-out;
+}
+
+.container .btn-outline-primary:hover {
+  background-color: #0075bf;
+  color: #fff;
+}
+
+
+.container section.pt-4.pb-5 {
+  background-color: #fff;
+}
+
+
+.container .row.mb-4 {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.container .input-group {
+  border-radius: 3px;
+  border: 1px solid #0075bf;
+}
+
+.container .input-group .input-group-text {
+  background-color: transparent;
+  border: none;
+  color: #0075bf;
+  border-left: 1px solid #0075bf;
+}
+
+
+.container .col-md-4.mb-3 {
+  position: relative;
+  margin-bottom: 1.5rem !important;
+}
+
+
+.container .accordion {
+  margin-top: 2rem;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.container .accordion-item {
+  border: 1px solid #0075bf;
+  margin-bottom: 0.5rem;
+}
+
+.container .accordion-button {
+  color: #0075bf;
+  background-color: #fff;
+  padding: 1rem 1.25rem;
+}
+
+.container .accordion-button:not(.collapsed) {
+  background-color: #f8f9fa;
+  color: #0075bf;
+  box-shadow: none;
+}
+
+
+.container .btn i {
+  font-size: 1.1em;
+}
