@@ -143,7 +143,7 @@ export class AddContrattiComponent {
         .filter(file => file.name.toLowerCase().endsWith('.pdf'))
         .map(file => ({
           nomeFile: file.name,
-          tipoDocumento: 'DOCUMENTO_PDF'
+          // tipoDocumento: 'DOCUMENTO_PDF'
         }))
     };
   
