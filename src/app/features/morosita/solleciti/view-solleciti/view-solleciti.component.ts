@@ -24,7 +24,9 @@ export class ViewSollecitiComponent implements OnInit {
     numeroProtocollo: ''
   }
   currentMorositaId: number | null = null;
-
+  breadcrumbList = [
+    { label: 'ERP - di Regione Puglia', link: '/' }
+  ];
   constructor(
     private route: ActivatedRoute,
     private router: Router

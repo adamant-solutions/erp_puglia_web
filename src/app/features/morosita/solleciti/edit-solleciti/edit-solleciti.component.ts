@@ -12,7 +12,9 @@ export class EditSollecitiComponent {
   morositaId!: number;
   sollecitoId!: number;
   esitoInvioOptions = Object.values(EsitoInvioSollecito);
-
+  breadcrumbList = [
+    { label: 'ERP - di Regione Puglia', link: '/' }
+  ];
   constructor(
     private sollecitoService: SollecitoService,
     private route: ActivatedRoute,
