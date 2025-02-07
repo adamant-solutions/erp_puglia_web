@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ModelLight } from 'src/app/core/models/contratto.model';
 import { Morosita } from 'src/app/core/models/morosita.model';
 
 @Component({
@@ -13,9 +14,10 @@ export class ViewMorositaComponent implements OnInit {
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Morosità', link: '/morosita' },
   ];
-
+  contratti: ModelLight[] = [];
   viewForm = this.fb.group({
     contrattoId: [''],
+    contrattoDescrizione: [''],
     dataRilevazione: [''],
     dataScadenza: [''],
     importoDovuto: [''],
@@ -35,9 +37,11 @@ export class ViewMorositaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+  
     this.route.data.subscribe(data => {
       const morosita = data['morositaByIdResolver'] as Morosita;
-      console.log(morosita)
+      this.contratti = data['contrattiLightResolver'] as ModelLight[];
+      
       if (morosita) {
         this.populateForm(morosita);
       }
@@ -45,8 +49,13 @@ export class ViewMorositaComponent implements OnInit {
   }
 
   private populateForm(morosita: Morosita) {
+   
+    const contratto = this.contratti.find(c => c.id === morosita.contrattoId);
+    const contrattoDescrizione = contratto ? contratto.descrizione : '';
+
     this.viewForm.patchValue({
-      contrattoId: morosita.contrattoId?.toString(),
+      contrattoId: morosita.contrattoId.toString(),
+      contrattoDescrizione: contrattoDescrizione,
       dataRilevazione: this.formatDate(morosita.dataRilevazione),
       dataScadenza: this.formatDate(morosita.dataScadenza),
       importoDovuto: morosita.importoDovuto?.toString(),

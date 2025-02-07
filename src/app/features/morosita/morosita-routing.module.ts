@@ -28,7 +28,8 @@ const routes:Routes = [
         path: '',
         component: ViewMorositaComponent,
         resolve: {
-          morositaByIdResolver
+          morositaByIdResolver,
+          contrattiLightResolver
         },
       },
       {
