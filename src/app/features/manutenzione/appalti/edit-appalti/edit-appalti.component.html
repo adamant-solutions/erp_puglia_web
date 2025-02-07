@@ -1,1 +1,233 @@
-<p>edit-appalti works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Appalto'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+              
+              <!-- Codice CIG -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceCIG" class="form-label">Codice CIG*</label>
+                <div class="input-group">
+                <input type="text" id="codiceCIG" class="form-control" formControlName="codiceCIG" maxlength="10" />
+                </div>
+                <span class="custom-error" *ngIf="editForm.get('codiceCIG')?.hasError('required') && editForm.get('codiceCIG')?.touched">
+                  Codice CIG è obbligatorio!
+                </span>
+                <span class="custom-error" *ngIf="editForm.get('codiceCIG')?.hasError('minlength') && editForm.get('codiceCIG')?.touched">
+                  Codice CIG deve essere lungo 10 caratteri.!
+                </span>
+              </div>
+
+              <!-- Codice CUP -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceCUP" class="form-label">Codice CUP*</label>
+                <div class="input-group">
+                <input type="text" id="codiceCUP" class="form-control" formControlName="codiceCUP" maxlength="15"/>
+                </div>
+                <span class="custom-error" *ngIf="editForm.get('codiceCUP')?.hasError('required') && editForm.get('codiceCUP')?.touched">
+                  Codice CUP è obbligatorio!
+                </span>
+                <span class="custom-error" *ngIf="editForm.get('codiceCUP')?.hasError('minlength') && editForm.get('codiceCUP')?.touched">
+                  Codice CUP deve essere lungo 15 caratteri.!
+                </span>
+              </div>
+
+              <!-- Tipo Appalto --> 
+              <div class="col-md-4 mb-3 select-wrapper">
+                <label class="form-label" for="tipoAppalto"
+                  >Tipo Appalto*</label
+                >
+                <div class="input-group">
+                  <select
+                    class="form-control"
+                    id="tipoAppalto"
+                    name="tipoAppalto"
+                    formControlName="tipoAppalto" 
+                  >
+                   <!--  <option value="" selected="">
+                      Seleziona Tipo Appalto
+                    </option> -->
+                    <option
+                      *ngFor="let tipoAppalto of tipoAppaltoList"
+                      [value]="tipoAppalto"
+                    >
+                      {{ tipoAppalto | capitalize }}
+                    </option>
+                  </select>
+
+                </div>
+                <span class="custom-error" *ngIf="editForm.get('tipoAppalto')?.hasError('required') && editForm.get('tipoAppalto')?.touched">
+                  Tipo Appalto è obbligatorio!
+                </span>
+              </div>
+
+                <!-- Stato -->
+              <div class="col-md-4 mb-3 select-wrapper">
+                <label class="form-label" for="stato"
+                  >Stato*</label
+                >
+                <div class="input-group">
+                  <select
+                    class="form-control"
+                    id="stato"
+                    name="stato"
+                    formControlName="stato" 
+                  >
+                   <!--  <option value="" selected="">
+                      Seleziona stato
+                    </option> -->
+                    <option
+                      *ngFor="let stato of statoList"
+                      [value]="stato"
+                    >
+                      {{ stato | capitalize }}
+                    </option>
+                  </select>
+
+                </div>
+                <span class="custom-error" *ngIf="editForm.get('stato')?.hasError('required') && editForm.get('stato')?.touched">
+                  Stato Appalto è obbligatorio!
+                </span>
+              </div>
+  
+
+              <!-- Importo Base Asta -->
+              <div class="col-md-4 mb-3">
+                <label for="importoBaseAsta" class="form-label">Importo Base Asta</label>
+                <div class="input-group">
+                <input type="text" id="importoBaseAsta" class="form-control" formControlName="importoBaseAsta" /></div>
+              </div>
+
+              <!-- Importo Aggiudicazione -->
+              <div class="col-md-4 mb-3">
+                <label for="importoAggiudicazione" class="form-label">Importo Aggiudicazione</label>
+                <div class="input-group">
+                <input type="text" id="importoAggiudicazione" class="form-control" formControlName="importoAggiudicazione" /></div>
+              </div>
+
+              <!-- Data Pubblicazione -->
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Data Pubblicazione*</label>
+                
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <input matInput [matDatepicker]="pickerdataPubblicazione"  id="dataPubblicazione" name="dataPubblicazione"
+                  formControlName="dataPubblicazione"/>
+                  <mat-datepicker-toggle matSuffix [for]="pickerdataPubblicazione"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerdataPubblicazione></mat-datepicker>
+                </mat-form-field>
+
+                <span class="custom-error" *ngIf="editForm.get('dataPubblicazione')?.hasError('required') && editForm.get('dataPubblicazione')?.touched">
+                    Data Pubblicazione è obbligatorio!
+                 </span>
+
+                <span class="custom-error" *ngIf="editForm.get('dataPubblicazione')?.hasError('matDatepickerParse')
+                 && (editForm.get('dataPubblicazione')?.dirty || editForm.get('dataPubblicazione')?.touched)">
+                 Inserisci una data valida nel formato gg/mm/aaaa!
+                  </span> 
+              </div>
+
+
+              <!-- Data Scadenza -->
+              
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Data Scadenza*</label>
+                
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <input matInput [matDatepicker]="pickerdataScadenza"  id="dataScadenza" name="dataScadenza"
+                  formControlName="dataScadenza"/>
+                  <mat-datepicker-toggle matSuffix [for]="pickerdataScadenza"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerdataScadenza></mat-datepicker>
+                </mat-form-field>
+
+                <span class="custom-error" *ngIf="editForm.get('dataScadenza')?.hasError('required') && editForm.get('dataScadenza')?.touched">
+                  Data Scadenza è obbligatorio!
+                 </span>
+
+                <span class="custom-error" *ngIf="editForm.get('dataScadenza')?.hasError('matDatepickerParse')
+                 && (editForm.get('dataScadenza')?.dirty || editForm.get('dataScadenza')?.touched)">
+                 Inserisci una data valida nel formato gg/mm/aaaa!
+                  </span> 
+              </div>
+
+              <!-- Data Aggiudicazione -->
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Data Aggiudicazione</label>
+                
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <input matInput [matDatepicker]="pickerdataAggiudicazione"  id="dataAggiudicazione" name="dataAggiudicazione"
+                  formControlName="dataAggiudicazione"/>
+                  <mat-datepicker-toggle matSuffix [for]="pickerdataAggiudicazione"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerdataAggiudicazione></mat-datepicker>
+                </mat-form-field>
+
+              
+                <span class="custom-error" *ngIf="editForm.get('dataAggiudicazione')?.hasError('matDatepickerParse')
+                 && (editForm.get('dataAggiudicazione')?.dirty || editForm.get('dataAggiudicazione')?.touched)">
+                 Inserisci una data valida nel formato gg/mm/aaaa!
+                  </span> 
+              </div>
+
+              <!-- Impresa -->
+
+                <div class="col-md-4 mb-3">
+                  <label for="impresaAggiudicatariaId" class="form-label">Impresa Aggiudicataria</label>
+                  <div class="input-group">
+                    <select class="form-control" id="impresaAggiudicatariaId" name="impresaAggiudicatariaId" formControlName="impresaAggiudicatariaId"  ><!--  (change)="selectPiano($event)" -->
+                      <option *ngFor="let imprese of impreseList" [value]="imprese.id"  [selected]="imprese.id === editForm.get('impresaAggiudicatariaId')?.value">
+                        {{ imprese.ragioneSociale }}
+                      </option>
+                    </select>
+                  </div>
+                <!--   <span class="custom-error" *ngIf="pianoref?.errors?.['required'] && (pianoref.dirty || pianoref.touched)">
+                      Piano è obbligatorio!
+                     </span> -->
+                </div>
+  
+                  <!-- Oggetto -->
+                  <div class="col-md-8 mb-3">
+                    <label for="oggetto" class="form-label">Oggetto</label>
+                    <div class="input-group">
+                    <textarea id="oggetto" class="form-control" formControlName="oggetto" minlength="10" maxlength="500" rows="3"></textarea></div>
+                    <span class="custom-error" *ngIf="editForm.get('oggetto')?.hasError('required') && editForm.get('oggetto')?.touched">
+                      Oggetto è obbligatorio!
+                    </span>
+                    <span class="custom-error" *ngIf="editForm.get('oggetto')?.hasError('minlength') && editForm.get('oggetto')?.touched">
+                      L'oggetto deve contenere tra 10 e 500 caratteri!
+                    </span>
+                  </div>
+                  
+            </div>
+          </div>
+
+        <!-- Buttons -->
+        <div class="col-12 mt-5 d-flex justify-content-between">
+          <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+            <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+            Indietro
+          </button>
+
+          <div>
+            <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm()">
+              <i class="bi bi-arrow-counterclockwise me-1"></i>
+              Reset
+            </button>
+
+            <button type="submit" class="btn btn-primary py-2" [disabled]="editForm.invalid">
+              Salva
+            </button>
+          </div>
+        
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
