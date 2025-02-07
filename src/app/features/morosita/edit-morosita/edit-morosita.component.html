@@ -8,8 +8,16 @@
 
         <form [formGroup]="editForm" class="row g-3" (ngSubmit)="onSubmit()">
           <div class="col-md-4 mb-3">
-            <label class="form-label">Contratto ID</label>
-            <input type="text" class="form-control" formControlName="contrattoId">
+            <label class="form-label">Contratto</label>
+            <select class="form-select" 
+                    formControlName="contrattoId"
+                    (change)="onContrattoChange($event)"
+                    [class.is-invalid]="editForm.get('contrattoId')?.invalid && editForm.get('contrattoId')?.touched">
+              <option value="">Seleziona un contratto</option>
+              <option *ngFor="let contratto of contratti" [value]="contratto.id">
+                {{ contratto.descrizione }}
+              </option>
+            </select>
             <div class="invalid-feedback" *ngIf="editForm.get('contrattoId')?.errors?.['required'] && editForm.get('contrattoId')?.touched">
               Campo obbligatorio
             </div>
@@ -132,15 +140,21 @@
             </div>
           </div>
 
-          <div class="col-12 mt-5">
-            <button type="submit" class="btn btn-primary me-2" [disabled]="!editForm.valid">
-              <i class="bi bi-save me-1"></i>
-              Salva
-            </button>
-            <button type="button" class="btn btn-outline-primary" (click)="indietroM()">
-              <i class="bi bi-arrow-left me-1"></i>
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-primary py-2" (click)="indietroM()">
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
               Indietro
             </button>
+            <div>
+              <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm()">
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                Reset
+              </button>
+              <button type="submit" class="btn btn-primary py-2" [disabled]="!editForm.valid">
+                <i class="bi bi-save"></i>
+                Salva
+              </button>
+            </div>
           </div>
         </form>
       </div>

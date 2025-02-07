@@ -66,7 +66,8 @@ const routes:Routes = [
         path: '',
         component: EditMorositaComponent,
         resolve: {
-          morositaByIdResolver
+          morositaByIdResolver,
+          contrattiLightResolver
         }
       },
       {
