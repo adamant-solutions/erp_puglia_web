@@ -30,7 +30,8 @@ export class AddContrattiComponent {
 
   @ViewChild('confermaModal') confermaModal!: ElementRef;
   private modal: any;
-
+  selectedFiles: File[] = [];
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -49,15 +50,26 @@ export class AddContrattiComponent {
     return this.fb.group({
       dataInizio: ['', Validators.required],
       dataFine: [''],
-     
       statoContratto: ['ATTIVO', Validators.required],
       descrizione: [''],
       canoneMensile: [null, [Validators.required, Validators.min(1)]],
       unitaImmobiliare: [null, Validators.required],
-      intestatari: this.fb.array([], Validators.required)
+      intestatari: this.fb.array([], Validators.required),
+      documenti: [null] 
     });
   }
-
+  onFileSelected(event: any) {
+    const files: FileList = event.target.files;
+    this.selectedFiles = Array.from(files);
+  }
+  removeFile(index: number) {
+    this.selectedFiles.splice(index, 1);
+   
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
+  }
+  
   private loadData() {
     this.route.data.subscribe({
       next: (data) => {
@@ -108,7 +120,6 @@ export class AddContrattiComponent {
       });
     }
   }
-
   private prepareFormData(): FormData {
     const formValue = this.contratoForm.getRawValue();
     const formData = new FormData();
@@ -128,7 +139,12 @@ export class AddContrattiComponent {
         },
         dataInizio: this.formatDate(int.dataInizio)
       })),
-      documenti: []
+      documenti: this.selectedFiles
+        .filter(file => file.name.toLowerCase().endsWith('.pdf'))
+        .map(file => ({
+          nomeFile: file.name,
+          tipoDocumento: 'DOCUMENTO_PDF'
+        }))
     };
   
     formData.append(
@@ -136,6 +152,13 @@ export class AddContrattiComponent {
       new Blob([JSON.stringify(contratto)], { type: 'application/json' }),
       'contratto.json'
     );
+  
+
+    this.selectedFiles
+      .filter(file => file.name.toLowerCase().endsWith('.pdf'))
+      .forEach(file => {
+        formData.append('documenti', file, file.name);
+      });
   
     return formData;
   }
