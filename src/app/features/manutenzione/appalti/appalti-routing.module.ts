@@ -6,6 +6,7 @@ import { AddAppaltiComponent } from './add-appalti/add-appalti.component';
 import { DettagliAppaltiComponent } from './dettagli-appalti/dettagli-appalti.component';
 import { EditAppaltiComponent } from './edit-appalti/edit-appalti.component';
 import { impreseLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/imprese.resolver';
+import { pianiLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/piani.resolver';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'nuovo-appalto',
-    component: AddAppaltiComponent
+    component: AddAppaltiComponent,
+    resolve: { dataPiano: pianiLightResolver }
   },
   {
     path: 'appalto-dettagli/:id',

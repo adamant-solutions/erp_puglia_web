@@ -18,3 +18,9 @@ export const pianiByIdResolver: ResolveFn<any> = (route, state, pService: PianiS
 
 }
 
+
+export const pianiLightResolver: ResolveFn<any> = (route, state, pService: PianiService = inject(PianiService)) => {
+  return pService.getPianiLight()
+
+}
+

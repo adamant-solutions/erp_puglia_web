@@ -1,1 +1,244 @@
-<p>add-appalti works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Nuovo Appalto'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form #appaltoForm="ngForm" (ngSubmit)="onSubmit(appaltoForm)" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+              <!--   <input type="text" name="id" [(ngModel)]="appalto.id" hidden/> -->
+
+              <!-- Codice CIG -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceCIG" class="form-label">Codice CIG*</label>
+                <div class="input-group">
+                  <input type="text" id="codiceCIG" class="form-control" name="codiceCIG" [(ngModel)]="appalto.codiceCIG" maxlength="10" required #CIGRef="ngModel"/>
+                </div>
+                <span class="custom-error" *ngIf="CIGRef?.errors?.['required'] && (CIGRef.dirty || CIGRef.touched)">
+                    Codice CIG è obbligatorio!
+                   </span>
+                   <span class="custom-error" *ngIf="CIGRef?.errors?.['maxlength'] && (CIGRef.dirty || CIGRef.touched)">
+                    Codice CIG deve essere lungo 10 caratteri.!
+                   </span>
+              </div>
+
+              <!-- Codice CUP -->
+              <div class="col-md-4 mb-3">
+                <label for="codiceCUP" class="form-label">Codice CUP*</label>
+                <div class="input-group">
+                  <input type="text" id="codiceCUP" class="form-control" name="codiceCUP" [(ngModel)]="appalto.codiceCUP" maxlength="15" required #CUPref="ngModel"/>
+                </div>
+                <span class="custom-error" *ngIf="CUPref?.errors?.['required'] && (CUPref.dirty || CUPref.touched)">
+                    Codice CUP è obbligatorio!
+                   </span>
+                   <span class="custom-error" *ngIf="CUPref?.errors?.['maxlength'] && (CUPref.dirty || CUPref.touched)">
+                    Codice CUP deve essere lungo 15 caratteri.!
+                   </span>
+              </div>
+
+              <!-- Tipo Appalto --> 
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="tipoAppalto">Tipo Appalto*</label>
+                <div class="input-group">
+                  <select class="form-control" id="tipoAppalto" name="tipoAppalto" [(ngModel)]="appalto.tipoAppalto" required #tiporef="ngModel">
+                    <option *ngFor="let tipoAppalto of tipoAppaltoList" [value]="tipoAppalto">
+                      {{ tipoAppalto | capitalize }}
+                    </option>
+                  </select>
+                </div>
+                <span class="custom-error" *ngIf="tiporef?.errors?.['required'] && (tiporef.dirty || tiporef.touched)">
+                    Tipo Appalto è obbligatorio!
+                   </span>
+              </div>
+
+              <!-- Stato -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="stato">Stato*</label>
+                <div class="input-group">
+                  <select class="form-control" id="stato" name="stato" [(ngModel)]="appalto.stato" required #statoRef="ngModel">
+                    <option *ngFor="let stato of statoList" [value]="stato">
+                      {{ stato | capitalize }}
+                    </option>
+                  </select>
+                </div>
+                <span class="custom-error" *ngIf="statoRef?.errors?.['required'] && (statoRef.dirty || statoRef.touched)">
+                    Stato Appalto è obbligatorio!
+                   </span>
+              </div>
+  
+              <!-- Importo Base Asta -->
+           <!--    <div class="col-md-4 mb-3">
+                <label for="importoBaseAsta" class="form-label">Importo Base Asta</label>
+                <div class="input-group">
+                  <input type="text" id="importoBaseAsta" class="form-control" name="importoBaseAsta" [(ngModel)]="appalto.importoBaseAsta" required pattern="^\d+(\.\d+)?$"/>
+                </div>
+              </div> -->
+
+              <!-- Importo Aggiudicazione -->
+             <!--  <div class="col-md-4 mb-3">
+                <label for="importoAggiudicazione" class="form-label">Importo Aggiudicazione</label>
+                <div class="input-group">
+                  <input type="text" id="importoAggiudicazione" class="form-control" name="importoAggiudicazione" [(ngModel)]="appalto.importoAggiudicazione" required pattern="^\d+(\.\d+)?$" />
+                </div>
+              </div> -->
+
+              <!-- Importo -->
+
+              <div class="col-md-4 mb-3">
+                <label for="importo" class="form-label">Importo</label>
+                <div class="input-group">
+                  <input type="text" id="importo" class="form-control" name="importo" [(ngModel)]="appalto.importo"  required pattern="^\d+(\.\d+)?$" #importoRef="ngModel"/>
+                </div>
+                <span class="custom-error" *ngIf="importoRef?.errors?.['required'] && (importoRef.dirty || importoRef.touched)">
+                    Importo è obbligatorio!
+                   </span>
+                   <span class="custom-error" *ngIf="importoRef?.errors?.['pattern'] && (importoRef.dirty || importoRef.touched)">
+                    Importo non valido!
+                   </span>
+              </div>
+
+              <!-- Data Pubblicazione -->
+
+                   <div class="col-md-4 mb-3">
+                    <label class="form-label">Data Pubblicazione*</label>
+                    
+                    <mat-form-field appearance="fill" style="width: 100%">
+                      <input matInput [matDatepicker]="pickerdataPubblicazione"  id="dataPubblicazione" name="dataPubblicazione"
+                        [(ngModel)]="appalto.dataPubblicazione" #dataPubblicazioneRef="ngModel" required />
+                      <mat-datepicker-toggle matSuffix [for]="pickerdataPubblicazione"></mat-datepicker-toggle>
+                      <mat-datepicker #pickerdataPubblicazione></mat-datepicker>
+                    </mat-form-field>
+
+                    <span class="custom-error" *ngIf="dataPubblicazioneRef?.errors?.['required']
+                    && (dataPubblicazioneRef.dirty || dataPubblicazioneRef.touched)">
+                        Data Pubblicazione è obbligatorio!
+                     </span>
+
+                    <span class="custom-error" *ngIf="dataPubblicazioneRef?.errors?.['matDatepickerParse']
+                     && (dataPubblicazioneRef.dirty || dataPubblicazioneRef.touched)">
+                     Inserisci una data valida nel formato gg/mm/aaaa!
+                      </span>
+                  </div>
+
+
+              <!-- Data Scadenza -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Data Scadenza*</label>
+                
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <input matInput [matDatepicker]="pickerdataScadenza" name="dataScadenza"
+                    [(ngModel)]="appalto.dataScadenza"  id="dataScadenza" #dataScadenzaRef="ngModel" required />
+                  <mat-datepicker-toggle matSuffix [for]="pickerdataScadenza"></mat-datepicker-toggle>
+                  <mat-datepicker #pickerdataScadenza></mat-datepicker>
+                </mat-form-field>
+
+                <span class="custom-error" *ngIf="dataScadenzaRef?.errors?.['required']
+                && (dataScadenzaRef.dirty || dataScadenzaRef.touched)">
+                    Data Scadenza è obbligatorio!
+                 </span>
+
+
+                <span class="custom-error" *ngIf="dataScadenzaRef?.errors?.['matDatepickerParse']
+                 && (dataScadenzaRef.dirty || dataScadenzaRef.touched)">
+                   Inserisci una data valida nel formato gg/mm/aaaa!
+                  </span>
+              </div>
+
+
+              <!-- Data Aggiudicazione -->
+          <!--     <div class="col-md-4 mb-3">
+                <label class="form-label">Data Aggiudicazione</label>
+                <mat-form-field appearance="fill" style="width: 100%">
+                  <input matInput [matDatepicker]="dataAggiudicazionepicker" id="dataAggiudicazione" name="dataAggiudicazione"
+                    [(ngModel)]="appalto.dataAggiudicazione" #dataAggiudicazioneRef="ngModel" />
+                  <mat-datepicker-toggle matSuffix [for]="dataAggiudicazionepicker"></mat-datepicker-toggle>
+                  <mat-datepicker #dataAggiudicazionepicker></mat-datepicker>
+                </mat-form-field>
+
+                <span class="custom-error" *ngIf="dataAggiudicazioneRef?.errors?.['matDatepickerParse']
+                 && (dataAggiudicazioneRef.dirty || dataAggiudicazioneRef.touched)">
+                 Data Aggiudicazione non valido
+                  </span>
+              </div> -->
+
+              <!-- Impresa Aggiudicataria -->
+<!--               <div class="col-md-4 mb-3">
+                <label for="impresaAggiudicatariaId" class="form-label">Impresa Aggiudicataria</label>
+                <div class="input-group">
+                  <input type="number" id="impresaAggiudicatariaId" class="form-control" name="impresaAggiudicatariaId" [(ngModel)]="appalto.impresaAggiudicatariaId" required />
+                </div>
+              </div> -->
+
+              
+                           <!-- Piano -->   
+
+                           <div class="col-md-4 mb-3">
+                            <label class="form-label" for="pianoId">Piano*</label>
+                            <div class="input-group">
+                              <select class="form-control" id="pianoId" name="pianoId" [(ngModel)]="appalto.pianoId" required #pianoref="ngModel" (change)="selectPiano($event)">
+                                <option *ngFor="let piano of pianiList" [value]="piano.id">
+                                  {{ piano.descrizione }}
+                                </option>
+                              </select>
+                            </div>
+                            <span class="custom-error" *ngIf="pianoref?.errors?.['required'] && (pianoref.dirty || pianoref.touched)">
+                                Piano è obbligatorio!
+                               </span>
+                          </div>
+            
+
+
+              <!-- Oggetto -->
+              <div class="col-md-8 mb-3">
+                <label for="oggetto" class="form-label">Oggetto</label>
+                <div class="input-group">
+                  <textarea id="oggetto" class="form-control" name="oggetto" [(ngModel)]="appalto.oggetto" required #ogRef="ngModel" minlength="10" maxlength="500" rows="3">
+                  </textarea>
+                </div>
+                <span class="custom-error" *ngIf="ogRef?.errors?.['required'] && (ogRef.dirty || ogRef.touched)">
+                    Oggetto è obbligatorio!
+                   </span>
+                   <span class="custom-error" *ngIf="ogRef?.errors?.['minlength'] && (ogRef.dirty || ogRef.touched)">
+                    L'oggetto deve contenere tra 10 e 500 caratteri!
+                   </span>
+              </div>
+
+               <!-- Note -->
+               <div class="col-md-4 mb-3">
+                <label for="note" class="form-label">Note</label>
+                <div class="input-group">
+                  <textarea id="note" class="form-control" name="note" [(ngModel)]="appalto.note"     rows="3" readonly>
+                  </textarea>
+                </div>
+              </div>
+            
+            </div>
+          </div>
+
+               <!-- Buttons -->
+               <div class="col-12 mt-5 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+                  <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+                  Indietro
+                </button>
+    
+                <div>
+                  <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm(appaltoForm)">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>
+                    Reset
+                  </button>
+    
+                  <button type="submit" class="btn btn-primary py-2" [disabled]="appaltoForm.invalid">
+                    Salva
+                  </button>
+                </div>
+              
+              </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

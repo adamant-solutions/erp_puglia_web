@@ -59,7 +59,7 @@ constructor(
       );
   }
   deleteAppalto(id: number): Observable<Appalto>{
-    return this.http.delete<Appalto>(`${this.url}/appalti`+id).pipe(
+    return this.http.delete<Appalto>(`${this.url}/appalti/`+id).pipe(
         catchError(error => { throw error; })
       );
   }

@@ -41,6 +41,12 @@ getPianiByid(id: number): Observable<Piani>{
   );
 }
 
+getPianiLight(): Observable<Piani>{
+  return this.http.get<Piani>(`${this.url}/piani/light`).pipe(
+    catchError(error => { throw error; })
+  );
+}
+
  addPiani(piani: Piani): Observable<Piani>{
   return this.http.post<Piani>(`${this.url}/piani`,piani).pipe(
       catchError(error => { throw error; })

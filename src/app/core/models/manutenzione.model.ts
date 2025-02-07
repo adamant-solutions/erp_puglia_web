@@ -25,17 +25,20 @@ export interface Piani {
 
 export interface Appalto {
     id: number
+    pianoId?: number
     codiceCIG: string
     codiceCUP: string
     oggetto: string
     tipoAppalto: string
     stato: string
+    importo?: number
     importoBaseAsta: number
     importoAggiudicazione: any
     dataPubblicazione: string
     dataScadenza: string
     dataAggiudicazione: string
     impresaAggiudicatariaId: number
+    note?: string
 }
 
 export interface Richiesta {

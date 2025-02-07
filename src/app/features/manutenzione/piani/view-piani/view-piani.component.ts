@@ -47,7 +47,7 @@ export class ViewPianiComponent {
     this.route.data.subscribe({
       next: (data) => {
         const response = data['pianiResolver']
-        console.log('Response from resolver:', response);
+       // console.log('Response from resolver:', response);
         this.pianiList = response.body;
         this.totalItems = response.headers.get('X-Total-Count');
          //console.log('Total items: ', this.totalItems);

@@ -101,7 +101,7 @@
                       <td scope="row">{{ pianoItem.descrizione }}</td>
                     <!--   <td scope="row">{{ pianoItem.budgetTotale }}</td>
                       <td scope="row">{{ pianoItem.budgetUtilizzato }}</td> -->
-                      <td scope="row">{{ pianoItem.dataApprovazione || '' }}</td>
+                      <td scope="row">{{ pianoItem.dataApprovazione | date: 'dd/MM/yyyy' }}</td>
                     </tr>
                   </tbody>
                 </table>
