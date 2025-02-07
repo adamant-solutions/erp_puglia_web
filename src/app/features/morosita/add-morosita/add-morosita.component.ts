@@ -7,7 +7,8 @@ import { ModelLight } from 'src/app/core/models/contratto.model';
 
 @Component({
   selector: 'app-add-morosita',
-  templateUrl: './add-morosita.component.html'
+  templateUrl: './add-morosita.component.html',
+  styleUrls: ['./add-morosita.component.css']
 })
 export class AddMorositaComponent implements OnInit {
   pageTitle = 'Nuova Morosità';
