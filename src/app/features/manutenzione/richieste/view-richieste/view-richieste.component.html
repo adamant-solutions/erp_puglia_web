@@ -112,9 +112,9 @@
                       >
                         <i class="bi bi-pencil align-middle"></i>
                       </a>
-                            <!--    (click)="deletePatrimonioModal(item)" -->
+                               
                       <a
-          
+                      (click)="deleteModal(item)" 
                         title="Cancella"
                         class="text-decoration-none me-3"
                         style="cursor: pointer; color: #0052a3"
@@ -147,3 +147,46 @@
       </div>
     </div>
 </section>
+
+<!-- delete modal -->
+<div
+  class="modal fade"
+  id="deleteRichiestaModal"
+  tabindex="-1"
+  aria-labelledby="deleteRichiestaModal"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0" style="margin-left: 24px">
+         <h1 class="modal-title fs-5" id="deleteRichiestaModal">Elimina Richiesta</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Sei sicuro di voler eliminare richiesta con descrizione: <b>{{ richiesteDescrizione }}</b
+          >?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-target="#deleteRichiestaModal2"
+          data-bs-toggle="modal"
+          (click)="deleteRichiesta()"
+        >
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

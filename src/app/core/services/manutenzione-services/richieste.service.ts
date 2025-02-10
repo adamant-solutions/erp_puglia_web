@@ -49,4 +49,28 @@ constructor(
     );
   }
 
+  
+getRichiesteLight(): Observable<Richiesta>{
+  return this.http.get<Richiesta>(`${this.url}/richieste/light`).pipe(
+    catchError(error => { throw error; })
+  );
+}
+
+  addRichiesta(richiesta: Richiesta): Observable<Richiesta>{
+    return this.http.post<Richiesta>(`${this.url}/richieste`,richiesta).pipe(
+        catchError(error => { throw error; })
+      );
+  }
+
+  editRichiesta(richiesta: Richiesta): Observable<Richiesta>{
+    return this.http.put<Richiesta>(`${this.url}/richieste`,richiesta).pipe(
+        catchError(error => { throw error; })
+      );
+  }
+
+  deleteRichiesta(id: number): Observable<Richiesta>{
+    return this.http.delete<Richiesta>(`${this.url}/richieste/`+id).pipe(
+        catchError(error => { throw error; })
+      );
+  }
 }

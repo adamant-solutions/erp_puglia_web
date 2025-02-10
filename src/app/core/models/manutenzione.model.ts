@@ -56,8 +56,9 @@ export interface Richiesta {
     dataInizioLavori: string
     dataFineLavori: string
     esitoCollaudo: string
-    pianoId: any
-    appaltoId: any
+    pianoId: number
+    appaltoId: number
+    richiestaId: number
     origineRichiesta: string
     budgetStimato: number
     budgetEffettivo: number

@@ -1,0 +1,185 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Visualizza Richiesta'"
+></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+
+              <!-- Unità Immobiliare -->
+              <div class="col-md-4 mb-3">
+                <label for="unitaImmobiliareId" class="form-label">Unità Immobiliare</label>
+                <div class="input-group">
+                  <input type="text" id="unitaImmobiliareId" class="form-control" formControlName="unitaImmobiliareId" />
+                </div>
+              </div>
+
+              <!-- Richiedente -->
+              <div class="col-md-4 mb-3">
+                <label for="richiedenteId" class="form-label">Richiedente</label>
+                <div class="input-group">
+                  <input type="text" id="richiedenteId" class="form-control" formControlName="richiedenteId" />
+                </div>
+              </div>
+
+              <!-- Data Richiesta -->
+              <div class="col-md-4 mb-3">
+                <label for="dataRichiesta" class="form-label">Data Richiesta</label>
+                <div class="input-group">
+                  <input type="text" id="dataRichiesta" class="form-control" formControlName="dataRichiesta" />
+                </div>
+              </div>
+
+              <!-- Descrizione -->
+              <div class="col-md-4 mb-3">
+                <label for="descrizione" class="form-label">Descrizione</label>
+                <div class="input-group">
+                  <input type="text" id="descrizione" class="form-control" formControlName="descrizione" />
+                </div>
+              </div>
+
+              <!-- Tipo Manutenzione -->
+              <div class="col-md-4 mb-3">
+                <label for="tipoManutenzione" class="form-label">Tipo Manutenzione</label>
+                <div class="input-group">
+                  <input type="text" id="tipoManutenzione" class="form-control" formControlName="tipoManutenzione" />
+                </div>
+              </div>
+
+              <!-- Stato -->
+              <div class="col-md-4 mb-3">
+                <label for="stato" class="form-label">Stato</label>
+                <div class="input-group">
+                  <input type="text" id="stato" class="form-control" formControlName="stato" />
+                </div>
+              </div>
+
+              <!-- Priorità -->
+              <div class="col-md-4 mb-3">
+                <label for="priorita" class="form-label">Priorità</label>
+                <div class="input-group">
+                  <input type="text" id="priorita" class="form-control" formControlName="priorita" />
+                </div>
+              </div>
+
+              <!-- Note Verifica -->
+              <div class="col-md-4 mb-3">
+                <label for="noteVerifica" class="form-label">Note Verifica</label>
+                <div class="input-group">
+                  <input type="text" id="noteVerifica" class="form-control" formControlName="noteVerifica" />
+                </div>
+              </div>
+
+              <!-- Data Approvazione -->
+              <div class="col-md-4 mb-3">
+                <label for="dataApprovazione" class="form-label">Data Approvazione</label>
+                <div class="input-group">
+                  <input type="text" id="dataApprovazione" class="form-control" formControlName="dataApprovazione" />
+                </div>
+              </div>
+
+              <!-- Data Pianificazione -->
+              <div class="col-md-4 mb-3">
+                <label for="dataPianificazione" class="form-label">Data Pianificazione</label>
+                <div class="input-group">
+                  <input type="text" id="dataPianificazione" class="form-control" formControlName="dataPianificazione" />
+                </div>
+              </div>
+
+              <!-- Data Inizio Lavori -->
+              <div class="col-md-4 mb-3">
+                <label for="dataInizioLavori" class="form-label">Data Inizio Lavori</label>
+                <div class="input-group">
+                  <input type="text" id="dataInizioLavori" class="form-control" formControlName="dataInizioLavori" />
+                </div>
+              </div>
+
+              <!-- Data Fine Lavori -->
+              <div class="col-md-4 mb-3">
+                <label for="dataFineLavori" class="form-label">Data Fine Lavori</label>
+                <div class="input-group">
+                  <input type="text" id="dataFineLavori" class="form-control" formControlName="dataFineLavori" />
+                </div>
+              </div>
+
+              <!-- Esito Collaudo -->
+              <div class="col-md-4 mb-3">
+                <label for="esitoCollaudo" class="form-label">Esito Collaudo</label>
+                <div class="input-group">
+                  <input type="text" id="esitoCollaudo" class="form-control" formControlName="esitoCollaudo" />
+                </div>
+              </div>
+
+                 <!-- Piano -->
+                 <div class="col-md-4 mb-3">
+                    <label for="piano" class="form-label">Piano</label>
+                    <div class="input-group">
+                      <input type="text" id="piano" class="form-control" formControlName="pianoId" />
+                    </div>
+                  </div>
+
+                     <!-- Appalto -->
+                     <div class="col-md-4 mb-3">
+                        <label for="appalto" class="form-label">Appalto</label>
+                        <div class="input-group">
+                          <input type="text" id="appalto" class="form-control" formControlName="appaltoId" />
+                        </div>
+                      </div>
+
+                    <!-- Origine Richiesta -->
+                    <div class="col-md-4 mb-3">
+                        <label for="origineRichiesta" class="form-label">Origine Richiesta</label>
+                        <div class="input-group">
+                          <input type="text" id="origineRichiesta" class="form-control" formControlName="origineRichiesta" />
+                        </div>
+                      </div>
+
+              <!-- Budget Stimato -->
+              <div class="col-md-4 mb-3">
+                <label for="budgetStimato" class="form-label">Budget Stimato</label>
+                <div class="input-group">
+                  <input type="text" id="budgetStimato" class="form-control" formControlName="budgetStimato" />
+                </div>
+              </div>
+
+              <!-- Budget Effettivo -->
+              <div class="col-md-4 mb-3">
+                <label for="budgetEffettivo" class="form-label">Budget Effettivo</label>
+                <div class="input-group">
+                  <input type="text" id="budgetEffettivo" class="form-control" formControlName="budgetEffettivo" />
+                </div>
+              </div>
+
+              <!-- Periodo Pianificato -->
+              <div class="col-md-4 mb-3">
+                <label for="periodoPianificato" class="form-label">Periodo Pianificato</label>
+                <div class="input-group">
+                  <input type="text" id="periodoPianificato" class="form-control" formControlName="periodoPianificato" />
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

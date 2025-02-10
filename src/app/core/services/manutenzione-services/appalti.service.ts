@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Appalto } from '../../models/manutenzione.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
+import { ModelLight } from '../../models/contratto.model';
 
 export interface AppaltiSearchParams{
   pagina?: number;
@@ -47,6 +48,13 @@ constructor(
       catchError(error => { throw error; })
     );
   }
+
+  getAppaltoLight(): Observable<ModelLight[]>{
+    return this.http.get<ModelLight[]>(`${this.url}/appalti/light`).pipe(
+      catchError(error => { throw error; })
+    );
+  }
+
 
   addAppalto(appalto: Appalto): Observable<Appalto>{
     return this.http.post<Appalto>(`${this.url}/appalti`,appalto).pipe(

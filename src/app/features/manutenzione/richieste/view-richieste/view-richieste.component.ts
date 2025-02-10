@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Richiesta, StatoRichiesta } from 'src/app/core/models/manutenzione.model';
-import { RichiesteSearchParams } from 'src/app/core/services/manutenzione-services/richieste.service';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { RichiesteSearchParams, RichiesteService } from 'src/app/core/services/manutenzione-services/richieste.service';
 
 @Component({
   selector: 'app-view-richieste',
@@ -17,6 +18,8 @@ export class ViewRichiesteComponent {
   ];
 
   richiesteList: Richiesta[] = [];
+  richiesteId!: number;
+  richiesteDescrizione!: string;
 
   currentPage = 0;
   pageSize = 10; 
@@ -44,7 +47,7 @@ export class ViewRichiesteComponent {
   private router = inject(Router);
 
 
-  constructor() { }
+  constructor(private richiesteService: RichiesteService,private bootstrap: BootstrapService) { }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['pagina'] || 0;
@@ -58,7 +61,7 @@ export class ViewRichiesteComponent {
   getList(){
     this.route.data.subscribe({
       next: (data) => {
-        const response = data['richiesteResolver']
+        const response = data['data']
       //  console.log('Response from resolver:', response);
         this.richiesteList = response.body;
         this.totalItems = response.headers.get('X-Total-Count');
@@ -103,5 +106,25 @@ export class ViewRichiesteComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  deleteModal(item: Richiesta) {
+    this.richiesteId = item.id;
+    this.richiesteDescrizione = item.descrizione;
+    this.bootstrap.showModal('deleteRichiestaModal');
+  }
+
+  deleteRichiesta() {
+    this.richiesteService.deleteRichiesta(this.richiesteId).subscribe({
+      next: () => {
+        this.richiesteList = this.richiesteList.filter(
+          (item) => item.id !== this.richiesteId
+        );
+        // this.notificationService.success(`"${this.pianoId}" deleted successfully.`);
+      },
+      error: (error: any) => {
+        console.error(error);
+        // this.notificationService.error(`Failed to delete "${this.pianoId}". Please try again.`);
+      },
+    });
+  }
 
 }

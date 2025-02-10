@@ -20,3 +20,7 @@ export const appaltoByIdResolver: ResolveFn<any> = (route, state, appaltioServic
 
 }
 
+export const appaltiLightResolver: ResolveFn<any> = (route, state, appaltioService: AppaltiService = inject(AppaltiService)) => {
+  return appaltioService.getAppaltoLight()
+
+}
