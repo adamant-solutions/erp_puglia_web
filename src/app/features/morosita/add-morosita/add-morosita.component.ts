@@ -33,6 +33,17 @@ statoOptions = [
     { label: 'Morosità', link: '/morosita' }
   ];
 
+  validationMessages = {
+    contrattoId: 'Contratto è obbligatorio',
+    dataRilevazione: 'Data Rilevazione è obbligatorio',
+    dataScadenza: 'Data Scadenza è obbligatorio',
+    importoDovuto: 'Importo Dovuto è obbligatorio',
+    importoVersato: 'Importo Versato è obbligatorio',
+    importoMorosita: 'Importo Morosità è obbligatorio',
+    stato: 'Stato è obbligatorio',
+    tentativiContatto: 'Tentativi Contatto è obbligatorio'
+  };
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -79,5 +90,10 @@ statoOptions = [
     this.errorMsg = error.status === 400 ? 'Dati non validi' : 
                     error.status === 422 ? 'Morosità già esistente' :
                     'Errore durante il salvataggio';
+  }
+  
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.morositaForm.get(fieldName);
+    return field ? (this.submitted && field.invalid) : false;
   }
 }
