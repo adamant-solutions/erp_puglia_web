@@ -19,6 +19,7 @@ import { AnagraficaService } from './core/services/anagrafica.service';
 import { ContrattiService } from './core/services/contratti.service';
 import { environment } from 'src/environments/environment';
 import { LoaderComponent } from './shared/loader.component';
+
 registerLocaleData(localeIt);
 
 @NgModule({
@@ -40,7 +41,8 @@ registerLocaleData(localeIt);
   { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
   { provide: 'contrattiUrl', useValue: environment.contrattiUrl },
   { provide: 'morositaUrl', useValue:environment.morositaUrl },
-  { provide: 'manutenzioneUrl', useValue: environment.manutenzioneUrl}
+  { provide: 'manutenzioneUrl', useValue: environment.manutenzioneUrl},
+  {provide: 'condominiUrl', useValue:environment.condominiUrl}
   ],
   bootstrap: [AppComponent],
 })

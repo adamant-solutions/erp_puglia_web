@@ -7,5 +7,6 @@ export const environment = {
   anagraficaUrl: API_BASE_URL + 'anagrafica',
   contrattiUrl: API_BASE_URL + 'contratti',
   morositaUrl: API_BASE_URL + 'morosita',
-  manutenzioneUrl: API_BASE_URL + 'manutenzione'
+  manutenzioneUrl: API_BASE_URL + 'manutenzione',
+   condominiUrl: API_BASE_URL + 'spese/condomini'
 };
