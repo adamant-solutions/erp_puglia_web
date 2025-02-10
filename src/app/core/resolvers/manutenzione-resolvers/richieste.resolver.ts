@@ -20,3 +20,9 @@ export const richiesteByIdResolver: ResolveFn<any> = (route, state, rService: Ri
 
 }
 
+
+export const richiesteLightResolver: ResolveFn<any> = (route, state, rService: RichiesteService = inject(RichiesteService)) => {
+  return rService.getRichiesteLight()
+
+}
+

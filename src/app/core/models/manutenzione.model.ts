@@ -82,7 +82,7 @@ export interface Interventi {
     impresaId: any
     personaleCoinvolto: any
     garanziaFino: any
-    stato: string
+    stato: StatoIntervento
 }
 
 

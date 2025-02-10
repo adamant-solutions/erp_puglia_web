@@ -2,7 +2,8 @@ import { Component, inject } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Interventi, StatoIntervento } from 'src/app/core/models/manutenzione.model';
-import { InterventiSearchParams } from 'src/app/core/services/manutenzione-services/interventi.service';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { InterventiSearchParams, InterventiService } from 'src/app/core/services/manutenzione-services/interventi.service';
 
 @Component({
   selector: 'app-view-interventi',
@@ -17,6 +18,9 @@ export class ViewInterventiComponent {
   ];
 
   interventList: Interventi[] = [];
+  interventId!: number;
+  interventNome!: string;
+  richiesta: any[]=[];
 
   currentPage = 0;
   pageSize = 10; 
@@ -39,7 +43,7 @@ export class ViewInterventiComponent {
   private router = inject(Router);
 
 
-  constructor() { }
+  constructor(private intSrc: InterventiService,private bootstrap: BootstrapService) { }
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.currentPage = +params['pagina'] || 0;
@@ -51,14 +55,11 @@ export class ViewInterventiComponent {
   }
 
   getList(){
-    this.route.data.subscribe({
-      next: (data) => {
-        const response = data['interventiResolver']
-        console.log('Response from resolver:', response);
-        this.interventList = response.body;
-        this.totalItems = response.headers.get('X-Total-Count');
+    this.route.data.subscribe(({ data, dataRichieste}) =>{
+        this.interventList = data.body;
+        this.totalItems = data.headers.get('X-Total-Count');
+        this.richiesta = dataRichieste
          //console.log('Total items: ', this.totalItems);
-      }
       });
   }
 
@@ -99,4 +100,29 @@ export class ViewInterventiComponent {
   }
 
 
+  deleteModal(item: Interventi | any) {
+    this.interventId = item.id;
+    this.interventNome = item.descrizione;
+    this.bootstrap.showModal('deleteInterventiModal');
+  }
+
+  deleteInterventi() {
+    this.intSrc.deleteInterventi(this.interventId).subscribe({
+      next: () => {
+        this.interventList = this.interventList.filter(
+          (item) => item.id !== this.interventId
+        );
+        // this.notificationService.success(`"${this.impreseId}" deleted successfully.`);
+      },
+      error: (error: any) => {
+        console.error(error);
+        // this.notificationService.error(`Failed to delete "${this.impreseId}". Please try again.`);
+      },
+    });
+  }
+
+  getRichiestaName(id: number): string {
+    const richiestaFound = this.richiesta.find((item: { id: number }) => item.id === id);
+    return richiestaFound?.indirizzoUnita ?? '';
+  }
 }
