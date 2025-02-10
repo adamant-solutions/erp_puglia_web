@@ -10,7 +10,7 @@ import { AnagraficaSearchParams } from '../resolvers/anagrafica.resolver';
 export class AnagraficaService {
 
   constructor(
-    @Inject('tokenUrl') private tokenUrl: string,
+  
     @Inject('anagraficaUrl') private anagraficaUrl: string,
     private http: HttpClient
   ) {}
