@@ -6,13 +6,15 @@ import { ViewRichiesteComponent } from './view-richieste/view-richieste.componen
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DettagliRichiestaComponent } from './dettagli-richiesta/dettagli-richiesta.component';
 import { EditRichiesteComponent } from './edit-richieste/edit-richieste.component';
+import { AddRichiesteComponent } from './add-richieste/add-richieste.component';
 
 
 @NgModule({
   declarations: [
     ViewRichiesteComponent,
     DettagliRichiestaComponent,
-    EditRichiesteComponent
+    EditRichiesteComponent,
+    AddRichiesteComponent
   ],
   imports: [
     CommonModule,

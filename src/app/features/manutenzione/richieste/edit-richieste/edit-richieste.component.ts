@@ -79,7 +79,7 @@ export class EditRichiesteComponent {
       unitaImmobiliareId: [this.richiesta.unitaImmobiliareId,[Validators.required]],
       richiedenteId: [this.richiesta.richiedenteId,[Validators.required]],
       dataRichiesta: [this.richiesta.dataRichiesta,[Validators.required]],
-      descrizione: [this.richiesta.descrizione,[Validators.required]],
+      descrizione: [this.richiesta.descrizione,[Validators.required,Validators.minLength(10),Validators.maxLength(1000)]],
       tipoManutenzione: [this.richiesta.tipoManutenzione,[Validators.required]],
       stato: [this.richiesta.stato,[Validators.required]],
       priorita: [this.richiesta.priorita,[Validators.required]],

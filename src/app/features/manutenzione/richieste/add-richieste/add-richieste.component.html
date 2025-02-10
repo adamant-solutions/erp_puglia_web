@@ -1,4 +1,4 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Richiesta'"></app-breadcrumbs>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Nuova Richiesta'"></app-breadcrumbs>
 
 <section class="pt-4 pb-5">
   <div class="container">
@@ -6,7 +6,7 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
 
-        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="row g-3">
+        <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
             <div class="row d-flex">
 
@@ -16,13 +16,13 @@
                 <label for="unitaImmobiliareId" class="form-label">Unità Immobiliare*</label>
                 <div class="input-group">
                   <select class="form-control" id="unitaImmobiliareId" name="unitaImmobiliareId" formControlName="unitaImmobiliareId"  >
-                    <option *ngFor="let item of unita" [value]="item.id"  [selected]="item.id == editForm.get('unitaImmobiliareId')?.value">
-                      {{ item.descrizione }} <!-- {{editForm.get('unitaImmobiliareId')?.value | json}}
+                    <option *ngFor="let item of unita" [value]="item.id"  [selected]="item.id == addForm.get('unitaImmobiliareId')?.value">
+                      {{ item.descrizione }} <!-- {{addForm.get('unitaImmobiliareId')?.value | json}}
                       {{item.id | json}} -->
                     </option>
                   </select>
                 </div>
-               <span class="custom-error" *ngIf="editForm.get('unitaImmobiliareId')?.hasError('required') && editForm.get('unitaImmobiliareId')?.touched">
+               <span class="custom-error" *ngIf="addForm.get('unitaImmobiliareId')?.hasError('required') && addForm.get('unitaImmobiliareId')?.touched">
                     Unità Immobiliare è obbligatorio!
                    </span>
               </div>
@@ -33,12 +33,12 @@
                 <label for="richiedenteId" class="form-label">Richiedente*</label>
                 <div class="input-group">
                   <select class="form-control" id="richiedenteId" name="richiedenteId" formControlName="richiedenteId"  >
-                    <option *ngFor="let item of richiedente" [value]="item.id"  [selected]="item.id === editForm.get('richiedenteId')?.value">
+                    <option *ngFor="let item of richiedente" [value]="item.id"  [selected]="item.id === addForm.get('richiedenteId')?.value">
                       {{ item.descrizione }}
                     </option>
                   </select>
                 </div>
-               <span class="custom-error" *ngIf="editForm.get('richiedenteId')?.hasError('required') && editForm.get('richiedenteId')?.touched">>
+               <span class="custom-error" *ngIf="addForm.get('richiedenteId')?.hasError('required') && addForm.get('richiedenteId')?.touched">>
                     Richiedente è obbligatorio!
                    </span>
               </div>
@@ -55,12 +55,12 @@
                   <mat-datepicker #pickerdataRichiesta></mat-datepicker>
                 </mat-form-field>
 
-                <span class="custom-error" *ngIf="editForm.get('dataRichiesta')?.hasError('required') && editForm.get('dataRichiesta')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('dataRichiesta')?.hasError('required') && addForm.get('dataRichiesta')?.touched">
                     Data Richiesta è obbligatorio!
                  </span>
 
-                <span class="custom-error" *ngIf="editForm.get('dataRichiesta')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataRichiesta')?.dirty || editForm.get('dataRichiesta')?.touched)">
+                <span class="custom-error" *ngIf="addForm.get('dataRichiesta')?.hasError('matDatepickerParse')
+                 && (addForm.get('dataRichiesta')?.dirty || addForm.get('dataRichiesta')?.touched)">
                  Inserisci una data valida nel formato gg/mm/aaaa!
                   </span> 
               </div>
@@ -81,7 +81,7 @@
 
                 </div>
                 <span class="custom-error"
-                  *ngIf="editForm.get('tipoManutenzione')?.hasError('required') && editForm.get('tipoManutenzione')?.touched">
+                  *ngIf="addForm.get('tipoManutenzione')?.hasError('required') && addForm.get('tipoManutenzione')?.touched">
                   Tipo Manutenzione è obbligatorio!
                 </span>
               </div>
@@ -101,7 +101,7 @@
 
                 </div>
                 <span class="custom-error"
-                  *ngIf="editForm.get('stato')?.hasError('required') && editForm.get('stato')?.touched">
+                  *ngIf="addForm.get('stato')?.hasError('required') && addForm.get('stato')?.touched">
                   Stato Appalto è obbligatorio!
                 </span>
               </div>
@@ -122,7 +122,7 @@
 
                 </div>
                 <span class="custom-error"
-                  *ngIf="editForm.get('priorita')?.hasError('required') && editForm.get('priorita')?.touched">
+                  *ngIf="addForm.get('priorita')?.hasError('required') && addForm.get('priorita')?.touched">
                   Priorità è obbligatorio!
                 </span>
               </div>
@@ -146,12 +146,12 @@
                   <mat-datepicker #pickerdataApprovazione></mat-datepicker>
                 </mat-form-field>
 
-           <!--      <span class="custom-error" *ngIf="editForm.get('dataApprovazione')?.hasError('required') && editForm.get('dataApprovazione')?.touched">
+           <!--      <span class="custom-error" *ngIf="addForm.get('dataApprovazione')?.hasError('required') && addForm.get('dataApprovazione')?.touched">
                     Data Approvazione è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataApprovazione')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataApprovazione')?.dirty || editForm.get('dataApprovazione')?.touched)">
+                <span class="custom-error" *ngIf="addForm.get('dataApprovazione')?.hasError('matDatepickerParse')
+                 && (addForm.get('dataApprovazione')?.dirty || addForm.get('dataApprovazione')?.touched)">
                  Inserisci una data valida nel formato gg/mm/aaaa!
                   </span> 
               </div>
@@ -167,12 +167,12 @@
                   <mat-datepicker #pickerdataPianificazione></mat-datepicker>
                 </mat-form-field>
 <!-- 
-                <span class="custom-error" *ngIf="editForm.get('dataPianificazione')?.hasError('required') && editForm.get('dataPianificazione')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('dataPianificazione')?.hasError('required') && addForm.get('dataPianificazione')?.touched">
                     Data Pianificazione è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataPianificazione')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataPianificazione')?.dirty || editForm.get('dataPianificazione')?.touched)">
+                <span class="custom-error" *ngIf="addForm.get('dataPianificazione')?.hasError('matDatepickerParse')
+                 && (addForm.get('dataPianificazione')?.dirty || addForm.get('dataPianificazione')?.touched)">
                  Inserisci una data valida nel formato gg/mm/aaaa!
                   </span> 
               </div>
@@ -188,12 +188,12 @@
                   <mat-datepicker #pickerdataInizioLavori></mat-datepicker>
                 </mat-form-field>
 <!-- 
-                <span class="custom-error" *ngIf="editForm.get('dataInizioLavori')?.hasError('required') && editForm.get('dataInizioLavori')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('dataInizioLavori')?.hasError('required') && addForm.get('dataInizioLavori')?.touched">
                    Data Inizio Lavori è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataInizioLavori')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataInizioLavori')?.dirty || editForm.get('dataInizioLavori')?.touched)">
+                <span class="custom-error" *ngIf="addForm.get('dataInizioLavori')?.hasError('matDatepickerParse')
+                 && (addForm.get('dataInizioLavori')?.dirty || addForm.get('dataInizioLavori')?.touched)">
                  Inserisci una data valida nel formato gg/mm/aaaa!
                   </span> 
               </div>
@@ -210,12 +210,12 @@
                   <mat-datepicker #pickerdataFineLavori></mat-datepicker>
                 </mat-form-field>
 <!-- 
-                <span class="custom-error" *ngIf="editForm.get('dataFineLavori')?.hasError('required') && editForm.get('dataFineLavori')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('dataFineLavori')?.hasError('required') && addForm.get('dataFineLavori')?.touched">
                    Data Fine Lavori è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataFineLavori')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataFineLavori')?.dirty || editForm.get('dataFineLavori')?.touched)">
+                <span class="custom-error" *ngIf="addForm.get('dataFineLavori')?.hasError('matDatepickerParse')
+                 && (addForm.get('dataFineLavori')?.dirty || addForm.get('dataFineLavori')?.touched)">
                  Inserisci una data valida nel formato gg/mm/aaaa!
                   </span> 
               </div>
@@ -236,12 +236,12 @@
                 <div class="input-group">
                   <select class="form-control" id="piano" name="piano" formControlName="pianoId">
                     <option [ngValue]="null">Seleziona piano</option>
-                    <option *ngFor="let item of piani" [value]="item.id"  [selected]="item.id === editForm.get('pianoId')?.value">
+                    <option *ngFor="let item of piani" [value]="item.id"  [selected]="item.id === addForm.get('pianoId')?.value">
                       {{ item.descrizione }}
                     </option>
                   </select>
                 </div>
-           <!--     <span class="custom-error" *ngIf="editForm.get('pianoId')?.hasError('required') && editForm.get('pianoId')?.touched">>
+           <!--     <span class="custom-error" *ngIf="addForm.get('pianoId')?.hasError('required') && addForm.get('pianoId')?.touched">>
                     Piano è obbligatorio!
                    </span> -->
               </div>
@@ -254,12 +254,12 @@
                 <div class="input-group">
                   <select class="form-control" id="appalto" name="appalto" formControlName="appaltoId">
                     <option [ngValue]="null">Seleziona appalto</option>
-                    <option *ngFor="let item of appalti" [value]="item.id"  [selected]="item.id === editForm.get('appaltoId')?.value">
+                    <option *ngFor="let item of appalti" [value]="item.id"  [selected]="item.id === addForm.get('appaltoId')?.value">
                       {{ item.codiceCIG }}
                     </option>
                   </select>
                 </div>
-              <!--  <span class="custom-error" *ngIf="editForm.get('appaltoId')?.hasError('required') && editForm.get('appaltoId')?.touched">>
+              <!--  <span class="custom-error" *ngIf="addForm.get('appaltoId')?.hasError('required') && addForm.get('appaltoId')?.touched">>
                 Appalto è obbligatorio!
                    </span> -->
               </div>
@@ -279,7 +279,7 @@
 
                 </div>
                 <span class="custom-error"
-                  *ngIf="editForm.get('origineRichiesta')?.hasError('required') && editForm.get('origineRichiesta')?.touched">
+                  *ngIf="addForm.get('origineRichiesta')?.hasError('required') && addForm.get('origineRichiesta')?.touched">
                   Origine Richiesta è obbligatorio!
                 </span>
               </div>
@@ -289,7 +289,7 @@
                 <div class="input-group">
                   <input type="text" id="budgetStimato" class="form-control" formControlName="budgetStimato" />
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetStimato')?.hasError('pattern') && editForm.get('budgetStimato')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('budgetStimato')?.hasError('pattern') && addForm.get('budgetStimato')?.touched">
                   Inserisci un budget valido!
                 </span>
               </div>
@@ -300,7 +300,7 @@
                 <div class="input-group">
                   <input type="text" id="budgetEffettivo" class="form-control" formControlName="budgetEffettivo" />
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetEffettivo')?.hasError('pattern') && editForm.get('budgetEffettivo')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('budgetEffettivo')?.hasError('pattern') && addForm.get('budgetEffettivo')?.touched">
                   Inserisci un budget valido!
                 </span>
               </div>
@@ -312,32 +312,29 @@
                   <input type="text" id="periodoPianificato" class="form-control"
                     formControlName="periodoPianificato" />
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('periodoPianificato')?.hasError('required') && editForm.get('periodoPianificato')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('periodoPianificato')?.hasError('required') && addForm.get('periodoPianificato')?.touched">
                   Periodo Pianificato  è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('periodoPianificato')?.hasError('pattern') && editForm.get('periodoPianificato')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('periodoPianificato')?.hasError('pattern') && addForm.get('periodoPianificato')?.touched">
                   Periodo Pianificato non valido(es. "Q1 2024" / "GEN 2024" )!
                 </span>
               </div>
 
               
-
               <!-- Descrizione -->
               <div class="col-md-8 mb-3">
                 <label for="descrizione" class="form-label">Descrizione*</label>
                 <div class="input-group">
-                  <textarea type="text" id="descrizione" class="form-control" formControlName="descrizione" minlength="10" maxlength="1000" rows="4"></textarea>
+                    <textarea  id="descrizione" class="form-control" formControlName="descrizione" minlength="10" maxlength="1000" rows="4">
+                    </textarea>
                 </div>
-                
-                <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('required') && editForm.get('descrizione')?.touched">
+                <span class="custom-error" *ngIf="addForm.get('descrizione')?.hasError('required') && addForm.get('descrizione')?.touched">
                   Descrizione è obbligatorio!
                </span>
-
-               <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('minlength') && editForm.get('descrizione')?.touched">
+               <span class="custom-error" *ngIf="addForm.get('descrizione')?.hasError('minlength') && addForm.get('descrizione')?.touched">
                 Descrizione deve contenere tra 10 e 1000 caratteri!!
              </span>
               </div>
-
 
             </div>
           </div>
@@ -355,7 +352,7 @@
                 Reset
               </button>
 
-              <button type="submit" class="btn btn-primary py-2" [disabled]="editForm.invalid">
+              <button type="submit" class="btn btn-primary py-2" [disabled]="addForm.invalid">
                 Salva
               </button>
             </div>

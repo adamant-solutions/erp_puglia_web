@@ -7,6 +7,7 @@ import { richiesteByIdResolver, richiesteResolver } from 'src/app/core/resolvers
 import { intestatariResolver, unitaImmobiliareResolver } from 'src/app/core/resolvers/contratti.resolver';
 import { appaltiLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/appalti.resolver';
 import { pianiLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/piani.resolver';
+import { AddRichiesteComponent } from './add-richieste/add-richieste.component';
 
 const routes: Routes = [
   {
@@ -15,10 +16,11 @@ const routes: Routes = [
     resolve: { data: richiesteResolver },
     runGuardsAndResolvers: 'always',
   },
- /*  {
+  {
     path: 'nuova-richiesta',
-    component: DettagliRichiestaComponent,//AddPianiComponent
-  }, */
+    component: AddRichiesteComponent,
+    resolve: { unitaData: unitaImmobiliareResolver , richiedenteData: intestatariResolver , appaltiData: appaltiLightResolver , pianiData: pianiLightResolver},
+  },
   {
     path: 'richiesta-dettagli/:id',
     component: DettagliRichiestaComponent,
