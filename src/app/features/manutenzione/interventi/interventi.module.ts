@@ -4,6 +4,8 @@ import { InterventiRoutingModule } from './interventi-routing.module';
 import { DettagliInterventiComponent } from './dettagli-interventi/dettagli-interventi.component';
 import { EditInterventiComponent } from './edit-interventi/edit-interventi.component';
 import { AddInterventiComponent } from './add-interventi/add-interventi.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -15,7 +17,9 @@ import { AddInterventiComponent } from './add-interventi/add-interventi.componen
   ],
   imports: [
     CommonModule,
-    InterventiRoutingModule
+    InterventiRoutingModule,
+    SharedModule,
+    ReactiveFormsModule
   ]
 })
 export class InterventiModule { }

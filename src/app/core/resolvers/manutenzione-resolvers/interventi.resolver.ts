@@ -13,3 +13,10 @@ export const interventiResolver: ResolveFn<any> = (route, state, intService: Int
   return intService.getInterventi(searchParams)
 
 }
+
+export const interventiByIDResolver: ResolveFn<any> = (route, state, intService: InterventiService = inject(InterventiService)) => {
+
+  const ID = route.params['id'];
+  return intService.getInterventoByid(ID)
+
+}

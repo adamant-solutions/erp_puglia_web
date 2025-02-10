@@ -1,1 +1,169 @@
-<p>dettagli-interventi works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Visualizza Intervento'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-5">Intervento</h1>
+                <form [formGroup]="interventoForm" class="row g-3">
+                    <div class="col-12">
+                        <div class="row d-flex">
+
+                            <!-- Richiesta -->
+                            <div class="col-md-4 mb-3">
+                                <label for="richiestaId" class="form-label">Richiesta</label>
+                                <div class="input-group">
+                                    <input type="text" id="richiestaId" class="form-control"
+                                        formControlName="richiestaId" />
+                                </div>
+                            </div>
+
+                            <!-- Data Inizio -->
+                            <div class="col-md-4 mb-3">
+                                <label for="dataInizio" class="form-label">Data Inizio</label>
+                                <div class="input-group">
+                                    <input type="text" id="dataInizio" class="form-control"
+                                        formControlName="dataInizio" />
+                                </div>
+                            </div>
+
+                            <!-- Data Fine -->
+                            <div class="col-md-4 mb-3">
+                                <label for="dataFine" class="form-label">Data Fine</label>
+                                <div class="input-group">
+                                    <input type="text" id="dataFine" class="form-control" formControlName="dataFine" />
+                                </div>
+                            </div>
+
+                            <!-- Data Intervento -->
+                            <div class="col-md-4 mb-3">
+                                <label for="dataIntervento" class="form-label">Data Intervento</label>
+                                <div class="input-group">
+                                    <input type="text" id="dataIntervento" class="form-control"
+                                        formControlName="dataIntervento" />
+                                </div>
+                            </div>
+
+                            <!-- Materiali Utilizzati -->
+                            <div class="col-md-4 mb-3">
+                                <label for="materialiUtilizzati" class="form-label">Materiali Utilizzati</label>
+                                <div class="input-group">
+                                    <input type="text" id="materialiUtilizzati" class="form-control"
+                                        formControlName="materialiUtilizzati" />
+                                </div>
+                            </div>
+
+                            <!-- Ore Lavoro -->
+                            <div class="col-md-4 mb-3">
+                                <label for="oreLavoro" class="form-label">Ore di Lavoro</label>
+                                <div class="input-group">
+                                    <input type="number" id="oreLavoro" class="form-control"
+                                        formControlName="oreLavoro" />
+                                </div>
+                            </div>
+
+                            <!-- Esito Intervento -->
+                            <div class="col-md-4 mb-3">
+                                <label for="esitoIntervento" class="form-label">Esito Intervento</label>
+                                <div class="input-group">
+                                    <input type="text" id="esitoIntervento" class="form-control"
+                                        formControlName="esitoIntervento" />
+                                </div>
+                            </div>
+
+                            <!-- Impresa -->
+                            <div class="col-md-4 mb-3">
+                                <label for="impresaId" class="form-label">Impresa</label>
+                                <div class="input-group">
+                                    <input type="text" id="impresaId" class="form-control"
+                                        formControlName="impresaId" />
+                                </div>
+                            </div>
+
+                            <!-- Stato -->
+                            <div class="col-md-4 mb-3">
+                                <label for="stato" class="form-label">Stato</label>
+                                <div class="input-group">
+                                    <select class="form-control" id="stato" formControlName="stato">
+                                        <option value="IN_CORSO">In Corso</option>
+                                        <option value="COMPLETATO">Completato</option>
+                                        <option value="ANNULLATO">Annullato</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Costo Materiali -->
+                            <div class="col-md-4 mb-3">
+                                <label for="costoMateriali" class="form-label">Costo Materiali (€)</label>
+                                <div class="input-group">
+                                    <input type="number" id="costoMateriali" class="form-control"
+                                        formControlName="costoMateriali" />
+                                </div>
+                            </div>
+
+                            <!-- Costo Manodopera -->
+                            <div class="col-md-4 mb-3">
+                                <label for="costoManodopera" class="form-label">Costo Manodopera (€)</label>
+                                <div class="input-group">
+                                    <input type="number" id="costoManodopera" class="form-control"
+                                        formControlName="costoManodopera" />
+                                </div>
+                            </div>
+
+                            <!-- Personale Coinvolto -->
+                            <div class="col-md-4 mb-3">
+                                <label for="personaleCoinvolto" class="form-label">Personale Coinvolto</label>
+                                <div class="input-group">
+                                    <input type="text" id="personaleCoinvolto" class="form-control"
+                                        formControlName="personaleCoinvolto" />
+                                </div>
+                            </div>
+
+
+                            <!-- Descrizione -->
+                            <div class="col-md-8 mb-3">
+                                <label for="descrizione" class="form-label">Descrizione</label>
+                                <div class="input-group">
+                                    <textarea id="descrizione" class="form-control" formControlName="descrizione"
+                                        rows="3"></textarea>
+                                </div>
+                              
+                            </div>
+
+
+                            <!-- Garanzia Fino -->
+                            <div class="col-md-4 mb-3">
+                                <label for="garanziaFino" class="form-label">Garanzia Fino</label>
+                                <div class="input-group">
+                                    <input type="text" id="garanziaFino" class="form-control"
+                                        formControlName="garanziaFino" />
+                                </div>
+                            </div>
+
+                            <!-- Note Tecniche -->
+                            <div class="col-md-12 mb-3">
+                                <label for="noteTecniche" class="form-label">Note Tecniche</label>
+                                <div class="input-group">
+                                    <textarea id="noteTecniche" class="form-control" formControlName="noteTecniche"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-12 mt-5 d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+                            <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+                            Indietro
+                        </button>
+
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

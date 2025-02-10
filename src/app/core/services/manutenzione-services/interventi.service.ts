@@ -39,6 +39,12 @@ constructor(
       );
 }  
 
+getInterventoByid(id: number): Observable<Interventi>{
+  return this.http.get<Interventi>(`${this.url}/interventi/`+id).pipe(
+    catchError(error => { throw error; })
+  );
+}
+
 deleteInterventi(id: number): Observable<Interventi>{
   return this.http.delete<Interventi>(`${this.url}/interventi/`+id).pipe(
       catchError(error => { throw error; })
