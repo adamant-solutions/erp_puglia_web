@@ -1,0 +1,117 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Condominio dettagli'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="viewForm" class="row g-3">
+          <div class="col-12">
+            <div class="row d-flex">
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="codice">Codice</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="codice"
+                    formControlName="codice"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="denominazione">Denominazione</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="denominazione"
+                    formControlName="denominazione"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="indirizzo">Indirizzo</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="indirizzo"
+                    formControlName="indirizzo"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="comune">Comune</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="comune"
+                    formControlName="comune"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="provincia"
+                    formControlName="provincia"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="cap">CAP</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cap"
+                    formControlName="cap"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="codiceFiscale">Codice Fiscale</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="codiceFiscale"
+                    formControlName="codiceFiscale"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+    
+          <div class="col-12 mt-5">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

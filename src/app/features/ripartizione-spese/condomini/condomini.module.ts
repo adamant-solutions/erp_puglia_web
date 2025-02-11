@@ -5,11 +5,13 @@ import { CondominiRoutingModule } from './condomini-routing.module';
 import { CondominiListComponent } from './condomini-list/condomini-list.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
 
 
 @NgModule({
   declarations: [
-    CondominiListComponent
+    CondominiListComponent,
+    ViewCondominiComponent
   ],
   imports: [
     CommonModule,

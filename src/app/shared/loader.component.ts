@@ -13,6 +13,7 @@ export class LoaderComponent {
   constructor(private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
+        window.scrollTo(0,0)
         this.isLoading$.next(true);
       }
       if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {

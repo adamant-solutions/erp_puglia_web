@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CondominiListComponent } from './condomini-list/condomini-list.component';
-import {  condominioResolver } from 'src/app/core/resolvers/ripartizione-spese/condominio.resolver';
+import {  condominioByIdResolver, condominioResolver } from 'src/app/core/resolvers/ripartizione-spese/condominio.resolver';
+import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
 
 
 const routes: Routes = [
@@ -10,9 +11,15 @@ const routes: Routes = [
     component: CondominiListComponent,
     resolve: {
       condomini: condominioResolver,
-      
-    }, 
-    runGuardsAndResolvers:'always'
+    },
+    runGuardsAndResolvers: 'always'
+  },
+  {
+    path: 'condominio-dettagli/:id',
+    component: ViewCondominiComponent,
+    resolve: {
+      condominio: condominioByIdResolver
+    }
   }
 ];
 
