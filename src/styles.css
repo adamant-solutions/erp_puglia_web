@@ -235,43 +235,7 @@ p {
 }
 
 i {
-  /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: "dms-webkit-icons" !important;
-  /* speak: none; */
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
   line-height: 1;
-  /* Better Font Rendering =========== */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-.dms-wk-icon-fb-light:before {
-  content: "";
-}
-.dms-wk-icon-ig-light:before {
-  content: "";
-}
-.dms-wk-icon-tw-light:before {
-  content: "";
-}
-.dms-wk-icon-yt-light:before {
-  content: "";
-}
-
-.dms-wk-icon-fb:before {
-  content: "";
-}
-.dms-wk-icon-ig:before {
-  content: "";
-}
-.dms-wk-icon-tw:before {
-  content: "";
-}
-.dms-wk-icon-yt:before {
-  content: "";
 }
 
 /* ---------------------------------------------------------------------- */
@@ -300,6 +264,6 @@ i {
   display: none;
 }
 
-textarea{
+textarea {
   resize: none;
 }
