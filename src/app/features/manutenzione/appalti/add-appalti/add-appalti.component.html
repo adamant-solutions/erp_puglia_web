@@ -42,12 +42,15 @@
               <!-- Tipo Appalto --> 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="tipoAppalto">Tipo Appalto*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+
                   <select class="form-control" id="tipoAppalto" name="tipoAppalto" [(ngModel)]="appalto.tipoAppalto" required #tiporef="ngModel">
                     <option *ngFor="let tipoAppalto of tipoAppaltoList" [value]="tipoAppalto">
                       {{ tipoAppalto | capitalize }}
                     </option>
                   </select>
+                </div>
                 </div>
                 <span class="custom-error" *ngIf="tiporef?.errors?.['required'] && (tiporef.dirty || tiporef.touched)">
                     Tipo Appalto è obbligatorio!
@@ -57,12 +60,15 @@
               <!-- Stato -->
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="stato">Stato*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+     
                   <select class="form-control" id="stato" name="stato" [(ngModel)]="appalto.stato" required #statoRef="ngModel">
                     <option *ngFor="let stato of statoList" [value]="stato">
                       {{ stato | capitalize }}
                     </option>
                   </select>
+                </div>
                 </div>
                 <span class="custom-error" *ngIf="statoRef?.errors?.['required'] && (statoRef.dirty || statoRef.touched)">
                     Stato Appalto è obbligatorio!
@@ -174,15 +180,17 @@
 
               
                            <!-- Piano -->   
-
                            <div class="col-md-4 mb-3">
                             <label class="form-label" for="pianoId">Piano*</label>
-                            <div class="input-group">
+                            <div class="d-flex align-items-center">
+                                <div class="input-group select-wrapper w-100">
+
                               <select class="form-control" id="pianoId" name="pianoId" [(ngModel)]="appalto.pianoId" required #pianoref="ngModel" (change)="selectPiano($event)">
                                 <option *ngFor="let piano of pianiList" [value]="piano.id">
                                   {{ piano.descrizione }}
                                 </option>
                               </select>
+                            </div>
                             </div>
                             <span class="custom-error" *ngIf="pianoref?.errors?.['required'] && (pianoref.dirty || pianoref.touched)">
                                 Piano è obbligatorio!

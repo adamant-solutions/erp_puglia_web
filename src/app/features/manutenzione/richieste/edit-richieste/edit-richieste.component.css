@@ -26,13 +26,3 @@
   .form-control:disabled {
     background-color: #fff;
   }
- /*  .select-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  .select-wrapper label {
-    font-size: inherit;
-    font-weight: 500;
-    transform: translateY(-20%)
-  } */

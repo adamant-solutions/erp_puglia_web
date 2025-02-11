@@ -14,13 +14,16 @@
 
                <div class="col-md-4 mb-3">
                 <label for="unitaImmobiliareId" class="form-label">Unità Immobiliare*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+              
                   <select class="form-control" id="unitaImmobiliareId" name="unitaImmobiliareId" formControlName="unitaImmobiliareId"  >
                     <option *ngFor="let item of unita" [value]="item.id"  [selected]="item.id == addForm.get('unitaImmobiliareId')?.value">
                       {{ item.descrizione }} <!-- {{addForm.get('unitaImmobiliareId')?.value | json}}
                       {{item.id | json}} -->
                     </option>
                   </select>
+                </div>
                 </div>
                <span class="custom-error" *ngIf="addForm.get('unitaImmobiliareId')?.hasError('required') && addForm.get('unitaImmobiliareId')?.touched">
                     Unità Immobiliare è obbligatorio!
@@ -31,14 +34,16 @@
               <!-- Richiedente -->
               <div class="col-md-4 mb-3">
                 <label for="richiedenteId" class="form-label">Richiedente*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="richiedenteId" name="richiedenteId" formControlName="richiedenteId"  >
                     <option *ngFor="let item of richiedente" [value]="item.id"  [selected]="item.id === addForm.get('richiedenteId')?.value">
                       {{ item.descrizione }}
                     </option>
                   </select>
                 </div>
-               <span class="custom-error" *ngIf="addForm.get('richiedenteId')?.hasError('required') && addForm.get('richiedenteId')?.touched">>
+                </div>
+               <span class="custom-error" *ngIf="addForm.get('richiedenteId')?.hasError('required') && addForm.get('richiedenteId')?.touched">
                     Richiedente è obbligatorio!
                    </span>
               </div>
@@ -66,9 +71,10 @@
               </div>
 
               <!-- Tipo Manutenzione -->
-              <div class="col-md-4 mb-3 select-wrapper">
+              <div class="col-md-4 mb-3">
                 <label class="form-label" for="tipoManutenzione">Tipo Manutenzione*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="tipoManutenzione" name="tipoManutenzione"
                     formControlName="tipoManutenzione">
                     <!--  <option value="" selected="">
@@ -78,7 +84,7 @@
                       {{ tipoManutenzione | capitalize }}
                     </option>
                   </select>
-
+                    </div>
                 </div>
                 <span class="custom-error"
                   *ngIf="addForm.get('tipoManutenzione')?.hasError('required') && addForm.get('tipoManutenzione')?.touched">
@@ -87,9 +93,10 @@
               </div>
 
               <!-- Stato -->
-              <div class="col-md-4 mb-3 select-wrapper">
+              <div class="col-md-4 mb-3">
                 <label class="form-label" for="stato">Stato*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="stato" name="stato" formControlName="stato">
                     <!--  <option value="" selected="">
                                     Seleziona stato
@@ -98,7 +105,7 @@
                       {{ stato | capitalize }}
                     </option>
                   </select>
-
+                    </div>
                 </div>
                 <span class="custom-error"
                   *ngIf="addForm.get('stato')?.hasError('required') && addForm.get('stato')?.touched">
@@ -108,9 +115,10 @@
 
 
               <!-- Priorità -->
-              <div class="col-md-4 mb-3 select-wrapper">
+              <div class="col-md-4 mb-3">
                 <label class="form-label" for="priorita">Priorità*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="priorita" name="priorita" formControlName="priorita">
                     <!--  <option value="" selected="">
                                     Seleziona priorita
@@ -119,7 +127,7 @@
                       {{ priorita | capitalize }}
                     </option>
                   </select>
-
+                    </div>
                 </div>
                 <span class="custom-error"
                   *ngIf="addForm.get('priorita')?.hasError('required') && addForm.get('priorita')?.touched">
@@ -233,13 +241,15 @@
               <!-- Piano -->
               <div class="col-md-4 mb-3">
                 <label for="piano" class="form-label">Piano</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="piano" name="piano" formControlName="pianoId">
                     <option [ngValue]="null">Seleziona piano</option>
                     <option *ngFor="let item of piani" [value]="item.id"  [selected]="item.id === addForm.get('pianoId')?.value">
                       {{ item.descrizione }}
                     </option>
                   </select>
+                </div>
                 </div>
            <!--     <span class="custom-error" *ngIf="addForm.get('pianoId')?.hasError('required') && addForm.get('pianoId')?.touched">>
                     Piano è obbligatorio!
@@ -251,13 +261,15 @@
 
               <div class="col-md-4 mb-3">
                 <label for="appalto" class="form-label">Appalto</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="appalto" name="appalto" formControlName="appaltoId">
                     <option [ngValue]="null">Seleziona appalto</option>
                     <option *ngFor="let item of appalti" [value]="item.id"  [selected]="item.id === addForm.get('appaltoId')?.value">
                       {{ item.codiceCIG }}
                     </option>
                   </select>
+                    </div>
                 </div>
               <!--  <span class="custom-error" *ngIf="addForm.get('appaltoId')?.hasError('required') && addForm.get('appaltoId')?.touched">>
                 Appalto è obbligatorio!
@@ -265,9 +277,10 @@
               </div>
 
               <!-- Origine Richiesta  -->
-              <div class="col-md-4 mb-3 select-wrapper">
+              <div class="col-md-4 mb-3">
                 <label class="form-label" for="origineRichiesta">Origine Richiesta*</label>
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
                   <select class="form-control" id="origineRichiesta" name="origineRichiesta" formControlName="origineRichiesta">
                     <!--  <option value="" selected="">
                                       Seleziona Origine Richiesta
@@ -276,7 +289,7 @@
                       {{ origine | capitalize }}
                     </option>
                   </select>
-
+                    </div>
                 </div>
                 <span class="custom-error"
                   *ngIf="addForm.get('origineRichiesta')?.hasError('required') && addForm.get('origineRichiesta')?.touched">

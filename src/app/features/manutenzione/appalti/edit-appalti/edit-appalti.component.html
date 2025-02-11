@@ -39,11 +39,13 @@
               </div>
 
               <!-- Tipo Appalto --> 
-              <div class="col-md-4 mb-3 select-wrapper">
+              <div class="col-md-4 mb-3">
                 <label class="form-label" for="tipoAppalto"
                   >Tipo Appalto*</label
                 >
-                <div class="input-group">
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+            
                   <select
                     class="form-control"
                     id="tipoAppalto"
@@ -60,7 +62,7 @@
                       {{ tipoAppalto | capitalize }}
                     </option>
                   </select>
-
+                    </div>
                 </div>
                 <span class="custom-error" *ngIf="editForm.get('tipoAppalto')?.hasError('required') && editForm.get('tipoAppalto')?.touched">
                   Tipo Appalto è obbligatorio!
@@ -68,11 +70,10 @@
               </div>
 
                 <!-- Stato -->
-              <div class="col-md-4 mb-3 select-wrapper">
-                <label class="form-label" for="stato"
-                  >Stato*</label
-                >
-                <div class="input-group">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="stato">Stato*</label>
+                  <div class="d-flex align-items-center">
+                      <div class="input-group select-wrapper w-100">
                   <select
                     class="form-control"
                     id="stato"
@@ -89,7 +90,7 @@
                       {{ stato | capitalize }}
                     </option>
                   </select>
-
+                      </div>
                 </div>
                 <span class="custom-error" *ngIf="editForm.get('stato')?.hasError('required') && editForm.get('stato')?.touched">
                   Stato Appalto è obbligatorio!
@@ -176,16 +177,17 @@
               </div>
 
               <!-- Impresa -->
-
-                <div class="col-md-4 mb-3">
-                  <label for="impresaAggiudicatariaId" class="form-label">Impresa Aggiudicataria</label>
-                  <div class="input-group">
+                    <div class="col-md-4 mb-3">
+                      <label for="impresaAggiudicatariaId" class="form-label">Impresa Aggiudicataria</label>
+                      <div class="d-flex align-items-center">
+                        <div class="input-group select-wrapper w-100">
                     <select class="form-control" id="impresaAggiudicatariaId" name="impresaAggiudicatariaId" formControlName="impresaAggiudicatariaId"  ><!--  (change)="selectPiano($event)" -->
                       <option *ngFor="let imprese of impreseList" [value]="imprese.id"  [selected]="imprese.id === editForm.get('impresaAggiudicatariaId')?.value">
                         {{ imprese.ragioneSociale }}
                       </option>
                     </select>
                   </div>
+                      </div>
                 <!--   <span class="custom-error" *ngIf="pianoref?.errors?.['required'] && (pianoref.dirty || pianoref.touched)">
                       Piano è obbligatorio!
                      </span> -->

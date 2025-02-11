@@ -88,7 +88,7 @@ export class AddRichiesteComponent {
       esitoCollaudo: [''],
       pianoId: [''],
       appaltoId: [''],
-      origineRichiesta: [''],
+      origineRichiesta: ['',[Validators.required]],
       budgetStimato: ['',[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       budgetEffettivo: ['',[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       periodoPianificato: ['',[Validators.required,Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]

@@ -91,7 +91,7 @@ export class EditRichiesteComponent {
       esitoCollaudo: [this.richiesta.esitoCollaudo],
       pianoId: [this.richiesta.pianoId],
       appaltoId: [this.richiesta.appaltoId],
-      origineRichiesta: [this.richiesta.origineRichiesta],
+      origineRichiesta: [this.richiesta.origineRichiesta,[Validators.required]],
       budgetStimato: [this.richiesta.budgetStimato,[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       budgetEffettivo: [this.richiesta.budgetEffettivo,[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       periodoPianificato: [this.richiesta.periodoPianificato,[Validators.required,Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
