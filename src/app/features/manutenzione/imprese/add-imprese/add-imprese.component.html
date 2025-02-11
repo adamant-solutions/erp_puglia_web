@@ -80,11 +80,33 @@
               </div>
 
               <!-- Provincia -->
-              <div class="col-md-4  mb-3">
+ <!--              <div class="col-md-4  mb-3">
                 <label for="provincia" class="form-label">Provincia</label>
                 <div class="input-group">
                   <input type="text" id="provincia" class="form-control" name="provincia"
-                    [(ngModel)]="impresa.provincia" />
+                    [(ngModel)]="impresa.provincia" pattern="^[A-Z]{2}$" maxlength="2" #provinciaRef="ngModel"/>
+                </div>
+                <span class="custom-error" *ngIf="
+                provinciaRef?.errors?.['pattern'] && (provinciaRef.dirty || provinciaRef.touched)">
+                  Provincia must be 2 characters!
+                </span>
+
+              </div> -->
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia</label>
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+                  <select class="form-control" id="provincia" name="provincia"
+                  [(ngModel)]="impresa.provincia" #provinciaRef="ngModel">
+                    <option value="" selected="">
+                      Seleziona Provincia
+                    </option>
+                    <option *ngFor="let provincia of provinces" [value]="provincia.sigla">
+                      {{ provincia.nome }}
+                    </option>
+                  </select>
+                    </div>
                 </div>
               </div>
 

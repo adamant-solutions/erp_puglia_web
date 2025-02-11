@@ -67,10 +67,21 @@
               </div>
 
               <!-- Provincia -->
+              
               <div class="col-md-4 mb-3">
-                <label for="provincia" class="form-label">Provincia</label>
-                <div class="input-group">
-                <input type="text" id="provincia" class="form-control" formControlName="provincia" />
+                <label class="form-label" for="provincia">Provincia</label>
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+                  <select class="form-control" id="provincia" name="provincia"
+                  formControlName="provincia">
+                    <option value="" selected="">
+                      Seleziona Provincia
+                    </option>
+                    <option *ngFor="let provincia of provinces" [value]="provincia.sigla">
+                      {{ provincia.nome }}
+                    </option>
+                  </select>
+                    </div>
                 </div>
               </div>
 
