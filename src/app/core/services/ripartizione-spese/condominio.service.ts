@@ -51,10 +51,26 @@ export class CondominioService {
   }
 
   updateCondominio(condominio: Condominio): Observable<Condominio> {
-    return this.http.put<Condominio>(`${this.condominiUrl}/${condominio.id}`, condominio);
+  
+    return this.http.put<Condominio>(`${this.condominiUrl}`, condominio);
   }
 
   deleteCondominio(id: number): Observable<void> {
     return this.http.delete<void>(`${this.condominiUrl}/${id}`);
   }
+
+
+
+  addUnitaToCondominio(condominioId: number, unitaId: number): Observable<void> {
+    return this.http.post<void>(`${this.condominiUrl}/${condominioId}/unita/${unitaId}`, {});
+  }
+
+  removeUnitaFromCondominio(condominioId: number, unitaId: number): Observable<void> {
+    return this.http.delete<void>(`${this.condominiUrl}/${condominioId}/unita/${unitaId}`);
+  }
+
+  getUnitaIdsForCondominio(condominioId: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.condominiUrl}/${condominioId}/unita`);
+  }
+
 }

@@ -31,13 +31,13 @@ export const patrimonioResolver: ResolveFn<Observable<any>> = (
 
   return patrimonioService.getFilteredPatrimonio(searchParams).pipe(
     catchError((error) => {
-      console.error('Error fetching patrimonio data:', error);
+     
       return of([]);
     })
   );
 };
 
-// patrimonioByIdResolver
+
 export const patrimonioByIdResolver: ResolveFn<Patrimonio | null> = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
@@ -48,8 +48,8 @@ export const patrimonioByIdResolver: ResolveFn<Patrimonio | null> = (
     .getPatrimonioById(id)
     .pipe(
       catchError((error) => {
-        console.error('Error fetching patrimonio:', error); // Log the error
-        return of(null); // Return `null` in case of an error
+        console.error('Error fetching patrimonio:', error); 
+        return of(null); 
       })
     );
 };

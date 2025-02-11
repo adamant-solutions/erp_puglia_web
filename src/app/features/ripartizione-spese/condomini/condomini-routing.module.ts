@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CondominiListComponent } from './condomini-list/condomini-list.component';
 import {  condominioByIdResolver, condominioResolver } from 'src/app/core/resolvers/ripartizione-spese/condominio.resolver';
 import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
+import { EditCondominiComponent } from './edit-condomini/edit-condomini.component';
+import { unitaImmobiliareResolver } from 'src/app/core/resolvers/contratti.resolver';
 
 
 const routes: Routes = [
@@ -19,6 +21,14 @@ const routes: Routes = [
     component: ViewCondominiComponent,
     resolve: {
       condominio: condominioByIdResolver
+    }
+  },
+  {
+    path: 'modifica-condominio/:id',
+    component: EditCondominiComponent,
+    resolve: {
+      condominio: condominioByIdResolver,
+      unitaImmobiliari: unitaImmobiliareResolver
     }
   }
 ];

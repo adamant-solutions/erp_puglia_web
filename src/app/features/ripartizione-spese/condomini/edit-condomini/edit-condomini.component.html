@@ -1,0 +1,184 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Modifica condominio'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="editForm" class="row g-3" (ngSubmit)="onSubmit()">
+          <div class="col-12">
+            <div class="row d-flex">
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="codice">Codice *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="codice"
+                    formControlName="codice"
+                    [class.is-invalid]="editForm.get('codice')?.invalid && editForm.get('codice')?.touched"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="denominazione">Denominazione *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="denominazione"
+                    formControlName="denominazione"
+                    [class.is-invalid]="editForm.get('denominazione')?.invalid && editForm.get('denominazione')?.touched"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="indirizzo">Indirizzo *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="indirizzo"
+                    formControlName="indirizzo"
+                    [class.is-invalid]="editForm.get('indirizzo')?.invalid && editForm.get('indirizzo')?.touched"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="comune">Comune *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="comune"
+                    formControlName="comune"
+                    [class.is-invalid]="editForm.get('comune')?.invalid && editForm.get('comune')?.touched"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="provincia"
+                    formControlName="provincia"
+                    maxlength="2"
+                    [class.is-invalid]="editForm.get('provincia')?.invalid && editForm.get('provincia')?.touched"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="cap">CAP *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cap"
+                    formControlName="cap"
+                    [class.is-invalid]="editForm.get('cap')?.invalid && editForm.get('cap')?.touched"
+                  />
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="codiceFiscale">Codice Fiscale *</label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="codiceFiscale"
+                    formControlName="codiceFiscale"
+                    [class.is-invalid]="editForm.get('codiceFiscale')?.invalid && editForm.get('codiceFiscale')?.touched"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 mt-4">
+              <h3>Unità Immobiliari</h3>
+              
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <select class="form-select" #unitaSelect [(ngModel)]="selectedUnitaId" [ngModelOptions]="{standalone: true}">
+                    <option value="">Seleziona unità immobiliare</option>
+                    <option *ngFor="let unita of unitaImmobiliariList" [value]="unita.id">
+                      {{ unita.descrizione }}
+                    </option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <button 
+                    type="button" 
+                    class="btn btn-primary"
+                    (click)="addUnitaImmobiliare(unitaSelect.value)"
+                    [disabled]="!unitaSelect.value"
+                  >
+                    Aggiungi
+                  </button>
+                </div>
+              </div>
+
+              <div class="table-responsive" *ngIf="selectedUnitaImmobiliari.length > 0">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>Descrizione</th>
+                      <th>ID Unità</th>
+                      <th>Azioni</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let unita of selectedUnitaImmobiliari">
+                      <td>{{ unita.descrizione }}</td>
+                      <td>{{ unita.id }}</td>
+                      <td>
+                        <button 
+                          type="button" 
+                          class="btn btn-danger btn-sm"
+                          (click)="removeUnitaImmobiliare(unita.id)"
+                        >
+                          <i class="bi bi-trash"></i> Rimuovi
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-5">
+            <button
+              type="submit"
+              class="btn btn-primary me-3"
+              [disabled]="!editForm.valid"
+            >
+              Salva
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
