@@ -1,4 +1,3 @@
-// condominio.service.ts
 import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -15,26 +14,33 @@ export class CondominioService {
      @Inject('condominiUrl') private condominiUrl: string,
   ) {}
 
-  getAllCondomini(): Observable<Condominio[]> {
-    return this.http.get<Condominio[]>(this.condominiUrl);
+  getAllCondomini(): Observable<any> {
+    return this.http.get<Condominio[]>(this.condominiUrl, { 
+      observe: 'response' 
+    });
   }
 
-  getCondomini(page: number, size: number, codice?: string, denominazione?: string, comune?: string, provincia?: string): Observable<Condominio[]> {
+  getCondomini(page: number, size: number, codice?: string, denominazione?: string, comune?: string, provincia?: string): Observable<any> {
     let params = new HttpParams()
       .set('page', page.toString())
       .set('size', size.toString());
-
+  
     if (codice) params = params.set('codice', codice);
     if (denominazione) params = params.set('denominazione', denominazione);
     if (comune) params = params.set('comune', comune);
     if (provincia) params = params.set('provincia', provincia);
-
-    return this.http.get<Condominio[]>(this.condominiUrl, { params });
+  
+    return this.http.get<Condominio[]>(this.condominiUrl, { 
+      params,
+      observe: 'response' 
+    });
   }
+
 
   getCondominioById(id: number): Observable<Condominio> {
     return this.http.get<Condominio>(`${this.condominiUrl}/${id}`);
   }
+
 
   getCondominioDetails(): Observable<any> {
     return this.http.get<any>(`${this.condominiUrl}/details`);

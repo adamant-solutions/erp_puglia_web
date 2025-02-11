@@ -17,7 +17,7 @@
                   class="form-control"
                   id="codice"
                   name="codice"
-              
+                  [(ngModel)]="searchCodiceParam"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-building"></i>
@@ -33,7 +33,7 @@
                   class="form-control"
                   id="denominazione"
                   name="denominazione"
-             
+                  [(ngModel)]="searchDenominazioneParam"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-card-text"></i>
@@ -49,7 +49,7 @@
                   class="form-control"
                   id="comune"
                   name="comune"
-  
+                  [(ngModel)]="searchComuneParam"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-geo-alt"></i>
@@ -65,7 +65,7 @@
                   class="form-control"
                   id="provincia"
                   name="provincia"
-       
+                  [(ngModel)]="searchProvinciaParam"
                   maxlength="2"
                 />
                 <span class="input-group-text">
@@ -78,7 +78,7 @@
               <button
                 type="button"
                 class="btn btn-primary me-3"
-              
+                (click)="cercaCondomini()"
               >
                 Cerca
               </button>

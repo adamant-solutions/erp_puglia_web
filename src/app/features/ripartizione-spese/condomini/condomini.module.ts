@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CondominiRoutingModule } from './condomini-routing.module';
 import { CondominiListComponent } from './condomini-list/condomini-list.component';
-
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 
@@ -14,7 +14,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     CommonModule,
     CondominiRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule
   ]
 })
 export class CondominiModule { }
