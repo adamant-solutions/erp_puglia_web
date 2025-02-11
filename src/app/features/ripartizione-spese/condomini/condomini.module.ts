@@ -6,12 +6,14 @@ import { CondominiListComponent } from './condomini-list/condomini-list.componen
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
+import { EditCondominiComponent } from './edit-condomini/edit-condomini.component';
 
 
 @NgModule({
   declarations: [
     CondominiListComponent,
-    ViewCondominiComponent
+    ViewCondominiComponent,
+    EditCondominiComponent
   ],
   imports: [
     CommonModule,
