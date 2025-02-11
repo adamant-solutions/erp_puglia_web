@@ -45,6 +45,18 @@ getInterventoByid(id: number): Observable<Interventi>{
   );
 }
 
+addInterventi(interventi: Interventi): Observable<Interventi>{
+  return this.http.post<Interventi>(`${this.url}/interventi`,interventi).pipe(
+      catchError(error => { throw error; })
+    );
+}
+
+editInterventi(interventi: Interventi): Observable<Interventi>{
+  return this.http.put<Interventi>(`${this.url}/interventi`,interventi).pipe(
+      catchError(error => { throw error; })
+    );
+}
+
 deleteInterventi(id: number): Observable<Interventi>{
   return this.http.delete<Interventi>(`${this.url}/interventi/`+id).pipe(
       catchError(error => { throw error; })

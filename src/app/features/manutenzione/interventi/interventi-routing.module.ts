@@ -7,6 +7,7 @@ import { DettagliInterventiComponent } from './dettagli-interventi/dettagli-inte
 import { EditInterventiComponent } from './edit-interventi/edit-interventi.component';
 import { richiesteLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/richieste.resolver';
 import { impreseLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/imprese.resolver';
+import { appaltiLightResolver } from 'src/app/core/resolvers/manutenzione-resolvers/appalti.resolver';
 
 const routes: Routes = [
   {
@@ -18,7 +19,7 @@ const routes: Routes = [
   {
     path: 'nuovo-intervento',
     component: AddInterventiComponent,
-    resolve: { richieste: richiesteLightResolver, imprese: impreseLightResolver },
+    resolve: { richieste: richiesteLightResolver, appalti: appaltiLightResolver },
   },
   {
     path: 'interventi-dettagli/:id',

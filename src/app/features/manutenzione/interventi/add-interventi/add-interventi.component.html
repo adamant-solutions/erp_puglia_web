@@ -1,1 +1,260 @@
-<p>add-interventi works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Nuovo Intervento'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="mb-5">Nuovo Intervento</h1>
+                <form [formGroup]="interventoForm" (ngSubmit)="onSubmit()" class="row g-3">
+                    <div class="col-12">
+                        <div class="row d-flex">
+
+                            <!-- Richiesta -->
+
+                            <div class="col-md-4 mb-3">
+                                <label for="richiestaId" class="form-label">Richiesta</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="input-group select-wrapper w-100">
+                                        <select id="richiestaId" class="form-control" formControlName="richiestaId" name="richiestaId">
+                                            <option [ngValue]="null">Seleziona richiesta</option>
+                                            <option *ngFor="let item of richieste" [value]="item.id">{{ item.indirizzoUnita}} {{ item.id }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <!-- Data Inizio -->
+
+                            <div class="col-md-4 mb-3">
+                                <label for="dataInizio" class="form-label">Data Inizio*</label>
+
+                                <mat-form-field appearance="fill" style="width: 100%">
+                                    <input matInput [matDatepicker]="pickerdataInizio" id="dataInizio" name="dataInizio"
+                                        formControlName="dataInizio" />
+                                    <mat-datepicker-toggle matSuffix [for]="pickerdataInizio"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickerdataInizio></mat-datepicker>
+                                </mat-form-field>
+
+                                <span class="custom-error"
+                                    *ngIf="interventoForm.get('dataInizio')?.hasError('required') && interventoForm.get('dataInizio')?.touched">
+                                    Data Inizio è obbligatorio!
+                                </span>
+
+                                <span class="custom-error"
+                                    *ngIf="interventoForm.get('dataInizio')?.hasError('matDatepickerParse')
+                                 && (interventoForm.get('dataInizio')?.dirty || interventoForm.get('dataInizio')?.touched)">
+                                    Inserisci una data valida nel formato gg/mm/aaaa!
+                                </span>
+                            </div>
+
+
+                            <!-- Data Fine -->
+
+                            <div class="col-md-4 mb-3">
+                                <label for="dataFine" class="form-label">Data Fine</label>
+                                
+                                <mat-form-field appearance="fill" style="width: 100%">
+                                  <input matInput [matDatepicker]="pickerdataFine"  id="dataFine" name="dataFine"
+                                  formControlName="dataFine"/>
+                                  <mat-datepicker-toggle matSuffix [for]="pickerdataFine"></mat-datepicker-toggle>
+                                  <mat-datepicker #pickerdataFine></mat-datepicker>
+                                </mat-form-field>
+                
+                                <span class="custom-error" *ngIf="interventoForm.get('dataFine')?.hasError('required') && interventoForm.get('dataFine')?.touched">
+                                    Data Fine è obbligatorio!
+                                 </span>
+                
+                                <span class="custom-error" *ngIf="interventoForm.get('dataFine')?.hasError('matDatepickerParse')
+                                 && (interventoForm.get('dataFine')?.dirty || interventoForm.get('dataFine')?.touched)">
+                                 Inserisci una data valida nel formato gg/mm/aaaa!
+                                  </span> 
+                              </div>
+
+                              
+                            <!-- Data Intervento -->
+
+                            <div class="col-md-4 mb-3">
+                                <label for="dataIntervento" class="form-label">Data Intervento*</label>
+                                
+                                <mat-form-field appearance="fill" style="width: 100%">
+                                  <input matInput [matDatepicker]="pickerdataIntervento"  id="dataIntervento" name="dataIntervento"
+                                  formControlName="dataIntervento"/>
+                                  <mat-datepicker-toggle matSuffix [for]="pickerdataIntervento"></mat-datepicker-toggle>
+                                  <mat-datepicker #pickerdataIntervento></mat-datepicker>
+                                </mat-form-field>
+                
+                                <span class="custom-error" *ngIf="interventoForm.get('dataIntervento')?.hasError('required') && interventoForm.get('dataIntervento')?.touched">
+                                    Data Intervento è obbligatorio!
+                                 </span>
+                
+                                <span class="custom-error" *ngIf="interventoForm.get('dataIntervento')?.hasError('matDatepickerParse')
+                                 && (interventoForm.get('dataIntervento')?.dirty || interventoForm.get('dataIntervento')?.touched)">
+                                 Inserisci una data valida nel formato gg/mm/aaaa!
+                                  </span> 
+                              </div>
+                
+
+                            <!-- Materiali Utilizzati -->
+                     <!--        <div class="col-md-4 mb-3">
+                                <label for="materialiUtilizzati" class="form-label">Materiali Utilizzati</label>
+                                <div class="input-group">
+                                    <input type="text" id="materialiUtilizzati" class="form-control"
+                                        formControlName="materialiUtilizzati" />
+                                </div>
+                            </div> -->
+
+                            <!-- Ore Lavoro -->
+                        <!--     <div class="col-md-4 mb-3">
+                                <label for="oreLavoro" class="form-label">Ore di Lavoro</label>
+                                <div class="input-group">
+                                    <input type="number" id="oreLavoro" class="form-control"
+                                        formControlName="oreLavoro" min="0" />
+                                </div>
+                            </div>
+ -->
+                            <!-- Esito Intervento -->
+                        <!--     <div class="col-md-4 mb-3">
+                                <label for="esitoIntervento" class="form-label">Esito Intervento</label>
+                                <div class="input-group">
+                                    <input type="text" id="esitoIntervento" class="form-control"
+                                        formControlName="esitoIntervento" />
+                                </div>
+                            </div> -->
+
+                            <!-- Appalto -->
+
+                            <div class="col-md-4 mb-3">
+                                <label for="appaltoId" class="form-label">Appalto</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="input-group select-wrapper w-100">
+                                        <select id="appaltoId" class="form-control" formControlName="appaltoId" name="appaltoId">
+                                            <option [ngValue]="null">Seleziona appalto</option>
+                                            <option *ngFor="let item of appalti" [value]="item.id">{{ item.codiceCIG }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Importo -->
+                            <div class="col-md-4 mb-3">
+                                <label for="importo" class="form-label">Importo</label>
+                                <div class="input-group">
+                                    <input type="text" id="importo" class="form-control"
+                                        formControlName="importo" />
+                                </div>
+                                <span class="custom-error" *ngIf="interventoForm.get('importo')?.hasError('pattern') && interventoForm.get('importo')?.touched">
+                                    Inserisci un valore valido!
+                                  </span>
+                            </div>
+
+                                       <!-- Stato -->
+
+                                       <div class="col-md-4 mb-3">
+                                        <label class="form-label" for="stato">Stato*</label>
+                                        <div class="d-flex align-items-center">
+                                            <div class="input-group select-wrapper w-100">
+                                                <select class="form-control" id="stato" name="stato" formControlName="stato">
+                                                    <option [ngValue]="null">Seleziona stato</option>
+                                                    <option *ngFor="let stato of statoList" [value]="stato">{{ stato | capitalize }}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <span class="custom-error" *ngIf="interventoForm.get('stato')?.hasError('required') && interventoForm.get('stato')?.touched">
+                                            Stato Intervento è obbligatorio!
+                                           </span>
+                                    </div>
+        
+                                         <!-- Priorita -->
+        
+                                         <div class="col-md-4 mb-3">
+                                            <label class="form-label" for="priorita">Priorita</label>
+                                            <div class="d-flex align-items-center">
+                                                <div class="input-group select-wrapper w-100">
+                                                    <select class="form-control" id="priorita" name="priorita" formControlName="priorita">
+                                                        <option [ngValue]="null">Seleziona priorita</option>
+                                                        <option *ngFor="let priorita of prioritaList" [value]="priorita">{{ priorita | capitalize }}</option>
+                                                    </select>
+                                                </div>
+                                             
+                                            </div>
+                                        </div>
+            
+        
+              
+
+                            <!-- Personale Coinvolto -->
+                        <!--     <div class="col-md-4 mb-3">
+                                <label for="personaleCoinvolto" class="form-label">Personale Coinvolto</label>
+                                <div class="input-group">
+                                    <input type="text" id="personaleCoinvolto" class="form-control"
+                                        formControlName="personaleCoinvolto" />
+                                </div>
+                            </div>
+ -->
+
+                            <!-- Descrizione -->
+                            <div class="col-md-8 mb-3">
+                                <label for="descrizione" class="form-label">Descrizione*</label>
+                                <div class="input-group">
+                                    <textarea id="descrizione" class="form-control" formControlName="descrizione"
+                                        rows="3"></textarea>
+                                </div>
+                                <div *ngIf="interventoForm.get('descrizione')?.invalid && interventoForm.get('descrizione')?.touched"
+                                    class="text-danger">
+                                    <span *ngIf="interventoForm.get('descrizione')?.errors?.['required']">
+                                        Descrizione è obbligatorio.
+                                    </span>
+                                    <span *ngIf="interventoForm.get('descrizione')?.errors?.['minlength']">
+                                        Inserisci almeno 10 caratteri.
+                                    </span>
+                                </div>
+                            </div>
+
+
+                            <!-- Garanzia Fino -->
+                 <!--            <div class="col-md-4 mb-3">
+                                <label for="garanziaFino" class="form-label">Garanzia Fino</label>
+                                <div class="input-group">
+                                    <input type="text" id="garanziaFino" class="form-control"
+                                        formControlName="garanziaFino" />
+                                </div>
+                            </div> -->
+
+                            <!-- Note -->
+                            <div class="col-md-8 mb-3">
+                                <label for="note" class="form-label">Note</label>
+                                <div class="input-group">
+                                    <textarea id="note" class="form-control" formControlName="note"
+                                        rows="3"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- buttons -->
+                    <div class="col-12 mt-5 d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+                            <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+                            Indietro
+                        </button>
+
+                        <div>
+                            <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm()">
+                                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                                Reset
+                            </button>
+
+                            <button type="submit" class="btn btn-primary py-2" [disabled]="interventoForm.invalid">
+                                Salva
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
