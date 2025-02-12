@@ -12,60 +12,78 @@
             <select class="form-select" 
                     formControlName="contrattoId"
                     (change)="onContrattoChange($event)"
-                    [class.is-invalid]="editForm.get('contrattoId')?.invalid && editForm.get('contrattoId')?.touched">
+                    [class.is-invalid]="shouldShowError('contrattoId')">
               <option value="">Seleziona un contratto</option>
               <option *ngFor="let contratto of contratti" [value]="contratto.id">
                 {{ contratto.descrizione }}
               </option>
             </select>
-            <div class="invalid-feedback" *ngIf="editForm.get('contrattoId')?.errors?.['required'] && editForm.get('contrattoId')?.touched">
+            <div class="invalid-feedback" *ngIf="shouldShowError('contrattoId')">
               Campo obbligatorio
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Rilevazione</label>
-            <input type="date" class="form-control" formControlName="dataRilevazione">
-            <div class="invalid-feedback" *ngIf="editForm.get('dataRilevazione')?.errors?.['required'] && editForm.get('dataRilevazione')?.touched">
-              Campo obbligatorio
+            <input type="date" 
+                   class="form-control" 
+                   formControlName="dataRilevazione"
+                   [class.is-invalid]="shouldShowError('dataRilevazione')">
+            <div class="invalid-feedback" *ngIf="shouldShowError('dataRilevazione')">
+              Campo obbligatoria
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Scadenza</label>
-            <input type="date" class="form-control" formControlName="dataScadenza">
-            <div class="invalid-feedback" *ngIf="editForm.get('dataScadenza')?.errors?.['required'] && editForm.get('dataScadenza')?.touched">
-              Campo obbligatorio
+            <input type="date" 
+                   class="form-control" 
+                   formControlName="dataScadenza"
+                   [class.is-invalid]="shouldShowError('dataScadenza')">
+            <div class="invalid-feedback" *ngIf="shouldShowError('dataScadenza')">
+              Campo obbligatoria
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Dovuto</label>
-            <input type="number" class="form-control" formControlName="importoDovuto">
-            <div class="invalid-feedback" *ngIf="editForm.get('importoDovuto')?.errors?.['required'] && editForm.get('importoDovuto')?.touched">
+            <input type="number" 
+                   class="form-control" 
+                   formControlName="importoDovuto"
+                   [class.is-invalid]="shouldShowError('importoDovuto')">
+            <div class="invalid-feedback" *ngIf="shouldShowError('importoDovuto')">
               Campo obbligatorio
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Versato</label>
-            <input type="number" class="form-control" formControlName="importoVersato">
-            <div class="invalid-feedback" *ngIf="editForm.get('importoVersato')?.errors?.['required'] && editForm.get('importoVersato')?.touched">
+            <input type="number" 
+                   class="form-control" 
+                   formControlName="importoVersato"
+                   [class.is-invalid]="shouldShowError('importoVersato')">
+            <div class="invalid-feedback" *ngIf="shouldShowError('importoVersato')">
               Campo obbligatorio
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Morosità</label>
-            <input type="number" class="form-control" formControlName="importoMorosita">
-            <div class="invalid-feedback" *ngIf="editForm.get('importoMorosita')?.errors?.['required'] && editForm.get('importoMorosita')?.touched">
+            <input type="number" 
+                   class="form-control" 
+                   formControlName="importoMorosita"
+                   [class.is-invalid]="shouldShowError('importoMorosita')">
+            <div class="invalid-feedback" *ngIf="shouldShowError('importoMorosita')">
               Campo obbligatorio
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato</label>
-            <select class="form-select" formControlName="stato">
+            <select class="form-select" 
+                    formControlName="stato"
+                    [class.is-invalid]="shouldShowError('stato')">
+              <option value="">Seleziona uno stato</option>
               <option value="INTIMATA">Intimata</option>
               <option value="ACCERTATA">Accertata</option>
               <option value="IN_RATEIZZAZIONE">In Rateizzazione</option>
@@ -75,7 +93,7 @@
               <option value="ESTINTA">Estinta</option>
               <option value="SOSPESA">Sospesa</option>
             </select>
-            <div class="invalid-feedback" *ngIf="editForm.get('stato')?.errors?.['required'] && editForm.get('stato')?.touched">
+            <div class="invalid-feedback" *ngIf="shouldShowError('stato')">
               Campo obbligatorio
             </div>
           </div>
@@ -85,15 +103,21 @@
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">Tentativi Effettuati</label>
-                <input type="number" class="form-control" formControlName="tentativiContatto">
-                <div class="invalid-feedback" *ngIf="editForm.get('tentativiContatto')?.errors?.['required'] && editForm.get('tentativiContatto')?.touched">
+                <input type="number" 
+                       class="form-control" 
+                       formControlName="tentativiContatto"
+                       [class.is-invalid]="shouldShowError('tentativiContatto')">
+                <div class="invalid-feedback" *ngIf="shouldShowError('tentativiContatto')">
                   Campo obbligatorio
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label">Modalità Contatto</label>
-                <select class="form-select" formControlName="modalitaContatto">
+                <select class="form-select" 
+                        formControlName="modalitaContatto"
+                        [class.is-invalid]="shouldShowError('modalitaContatto')">
+                  <option value="">Seleziona una modalità</option>
                   <option value="TELEFONO">Telefono</option>
                   <option value="EMAIL">Email</option>
                   <option value="SMS">SMS</option>
@@ -101,27 +125,35 @@
                   <option value="VISITA">Visita</option>
                   <option value="ALTRO">Altro</option>
                 </select>
-                <div class="invalid-feedback" *ngIf="editForm.get('modalitaContatto')?.errors?.['required'] && editForm.get('modalitaContatto')?.touched">
+                <div class="invalid-feedback" *ngIf="shouldShowError('modalitaContatto')">
                   Campo obbligatorio
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label">Esito Contatto</label>
-                <input type="text" class="form-control" formControlName="esitoContatto">
-                <div class="invalid-feedback" *ngIf="editForm.get('esitoContatto')?.errors?.['required'] && editForm.get('esitoContatto')?.touched">
+                <input type="text" 
+                       class="form-control" 
+                       formControlName="esitoContatto"
+                       [class.is-invalid]="shouldShowError('esitoContatto')">
+                <div class="invalid-feedback" *ngIf="shouldShowError('esitoContatto')">
                   Campo obbligatorio
                 </div>
               </div>
             </div>
           </div>
-           <div class="col-12 mt-4">
+
+          <div class="col-12 mt-4">
             <h3 class="mb-3">Note</h3>
             <div class="row">
               <div class="col-12 mb-3">
                 <label class="form-label">Note</label>
-                <textarea class="form-control" formControlName="note" rows="3"></textarea>
-                <div class="invalid-feedback" *ngIf="editForm.get('note')?.errors?.['required'] && editForm.get('note')?.touched">
+                <textarea class="form-control" 
+                          formControlName="note" 
+                          rows="3"
+                          [class.is-invalid]="shouldShowError('note')">
+                </textarea>
+                <div class="invalid-feedback" *ngIf="shouldShowError('note')">
                   Campo obbligatorio
                 </div>
               </div>
@@ -133,7 +165,7 @@
             <div class="row">
               <div class="col-12 mb-3">
                 <button type="button" class="btn btn-outline-primary" [routerLink]="['solleciti']">
-                  <i class="bi bi-arrow-right me-1" ></i>
+                  <i class="bi bi-arrow-right me-1"></i>
                   Vista Solleciti
                 </button>
               </div>
@@ -150,7 +182,7 @@
                 <i class="bi bi-arrow-counterclockwise me-1"></i>
                 Reset
               </button>
-              <button type="submit" class="btn btn-primary py-2" [disabled]="!editForm.valid">
+              <button type="submit" class="btn btn-primary py-2">
                 <i class="bi bi-save"></i>
                 Salva
               </button>

@@ -15,6 +15,7 @@ export class EditMorositaComponent implements OnInit {
   contratti: ModelLight[] = [];
   initialFormValues: any;
   morositaId!: number;
+  formSubmitAttempted = false;
 
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
@@ -50,15 +51,12 @@ export class EditMorositaComponent implements OnInit {
         const morosita: Morosita = data['morositaByIdResolver'];
         this.morositaId = morosita.id;
         this.populateForm(morosita);
-    
         this.initialFormValues = this.editForm.value;
       }
     });
   }
 
   private populateForm(morosita: Morosita): void {
-    const contratto = this.contratti.find(c => c.id === morosita.contrattoId);
-    
     this.editForm.patchValue({
       ...morosita,
     });
@@ -67,12 +65,12 @@ export class EditMorositaComponent implements OnInit {
   resetForm(): void {
     if (this.initialFormValues) {
       this.editForm.patchValue(this.initialFormValues);
-   
       Object.keys(this.editForm.controls).forEach(key => {
         const control = this.editForm.get(key);
         control?.markAsUntouched();
         control?.markAsPristine();
       });
+      this.formSubmitAttempted = false;
     }
   }
 
@@ -87,7 +85,19 @@ export class EditMorositaComponent implements OnInit {
     }
   }
 
+  showValidationErrors(): void {
+    this.formSubmitAttempted = true;
+    Object.keys(this.editForm.controls).forEach(key => {
+      const control = this.editForm.get(key);
+      if (control?.invalid) {
+        control.markAsTouched();
+      }
+    });
+  }
+
   onSubmit(): void {
+    this.showValidationErrors();
+    
     if (this.editForm.valid) {
       const formValues = this.editForm.value;
       const updatedMorosita: Morosita = {
@@ -101,17 +111,15 @@ export class EditMorositaComponent implements OnInit {
             this.router.navigate(['/morosita']);
           },
           error: (error) => {
-
+          
           }
         });
-    } else {
-      Object.keys(this.editForm.controls).forEach(key => {
-        const control = this.editForm.get(key);
-        if (control?.invalid) {
-          control.markAsTouched();
-        }
-      });
     }
+  }
+
+  shouldShowError(controlName: string): boolean {
+    const control = this.editForm.get(controlName);
+    return !!(control && control.invalid && (control.touched || this.formSubmitAttempted));
   }
 
   indietroM(): void {
