@@ -8,7 +8,7 @@
 
         <form [formGroup]="editForm" class="row g-3" (ngSubmit)="onSubmit()">
           <div class="col-md-4 mb-3">
-            <label class="form-label">Contratto</label>
+            <label class="form-label">Contratto*</label>
             <select class="form-select" 
                     formControlName="contrattoId"
                     (change)="onContrattoChange($event)"
@@ -24,7 +24,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <label class="form-label">Data Rilevazione</label>
+            <label class="form-label">Data Rilevazione*</label>
             <input type="date" 
                    class="form-control" 
                    formControlName="dataRilevazione"
@@ -35,7 +35,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <label class="form-label">Data Scadenza</label>
+            <label class="form-label">Data Scadenza*</label>
             <input type="date" 
                    class="form-control" 
                    formControlName="dataScadenza"
@@ -46,7 +46,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <label class="form-label">Importo Dovuto</label>
+            <label class="form-label">Importo Dovuto*</label>
             <input type="number" 
                    class="form-control" 
                    formControlName="importoDovuto"
@@ -57,7 +57,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <label class="form-label">Importo Versato</label>
+            <label class="form-label">Importo Versato*</label>
             <input type="number" 
                    class="form-control" 
                    formControlName="importoVersato"
@@ -68,7 +68,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <label class="form-label">Importo Morosità</label>
+            <label class="form-label">Importo Morosità*</label>
             <input type="number" 
                    class="form-control" 
                    formControlName="importoMorosita"
@@ -79,7 +79,7 @@
           </div>
 
           <div class="col-md-4 mb-3">
-            <label class="form-label">Stato</label>
+            <label class="form-label">Stato*</label>
             <select class="form-select" 
                     formControlName="stato"
                     [class.is-invalid]="shouldShowError('stato')">
@@ -99,7 +99,7 @@
           </div>
 
           <div class="col-12 mt-4">
-            <h3 class="mb-3">Tentativi di Contatto</h3>
+            <h3 class="mb-3">Tentativi Contatto*</h3>
             <div class="row">
               <div class="col-md-4 mb-3">
                 <label class="form-label">Tentativi Effettuati</label>
