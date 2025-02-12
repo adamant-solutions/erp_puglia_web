@@ -7,12 +7,11 @@
         <h1 class="mb-5">{{pageTitle}}</h1>
 
         <form [formGroup]="contratoForm" (ngSubmit)="onSubmit()" class="row g-3">
-        
+          
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato Contratto*</label>
-            <div class="input-group">
-              <select class="form-control" formControlName="statoContratto"
-                [class.is-invalid]="submitted && contratoForm.get('statoContratto')?.invalid">
+            <div class="input-group" [ngClass]="{'is-invalid': submitted && contratoForm.get('statoContratto')?.invalid}">
+              <select class="form-control" formControlName="statoContratto">
                 <option *ngFor="let stato of statoContrattoOptions" [value]="stato">
                   {{stato.charAt(0) + stato.slice(1).toLowerCase()}}
                 </option>
@@ -21,49 +20,43 @@
                 <i class="bi bi-caret-down-fill"></i>
               </span>
             </div>
-            <div class="invalid-feedback">
-              <!-- {{ getErrorMessage('statoContratto') }} -->
+            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('statoContratto')?.errors?.['required']">
+              Campo obbligatorio
             </div>
           </div>
 
-   
           <div class="col-md-4 mb-3">
             <label class="form-label">Canone Mensile*</label>
             <input type="number" class="form-control" formControlName="canoneMensile"
-              [class.is-invalid]="submitted && contratoForm.get('canoneMensile')?.invalid">
-            <div class="invalid-feedback">
-              <!-- {{ getErrorMessage('canoneMensile') }} -->
+              [ngClass]="{'is-invalid': submitted && contratoForm.get('canoneMensile')?.invalid}">
+            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('canoneMensile')?.errors?.['required']">
+              Campo obbligatorio
             </div>
           </div>
 
-     
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Inizio*</label>
             <input type="date" class="form-control" formControlName="dataInizio"
-              [class.is-invalid]="submitted && contratoForm.get('dataInizio')?.invalid">
-            <div class="invalid-feedback">
-              <!-- {{ getErrorMessage('dataInizio') }} -->
+              [ngClass]="{'is-invalid': submitted && contratoForm.get('dataInizio')?.invalid}">
+            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']">
+              Campo obbligatoria
             </div>
           </div>
 
-       
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Fine</label>
             <input type="date" class="form-control" formControlName="dataFine">
           </div>
 
-       
           <div class="col-md-8 mb-3">
             <label class="form-label">Descrizione</label>
             <input type="text" class="form-control" formControlName="descrizione">
           </div>
 
-      
           <div class="col-md-6 mb-3">
             <label class="form-label">Unità Immobiliare*</label>
-            <div class="input-group">
-              <select class="form-control" formControlName="unitaImmobiliare"
-                [class.is-invalid]="submitted && contratoForm.get('unitaImmobiliare')?.invalid">
+            <div class="input-group" [ngClass]="{'is-invalid': submitted && contratoForm.get('unitaImmobiliare')?.invalid}">
+              <select class="form-control" formControlName="unitaImmobiliare">
                 <option [ngValue]="null">Seleziona unità immobiliare</option>
                 <option *ngFor="let unita of unitaImmobiliariOptions" [ngValue]="unita">
                   {{unita.descrizione}}
@@ -73,12 +66,12 @@
                 <i class="bi bi-caret-down-fill"></i>
               </span>
             </div>
-            <div class="invalid-feedback">
-              <!-- {{ getErrorMessage('unitaImmobiliare') }} -->
+            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('unitaImmobiliare')?.errors?.['required']">
+              Campo obbligatorio
             </div>
           </div>
 
-          <!-- Intestatari -->
+     
           <div class="col-12 mb-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <label class="form-label">Intestatari</label>
@@ -91,9 +84,9 @@
               <div *ngFor="let intestatarioGroup of intestatari.controls; let i=index" [formGroupName]="i"
                 class="row mb-3">
                 <div class="col-md-6">
-                  <div class="input-group" formGroupName="intestatario">
-                    <select class="form-control" formControlName="id"
-                      [class.is-invalid]="submitted && intestatarioGroup.get('intestatario.id')?.invalid">
+                  <div class="input-group" formGroupName="intestatario"
+                    [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('intestatario.id')?.invalid}">
+                    <select class="form-control" formControlName="id">
                       <option [ngValue]="null">Seleziona intestatario</option>
                       <option *ngFor="let intestatario of intestatariOptions" [ngValue]="intestatario">
                         {{intestatario.descrizione}}
@@ -103,15 +96,22 @@
                       <i class="bi bi-trash"></i>
                     </button>
                   </div>
+                  <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('intestatario.id')?.errors?.['required']">
+                    Campo obbligatorio
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <input type="date" class="form-control" formControlName="dataInizio"
-                    [class.is-invalid]="submitted && intestatarioGroup.get('dataInizio')?.invalid">
+                    [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('dataInizio')?.invalid}">
+                  <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('dataInizio')?.errors?.['required']">
+                    Campo obbligatoria
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
+        
           <div class="col-12 mb-3">
             <label class="form-label">Documenti</label>
             <div class="input-group">
@@ -156,14 +156,11 @@
             </div>
           </div>
 
-          <!-- Buttons -->
+ 
           <div class="col-12 mt-4">
             <button type="submit" class="btn btn-primary me-2">
               <i class="bi bi-save me-1"></i>Salva
             </button>
-            <!-- <button type="button" class="btn btn-outline-secondary" (click)="cancelForm()">
-              <i class="bi bi-x-circle me-1"></i>Annulla
-            </button> -->
           </div>
         </form>
 
