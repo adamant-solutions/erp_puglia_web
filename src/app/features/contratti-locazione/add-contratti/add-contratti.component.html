@@ -21,7 +21,7 @@
               </span>
             </div>
             <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('statoContratto')?.errors?.['required']">
-              Campo obbligatorio
+              Stato Contratto è obbligatorio
             </div>
           </div>
 
@@ -29,18 +29,18 @@
             <label class="form-label">Canone Mensile*</label>
             <input type="number" class="form-control" formControlName="canoneMensile"
               [ngClass]="{'is-invalid': submitted && contratoForm.get('canoneMensile')?.invalid}">
-            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('canoneMensile')?.errors?.['required']">
-              Campo obbligatorio
-            </div>
+              <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('canoneMensile')?.errors?.['required']">
+                Canone Mensile è obbligatorio
+              </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Inizio*</label>
             <input type="date" class="form-control" formControlName="dataInizio"
               [ngClass]="{'is-invalid': submitted && contratoForm.get('dataInizio')?.invalid}">
-            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']">
-              Campo obbligatoria
-            </div>
+              <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']">
+                Data Inizio è obbligatoria
+              </div>
           </div>
 
           <div class="col-md-4 mb-3">
@@ -67,7 +67,7 @@
               </span>
             </div>
             <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('unitaImmobiliare')?.errors?.['required']">
-              Campo obbligatorio
+              Unità Immobiliare obbligatorio
             </div>
           </div>
 
@@ -97,14 +97,14 @@
                     </button>
                   </div>
                   <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('intestatario.id')?.errors?.['required']">
-                    Campo obbligatorio
+                    Intestatari obbligatorio
                   </div>
                 </div>
                 <div class="col-md-6">
                   <input type="date" class="form-control" formControlName="dataInizio"
                     [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('dataInizio')?.invalid}">
                   <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('dataInizio')?.errors?.['required']">
-                    Campo obbligatoria
+                    Data Inizio obbligatoria
                   </div>
                 </div>
               </div>
