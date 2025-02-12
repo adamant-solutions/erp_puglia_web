@@ -12,6 +12,7 @@ export class CondominioService {
 
   constructor(private http: HttpClient,
      @Inject('condominiUrl') private condominiUrl: string,
+     @Inject('patrimonioUrl') private patrimonioUrl:string
   ) {}
 
   getAllCondomini(): Observable<any> {
@@ -73,6 +74,8 @@ export class CondominioService {
     return this.http.get<number[]>(`${this.condominiUrl}/${condominioId}/unita`);
   }
 
-
+  getUnitaImmobiliare(): Observable<any> {
+    return this.http.get<any>(`${this.patrimonioUrl}/light`);
+  }
 
 }

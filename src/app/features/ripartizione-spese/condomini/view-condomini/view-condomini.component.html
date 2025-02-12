@@ -97,9 +97,34 @@
                 </div>
               </div>
             </div>
+
+            <!-- Unità Immobiliari Section -->
+            <div class="col-12 mt-4">
+              <h3>Unità Immobiliari</h3>
+              
+              <div class="table-responsive" *ngIf="unitaImmobiliariList.length > 0">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <!-- <th>ID</th> -->
+                      <th>Descrizione</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let unita of unitaImmobiliariList">
+                      <!-- <td>{{ unita.id }}</td> -->
+                      <td>{{ unita.descrizione }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <div *ngIf="unitaImmobiliariList.length === 0" class="alert alert-info">
+                Nessuna unità immobiliare associata
+              </div>
+            </div>
           </div>
 
-    
           <div class="col-12 mt-5">
             <button
               type="button"
