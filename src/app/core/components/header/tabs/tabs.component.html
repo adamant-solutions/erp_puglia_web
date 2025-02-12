@@ -38,32 +38,22 @@
         <!-- aria-current="page" -->
         <a
           class="nav-link"
-          [routerLink]="['/patrimonio']"
-          [queryParams]="{ pagina: 0 }"
-          [ngClass]="{ active: isCurrentRoute('patrimonio') }"
-        >
-          <span>Unità Immobiliare</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/contabilita']"
-          [ngClass]="{ active: isCurrentRoute('contabilita') }"
-        >
-          <span>Contabilità</span>
-        </a>
-      </li>
-
-      <li class="nav-item">
-        <a
-          class="nav-link"
           [routerLink]="['/anagrafica']"
           [queryParams]="{ pagina: 0 }"
           [ngClass]="{ active: isCurrentRoute('anagrafica') }"
         >
           <span>Anagrafica</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/patrimonio']"
+          [queryParams]="{ pagina: 0 }"
+          [ngClass]="{ active: isCurrentRoute('patrimonio') }"
+        >
+          <span>Unità Immobiliare</span>
         </a>
       </li>
 
@@ -104,6 +94,16 @@
           [ngClass]="{ active: isCurrentRoute('morosita') }"
         >
           <span>Morosità</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/contabilita']"
+          [ngClass]="{ active: isCurrentRoute('contabilita') }"
+        >
+          <span>Contabilità</span>
         </a>
       </li>
 
