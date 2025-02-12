@@ -2,26 +2,19 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'patrimonio', pathMatch: 'full' },
-  {
-    path: 'patrimonio',
-    loadChildren: () =>
-      import('./features/patrimonio/patrimonio.module').then(
-        (m) => m.PatrimonioModule
-      ),
-  },
-  {
-    path: 'contabilita',
-    loadChildren: () =>
-      import('./features/contabilita/contabilita.module').then(
-        (m) => m.ContabilitaModule
-      ),
-  },
+  { path: '', redirectTo: 'anagrafica', pathMatch: 'full' },
   {
     path: 'anagrafica',
     loadChildren: () =>
       import('./features/anagrafica/anagrafica.module').then(
         (m) => m.AnagraficaModule
+      ),
+  },
+  {
+    path: 'patrimonio',
+    loadChildren: () =>
+      import('./features/patrimonio/patrimonio.module').then(
+        (m) => m.PatrimonioModule
       ),
   },
   {
@@ -53,13 +46,20 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'contabilita',
+    loadChildren: () =>
+      import('./features/contabilita/contabilita.module').then(
+        (m) => m.ContabilitaModule
+      ),
+  },
+  {
     path: 'ciclo-passivo',
     loadChildren: () =>
       import('./features/ciclo-passivo/ciclo-passivo.module').then(
         (m) => m.CicloPassivoModule
       ),
   },
-  { path: '**', redirectTo: 'patrimonio' },
+  { path: '**', redirectTo: 'anagrafica' },
 ];
 
 @NgModule({
