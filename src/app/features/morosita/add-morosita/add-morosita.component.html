@@ -7,11 +7,11 @@
         <h1 class="mb-5">{{pageTitle}}</h1>
 
         <form [formGroup]="morositaForm" (ngSubmit)="onSubmit()" class="row g-3">
+         
           <div class="col-md-4 mb-3">
             <label class="form-label">Contratto*</label>
-            <div class="input-group">
-              <select class="form-select" formControlName="contrattoId"
-                [class.is-invalid]="isFieldInvalid('contrattoId')">
+            <div class="input-group" [ngClass]="{'is-invalid': isFieldInvalid('contrattoId')}">
+              <select class="form-select" formControlName="contrattoId">
                 <option [ngValue]="null">Seleziona contratto</option>
                 <option *ngFor="let contratto of contratti" [value]="contratto.id">
                   {{contratto.descrizione}}
@@ -22,60 +22,65 @@
               </span>
             </div>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('contrattoId')">
-              {{validationMessages.contrattoId}}
+              Campo obbligatorio
             </div>
           </div>
 
+     
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Rilevazione*</label>
             <input type="date" class="form-control" formControlName="dataRilevazione"
-              [class.is-invalid]="isFieldInvalid('dataRilevazione')">
+              [ngClass]="{'is-invalid': isFieldInvalid('dataRilevazione')}">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('dataRilevazione')">
-              {{validationMessages.dataRilevazione}}
+              Campo obbligatoria
             </div>
           </div>
 
+  
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Scadenza*</label>
             <input type="date" class="form-control" formControlName="dataScadenza"
-              [class.is-invalid]="isFieldInvalid('dataScadenza')">
+              [ngClass]="{'is-invalid': isFieldInvalid('dataScadenza')}">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('dataScadenza')">
-              {{validationMessages.dataScadenza}}
+              Campo obbligatoria
             </div>
           </div>
 
+    
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Dovuto*</label>
             <input type="number" class="form-control" formControlName="importoDovuto"
-              [class.is-invalid]="isFieldInvalid('importoDovuto')">
+              [ngClass]="{'is-invalid': isFieldInvalid('importoDovuto')}">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('importoDovuto')">
-              {{validationMessages.importoDovuto}}
+              Campo obbligatorio
             </div>
           </div>
 
+      
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Versato*</label>
             <input type="number" class="form-control" formControlName="importoVersato"
-              [class.is-invalid]="isFieldInvalid('importoVersato')">
+              [ngClass]="{'is-invalid': isFieldInvalid('importoVersato')}">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('importoVersato')">
-              {{validationMessages.importoVersato}}
+              Campo obbligatorio
             </div>
           </div>
 
+      
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Morosità*</label>
             <input type="number" class="form-control" formControlName="importoMorosita"
-              [class.is-invalid]="isFieldInvalid('importoMorosita')">
+              [ngClass]="{'is-invalid': isFieldInvalid('importoMorosita')}">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('importoMorosita')">
-              {{validationMessages.importoMorosita}}
+              Campo obbligatorio
             </div>
           </div>
 
+
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato*</label>
-            <div class="input-group">
-              <select class="form-select" formControlName="stato"
-                [class.is-invalid]="isFieldInvalid('stato')">
+            <div class="input-group" [ngClass]="{'is-invalid': isFieldInvalid('stato')}">
+              <select class="form-select" formControlName="stato">
                 <option value="">Seleziona stato</option>
                 <option *ngFor="let stato of statoOptions" [value]="stato.value">
                   {{ stato.label }}
@@ -86,19 +91,21 @@
               </span>
             </div>
             <div class="invalid-feedback" *ngIf="isFieldInvalid('stato')">
-              {{validationMessages.stato}}
+              Campo obbligatorio
             </div>
           </div>
 
+      
           <div class="col-md-4 mb-3">
             <label class="form-label">Tentativi Contatto*</label>
             <input type="number" class="form-control" formControlName="tentativiContatto"
-              [class.is-invalid]="isFieldInvalid('tentativiContatto')">
+              [ngClass]="{'is-invalid': isFieldInvalid('tentativiContatto')}">
             <div class="invalid-feedback" *ngIf="isFieldInvalid('tentativiContatto')">
-              {{validationMessages.tentativiContatto}}
+              Campo obbligatorio
             </div>
           </div>
 
+   
           <div class="col-md-4 mb-3">
             <label class="form-label">Modalità Contatto</label>
             <div class="input-group">
@@ -114,16 +121,19 @@
             </div>
           </div>
 
+ 
           <div class="col-md-8 mb-3">
             <label class="form-label">Note</label>
             <textarea class="form-control" formControlName="note" rows="3"></textarea>
           </div>
+
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Esito Contatto</label>
             <input type="text" class="form-control" formControlName="esitoContatto">
           </div>
 
+  
           <div class="col-12 mt-4">
             <button type="submit" class="btn btn-primary me-2">
               <i class="bi bi-save me-1"></i>Salva

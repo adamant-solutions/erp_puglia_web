@@ -33,16 +33,7 @@ statoOptions = [
     { label: 'Morosità', link: '/morosita' }
   ];
 
-  validationMessages = {
-    contrattoId: 'Contratto è obbligatorio',
-    dataRilevazione: 'Data Rilevazione è obbligatorio',
-    dataScadenza: 'Data Scadenza è obbligatorio',
-    importoDovuto: 'Importo Dovuto è obbligatorio',
-    importoVersato: 'Importo Versato è obbligatorio',
-    importoMorosita: 'Importo Morosità è obbligatorio',
-    stato: 'Stato è obbligatorio',
-    tentativiContatto: 'Tentativi Contatto è obbligatorio'
-  };
+
 
   constructor(
     private fb: FormBuilder,
