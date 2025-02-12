@@ -22,6 +22,8 @@ export class EditCondominiComponent implements OnInit {
   selectedUnitaImmobiliari: ModelLight[] = [];
   condominioId!: number;
   selectedUnitaId: string = '';
+  formSubmitAttempted = false;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -40,25 +42,22 @@ export class EditCondominiComponent implements OnInit {
       version: [0]
     });
   }
+
   ngOnInit() {
-   
     this.route.data.subscribe({
       next: (data) => {
         if (data['condominio']) {
           const condominio = data['condominio'];
           this.condominioId = condominio.id;
           this.editForm.patchValue(condominio);
-          
-       
           this.loadUnitaImmobiliari();
         }
       },
       error: (error) => {
-      
+   
       }
     });
 
-  
     this.route.data.subscribe({
       next: (data) => {
         if (data['unitaImmobiliari']?.body) {
@@ -66,9 +65,14 @@ export class EditCondominiComponent implements OnInit {
         }
       },
       error: (error) => {
-     
+    
       }
     });
+  }
+
+  shouldShowError(controlName: string): boolean {
+    const control = this.editForm.get(controlName);
+    return !!(control && control.invalid && (control.touched || this.formSubmitAttempted));
   }
 
   loadUnitaImmobiliari() {
@@ -79,14 +83,14 @@ export class EditCondominiComponent implements OnInit {
         );
       },
       error: (error) => {
-        
+   
       }
     });
   }
 
-
-
   onSubmit() {
+    this.formSubmitAttempted = true;
+    
     if (this.editForm.valid) {
       const updatedCondominio = {
         ...this.editForm.value,
@@ -98,11 +102,19 @@ export class EditCondominiComponent implements OnInit {
           this.router.navigate(['/condomini']);
         },
         error: (error) => {
-          console.error('Error updating condominio:', error);
+    
+        }
+      });
+    } else {
+      Object.keys(this.editForm.controls).forEach(key => {
+        const control = this.editForm.get(key);
+        if (control?.invalid) {
+          control.markAsTouched();
         }
       });
     }
   }
+
 
   addUnitaImmobiliare(unitaId: string) {
     if (!unitaId) return;
@@ -114,11 +126,10 @@ export class EditCondominiComponent implements OnInit {
       this.condominioService.addUnitaToCondominio(this.condominioId, numericUnitaId).subscribe({
         next: () => {
           this.selectedUnitaImmobiliari.push(unita);
-          // Reset the selected value
           this.selectedUnitaId = '';
         },
         error: (error) => {
-          console.error('Error adding unità immobiliare:', error);
+        
         }
       });
     }
@@ -132,12 +143,12 @@ export class EditCondominiComponent implements OnInit {
         );
       },
       error: (error) => {
-        console.error('Error removing unità immobiliare:', error);
+       
       }
     });
   }
 
   indietro() {
-    this.router.navigate(['/condomini']);
+    this.router.navigate(['ripartizione-spese/condomini']);
   }
 }
