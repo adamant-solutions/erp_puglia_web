@@ -99,7 +99,7 @@ export class EditCondominiComponent implements OnInit {
 
       this.condominioService.updateCondominio(updatedCondominio).subscribe({
         next: () => {
-          this.router.navigate(['/condomini']);
+          this.router.navigate(['ripartizione-spese/condomini']);
         },
         error: (error) => {
     
