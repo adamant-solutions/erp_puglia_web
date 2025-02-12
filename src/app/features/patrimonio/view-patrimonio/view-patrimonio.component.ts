@@ -11,16 +11,16 @@ import { CapitalizePipe } from 'src/app/core/pipes/capitalize.pipe';
   styleUrls: ['./view-patrimonio.component.css'],
 })
 export class ViewPatrimonioComponent implements OnInit {
-  pageTitle: string = 'Patrimonio dettagli';
+  pageTitle: string = 'Dettagli Unità Immobiliare';
 
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Patrimonio', link: '/patrimonio' },
+    { label: 'Unità Immobiliare', link: '/patrimonio' },
   ];
 
   patrimonio!: Patrimonio;
   viewForm!: FormGroup;
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -53,8 +53,12 @@ export class ViewPatrimonioComponent implements OnInit {
     this.viewForm = this.formBuilder.group({
       metriQuadri: [this.patrimonio.metriQuadri],
       quartiere: [this.patrimonio.quartiere],
-      tipoAmministrazione: [this.transformText(this.patrimonio.tipoAmministrazione)],
-      statoDisponibilita: [this.transformText(this.patrimonio.statoDisponibilita)],
+      tipoAmministrazione: [
+        this.transformText(this.patrimonio.tipoAmministrazione),
+      ],
+      statoDisponibilita: [
+        this.transformText(this.patrimonio.statoDisponibilita),
+      ],
       comune: [this.patrimonio.comune],
       provincia: [this.patrimonio.provincia],
       indirizzo: [this.patrimonio.indirizzo],

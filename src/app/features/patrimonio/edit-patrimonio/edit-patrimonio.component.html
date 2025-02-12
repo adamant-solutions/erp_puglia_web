@@ -1,6 +1,6 @@
 <app-breadcrumbs
   [crumbsList]="breadcrumbList"
-  [currentPage]="'Modifica Patrimonio'"
+  [currentPage]="'Modifica Unità Immobiliare'"
 >
 </app-breadcrumbs>
 
@@ -661,9 +661,8 @@
                         class="btn p-0"
                         (click)="deleteDocument(i)"
                         title="Remove"
-                        style="font-size: 1.5rem">
-                     
-                      
+                        style="font-size: 1.5rem"
+                      >
                         <i class="bi bi-x-square-fill"></i>
                       </button>
                     </div>
@@ -744,16 +743,16 @@
                           placeholder="Selected file"
                           readonly
                         />
-                        <input 
-                          type="file" 
-                          #fileInput 
+                        <input
+                          type="file"
+                          #fileInput
                           style="display: none"
                           (change)="onFileSelected($event, i)"
                           accept=".pdf,.txt"
                         />
-                        <button 
-                          type="button" 
-                          class="btn btn-outline-secondary" 
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary"
                           (click)="fileInput.click()"
                         >
                           <i class="bi bi-upload me-1"></i>Upload
@@ -762,8 +761,16 @@
                       <span
                         class="custom-error"
                         *ngIf="
-                          modificaForm.get('documenti')?.get(i.toString())?.get('percorsoFile')?.hasError('required') &&
-                          (modificaForm.get('documenti')?.get(i.toString())?.get('percorsoFile')?.touched || submitted)
+                          modificaForm
+                            .get('documenti')
+                            ?.get(i.toString())
+                            ?.get('percorsoFile')
+                            ?.hasError('required') &&
+                          (modificaForm
+                            .get('documenti')
+                            ?.get(i.toString())
+                            ?.get('percorsoFile')?.touched ||
+                            submitted)
                         "
                       >
                         Percorso file è obbligatorio!
@@ -835,14 +842,27 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Conferma eliminazione</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         Sei sicuro di voler eliminare questo documento?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDeleteFile()">Elimina</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDeleteFile()"
+        >
+          Elimina
+        </button>
       </div>
     </div>
   </div>

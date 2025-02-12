@@ -81,14 +81,14 @@ export class PatrimonioService {
 
     return this.http.put<Patrimonio>(`${this.patrimonioUrl}`, formData)
       .pipe(
-        catchError(error => throwError(() => new Error('Failed to update patrimonio')))
+        catchError(error => throwError(() => new Error('Failed to update Unità Immobiliare')))
       );
   }
 
   deletePatrimonio(patrimonioId: number): Observable<any> {
     return this.http.delete(`${this.patrimonioUrl}/${patrimonioId}`)
       .pipe(
-        catchError(error => throwError(() => new Error('Failed to delete patrimonio and its documents')))
+        catchError(error => throwError(() => new Error('Failed to delete Unità Immobiliare and its documents')))
       );
   }
 

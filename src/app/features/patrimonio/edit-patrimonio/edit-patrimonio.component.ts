@@ -17,17 +17,17 @@ import { BootstrapService } from 'src/app/core/services/bootstrap-service.servic
   styleUrls: ['./edit-patrimonio.component.css'],
 })
 export class EditPatrimonioComponent implements OnInit {
-  pageTitle: string = 'Modifica Patrimonio';
+  pageTitle: string = 'Modifica Unità Immobiliare';
   selectedFiles: any[] = [];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Patrimonio', link: '/patrimonio' },
+    { label: 'Unità Immobiliare', link: '/patrimonio' },
   ];
 
   patrimonio!: Patrimonio;
   patrimonioId!: number;
   deleteFileIndex: number = -1;
-  
+
   modificaForm!: FormGroup;
 
   tipoAmministrazioneList: TipoAmministrazione[] = [
@@ -436,13 +436,11 @@ export class EditPatrimonioComponent implements OnInit {
       ),
     });
 
-   
-
     this.selectedFiles = this.patrimonio.documenti
-    ? new Array(this.patrimonio.documenti.length).fill(null)
-    : [];
+      ? new Array(this.patrimonio.documenti.length).fill(null)
+      : [];
 
-  this.initialFormValues = this.modificaForm.getRawValue();
+    this.initialFormValues = this.modificaForm.getRawValue();
   }
 
   get documentiList(): FormArray {
@@ -463,17 +461,14 @@ export class EditPatrimonioComponent implements OnInit {
   onFileSelected(event: any, index: number): void {
     const file = event.target.files[0];
     if (file) {
-  
       this.selectedFiles[index] = file;
-      
- 
+
       const documentControl = this.documentiList.at(index);
       documentControl.patchValue({
         percorsoFile: file.name,
-        contentType: file.type || 'application/pdf'
+        contentType: file.type || 'application/pdf',
       });
-      
-   
+
       documentControl.markAsDirty();
       console.log(`File selected at index ${index}:`, file.name);
     }
@@ -492,9 +487,10 @@ export class EditPatrimonioComponent implements OnInit {
     if (this.deleteFileIndex !== -1) {
       const documento = this.documentiList.at(this.deleteFileIndex);
       const documentoId = documento.get('id')?.value;
-      
+
       if (documentoId) {
-        this.patrimonioService.deleteDocument(this.patrimonioId, documentoId)
+        this.patrimonioService
+          .deleteDocument(this.patrimonioId, documentoId)
           .subscribe({
             next: () => {
               this.documentiList.removeAt(this.deleteFileIndex);
@@ -506,10 +502,9 @@ export class EditPatrimonioComponent implements OnInit {
               this.errorMessage = 'Failed to delete document.';
               this.bootstrapService.hideModal('deleteFileModal');
               this.deleteFileIndex = -1;
-            }
+            },
           });
       } else {
-       
         this.documentiList.removeAt(this.deleteFileIndex);
         this.selectedFiles[this.deleteFileIndex] = null;
         this.bootstrapService.hideModal('deleteFileModal');
@@ -520,14 +515,14 @@ export class EditPatrimonioComponent implements OnInit {
   removeFile(index: number) {
     const documento = this.documentiList.at(index);
     const documentoId = documento.get('id')?.value;
-    
+
     if (documentoId) {
       this.showDeleteFileModal(index);
     } else {
       this.selectedFiles[index] = null;
       documento.patchValue({
         percorsoFile: null,
-        contentType: null
+        contentType: null,
       });
     }
   }
@@ -545,51 +540,51 @@ export class EditPatrimonioComponent implements OnInit {
   }
   onSubmit(): void {
     this.submitted = true;
-  
+
     if (this.modificaForm.invalid) {
       return;
     }
-  
- 
-    const filesToUpload: File[] = [];
-    
-    this.documentiList.controls.forEach((control, index) => {
 
+    const filesToUpload: File[] = [];
+
+    this.documentiList.controls.forEach((control, index) => {
       const dataDocumento = control.get('dataDocumento')?.value;
       if (dataDocumento) {
         control.patchValue({
           dataDocumento: moment(dataDocumento).format('YYYY-MM-DD'),
         });
       }
-      
-     
+
       if (this.selectedFiles[index]) {
         filesToUpload.push(this.selectedFiles[index]);
       }
     });
-  
+
     const formValue = this.modificaForm.getRawValue();
-  
-    
-    formValue.documenti = formValue.documenti.map((doc: any, index: number) => {
-     
-      if (this.selectedFiles[index]) {
-        return {
-          ...doc,
-          percorsoFile: this.selectedFiles[index].name
-        };
-      }
-      return doc;
-    }).filter((doc: any) => doc.percorsoFile);
-  
-    this.patrimonioService.modificaPatrimonio(formValue, filesToUpload).subscribe({
-      next: () => {
-        this.router.navigate(['/patrimonio']);
-      },
-      error: (err) => {
-        this.errorMessage = 'Failed to update patrimonio. Please try again.';
-        console.error('Error updating patrimonio:', err);
-      },
-    });
+
+    formValue.documenti = formValue.documenti
+      .map((doc: any, index: number) => {
+        if (this.selectedFiles[index]) {
+          return {
+            ...doc,
+            percorsoFile: this.selectedFiles[index].name,
+          };
+        }
+        return doc;
+      })
+      .filter((doc: any) => doc.percorsoFile);
+
+    this.patrimonioService
+      .modificaPatrimonio(formValue, filesToUpload)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/patrimonio']);
+        },
+        error: (err) => {
+          this.errorMessage =
+            'Failed to update Unità Immobiliare. Please try again.';
+          console.error('Error updating Unità Immobiliare:', err);
+        },
+      });
   }
 }

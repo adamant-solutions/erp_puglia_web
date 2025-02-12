@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Documento, Patrimonio, StatoDisponibilita } from 'src/app/core/models/patrimonio.model';
+import {
+  Documento,
+  Patrimonio,
+  StatoDisponibilita,
+} from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -12,7 +16,7 @@ import { PatrimonioSearchParams } from 'src/app/core/resolvers/patrimonio.resolv
   styleUrls: ['./patrimonio.component.css'],
 })
 export class PatrimonioComponent implements OnInit {
-  pageTitle: string = 'Patrimonio';
+  pageTitle: string = 'Unità Immobiliare';
   selectedPatrimonioId!: number;
   selectedDocumentoId!: any;
   documentsToDownload: Documento[] = [];
@@ -48,28 +52,27 @@ export class PatrimonioComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.currentPage = +params['pagina'] || 0;
       this.patrimonioSearchParams.comune = params['comune'] || '';
       this.patrimonioSearchParams.indirizzo = params['indirizzo'] || '';
-      this.patrimonioSearchParams.statoDisponibilita = params['statoDisponibilita'] || '';
+      this.patrimonioSearchParams.statoDisponibilita =
+        params['statoDisponibilita'] || '';
 
       this.getPatrimonioList();
-     
     });
- 
   }
 
   getPatrimonioList() {
     this.activatedRoute.data.subscribe({
       next: (data) => {
-        const response = data['patrimonioResolver']
-       //  console.log('Response from resolver:', response);
+        const response = data['patrimonioResolver'];
+        //  console.log('Response from resolver:', response);
         this.patrimonioList = response.body;
         this.totalItems = response.headers.get('X-Paging-TotalRecordCount');
         //  console.log('Total items: ', this.totalItems);
-      }
-      });
+      },
+    });
   }
 
   getDocumentTypes(documenti: any[]): string {
@@ -101,11 +104,11 @@ export class PatrimonioComponent implements OnInit {
         this.patrimonioList = this.patrimonioList.filter(
           (patrimonio) => patrimonio.id !== this.patrimonioId
         );
-        // this.notificationService.success(`Patrimonio "${this.patrimonioId}" deleted successfully.`);
+        // this.notificationService.success(`Unità Immobiliare "${this.patrimonioId}" deleted successfully.`);
       },
       error: (error: any) => {
         console.error(error);
-        // this.notificationService.error(`Failed to delete patrimonio "${this.patrimonioId}". Please try again.`);
+        // this.notificationService.error(`Failed to delete Unità Immobiliare "${this.patrimonioId}". Please try again.`);
       },
     });
   }

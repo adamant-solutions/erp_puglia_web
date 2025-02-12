@@ -1,4 +1,7 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Patrimonio'">
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Unità Immobiliare'"
+>
 </app-breadcrumbs>
 
 <section class="py-4">
@@ -60,10 +63,10 @@
                     *ngFor="let statoDisponibilita of statoDisponibilitaList"
                     [value]="statoDisponibilita"
                   >
-                    {{ statoDisponibilita | capitalize}}
+                    {{ statoDisponibilita | capitalize }}
                   </option>
                 </select>
-           <!--      <span class="input-group-text">
+                <!--      <span class="input-group-text">
                   <i class="bi bi-caret-down-fill"></i>
                 </span> -->
               </div>
@@ -98,7 +101,7 @@
             <svg class="icon icon-white me-1">
               <use href="assets/svg/sprites.svg#it-plus-circle"></use>
             </svg>
-            <span>Aggiungi patrimonio</span>
+            <span>Aggiungi Unità Immobiliare</span>
           </button>
         </div>
 
@@ -129,7 +132,6 @@
                 -->
                 <th scope="col">Tipo documento</th>
                 <th scope="col">Documenti</th>
-              
               </tr>
             </thead>
             <tbody>
@@ -143,7 +145,7 @@
                     >
                       <i class="bi bi-eye-fill align-middle"></i>
                     </a>
-                
+
                     <a
                       [routerLink]="['modifica-patrimonio', patrimonioItem.id]"
                       title="Modifica"
@@ -151,7 +153,7 @@
                     >
                       <i class="bi bi-pencil align-middle"></i>
                     </a>
-                
+
                     <a
                       (click)="deletePatrimonioModal(patrimonioItem)"
                       title="Cancella"
@@ -168,7 +170,9 @@
                 <td scope="row">{{ patrimonioItem.quartiere }}</td>
                 <td scope="row">{{ patrimonioItem.tipoAmministrazione }}</td>
                 -->
-                <td scope="row">{{ patrimonioItem.statoDisponibilita | capitalize}}</td>
+                <td scope="row">
+                  {{ patrimonioItem.statoDisponibilita | capitalize }}
+                </td>
                 <td scope="row">{{ patrimonioItem.comune }}</td>
                 <td scope="row">{{ patrimonioItem.provincia }}</td>
                 <td scope="row">{{ patrimonioItem.indirizzo }}</td>
@@ -185,19 +189,21 @@
                   {{ getDocumentTypes(patrimonioItem.documenti) | capitalize }}
                 </td>
                 <td scope="row">
-                  <ng-container *ngIf="patrimonioItem.documenti.length > 0;">
+                  <ng-container *ngIf="patrimonioItem.documenti.length > 0">
                     <a
                       href="javascript:void(0)"
-                      (click)="showDownloadModal(patrimonioItem.id, patrimonioItem.documenti)"
+                      (click)="
+                        showDownloadModal(
+                          patrimonioItem.id,
+                          patrimonioItem.documenti
+                        )
+                      "
                       title="Download"
                       class="me-3"
                     >
-                    
-                      <i class="bi bi-download"></i> 
-               
+                      <i class="bi bi-download"></i>
                     </a>
                   </ng-container>
-                 
                 </td>
               </tr>
             </tbody>
@@ -230,7 +236,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">
       <div class="modal-header p-0">
-        <!-- <h1 class="modal-title fs-5" id="deletePatrimonioModalLabel">Elimina Patrimonio</h1> -->
+        <!-- <h1 class="modal-title fs-5" id="deletePatrimonioModalLabel">Elimina Unità Immobiliare</h1> -->
         <button
           type="button"
           class="btn-close"
@@ -240,7 +246,8 @@
       </div>
       <div class="modal-body text-center">
         <p>
-          Sei sicuro di voler eliminare Patrimonio <b>{{ patrimonioId }}</b
+          Sei sicuro di voler eliminare l'Unità Immobiliare
+          <b>{{ patrimonioId }}</b
           >?
         </p>
       </div>
@@ -272,7 +279,7 @@
     <div class="modal-content p-4">
       <div class="modal-body text-center">
         <p>
-          Patrimonio <b>{{ patrimonioId }}</b> eliminato!
+          Unità Immobiliare <b>{{ patrimonioId }}</b> eliminata!
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
@@ -284,19 +291,40 @@
   </div>
 </div>
 
-<div class="modal fade" id="downloadPatrimonioModal" tabindex="-1" aria-labelledby="downloadPatrimonioModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="downloadPatrimonioModal"
+  tabindex="-1"
+  aria-labelledby="downloadPatrimonioModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="downloadPatrimonioModalLabel">Download Document</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="downloadPatrimonioModalLabel">
+          Download Document
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         Are you sure you want to download this document?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="downloadDocument()">Download</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="downloadDocument()"
+        >
+          Download
+        </button>
       </div>
     </div>
   </div>
@@ -306,8 +334,15 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">
+          Scegli il tipo di documento che vuoi scaricare
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <div class="form-check" *ngFor="let doc of documentsToDownload">
@@ -317,7 +352,7 @@
             [id]="'doc' + doc.id"
             [value]="doc.id"
             class="form-check-input"
-            [(ngModel)]="selectedDocumentoId" 
+            [(ngModel)]="selectedDocumentoId"
           />
           <label class="form-check-label" [for]="'doc' + doc.id">
             {{ doc.tipoDocumento }} - {{ doc.dataDocumento }}
@@ -331,12 +366,14 @@
         <button
           type="button"
           class="btn btn-primary"
-          [disabled]="!selectedDocumentoId" 
+          [disabled]="!selectedDocumentoId"
           (click)="downloadDocument()"
         >
           Download
         </button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
       </div>
     </div>
   </div>
