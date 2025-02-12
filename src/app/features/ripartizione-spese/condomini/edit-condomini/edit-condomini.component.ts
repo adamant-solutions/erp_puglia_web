@@ -30,6 +30,7 @@ export class EditCondominiComponent implements OnInit {
     private router: Router,
     private condominioService: CondominioService
   ) {
+    this.formSubmitAttempted = false;
     this.editForm = this.fb.group({
       id: [''],
       codice: ['', Validators.required],
@@ -72,7 +73,7 @@ export class EditCondominiComponent implements OnInit {
 
   shouldShowError(controlName: string): boolean {
     const control = this.editForm.get(controlName);
-    return !!(control && control.invalid && (control.touched || this.formSubmitAttempted));
+    return !!(control && control.invalid && this.formSubmitAttempted);
   }
 
   loadUnitaImmobiliari() {
@@ -96,20 +97,13 @@ export class EditCondominiComponent implements OnInit {
         ...this.editForm.value,
         unitaImmobiliari: this.selectedUnitaImmobiliari
       };
-
+  
       this.condominioService.updateCondominio(updatedCondominio).subscribe({
         next: () => {
           this.router.navigate(['ripartizione-spese/condomini']);
         },
         error: (error) => {
-    
-        }
-      });
-    } else {
-      Object.keys(this.editForm.controls).forEach(key => {
-        const control = this.editForm.get(key);
-        if (control?.invalid) {
-          control.markAsTouched();
+        
         }
       });
     }
