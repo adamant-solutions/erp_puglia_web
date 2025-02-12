@@ -19,11 +19,12 @@ import { AnagraficaService } from './core/services/anagrafica.service';
 import { ContrattiService } from './core/services/contratti.service';
 import { environment } from 'src/environments/environment';
 import { LoaderComponent } from './shared/loader.component';
+import { ToastComponent } from './core/components/toast/toast.component';
 
 registerLocaleData(localeIt);
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, TabsComponent, FooterComponent,LoaderComponent],
+  declarations: [AppComponent, HeaderComponent, TabsComponent, FooterComponent,LoaderComponent, ToastComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

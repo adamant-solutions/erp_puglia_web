@@ -28,12 +28,14 @@
                 <div class="input-group">
                 <input type="text" id="partitaIva" class="form-control" formControlName="partitaIva" maxlength="11" />
                 </div>
-                <span class="custom-error" *ngIf="impresaForm.get('partitaIva')?.hasError('required')">
+                <div  class="custom-error" *ngIf="impresaForm.get('partitaIva')?.invalid && submitted">
+                <span *ngIf="impresaForm.get('partitaIva')?.hasError('required')">
                   Partita IVA è obbligatoria!
                 </span>
-                <span class="custom-error" *ngIf="impresaForm.get('partitaIva')?.hasError('pattern')">
+                <span *ngIf="impresaForm.get('partitaIva')?.hasError('pattern')">
                   Partita IVA non valida!
                 </span>
+              </div>
               </div>
 
               <!-- Codice Fiscale -->
@@ -42,12 +44,14 @@
                 <div class="input-group">
                 <input type="text" id="codiceFiscale" class="form-control" formControlName="codiceFiscale" />
                 </div>
-                <span class="custom-error" *ngIf="impresaForm.get('codiceFiscale')?.hasError('required')">
+                <div  class="custom-error" *ngIf="impresaForm.get('codiceFiscale')?.invalid && submitted">
+                <span *ngIf="impresaForm.get('codiceFiscale')?.hasError('required')">
                   Codice Fiscale è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="impresaForm.get('codiceFiscale')?.hasError('pattern')">
+                <span *ngIf="impresaForm.get('codiceFiscale')?.hasError('pattern')">
                   Codice Fiscale non valido!
                 </span>
+                </div>
               </div>
 
               <!-- Indirizzo -->
@@ -90,9 +94,11 @@
                 <label for="cap" class="form-label">CAP</label>
                 <div class="input-group">
                 <input type="text" id="cap" class="form-control" formControlName="cap" maxlength="5" /></div>
-                <span class="custom-error" *ngIf="impresaForm.get('cap')?.hasError('pattern')">
+                <div  class="custom-error" *ngIf="impresaForm.get('cap')?.invalid && submitted">
+                <span *ngIf="impresaForm.get('cap')?.hasError('pattern')">
                   CAP non valido!
                 </span>
+                </div>
               </div>
 
               <!-- Telefono -->
@@ -101,9 +107,11 @@
                 <div class="input-group">
                 <input type="tel" id="telefono" class="form-control" formControlName="telefono" />
                 </div>
-                <span class="custom-error" *ngIf="impresaForm.get('telefono')?.hasError('pattern')">
+                <div  class="custom-error" *ngIf="impresaForm.get('telefono')?.invalid && submitted">
+                <span *ngIf="impresaForm.get('telefono')?.hasError('pattern')">
                   Telefono non valido!
                 </span>
+              </div>
               </div>
 
               <!-- Email -->
@@ -112,9 +120,11 @@
                 <div class="input-group">
                 <input type="text" id="email" class="form-control" formControlName="email" />
                 </div>
-                <span class="custom-error" *ngIf="impresaForm.get('email')?.hasError('pattern')">
+                <div  class="custom-error" *ngIf="impresaForm.get('email')?.invalid && submitted">
+                <span *ngIf="impresaForm.get('email')?.hasError('pattern')">
                   Email non valido!
                 </span>
+                </div>
               </div>
 
               <!-- PEC -->
@@ -123,9 +133,11 @@
                 <div class="input-group">
                 <input type="email" id="pec" class="form-control" formControlName="pec" />
                 </div>
+                <div *ngIf="impresaForm.get('pec')?.invalid && submitted">
                 <span class="custom-error" *ngIf="impresaForm.get('pec')?.hasError('required')">
                   PEC è obbligatoria!
                 </span>
+                </div>
               </div>
 
             </div>
@@ -154,7 +166,7 @@
                 Reset
               </button>
 
-              <button type="submit" class="btn btn-primary py-2" [disabled]="impresaForm.invalid">
+              <button type="submit" class="btn btn-primary py-2">
                 Salva
               </button>
             </div>

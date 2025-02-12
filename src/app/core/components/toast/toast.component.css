@@ -1,0 +1,15 @@
+.with-icon-success {
+    border-left: 4px solid rgb(0, 127.5, 85);
+}
+
+.with-icon-error {
+    border-left: 4px solid #dc3545;
+}
+
+svg.text-success {
+    fill: rgb(0, 127.5, 85) !important;
+}
+
+svg.text-danger {
+    fill: #dc3545 !important;
+}
