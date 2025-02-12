@@ -11,13 +11,13 @@ export class RipartizioneSpeseComponent {
   pageTitle = 'Ripartizione Spese';
   
   tabs = [
+    { path: 'condomini', label: 'Condomini' },
+    { path: 'periodi-gestione', label: 'Periodi Gestione' },
     { path: 'voci-spesa', label: 'Voci Spesa' },
     { path: 'stato-pagamenti', label: 'Stato Pagamenti' },
-    { path: 'periodi-gestione', label: 'Periodi Gestione' },
-    { path: 'condomini', label: 'Condomini' }
   ];
 
-  activeTab: string = 'voci-spesa';
+  activeTab: string = 'condomini';
 
   constructor(private router: Router) {
 
@@ -26,7 +26,7 @@ export class RipartizioneSpeseComponent {
     ).subscribe((event: any) => {
 
       const urlParts = event.url.split('/');
-      this.activeTab = urlParts[urlParts.length - 1] || 'voci-spesa';
+      this.activeTab = urlParts[urlParts.length - 1] || 'condomini';
     });
   }
 }

@@ -8,6 +8,16 @@ const routes: Routes = [
     component: RipartizioneSpeseComponent,
     children: [
       {
+        path: 'condomini',
+        loadChildren: () => 
+          import('./condomini/condomini.module').then(m => m.CondominiModule)
+      },
+      {
+        path: 'periodi-gestione',
+        loadChildren: () => 
+          import('./periodi-gestione/periodi-gestione.module').then(m => m.PeriodiGestioneModule)
+      },
+      {
         path: 'voci-spesa',
         loadChildren: () => 
           import('./voci-spesa/voci-spesa.module').then(m => m.VociSpesaModule)
@@ -18,18 +28,8 @@ const routes: Routes = [
           import('./stato-pagamenti/stato-pagamenti.module').then(m => m.StatoPagamentiModule)
       },
       {
-        path: 'periodi-gestione',
-        loadChildren: () => 
-          import('./periodi-gestione/periodi-gestione.module').then(m => m.PeriodiGestioneModule)
-      },
-      {
-        path: 'condomini',
-        loadChildren: () => 
-          import('./condomini/condomini.module').then(m => m.CondominiModule)
-      },
-      {
         path: '',
-        redirectTo: 'voci-spesa',
+        redirectTo: 'condomini',
         pathMatch: 'full'
       }
     ]
