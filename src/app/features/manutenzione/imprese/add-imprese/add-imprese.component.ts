@@ -31,7 +31,7 @@ export class AddImpreseComponent {
     email: '',
     pec: ''
   };
-
+  submitted: boolean = false;
   provinces = [
     { sigla: 'BA', nome: 'Bari' },
     { sigla: 'BT', nome: 'Barletta-Andria-Trani' },
@@ -45,7 +45,7 @@ export class AddImpreseComponent {
   private router = inject(Router);
 
   onSubmit(form: NgForm) {
- 
+    this.submitted = true;
     if(form.invalid){
       return;
     }

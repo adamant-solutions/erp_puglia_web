@@ -16,11 +16,13 @@
                   <input type="text" id="ragioneSociale" class="form-control" name="ragioneSociale"
                     [(ngModel)]="impresa.ragioneSociale" required #rgRef="ngModel" />
                 </div>
-
-                <span class="custom-error" *ngIf="
-                 rgRef.invalid && (rgRef.dirty || rgRef.touched)">
+                <div class="custom-error" *ngIf="
+                rgRef.invalid && submitted">
+                <span *ngIf="
+                rgRef?.errors?.['required']">
                   Ragione Sociale è obbligatoria!
                 </span>
+              </div>
               </div>
 
               <!-- Partita IVA (Unique) -->
@@ -31,14 +33,17 @@
                     [(ngModel)]="impresa.partitaIva" maxlength="11" required pattern="^[0-9]{11}$"
                     #partitaIvaRef="ngModel" />
                 </div>
-                <span class="custom-error" *ngIf="
-                partitaIvaRef?.errors?.['required'] && (partitaIvaRef.dirty || partitaIvaRef.touched)">
+                <div class="custom-error" *ngIf="
+                partitaIvaRef.invalid && submitted">
+                <span *ngIf="
+                partitaIvaRef?.errors?.['required']">
                   Partita Iva è obbligatoria!
                 </span>
-                <span class="custom-error" *ngIf="
-              partitaIvaRef?.errors?.['pattern'] && (partitaIvaRef.dirty || partitaIvaRef.touched)">
+                <span *ngIf="
+                 partitaIvaRef?.errors?.['pattern']">
                   Partita Iva non valido!
                 </span>
+              </div>
               </div>
 
               <!-- Codice Fiscale (Unique) -->
@@ -49,17 +54,18 @@
                     [(ngModel)]="impresa.codiceFiscale" required pattern="^[A-Z0-9]{16}$" #cfRef="ngModel" />
 
                 </div>
-
-                <span class="custom-error" *ngIf="
-                cfRef?.errors?.['required'] && (cfRef.dirty || cfRef.touched)">
+                <div class="custom-error" *ngIf="
+                cfRef.invalid && submitted">
+                <span *ngIf="
+                cfRef?.errors?.['required']">
                   Codice Fiscale è obbligatorio!
                 </span>
 
-                <span class="custom-error" *ngIf="
-              cfRef?.errors?.['pattern'] && (cfRef.dirty || cfRef.touched)">
+                <span *ngIf="
+              cfRef?.errors?.['pattern']">
                   Codice Fiscale non valido!
                 </span>
-
+                </div>
               </div>
 
               <!-- Indirizzo -->
@@ -117,11 +123,13 @@
                   <input type="text" id="cap" class="form-control" name="cap" [(ngModel)]="impresa.cap"
                     pattern="^[0-9]{5}$" maxlength="5" #capRef="ngModel" />
                 </div>
-                <span class="custom-error" *ngIf="
-                capRef?.errors?.['pattern'] && (capRef.dirty || cfRef.touched)">
+                <div class="custom-error" *ngIf="
+                capRef.invalid && submitted">
+                <span *ngIf="
+                capRef?.errors?.['pattern']">
                   CAP non valido!
                 </span>
-
+                </div>
               </div>
 
               <!-- Telefono -->
@@ -131,11 +139,13 @@
                   <input type="tel" id="telefono" class="form-control" name="telefono" [(ngModel)]="impresa.telefono"
                     pattern="^[0-9]+$" #telRef="ngModel" />
                 </div>
-                <span class="custom-error" *ngIf="
-                telRef?.errors?.['pattern'] && (telRef.dirty || telRef.touched)">
+                <div class="custom-error" *ngIf="
+                telRef.invalid && submitted">
+                <span *ngIf="
+                telRef?.errors?.['pattern']">
                   Telefono non valido!
                 </span>
-
+                </div>
               </div>
 
               <!-- Email -->
@@ -145,12 +155,14 @@
                   <input type="text" id="email" class="form-control" name="email" [(ngModel)]="impresa.email" [pattern]="'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
                 " #emailRef="ngModel" />
                 </div>
-                <span class="custom-error" *ngIf="
-                emailRef?.errors?.['pattern'] && (emailRef.dirty || emailRef.touched)">
+                <div class="custom-error" *ngIf="
+                emailRef.invalid && submitted">
+                <span *ngIf="
+                emailRef?.errors?.['pattern']">
                   Email non valido!
                 </span>
               </div>
-
+              </div>
               <!-- PEC -->
               <div class="col-md-4  mb-3">
                 <label for="pec" class="form-label">PEC*</label>
@@ -159,13 +171,14 @@
                     #pecRef="ngModel" required /><!-- [pattern]="'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.pec\.(it|eu|com)$'" -->
 
                 </div>
-
-                <span class="custom-error" *ngIf="
-                  pecRef?.errors?.['required'] && (pecRef.dirty || pecRef.touched)">
+                <div class="custom-error" *ngIf="
+                pecRef.invalid && submitted">
+                <span *ngIf="
+                  pecRef?.errors?.['required']">
 
                   PEC è obbligatoria!
                 </span>
-
+                </div>
           <!--                  <span
               class="custom-error"
               *ngIf="
@@ -189,8 +202,8 @@
                 Annulla
               </button>
 
-              <button type="submit" class="btn btn-primary py-2" [disabled]="impresaForm.invalid">
-                Aggiungi
+              <button type="submit" class="btn btn-primary py-2">
+                Salva
               </button>
             </div>
           </div>
