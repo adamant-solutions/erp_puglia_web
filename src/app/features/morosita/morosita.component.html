@@ -171,7 +171,7 @@
                     >
                       <i class="bi bi-pencil"></i>
                     </a>
-                    <a (click)="openDeleteModal(morositaItem.id)" class="me-3" role="button" title="Delete">
+                    <a (click)="openDeleteModal(morositaItem)" class="me-3" role="button" title="Delete">
                       <i class="bi bi-trash"></i>
                     </a>
                   </td>
@@ -216,7 +216,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body">
-        Sei sicuro di voler eliminare questa morosità?
+        Sei sicuro di voler eliminare questa morosità connesso a questo contratto <b>{{ morositanome }}</b>? 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>

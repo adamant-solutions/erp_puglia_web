@@ -34,7 +34,7 @@ export class MorositaComponent implements OnInit {
   morositaToDelete: number | null = null;
   private deleteModal: Modal | null = null;
   private contrattoMap: Map<number, string> = new Map();
-
+  morositanome:string = ''
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -102,8 +102,9 @@ export class MorositaComponent implements OnInit {
     });
   }
 
-  openDeleteModal(id: number): void {
-    this.morositaToDelete = id;
+  openDeleteModal(morosita: any): void {
+    this.morositanome =this.getContrattoDescrizione(morosita.contrattoId)
+    this.morositaToDelete = morosita.id;
     this.deleteModal?.show();
   }
 
