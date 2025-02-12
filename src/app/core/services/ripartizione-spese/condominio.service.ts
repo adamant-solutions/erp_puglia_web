@@ -73,4 +73,6 @@ export class CondominioService {
     return this.http.get<number[]>(`${this.condominiUrl}/${condominioId}/unita`);
   }
 
+
+
 }
