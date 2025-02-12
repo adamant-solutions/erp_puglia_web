@@ -1,7 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
-import { Anagrafica, TipoDocumento } from 'src/app/core/models/anagrafica.model';
+import {
+  Anagrafica,
+  TipoDocumento,
+} from 'src/app/core/models/anagrafica.model';
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
@@ -21,19 +24,20 @@ export class AnagraficaComponent implements OnInit {
   anagraficaList: Anagrafica[] = [];
 
   anagraficaId!: number;
+  anagraficaMainIdentificationData!: string;
+
   selectedAnagraficaId: number | null = null;
   selectedDocumentType: TipoDocumento | null = null;
   currentAnagrafica: Anagrafica | null = null;
   anagraficaSearchParams: AnagraficaSearchParams = {
-      nome: '',
-      cognome: '',
-      codiceFiscale: '',
+    nome: '',
+    cognome: '',
+    codiceFiscale: '',
   };
 
-
-  totalItems = 0; 
-  pageSize = 10; 
-  currentPage = 0; 
+  totalItems = 0;
+  pageSize = 10;
+  currentPage = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -43,16 +47,14 @@ export class AnagraficaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params) => {
       this.currentPage = +params['pagina'] || 0;
       this.anagraficaSearchParams.nome = params['nome'] || '';
       this.anagraficaSearchParams.cognome = params['cognome'] || '';
       this.anagraficaSearchParams.codiceFiscale = params['codiceFiscale'] || '';
 
       this.getAnagraficaList();
-     
     });
- 
   }
   getAnagraficaList() {
     // Load initial data from resolver
@@ -62,13 +64,11 @@ export class AnagraficaComponent implements OnInit {
         console.log('Response from resolver:', response);
         this.anagraficaList = response.body;
         this.totalItems = response.headers.get('X-Paging-TotalRecordCount');
-        //this.totalPages = responseData.headers.get('X-Paging-PageCount') 
-  
-          console.log('Total items: ', this.totalItems);
-       
+        //this.totalPages = responseData.headers.get('X-Paging-PageCount')
+
+        console.log('Total items: ', this.totalItems);
       });
   }
-
 
   onPageChange(event: PageEvent): void {
     // const pageIndex = event.pageIndex + 1; // MatPaginator's pageIndex starts from 0, convert 0-based index to 1-based
@@ -84,6 +84,9 @@ export class AnagraficaComponent implements OnInit {
 
   deleteAnagraficaModal(anagrafica: Anagrafica | any) {
     this.anagraficaId = anagrafica.id;
+
+    this.anagraficaMainIdentificationData = `${anagrafica.cittadino.nome} ${anagrafica.cittadino.cognome} - ${anagrafica.cittadino.codiceFiscale}`;
+
     this.bootstrapService.showModal('deleteAnagraficaModal');
   }
 
@@ -116,7 +119,6 @@ export class AnagraficaComponent implements OnInit {
     });
   }
 
-  
   cancellaCerca() {
     this.anagraficaSearchParams = {
       nome: '',
@@ -128,69 +130,61 @@ export class AnagraficaComponent implements OnInit {
       queryParams: { pagina: 0 },
     });
   }
- 
 
   downloadDocument() {
-    if (!this.selectedAnagraficaId || !this.selectedDocumentType || !this.currentAnagrafica) {
+    if (
+      !this.selectedAnagraficaId ||
+      !this.selectedDocumentType ||
+      !this.currentAnagrafica
+    ) {
       console.warn('No anagrafica or document type selected');
       return;
     }
-  
-    const selectedDocument = this.currentAnagrafica.cittadino.documenti_identita?.find(
-      doc => doc.tipo_documento === this.selectedDocumentType
-    );
-  
+
+    const selectedDocument =
+      this.currentAnagrafica.cittadino.documenti_identita?.find(
+        (doc) => doc.tipo_documento === this.selectedDocumentType
+      );
+
     if (!selectedDocument) {
       console.error('Selected document not found');
       return;
     }
-  
-    this.anagraficaService.downloadDocument(this.selectedAnagraficaId, selectedDocument.id)
+
+    this.anagraficaService
+      .downloadDocument(this.selectedAnagraficaId, selectedDocument.id)
       .subscribe({
         next: (blob: Blob) => {
           console.log('Download response received', blob);
-          
-        
-          
+
           const url = window.URL.createObjectURL(blob);
-          
-      
-          
+
           const link = document.createElement('a');
           link.style.display = 'none';
           link.href = url;
-          
-        
-          
-          link.download = selectedDocument.nomeFile || `document-${selectedDocument.id}.pdf`;
-          
-      
-          
+
+          link.download =
+            selectedDocument.nomeFile || `document-${selectedDocument.id}.pdf`;
+
           document.body.appendChild(link);
           link.click();
-          
-       
-          
+
           setTimeout(() => {
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
           }, 100);
-  
+
           this.bootstrapService.hideModal('downloadModal');
         },
         error: (error) => {
           console.error('Download failed:', error);
-       
-          
-        }
+        },
       });
   }
 
-
   showDownloadModal(anagraficaId: number) {
     this.selectedAnagraficaId = anagraficaId;
-    
-  
+
     this.anagraficaService.getAnagraficaById(anagraficaId).subscribe({
       next: (anagrafica) => {
         this.currentAnagrafica = anagrafica;
@@ -199,9 +193,7 @@ export class AnagraficaComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching anagrafica details:', error);
-      
-      }
+      },
     });
   }
-
 }

@@ -129,7 +129,6 @@
                   </a>
 
                   <a
-                  
                     (click)="deleteAnagraficaModal(anagraficaItem)"
                     title="Cancella"
                     style="cursor: pointer; color: #0052a3"
@@ -151,10 +150,12 @@
                   }}
                 </td>
                 <td scope="row">
-                  <a href="javascript:void(0)" 
-                     (click)="showDownloadModal(anagraficaItem.id)"
-                     title="Download" 
-                     class="it-download">
+                  <a
+                    href="javascript:void(0)"
+                    (click)="showDownloadModal(anagraficaItem.id)"
+                    title="Download"
+                    class="it-download"
+                  >
                     <i class="bi bi-download"></i>
                   </a>
                 </td>
@@ -199,7 +200,8 @@
       </div>
       <div class="modal-body text-center">
         <p>
-          Sei sicuro di voler eliminare l'anagrafica <b>{{ anagraficaId }}</b
+          Sei sicuro di voler eliminare l'anagrafica per
+          <b>{{ anagraficaMainIdentificationData }}</b
           >?
         </p>
       </div>
@@ -231,7 +233,8 @@
     <div class="modal-content p-4">
       <div class="modal-body text-center">
         <p>
-          Anagrafica <b>{{ anagraficaId }}</b> eliminata!
+          Anagrafica per
+          <b>{{ anagraficaMainIdentificationData }}</b> eliminata!
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
@@ -243,39 +246,56 @@
   </div>
 </div>
 
-
 <div class="modal" tabindex="-1" role="dialog" id="downloadModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">
+          Scegli il tipo di documento che vuoi scaricare
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
-        <div class="form-check" *ngFor="let doc of currentAnagrafica?.cittadino?.documenti_identita">
-          <input name="downloadFormat" 
-                 type="radio" 
-                 [id]="'doc' + doc.id" 
-                 [value]="doc.tipo_documento" 
-                 class="form-check-input" 
-                 [(ngModel)]="selectedDocumentType" />
+        <div
+          class="form-check"
+          *ngFor="let doc of currentAnagrafica?.cittadino?.documenti_identita"
+        >
+          <input
+            name="downloadFormat"
+            type="radio"
+            [id]="'doc' + doc.id"
+            [value]="doc.tipo_documento"
+            class="form-check-input"
+            [(ngModel)]="selectedDocumentType"
+          />
           <label class="form-check-label" [for]="'doc' + doc.id">
-            {{doc.tipo_documento}}
+            {{ doc.tipo_documento }}
           </label>
         </div>
-        <div *ngIf="!currentAnagrafica?.cittadino?.documenti_identita?.length" 
-             class="alert alert-info">
+        <div
+          *ngIf="!currentAnagrafica?.cittadino?.documenti_identita?.length"
+          class="alert alert-info"
+        >
           Nessun documento disponibile per il download.
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" 
-                class="btn btn-primary" 
-                [disabled]="!selectedDocumentType"
-                (click)="downloadDocument()">
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!selectedDocumentType"
+          (click)="downloadDocument()"
+        >
           Download
         </button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
       </div>
     </div>
   </div>
