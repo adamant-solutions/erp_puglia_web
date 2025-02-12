@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Piani } from 'src/app/core/models/manutenzione.model';
 import { PianiService } from 'src/app/core/services/manutenzione-services/piani.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-piani',
@@ -28,10 +29,11 @@ piano: Piani = {
   budgetResiduo: 0,
   note: ''
 }
+submitted: boolean = false;
 
 private router = inject(Router);
 private route = inject(ActivatedRoute);
-constructor(private fb: FormBuilder,private pianoSrc: PianiService) {}
+constructor(private fb: FormBuilder,private pianoSrc: PianiService,private notificationService: NotificationService) {}
 ngOnInit(): void {
   this.route.data.subscribe(({ data }) => {
     this.piano = data
@@ -56,16 +58,25 @@ initForm() {
 }  
 
 onSubmit() {
+  this.submitted = true;
   console.log('Form Submitted', this.editForm.value);
   if (this.editForm.valid) {
     console.log('Form Submitted', this.editForm.value);
     this.pianoSrc.editPiani(this.editForm.getRawValue()).subscribe({
       next: (res) => {
-        alert('Dati salvati con successo!');
+        this.notificationService.addNotification({
+          message: 'Dati salvati con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['manutenzione/piani/piano-dettagli/' + this.piano.id]);
       },
       error: (err) =>{
-        alert('Error!');
+        this.notificationService.addNotification({
+          message: "Si è verificato un errore!",
+          type: 'error',
+          timeout: 5000,
+        });
       }
     })
 

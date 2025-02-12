@@ -16,42 +16,46 @@
                     <label for="anno" class="form-label">Anno*</label>
                     <div class="input-group">
                       <input type="text" id="anno" class="form-control" name="anno"
-                        [(ngModel)]="piano.anno" required pattern="^\d{4}$" #annoRef="ngModel" />
+                        [(ngModel)]="piano.anno" required pattern="^\d{4}$" #annoRef="ngModel"  [ngClass]="{'is-invalid': annoRef?.invalid && submitted}"/>
                     </div>
-                    <span class="custom-error" *ngIf="annoRef?.errors?.['required'] && (annoRef.dirty || annoRef.touched)">
+                  <div class="custom-error" *ngIf="annoRef?.invalid && submitted">
+                    <span *ngIf="annoRef?.errors?.['required']">
                      Anno è obbligatorio!
                     </span>
-                    <span class="custom-error" *ngIf="annoRef?.errors?.['pattern'] && (annoRef.dirty || annoRef.touched)">
+                    <span *ngIf="annoRef?.errors?.['pattern']">
                       Inserisci un anno valido (es. 2024)!
                     </span>
                   </div>
-    
+                </div>
                   <!-- Descrizione -->
                   <div class="col-md-4 mb-3">
                     <label for="descrizione" class="form-label">Descrizione*</label>
                     <div class="input-group">
                       <input type="text" id="descrizione" class="form-control" name="descrizione"
-                        [(ngModel)]="piano.descrizione" required minlength="3" #descrizioneRef="ngModel" />
+                        [(ngModel)]="piano.descrizione" required minlength="3" #descrizioneRef="ngModel" [ngClass]="{'is-invalid': descrizioneRef?.invalid && submitted}"/>
                     </div>
-                    <span class="custom-error" *ngIf="descrizioneRef.invalid && (descrizioneRef.dirty || descrizioneRef.touched)">
+                    <div class="custom-error" *ngIf="descrizioneRef?.invalid && submitted">
+                    <span>
                       Inserisci almeno 3 caratteri!
                     </span>
                   </div>
-    
+    </div>
                   <!-- Budget Totale -->
                   <div class="col-md-4 mb-3">
                     <label for="budgetTotale" class="form-label">Budget Totale*</label>
                     <div class="input-group">
                       <input type="text" id="budgetTotale" class="form-control" name="budgetTotale"
                         [(ngModel)]="piano.budgetTotale" required pattern="^\d+(\.\d+)?$"
-                        #budgetTotaleRef="ngModel" />
+                        #budgetTotaleRef="ngModel" [ngClass]="{'is-invalid': budgetTotaleRef?.invalid && submitted}"/>
                     </div>
-                    <span class="custom-error" *ngIf="budgetTotaleRef?.errors?.['required'] && (budgetTotaleRef.dirty || budgetTotaleRef.touched)">
+                    <div class="custom-error" *ngIf="budgetTotaleRef?.invalid && submitted">
+                    <span *ngIf="budgetTotaleRef?.errors?.['required']">
                       Budget Totale è obbligatorio!
                     </span>
-                    <span class="custom-error" *ngIf="budgetTotaleRef?.errors?.['pattern'] && (budgetTotaleRef.dirty || budgetTotaleRef.touched)">
+                    <span *ngIf="budgetTotaleRef?.errors?.['pattern']">
                       Inserisci un budget valido!
                     </span>
+                  </div>
                   </div>
     
                   <!-- Budget Utilizzato -->
@@ -60,47 +64,49 @@
                     <div class="input-group">
                       <input type="text" id="budgetUtilizzato" class="form-control" name="budgetUtilizzato"
                         [(ngModel)]="piano.budgetUtilizzato" required pattern="^\d+(\.\d+)?$"
-                        #budgetUtilizzatoRef="ngModel" />
+                        #budgetUtilizzatoRef="ngModel" [ngClass]="{'is-invalid': budgetUtilizzatoRef?.invalid && submitted}"/>
                     </div>
-                    <span class="custom-error" *ngIf="budgetUtilizzatoRef?.errors?.['required'] && (budgetUtilizzatoRef.dirty || budgetUtilizzatoRef.touched)">
+                    <div class="custom-error" *ngIf="budgetUtilizzatoRef?.invalid && submitted">
+                    <span *ngIf="budgetUtilizzatoRef?.errors?.['required']">
                       Budget Totale è obbligatorio!
                     </span>
-                    <span class="custom-error" *ngIf="budgetUtilizzatoRef?.errors?.['pattern'] && (budgetUtilizzatoRef.dirty || budgetUtilizzatoRef.touched)">
+                    <span *ngIf="budgetUtilizzatoRef?.errors?.['pattern']">
                       Inserisci un budget valido!
                     </span>
                   </div>
-    
+                  </div>
                   <!-- Budget Residuo -->
                   <div class="col-md-4 mb-3">
                     <label for="budgetResiduo" class="form-label">Budget Residuo*</label>
                     <div class="input-group">
                       <input type="text" id="budgetResiduo" class="form-control" name="budgetResiduo"
                         [(ngModel)]="piano.budgetResiduo" required pattern="^\d+(\.\d+)?$"
-                        #budgetResiduoRef="ngModel" />
+                        #budgetResiduoRef="ngModel" [ngClass]="{'is-invalid': budgetResiduoRef?.invalid && submitted}"/>
                     </div>
-                    <span class="custom-error" *ngIf="budgetResiduoRef?.errors?.['required'] && (budgetResiduoRef.dirty || budgetResiduoRef.touched)">
+                    <div class="custom-error" *ngIf="budgetResiduoRef?.invalid && submitted">
+                    <span *ngIf="budgetResiduoRef?.errors?.['required']">
                       Budget Totale è obbligatorio!
                     </span>
-                    <span class="custom-error" *ngIf="budgetResiduoRef?.errors?.['pattern'] && (budgetResiduoRef.dirty || budgetResiduoRef.touched)">
+                    <span *ngIf="budgetResiduoRef?.errors?.['pattern']">
                       Inserisci un budget valido!
                     </span>
                   </div>
-    
+                  </div>
                   <!-- Data Approvazione -->
                   <div class="col-md-4 mb-3">
                     <label class="form-label">Data Approvazione</label>
                     
                     <mat-form-field appearance="fill" style="width: 100%">
                       <input matInput [matDatepicker]="picker" name="dataApprovazione"
-                        [(ngModel)]="piano.dataApprovazione" #dataApprovazioneRef="ngModel" />
+                        [(ngModel)]="piano.dataApprovazione" #dataApprovazioneRef="ngModel"  [ngClass]="{'is-invalid': dataApprovazioneRef?.invalid && submitted}"/>
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
-
-                    <span class="custom-error" *ngIf="dataApprovazioneRef?.errors?.['matDatepickerParse']
-                     && (dataApprovazioneRef.dirty || dataApprovazioneRef.touched)">
+                    <div class="custom-error" *ngIf="dataApprovazioneRef?.invalid && submitted">
+                    <span *ngIf="dataApprovazioneRef?.errors?.['matDatepickerParse']">
                         Data Approvazione non valido
                       </span>
+                    </div>
                   </div>
     
                   <!-- Note -->
@@ -128,7 +134,7 @@
                     Reset
                   </button>
     
-                  <button type="submit" class="btn btn-primary py-2" [disabled]="addForm.invalid">
+                  <button type="submit" class="btn btn-primary py-2">
                     Salva
                   </button>
                 </div>

@@ -14,7 +14,7 @@
                 <label for="ragioneSociale" class="form-label">Ragione Sociale*</label>
                 <div class="input-group">
                   <input type="text" id="ragioneSociale" class="form-control" name="ragioneSociale"
-                    [(ngModel)]="impresa.ragioneSociale" required #rgRef="ngModel" />
+                    [(ngModel)]="impresa.ragioneSociale" required #rgRef="ngModel"  [ngClass]="{'is-invalid': rgRef?.invalid && submitted}"/>
                 </div>
                 <div class="custom-error" *ngIf="
                 rgRef.invalid && submitted">
@@ -31,7 +31,7 @@
                 <div class="input-group">
                   <input type="text" id="partitaIva" class="form-control" name="partitaIva"
                     [(ngModel)]="impresa.partitaIva" maxlength="11" required pattern="^[0-9]{11}$"
-                    #partitaIvaRef="ngModel" />
+                    #partitaIvaRef="ngModel"  [ngClass]="{'is-invalid': partitaIvaRef?.invalid && submitted}"/>
                 </div>
                 <div class="custom-error" *ngIf="
                 partitaIvaRef.invalid && submitted">
@@ -51,7 +51,7 @@
                 <label for="codiceFiscale" class="form-label">Codice Fiscale*</label>
                 <div class="input-group">
                   <input type="text" id="codiceFiscale" class="form-control" name="codiceFiscale"
-                    [(ngModel)]="impresa.codiceFiscale" required pattern="^[A-Z0-9]{16}$" #cfRef="ngModel" />
+                    [(ngModel)]="impresa.codiceFiscale" required pattern="^[A-Z0-9]{16}$" #cfRef="ngModel"   [ngClass]="{'is-invalid': cfRef?.invalid && submitted}"/>
 
                 </div>
                 <div class="custom-error" *ngIf="
@@ -121,7 +121,7 @@
                 <label for="cap" class="form-label">CAP</label>
                 <div class="input-group">
                   <input type="text" id="cap" class="form-control" name="cap" [(ngModel)]="impresa.cap"
-                    pattern="^[0-9]{5}$" maxlength="5" #capRef="ngModel" />
+                    pattern="^[0-9]{5}$" maxlength="5" #capRef="ngModel"  [ngClass]="{'is-invalid': capRef?.invalid && submitted}"/>
                 </div>
                 <div class="custom-error" *ngIf="
                 capRef.invalid && submitted">
@@ -137,7 +137,7 @@
                 <label for="telefono" class="form-label">Telefono</label>
                 <div class="input-group">
                   <input type="tel" id="telefono" class="form-control" name="telefono" [(ngModel)]="impresa.telefono"
-                    pattern="^[0-9]+$" #telRef="ngModel" />
+                    pattern="^[0-9]+$" #telRef="ngModel"  [ngClass]="{'is-invalid': telRef?.invalid && submitted}"/>
                 </div>
                 <div class="custom-error" *ngIf="
                 telRef.invalid && submitted">
@@ -153,7 +153,7 @@
                 <label for="email" class="form-label">Email</label>
                 <div class="input-group">
                   <input type="text" id="email" class="form-control" name="email" [(ngModel)]="impresa.email" [pattern]="'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-                " #emailRef="ngModel" />
+                " #emailRef="ngModel"  [ngClass]="{'is-invalid': emailRef?.invalid && submitted}"/>
                 </div>
                 <div class="custom-error" *ngIf="
                 emailRef.invalid && submitted">
@@ -168,8 +168,7 @@
                 <label for="pec" class="form-label">PEC*</label>
                 <div class="input-group">
                   <input type="email" id="pec" class="form-control" name="pec" [(ngModel)]="impresa.pec"
-                    #pecRef="ngModel" required /><!-- [pattern]="'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.pec\.(it|eu|com)$'" -->
-
+                    #pecRef="ngModel" required [pattern]="'^[a-zA-Z0-9._%+-]+@pec\\.it$'" [ngClass]="{'is-invalid': pecRef?.invalid && submitted}"/>
                 </div>
                 <div class="custom-error" *ngIf="
                 pecRef.invalid && submitted">
@@ -178,14 +177,15 @@
 
                   PEC è obbligatoria!
                 </span>
+                <span
+             
+                *ngIf="
+                pecRef?.errors?.['pattern']"
+              >
+              PEC non valido! (es. nome.cognome@pec.it)
+              </span>  
                 </div>
-          <!--                  <span
-              class="custom-error"
-              *ngIf="
-              pecRef?.errors?.['pattern'] && (pecRef.dirty || pecRef.touched)"
-            >
-              PEC non valido!
-            </span>  --> 
+
               </div>
             </div>
           </div>

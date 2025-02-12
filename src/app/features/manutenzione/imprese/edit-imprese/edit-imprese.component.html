@@ -133,9 +133,12 @@
                 <div class="input-group">
                 <input type="email" id="pec" class="form-control" formControlName="pec" />
                 </div>
-                <div *ngIf="impresaForm.get('pec')?.invalid && submitted">
-                <span class="custom-error" *ngIf="impresaForm.get('pec')?.hasError('required')">
+                <div class="custom-error" *ngIf="impresaForm.get('pec')?.invalid && submitted">
+                <span *ngIf="impresaForm.get('pec')?.hasError('required')">
                   PEC è obbligatoria!
+                </span>
+                <span *ngIf="impresaForm.get('pec')?.hasError('pattern')">
+                  PEC non valido! (es. nome.cognome@pec.it)
                 </span>
                 </div>
               </div>

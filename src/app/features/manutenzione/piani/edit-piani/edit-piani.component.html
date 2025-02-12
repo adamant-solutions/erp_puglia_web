@@ -14,69 +14,73 @@
               <div class="col-md-4 mb-3">
                 <label for="anno" class="form-label">Anno*</label>
                 <div class="input-group">
-                <input type="text" id="anno" class="form-control" formControlName="anno"/>
+                <input type="text" id="anno" class="form-control" formControlName="anno" [ngClass]="{'is-invalid': editForm.get('anno')?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('anno')?.hasError('required') && editForm.get('anno')?.touched">
+                <div class="custom-error" *ngIf="editForm.get('anno')?.invalid && submitted">
+                <span *ngIf="editForm.get('anno')?.hasError('required')">
                   Anno è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('anno')?.hasError('pattern') && editForm.get('anno')?.touched">
+                <span *ngIf="editForm.get('anno')?.hasError('pattern')">
                   Inserisci un anno valido (es. 2024)!
                 </span>
               </div>
-
+            </div>
               <!-- Descrizione -->
               <div class="col-md-4 mb-3">
                 <label for="descrizione" class="form-label">Descrizione*</label>
                 <div class="input-group">
-                <input type="text" id="descrizione" class="form-control" formControlName="descrizione"/>
-                <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('required') && editForm.get('descrizione')?.touched">
+                <input type="text" id="descrizione" class="form-control" formControlName="descrizione"  [ngClass]="{'is-invalid': editForm.get('descrizione')?.invalid && submitted}"/>
+                </div>
+                <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('required')">
                   Descrizione è obbligatorio!
                 </span>
-                </div>
               </div>
 
               <!-- Budget Totale -->
               <div class="col-md-4 mb-3">
                 <label for="budgetTotale" class="form-label">Budget Totale*</label>
                 <div class="input-group">
-                <input type="text" id="budgetTotale" class="form-control" formControlName="budgetTotale"/>
+                <input type="text" id="budgetTotale" class="form-control" formControlName="budgetTotale"  [ngClass]="{'is-invalid': editForm.get('budgetTotale')?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetTotale')?.hasError('required') && editForm.get('budgetTotale')?.touched">
+                <div class="custom-error" *ngIf="editForm.get('budgetTotale')?.invalid  && submitted">
+                <span *ngIf="editForm.get('budgetTotale')?.hasError('required')">
                   Budget Totale è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('budgetTotale')?.hasError('pattern') && editForm.get('budgetTotale')?.touched">
+                <span *ngIf="editForm.get('budgetTotale')?.hasError('pattern')">
                   Inserisci un budget valido!
                 </span>
               </div>
-
+            </div>
               <!-- Budget Utilizzato -->
               <div class="col-md-4 mb-3">
                 <label for="budgetUtilizzato" class="form-label">Budget Utilizzato*</label>
                 <div class="input-group">
-                <input type="text" id="budgetUtilizzato" class="form-control" formControlName="budgetUtilizzato"/>
+                <input type="text" id="budgetUtilizzato" class="form-control" formControlName="budgetUtilizzato"  [ngClass]="{'is-invalid': editForm.get('budgetUtilizzato')?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetUtilizzato')?.hasError('required') && editForm.get('budgetUtilizzato')?.touched">
+                <div  class="custom-error" *ngIf="editForm.get('budgetUtilizzato')?.invalid && submitted">
+                <span *ngIf="editForm.get('budgetUtilizzato')?.hasError('required')">
                   Budget Utilizzato è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('budgetUtilizzato')?.hasError('pattern') && editForm.get('budgetUtilizzato')?.touched">
+                <span class="custom-error" *ngIf="editForm.get('budgetUtilizzato')?.hasError('pattern')">
                   Inserisci un budget valido!
                 </span>
               </div>
-
+            </div>
               <!-- Budget Residuo -->
               <div class="col-md-4 mb-3">
                 <label for="budgetResiduo" class="form-label">Budget Residuo*</label>
                 <div class="input-group">
                 <input type="text" id="budgetResiduo" class="form-control" formControlName="budgetResiduo"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetResiduo')?.hasError('required') && editForm.get('budgetResiduo')?.touched">
+                <div class="custom-error" [ngClass]="{'is-invalid': editForm.get('budgetResiduo')?.invalid && submitted}">
+                <span *ngIf="editForm.get('budgetResiduo')?.hasError('required')">
                   Budget Residuo è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('budgetResiduo')?.hasError('pattern') && editForm.get('budgetResiduo')?.touched">
+                <span *ngIf="editForm.get('budgetResiduo')?.hasError('pattern')">
                   Inserisci un budget valido!
                 </span>
               </div>
-
+            </div>
               <div class="col-md-4 mb-3">
                 <label class="form-label">Data Approvazione</label>
                 
@@ -148,7 +152,7 @@
                 Reset
               </button>
 
-              <button type="submit" class="btn btn-primary py-2" [disabled]="editForm.invalid">
+              <button type="submit" class="btn btn-primary py-2">
                 Salva
               </button>
             </div>
