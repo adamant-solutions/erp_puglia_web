@@ -139,8 +139,7 @@
                     <i class="bi bi-pencil"></i>
                   </a>
                   <a
-                  
-               
+                  (click)="openDeleteModal(condominio)"
                   title="Cancella"
                   style="cursor: pointer; color: #0052a3"
                 >
@@ -193,15 +192,14 @@
       </div>
       <div class="modal-body text-center">
         <p>
-          Sei sicuro di voler eliminare il condominio <b>{{ condominioId }}</b>?
+          Sei sicuro di voler eliminare il condominio <b>{{ condominioToDelete?.denominazione }}</b>?
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
         <button
           type="button"
           class="btn btn-primary"
-          data-bs-target="#deleteCondominioModal2"
-          data-bs-toggle="modal"
+          (click)="confirmDelete()"
         >
           Sì
         </button>
@@ -213,6 +211,7 @@
   </div>
 </div>
 
+
 <div
   class="modal fade"
   id="deleteCondominioModal2"
@@ -223,11 +222,15 @@
     <div class="modal-content p-4">
       <div class="modal-body text-center">
         <p>
-          Condominio <b>{{ condominioId }}</b> eliminato!
+          Condominio <b>{{ condominioToDelete?.denominazione }}</b> eliminato!
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+        <button 
+          type="button" 
+          class="btn btn-primary" 
+          (click)="closeSuccessModal()"
+        >
           Ok
         </button>
       </div>
