@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Imprese } from 'src/app/core/models/manutenzione.model';
 import { ImpreseService } from 'src/app/core/services/manutenzione-services/imprese.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-imprese',
@@ -43,6 +44,7 @@ export class AddImpreseComponent {
 
   private impreseService = inject(ImpreseService);
   private router = inject(Router);
+  private notifService = inject(NotificationService);
 
   onSubmit(form: NgForm) {
     this.submitted = true;
@@ -55,11 +57,20 @@ export class AddImpreseComponent {
 
       this.impreseService.addImprese(this.impresa).subscribe({
         next: (res) => {
-          alert('Dati salvati con successo!');
+         /*  alert('Dati salvati con successo!'); */
+          this.notifService.addNotification({
+            message: 'Dati salvati con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['/manutenzione/imprese']);
         },
         error: (err) =>{
-          alert('Error!');
+          this.notifService.addNotification({
+            message: "Si è verificato un errore!",
+            type: 'error',
+            timeout: 5000,
+          });
         }
       })
 

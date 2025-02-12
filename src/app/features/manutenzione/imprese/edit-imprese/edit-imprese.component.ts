@@ -11,7 +11,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   styleUrls: ['./edit-imprese.component.css']
 })
 export class EditImpreseComponent {
-  pageTitle: string = 'Modifica Imprese';
+  pageTitle: string = 'Modifica Impresa';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Manutenzione', link: '/manutenzione' },
