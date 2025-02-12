@@ -1,0 +1,142 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Nuovo condominio'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="addForm" class="row g-3" (ngSubmit)="onSubmit()">
+          <div class="col-12">
+            <div class="row d-flex">
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="codice">Codice *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('codice')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="codice"
+                    formControlName="codice"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('codice')">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="denominazione">Denominazione *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('denominazione')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="denominazione"
+                    formControlName="denominazione"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('denominazione')">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="indirizzo">Indirizzo *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('indirizzo')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="indirizzo"
+                    formControlName="indirizzo"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('indirizzo')">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="comune">Comune *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('comune')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="comune"
+                    formControlName="comune"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('comune')">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('provincia')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="provincia"
+                    formControlName="provincia"
+                    maxlength="2"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('provincia')">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="cap">CAP *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('cap')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cap"
+                    formControlName="cap"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('cap')">
+                  Campo obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="codiceFiscale">Codice Fiscale *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('codiceFiscale')">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="codiceFiscale"
+                    formControlName="codiceFiscale"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('codiceFiscale')">
+                  Campo obbligatorio
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-5">
+            <button type="submit" class="btn btn-primary me-3">
+              Salva
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

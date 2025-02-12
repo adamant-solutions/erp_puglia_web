@@ -7,13 +7,15 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
 import { EditCondominiComponent } from './edit-condomini/edit-condomini.component';
+import { AddCondominiComponent } from './condomini-list/add-condomini/add-condomini.component';
 
 
 @NgModule({
   declarations: [
     CondominiListComponent,
     ViewCondominiComponent,
-    EditCondominiComponent
+    EditCondominiComponent,
+    AddCondominiComponent
   ],
   imports: [
     CommonModule,

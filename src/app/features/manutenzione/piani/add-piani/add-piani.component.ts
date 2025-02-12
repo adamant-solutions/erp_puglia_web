@@ -3,6 +3,7 @@ import { FormBuilder, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Piani } from 'src/app/core/models/manutenzione.model';
 import { PianiService } from 'src/app/core/services/manutenzione-services/piani.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-piani',
@@ -31,21 +32,31 @@ piano: Piani = {
 }
 
 private router = inject(Router);
-constructor(private fb: FormBuilder,private pianoSrc: PianiService) {}
+submitted: boolean = false;
+constructor(private fb: FormBuilder,private pianoSrc: PianiService,private notificationService: NotificationService) {}
 
 ngOnInit(): void {
 }
 
 onSubmit(form: NgForm) {
+  this.submitted = true;
   if (form.valid) {
     console.log('Form Submitted', form.value);
     this.pianoSrc.addPiani(form.value).subscribe({
       next: (res) => {
-        alert('Dati salvati con successo!');
+        this.notificationService.addNotification({
+          message: 'Dati salvati con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['manutenzione/piani/piano-dettagli/' + res.id]);
       },
       error: (err) =>{
-        alert('Error!');
+        this.notificationService.addNotification({
+          message: "Si è verificato un errore!",
+          type: 'error',
+          timeout: 5000,
+        });
       }
     })
 

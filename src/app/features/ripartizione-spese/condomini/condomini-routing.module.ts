@@ -5,6 +5,7 @@ import {  condominioByIdResolver, condominioResolver } from 'src/app/core/resolv
 import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
 import { EditCondominiComponent } from './edit-condomini/edit-condomini.component';
 import { unitaImmobiliareResolver } from 'src/app/core/resolvers/contratti.resolver';
+import { AddCondominiComponent } from './condomini-list/add-condomini/add-condomini.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,10 @@ const routes: Routes = [
       condominio: condominioByIdResolver,
       unitaImmobiliari: unitaImmobiliareResolver
     }
+  },
+  {
+    path: 'nuovo-condominio',
+    component: AddCondominiComponent
   }
 ];
 

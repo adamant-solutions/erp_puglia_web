@@ -71,7 +71,7 @@ export class EditImpreseComponent {
       cap: [this.impresa.cap, [Validators.pattern(/^[0-9]{5}$/)]],
       telefono: [this.impresa.telefono, [Validators.pattern(/^[0-9]+$/)]],
       email: [this.impresa.email, [Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
-      pec: [this.impresa.pec, [Validators.required]],
+      pec: [this.impresa.pec, [Validators.required,Validators.pattern(/^[a-zA-Z0-9._%+-]+@pec\.it$/)]],
     });
   }
 
