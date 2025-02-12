@@ -35,7 +35,7 @@ export class AddAnagraficaComponent implements OnInit {
   private documentTypeMap: Record<TipoDocumento, UploadDocumentType> = {
     [TipoDocumento.CARTA_DEL_IDENTITA]: 'CI',
     [TipoDocumento.PASSAPORTO]: 'PP',
-    [TipoDocumento.PATENTE]: 'PT'
+    [TipoDocumento.PATENTE]: 'PT',
   };
 
   addForm!: FormGroup;
@@ -50,10 +50,12 @@ export class AddAnagraficaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private anagraficaService: AnagraficaService,
-     private bootstrapService: BootstrapService
-  ) {this.uploadForm = this.formBuilder.group({
-    documentType: ['', Validators.required]
-  });}
+    private bootstrapService: BootstrapService
+  ) {
+    this.uploadForm = this.formBuilder.group({
+      documentType: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.initForm();
@@ -66,14 +68,14 @@ export class AddAnagraficaComponent implements OnInit {
         nome: ['', Validators.required],
         cognome: ['', Validators.required],
         codiceFiscale: ['', Validators.required],
-        genere: ['M', Validators.required],
+        genere: ['', Validators.required],
         cittadinanza: ['', Validators.required],
         dataDiNascita: ['', [Validators.required]],
 
         residenza: this.formBuilder.group({
           indirizzo: [''],
           civico: [''],
-          cap: ['',[Validators.pattern('^[0-9]{5}$')]],
+          cap: ['', [Validators.pattern('^[0-9]{5}$')]],
           comuneResidenza: [''],
           provinciaResidenza: [''],
           statoResidenza: [''],
@@ -106,7 +108,7 @@ export class AddAnagraficaComponent implements OnInit {
       data_scadenza: ['', Validators.required],
       ente_emittente: ['', Validators.required],
       nomeFile: [''],
-      contentType: ['']
+      contentType: [''],
     });
     this.documentiIdentita.push(documentoGroup);
   }
@@ -114,8 +116,6 @@ export class AddAnagraficaComponent implements OnInit {
   removeDocumento(index: number): void {
     this.documentiIdentita.removeAt(index);
   }
-
-
 
   indietro() {
     this.router.navigate(['/anagrafica']);
@@ -133,103 +133,113 @@ export class AddAnagraficaComponent implements OnInit {
   onSubmit() {
     window.scrollTo(0, 0);
     this.submitted = true;
-   
+
     if (this.addForm.invalid) {
       return;
     }
     const formValue = this.addForm.getRawValue();
-    console.log(formValue.cittadino.dataDiNascita)
+    console.log(formValue.cittadino.dataDiNascita);
 
-     formValue.cittadino.dataDiNascita = this.formatDateForBackend(formValue.cittadino.dataDiNascita);
+    formValue.cittadino.dataDiNascita = this.formatDateForBackend(
+      formValue.cittadino.dataDiNascita
+    );
 
-  
     if (formValue.cittadino.documenti_identita) {
-      formValue.cittadino.documenti_identita = formValue.cittadino.documenti_identita.map((doc: any, index: number) => {
-        const file = this.selectedFiles[index];
-        return {
-          ...doc,
-          data_emissione: this.formatDateForBackend(doc.data_emissione),
-          data_scadenza: this.formatDateForBackend(doc.data_scadenza),
-          nomeFile: file ? file.name : '',
-          contentType: file ? file.type : ''
-        };
-      });
+      formValue.cittadino.documenti_identita =
+        formValue.cittadino.documenti_identita.map(
+          (doc: any, index: number) => {
+            const file = this.selectedFiles[index];
+            return {
+              ...doc,
+              data_emissione: this.formatDateForBackend(doc.data_emissione),
+              data_scadenza: this.formatDateForBackend(doc.data_scadenza),
+              nomeFile: file ? file.name : '',
+              contentType: file ? file.type : '',
+            };
+          }
+        );
     }
 
-   
     const formData = new FormData();
     const anagraficaBlob = new Blob([JSON.stringify(formValue)], {
-      type: 'application/json'
+      type: 'application/json',
     });
     formData.append('anagrafica', anagraficaBlob, 'anagrafica.json');
 
-   
     Object.entries(this.selectedFiles).forEach(([index, file]) => {
       formData.append('documenti', file, file.name);
     });
 
-
-    this.anagraficaService.addAnagrafica(formData)
-      .subscribe({
-        next: (response) => {
-          this.submitted = false;
-          this.router.navigate(['/anagrafica']);
-        },
-        error: (error) => {
-          if (error.status === 400 && error.error?.message?.includes('documenti')) {
-            this.errorMessage = 'Errore: Il numero di documenti nel JSON non corrisponde ai file caricati';
-          } else {
-            this.errorMessage = 'Errore durante la creazione dell\'anagrafica';
-          }
-          console.error('Error:', error);
+    this.anagraficaService.addAnagrafica(formData).subscribe({
+      next: (response) => {
+        this.submitted = false;
+        this.router.navigate(['/anagrafica']);
+      },
+      error: (error) => {
+        if (
+          error.status === 400 &&
+          error.error?.message?.includes('documenti')
+        ) {
+          this.errorMessage =
+            'Errore: Il numero di documenti nel JSON non corrisponde ai file caricati';
+        } else {
+          this.errorMessage = "Errore durante la creazione dell'anagrafica";
         }
-      });
+        console.error('Error:', error);
+      },
+    });
   }
 
   openUploadModal(index: number) {
     this.currentDocumentIndex = index;
     const documentiFormArray = this.documentiIdentita;
     const currentDoc = documentiFormArray.at(index);
-    const selectedType = currentDoc.get('tipo_documento')?.value as TipoDocumento;
-    
+    const selectedType = currentDoc.get('tipo_documento')
+      ?.value as TipoDocumento;
+
     if (selectedType) {
       const uploadModalType = this.documentTypeMap[selectedType];
       this.uploadForm.patchValue({
-        documentType: uploadModalType
+        documentType: uploadModalType,
       });
     } else {
       this.uploadForm.reset();
     }
-    
+
     this.bootstrapService.showModal('uploadModal');
   }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file && this.currentDocumentIndex !== -1) {
-      
       this.selectedFiles[this.currentDocumentIndex] = file;
-  
+
       this.displayFileNames[this.currentDocumentIndex] = file.name;
       this.hasUploadedFile = true;
     }
   }
   saveDocument() {
-    if (this.uploadForm.valid && this.currentDocumentIndex !== -1 && this.selectedFiles[this.currentDocumentIndex]) {
+    if (
+      this.uploadForm.valid &&
+      this.currentDocumentIndex !== -1 &&
+      this.selectedFiles[this.currentDocumentIndex]
+    ) {
       const documenti = this.documentiIdentita;
       const currentDoc = documenti.at(this.currentDocumentIndex);
       const currentFile = this.selectedFiles[this.currentDocumentIndex];
-      
+
       if (currentDoc && currentFile) {
         currentDoc.patchValue({
           nomeFile: currentFile.name,
-          contentType: currentFile.type
+          contentType: currentFile.type,
         });
-        
+
         this.hasUploadedFile = true;
         this.bootstrapService.hideModal('uploadModal');
-     
-        const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+
+        const fileInput = document.querySelector(
+          'input[type="file"]'
+        ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = '';
         }
@@ -237,22 +247,22 @@ export class AddAnagraficaComponent implements OnInit {
     }
   }
 
-
   removeFile() {
     if (this.currentDocumentIndex !== -1) {
-     
       delete this.selectedFiles[this.currentDocumentIndex];
       delete this.displayFileNames[this.currentDocumentIndex];
-      
+
       const documento = this.documentiIdentita.at(this.currentDocumentIndex);
       documento.patchValue({
         nomeFile: null,
-        contentType: null
+        contentType: null,
       });
-      
+
       this.hasUploadedFile = false;
-    
-      const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+
+      const fileInput = document.querySelector(
+        'input[type="file"]'
+      ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = '';
       }
@@ -263,10 +273,7 @@ export class AddAnagraficaComponent implements OnInit {
     return this.displayFileNames[index] || '';
   }
 
-
   hasFileForDocument(index: number): boolean {
     return !!this.selectedFiles[index];
   }
-
-
 }

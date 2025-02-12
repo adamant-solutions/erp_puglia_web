@@ -101,28 +101,34 @@
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="genere">Genere *</label>
                   <div class="input-group">
-                    <select class="form-control" id="genere" name="genere" formControlName="genere">
-                
+                    <select
+                      class="form-control"
+                      id="genere"
+                      name="genere"
+                      formControlName="genere"
+                    >
                       <option value="M">M</option>
                       <option value="F">F</option>
                       <option value="N">Nonbinario</option>
                     </select>
-                  <!--   <span class="input-group-text">
+                    <!-- <span class="input-group-text">
                       <i class="bi bi-caret-down-fill"></i>
                     </span> -->
                     <span class="input-group-text">
                       <i class="bi bi-gender-neuter"></i>
                     </span>
                   </div>
-                  <span class="custom-error" *ngIf="
-                                      addForm.get('cittadino.genere')?.hasError('required') &&
-                                      (addForm.get('cittadino.genere')?.touched || submitted)
-                                    ">
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      addForm.get('cittadino.genere')?.hasError('required') &&
+                      (addForm.get('cittadino.genere')?.touched || submitted)
+                    "
+                  >
                     Genere è obbligatorio!
                   </span>
                 </div>
 
-   
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="cittadinanza"
                     >Cittadinanza *</label
@@ -252,18 +258,17 @@
                   </div>
 
                   <span
-                  class="custom-error"
-                  *ngIf="
-                    addForm
-                      .get('cittadino.residenza.cap')
-                      ?.hasError('required') &&
-                    (addForm.get('cittadino.residenza.cap')?.touched ||
-                      submitted)
-                  "
-                >
-                  Cap non è valido!
-                </span>
-
+                    class="custom-error"
+                    *ngIf="
+                      addForm
+                        .get('cittadino.residenza.cap')
+                        ?.hasError('required') &&
+                      (addForm.get('cittadino.residenza.cap')?.touched ||
+                        submitted)
+                    "
+                  >
+                    Cap non è valido!
+                  </span>
                 </div>
 
                 <div class="col-md-4 mb-3">
@@ -578,7 +583,11 @@
                         </div>
                       </div>
                       <div class="col-12 mb-3">
-                        <button type="button" class="btn btn-primary me-2" (click)="openUploadModal(i)">
+                        <button
+                          type="button"
+                          class="btn btn-primary me-2"
+                          (click)="openUploadModal(i)"
+                        >
                           <i class="bi bi-upload me-2"></i>Upload
                         </button>
                       </div>
@@ -648,13 +657,17 @@
   </div>
 </section>
 
-
 <div class="modal" tabindex="-1" role="dialog" id="uploadModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Carica Documento</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="uploadForm">
@@ -666,29 +679,42 @@
               <option value="PT">Patente</option>
             </select>
           </div>
-          
+
           <div class="mb-3">
             <label class="form-label">File</label>
             <div class="d-flex align-items-center">
-              <input 
-                type="file" 
-                class="form-control" 
+              <input
+                type="file"
+                class="form-control"
                 (change)="onFileSelected($event)"
-                accept=".pdf">
-              <button type="button" class="btn ms-2" (click)="removeFile()" [disabled]="!hasUploadedFile">
-                <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg>
+                accept=".pdf"
+              />
+              <button
+                type="button"
+                class="btn ms-2"
+                (click)="removeFile()"
+                [disabled]="!hasUploadedFile"
+              >
+                <svg class="icon">
+                  <use href="/assets/svg/sprites.svg#it-close"></use>
+                </svg>
               </button>
             </div>
-            <small class="text-muted" *ngIf="displayFileNames[currentDocumentIndex]">
+            <small
+              class="text-muted"
+              *ngIf="displayFileNames[currentDocumentIndex]"
+            >
               File selezionato: {{ displayFileNames[currentDocumentIndex] }}
             </small>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" 
-                [disabled]="!uploadForm.valid || !selectedFiles[currentDocumentIndex]" 
-                (click)="saveDocument()">
+        <button
+          class="btn btn-primary"
+          [disabled]="!uploadForm.valid || !selectedFiles[currentDocumentIndex]"
+          (click)="saveDocument()"
+        >
           Salva
         </button>
         <button class="btn btn-secondary" data-bs-dismiss="modal">

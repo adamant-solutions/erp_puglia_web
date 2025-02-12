@@ -110,8 +110,12 @@
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="genere">Genere *</label>
                   <div class="input-group">
-                    <select class="form-control" id="genere" name="genere" formControlName="genere">
-                
+                    <select
+                      class="form-control"
+                      id="genere"
+                      name="genere"
+                      formControlName="genere"
+                    >
                       <option value="M">M</option>
                       <option value="F">F</option>
                       <option value="N">Nonbinario</option>
@@ -567,21 +571,23 @@
                           </span>
                         </div>
                       </div>
-                    
+
                       <div class="col-md-3 mb-3">
                         <label class="form-label">File</label>
                         <div class="input-group">
                           <input
-                          type="text"
-                          class="form-control"
-                          [value]="documentiIdentita.at(i).get('nomeFile')?.value || 'Nessun file caricato'"
-                          readonly
-                        />
+                            type="text"
+                            class="form-control"
+                            [value]="
+                              documentiIdentita.at(i).get('nomeFile')?.value ||
+                              'Nessun file caricato'
+                            "
+                            readonly
+                          />
                           <span class="input-group-text">
                             <i class="bi bi-folder"></i>
                           </span>
                         </div>
-                  
                       </div>
                       <!-- <div class="col-md-1 mb-3">
                         <button 
@@ -593,13 +599,14 @@
                       </button>
                         </div> -->
                       <div class="col-12 mb-3">
-                        <button type="button" class="btn btn-primary me-2" (click)="openUploadModal(i)">
+                        <button
+                          type="button"
+                          class="btn btn-primary me-2"
+                          (click)="openUploadModal(i)"
+                        >
                           <i class="bi bi-upload me-2"></i>Upload
                         </button>
-                   
                       </div>
-
-              
                     </div>
                   </div>
                 </div>
@@ -643,7 +650,15 @@
                 Reset
               </button>
 
-              <button type="submit" class="btn btn-primary py-2" [routerLink]="['/anagrafica/anagrafica-dettagli/'+ anagrafica.id]">Salva</button>
+              <button
+                type="submit"
+                class="btn btn-primary py-2"
+                [routerLink]="[
+                  '/anagrafica/anagrafica-dettagli/' + anagrafica.id
+                ]"
+              >
+                Salva
+              </button>
             </div>
           </div>
         </form>
@@ -652,14 +667,17 @@
   </div>
 </section>
 
-
-
 <div class="modal" tabindex="-1" role="dialog" id="uploadModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Carica Documento</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <form [formGroup]="uploadForm">
@@ -672,24 +690,34 @@
               <option value="PT">Patente</option>
             </select>
           </div>
-          
+
           <div class="mb-3">
             <label class="form-label">File</label>
-            <button type="button" class="btn" (click)="removeFile()" [disabled]="!hasUploadedFile">
-              <svg class="icon"><use href="/assets/svg/sprites.svg#it-close"></use></svg>
+            <button
+              type="button"
+              class="btn"
+              (click)="removeFile()"
+              [disabled]="!hasUploadedFile"
+            >
+              <svg class="icon">
+                <use href="/assets/svg/sprites.svg#it-close"></use>
+              </svg>
             </button>
-            <input 
-              type="file" 
-              class="form-control" 
+            <input
+              type="file"
+              class="form-control"
               (change)="onFileSelected($event)"
-              accept=".pdf">
+              accept=".pdf"
+            />
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary" 
-                [disabled]="!uploadForm.valid || !selectedFile" 
-                (click)="saveDocument()">
+        <button
+          class="btn btn-primary"
+          [disabled]="!uploadForm.valid || !selectedFile"
+          (click)="saveDocument()"
+        >
           Salva
         </button>
         <button class="btn btn-secondary" data-bs-dismiss="modal">
@@ -718,9 +746,7 @@
         ></button>
       </div>
       <div class="modal-body text-center">
-        <p>
-          Sei sicuro di voler eliminare questo documento?
-        </p>
+        <p>Sei sicuro di voler eliminare questo documento?</p>
       </div>
       <div class="modal-footer" style="justify-content: center">
         <button
