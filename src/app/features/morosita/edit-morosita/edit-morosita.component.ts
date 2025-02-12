@@ -96,22 +96,22 @@ export class EditMorositaComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.showValidationErrors();
-    
+    this.formSubmitAttempted = true;
+  
     if (this.editForm.valid) {
       const formValues = this.editForm.value;
       const updatedMorosita: Morosita = {
         id: this.morositaId,
         ...formValues
       };
-
+  
       this.morositaService.updateMorosita(this.morositaId, updatedMorosita)
         .subscribe({
           next: () => {
             this.router.navigate(['/morosita']);
           },
           error: (error) => {
-          
+            
           }
         });
     }
