@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Imprese } from 'src/app/core/models/manutenzione.model';
 import { ImpreseService } from 'src/app/core/services/manutenzione-services/imprese.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-imprese',
@@ -16,6 +17,7 @@ export class EditImpreseComponent {
     { label: 'Manutenzione', link: '/manutenzione' },
     { label: 'Imprese', link: '/manutenzione/imprese' },
   ];
+  submitted: boolean = false;
   impresaForm!: FormGroup;
   impresa: Imprese = {
     id: 0,
@@ -45,7 +47,7 @@ export class EditImpreseComponent {
   private route = inject(ActivatedRoute);
 
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
  
@@ -74,19 +76,27 @@ export class EditImpreseComponent {
   }
 
   onSubmit() {
-    if (this.impresaForm.valid) {
+    this.submitted = true;
+  if (this.impresaForm.valid) { 
       console.log('Form Submitted', this.impresaForm.value);
       this.impreseService.editImprese(this.impresaForm.value).subscribe({
         next: (res) => {
-          alert('Dati salvati con successo!');
-          this.router.navigate(['manutenzione/imprese/imprese-dettagli/' + this.impresa.id]);
+          this.notificationService.addNotification({
+            message: 'Dati salvati con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
+          this.router.navigate(['manutenzione/imprese/imprese-dettagli/' + res.id]);
         },
-        error: (err) =>{
-          alert('Error!');
+        error: (err) => {
+          this.notificationService.addNotification({
+            message: "Si è verificato un errore!",
+            type: 'error',
+            timeout: 5000,
+          });
         }
-      })
-
-    }
+      });
+     }  
   }
 
   resetForm() {

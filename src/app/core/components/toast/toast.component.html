@@ -1,0 +1,20 @@
+
+<div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 1050">
+  <div *ngFor="let notification of notifications$ | async"  class="toast fade show mb-2" role="alert">
+    <div class="d-flex" [ngClass]="{
+      'with-icon-success': notification.type === 'success',
+      'with-icon-error': notification.type === 'error'
+    }">
+      <div class="toast-body">
+        <p class="mb-0">
+          <svg class="icon" [ngClass]="notification.type === 'success' ? 'text-success' : 'text-danger'">
+            <use [attr.href]="'/assets/svg/sprites.svg#' + (notification.type === 'success' ? 'it-check-circle' : 'it-close-circle')"></use>
+          </svg>
+          {{ notification.message }}
+        </p>
+      
+      </div>
+      <button type="button" class="btn-close me-2 m-auto" (click)="remove(notification)"></button>
+       </div> 
+
+  </div>
