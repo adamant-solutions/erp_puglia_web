@@ -368,7 +368,7 @@ export class EditPatrimonioComponent implements OnInit {
 
       metriQuadri: [
         this.patrimonio.metriQuadri,
-        Validators.pattern(/^-?\d+(\.\d+)?$/),
+        [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)],
       ], // Regex for floating-point numbers
       quartiere: [this.patrimonio.quartiere, Validators.required],
       tipoAmministrazione: [

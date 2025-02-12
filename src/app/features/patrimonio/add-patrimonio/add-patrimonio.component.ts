@@ -346,7 +346,10 @@ export class AddPatrimonioComponent implements OnInit {
 
   initForm() {
     this.addForm = this.formBuilder.group({
-      metriQuadri: [null, Validators.pattern(/^-?\d+(\.\d+)?$/)],
+      metriQuadri: [
+        null,
+        [Validators.required, Validators.pattern(/^-?\d+(\.\d+)?$/)],
+      ],
       quartiere: ['', Validators.required],
       tipoAmministrazione: ['', Validators.required],
       statoDisponibilita: ['', Validators.required],

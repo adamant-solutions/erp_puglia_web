@@ -15,7 +15,9 @@
             <div class="row d-flex">
               <!-- metriQuadri -->
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="metriQuadri">Metri quadri</label>
+                <label class="form-label" for="metriQuadri"
+                  >Metri quadri *</label
+                >
                 <div class="input-group">
                   <input
                     type="text"
@@ -35,6 +37,11 @@
                       submitted)
                   "
                 >
+                  <span
+                    *ngIf="addForm.get('metriQuadri')?.errors?.['required']"
+                  >
+                    Metri quadri è obbligatorio!
+                  </span>
                   <span *ngIf="addForm.get('metriQuadri')?.errors?.['pattern']">
                     Enter a valid floating-point number.
                   </span>
