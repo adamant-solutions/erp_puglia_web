@@ -15,7 +15,10 @@
             <div class="row d-flex">
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="codice">Codice *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('codice')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('codice')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -29,8 +32,13 @@
               </div>
 
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="denominazione">Denominazione *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('denominazione')">
+                <label class="form-label" for="denominazione"
+                  >Denominazione *</label
+                >
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('denominazione')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -38,14 +46,20 @@
                     formControlName="denominazione"
                   />
                 </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('denominazione')">
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('denominazione')"
+                >
                   Campo obbligatorio
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="indirizzo">Indirizzo *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('indirizzo')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('indirizzo')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -53,14 +67,20 @@
                     formControlName="indirizzo"
                   />
                 </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('indirizzo')">
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('indirizzo')"
+                >
                   Campo obbligatorio
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="comune">Comune *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('comune')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('comune')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -75,7 +95,10 @@
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="provincia">Provincia *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('provincia')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('provincia')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -84,14 +107,20 @@
                     maxlength="2"
                   />
                 </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('provincia')">
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('provincia')"
+                >
                   Campo obbligatorio
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="cap">CAP *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('cap')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('cap')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -105,8 +134,13 @@
               </div>
 
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="codiceFiscale">Codice Fiscale *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('codiceFiscale')">
+                <label class="form-label" for="codiceFiscale"
+                  >Codice Fiscale *</label
+                >
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('codiceFiscale')"
+                >
                   <input
                     type="text"
                     class="form-control"
@@ -114,7 +148,10 @@
                     formControlName="codiceFiscale"
                   />
                 </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('codiceFiscale')">
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('codiceFiscale')"
+                >
                   Campo obbligatorio
                 </div>
               </div>
@@ -122,21 +159,28 @@
 
             <div class="col-12 mt-4">
               <h3>Unità Immobiliari</h3>
-              
+
               <div class="row mb-3">
                 <div class="col-md-6">
-                  <select class="form-select" #unitaSelect [(ngModel)]="selectedUnitaId" [ngModelOptions]="{standalone: true}">
-                    <option value="">Seleziona unità immobiliare</option>
-                    <option *ngFor="let unita of unitaImmobiliariList" [value]="unita.id">
+                  <select
+                    class="form-select"
+                    #unitaSelect
+                    [(ngModel)]="selectedUnitaId"
+                    [ngModelOptions]="{ standalone: true }"
+                  >
+                    <option value="">Seleziona un'Unità Immobiliare</option>
+                    <option
+                      *ngFor="let unita of unitaImmobiliariList"
+                      [value]="unita.id"
+                    >
                       {{ unita.descrizione }}
                     </option>
                   </select>
                 </div>
 
-                
                 <div class="col-md-2">
-                  <button 
-                    type="button" 
+                  <button
+                    type="button"
                     class="btn btn-primary"
                     (click)="addUnitaImmobiliare(unitaSelect.value)"
                     [disabled]="!unitaSelect.value"
@@ -146,7 +190,10 @@
                 </div>
               </div>
 
-              <div class="table-responsive" *ngIf="selectedUnitaImmobiliari.length > 0">
+              <div
+                class="table-responsive"
+                *ngIf="selectedUnitaImmobiliari.length > 0"
+              >
                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -158,8 +205,8 @@
                     <tr *ngFor="let unita of selectedUnitaImmobiliari">
                       <td>{{ unita.descrizione }}</td>
                       <td>
-                        <button 
-                          type="button" 
+                        <button
+                          type="button"
                           class="btn btn-danger btn-sm"
                           (click)="removeUnitaImmobiliare(unita.id)"
                         >
@@ -174,16 +221,17 @@
           </div>
 
           <div class="col-12 mt-5">
-            <button type="submit" class="btn btn-primary me-3">
-              Salva
-            </button>
+            <button type="submit" class="btn btn-primary me-3">Salva</button>
 
             <button
               type="button"
               class="btn btn-outline-primary"
               (click)="indietro()"
             >
-              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
               Indietro
             </button>
           </div>

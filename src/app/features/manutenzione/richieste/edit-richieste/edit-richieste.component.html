@@ -1,4 +1,7 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Richiesta'"></app-breadcrumbs>
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Modifica Richiesta'"
+></app-breadcrumbs>
 
 <section class="pt-4 pb-5">
   <div class="container">
@@ -9,231 +12,405 @@
         <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
             <div class="row d-flex">
-
-               <!-- Unità Immobiliare -->
-               <div class="col-md-4 mb-3">
-                <label for="unitaImmobiliareId" class="form-label">Unità Immobiliare*</label>
+              <!-- Unità Immobiliare -->
+              <div class="col-md-4 mb-3">
+                <label for="unitaImmobiliareId" class="form-label"
+                  >Unità Immobiliare *</label
+                >
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-              
-                  <select class="form-control" id="unitaImmobiliareId" name="unitaImmobiliareId" formControlName="unitaImmobiliareId"  >
-                    <option *ngFor="let item of unita" [value]="item.id"  [selected]="item.id == editForm.get('unitaImmobiliareId')?.value">
-                      {{ item.descrizione }} <!-- {{editForm.get('unitaImmobiliareId')?.value | json}}
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="unitaImmobiliareId"
+                      name="unitaImmobiliareId"
+                      formControlName="unitaImmobiliareId"
+                    >
+                      <option
+                        *ngFor="let item of unita"
+                        [value]="item.id"
+                        [selected]="
+                          item.id == editForm.get('unitaImmobiliareId')?.value
+                        "
+                      >
+                        {{ item.descrizione }}
+                        <!-- {{editForm.get('unitaImmobiliareId')?.value | json}}
                       {{item.id | json}} -->
-                    </option>
-                  </select>
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                </div>
-               <span class="custom-error" *ngIf="editForm.get('unitaImmobiliareId')?.hasError('required') && editForm.get('unitaImmobiliareId')?.touched">
-                    Unità Immobiliare è obbligatorio!
-                   </span>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('unitaImmobiliareId')?.hasError('required') &&
+                    editForm.get('unitaImmobiliareId')?.touched
+                  "
+                >
+                  Unità Immobiliare è obbligatoria!
+                </span>
               </div>
-
 
               <!-- Richiedente -->
               <div class="col-md-4 mb-3">
-                <label for="richiedenteId" class="form-label">Richiedente*</label>
+                <label for="richiedenteId" class="form-label"
+                  >Richiedente *</label
+                >
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="richiedenteId" name="richiedenteId" formControlName="richiedenteId"  >
-                    <option *ngFor="let item of richiedente" [value]="item.id"  [selected]="item.id === editForm.get('richiedenteId')?.value">
-                      {{ item.descrizione }}
-                    </option>
-                  </select>
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="richiedenteId"
+                      name="richiedenteId"
+                      formControlName="richiedenteId"
+                    >
+                      <option
+                        *ngFor="let item of richiedente"
+                        [value]="item.id"
+                        [selected]="
+                          item.id === editForm.get('richiedenteId')?.value
+                        "
+                      >
+                        {{ item.descrizione }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                </div>
-               <span class="custom-error" *ngIf="editForm.get('richiedenteId')?.hasError('required') && editForm.get('richiedenteId')?.touched">
-                    Richiedente è obbligatorio!
-                   </span>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('richiedenteId')?.hasError('required') &&
+                    editForm.get('richiedenteId')?.touched
+                  "
+                >
+                  Richiedente è obbligatorio!
+                </span>
               </div>
 
-
-              <!-- Data Richiesta -->              
+              <!-- Data Richiesta -->
               <div class="col-md-4 mb-3">
-                <label for="dataRichiesta" class="form-label">Data Richiesta*</label>
-                
+                <label for="dataRichiesta" class="form-label"
+                  >Data Richiesta *</label
+                >
+
                 <mat-form-field appearance="fill" style="width: 100%">
-                  <input matInput [matDatepicker]="pickerdataRichiesta"  id="dataRichiesta" name="dataRichiesta"
-                  formControlName="dataRichiesta"/>
-                  <mat-datepicker-toggle matSuffix [for]="pickerdataRichiesta"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="pickerdataRichiesta"
+                    id="dataRichiesta"
+                    name="dataRichiesta"
+                    formControlName="dataRichiesta"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="pickerdataRichiesta"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #pickerdataRichiesta></mat-datepicker>
                 </mat-form-field>
 
-                <span class="custom-error" *ngIf="editForm.get('dataRichiesta')?.hasError('required') && editForm.get('dataRichiesta')?.touched">
-                    Data Richiesta è obbligatorio!
-                 </span>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('dataRichiesta')?.hasError('required') &&
+                    editForm.get('dataRichiesta')?.touched
+                  "
+                >
+                  Data Richiesta è obbligatorio!
+                </span>
 
-                <span class="custom-error" *ngIf="editForm.get('dataRichiesta')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataRichiesta')?.dirty || editForm.get('dataRichiesta')?.touched)">
-                 Inserisci una data valida nel formato gg/mm/aaaa!
-                  </span> 
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm
+                      .get('dataRichiesta')
+                      ?.hasError('matDatepickerParse') &&
+                    (editForm.get('dataRichiesta')?.dirty ||
+                      editForm.get('dataRichiesta')?.touched)
+                  "
+                >
+                  Inserisci una data valida nel formato gg/mm/aaaa!
+                </span>
               </div>
 
               <!-- Tipo Manutenzione -->
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="tipoManutenzione">Tipo Manutenzione*</label>
+                <label class="form-label" for="tipoManutenzione"
+                  >Tipo Manutenzione *</label
+                >
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="tipoManutenzione" name="tipoManutenzione"
-                    formControlName="tipoManutenzione">
-                    <!--  <option value="" selected="">
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="tipoManutenzione"
+                      name="tipoManutenzione"
+                      formControlName="tipoManutenzione"
+                    >
+                      <!--  <option value="" selected="">
                       Seleziona Tipo Manutenzione
                     </option> -->
-                    <option *ngFor="let tipoManutenzione of tipoMList" [value]="tipoManutenzione">
-                      {{ tipoManutenzione | capitalize }}
-                    </option>
-                  </select>
-                    </div>
+                      <option
+                        *ngFor="let tipoManutenzione of tipoMList"
+                        [value]="tipoManutenzione"
+                      >
+                        {{ tipoManutenzione | capitalize }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <span class="custom-error"
-                  *ngIf="editForm.get('tipoManutenzione')?.hasError('required') && editForm.get('tipoManutenzione')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('tipoManutenzione')?.hasError('required') &&
+                    editForm.get('tipoManutenzione')?.touched
+                  "
+                >
                   Tipo Manutenzione è obbligatorio!
                 </span>
               </div>
 
               <!-- Stato -->
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="stato">Stato*</label>
+                <label class="form-label" for="stato">Stato *</label>
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="stato" name="stato" formControlName="stato">
-                    <!--  <option value="" selected="">
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="stato"
+                      name="stato"
+                      formControlName="stato"
+                    >
+                      <!--  <option value="" selected="">
                                     Seleziona stato
                                   </option> -->
-                    <option *ngFor="let stato of statoList" [value]="stato">
-                      {{ stato | capitalize }}
-                    </option>
-                  </select>
-                    </div>
+                      <option *ngFor="let stato of statoList" [value]="stato">
+                        {{ stato | capitalize }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <span class="custom-error"
-                  *ngIf="editForm.get('stato')?.hasError('required') && editForm.get('stato')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('stato')?.hasError('required') &&
+                    editForm.get('stato')?.touched
+                  "
+                >
                   Stato Appalto è obbligatorio!
                 </span>
               </div>
 
-
               <!-- Priorità -->
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="priorita">Priorità*</label>
+                <label class="form-label" for="priorita">Priorità *</label>
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="priorita" name="priorita" formControlName="priorita">
-                    <!--  <option value="" selected="">
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="priorita"
+                      name="priorita"
+                      formControlName="priorita"
+                    >
+                      <!--  <option value="" selected="">
                                     Seleziona priorita
                                   </option> -->
-                    <option *ngFor="let priorita of prioritaList" [value]="priorita">
-                      {{ priorita | capitalize }}
-                    </option>
-                  </select>
-                    </div>
+                      <option
+                        *ngFor="let priorita of prioritaList"
+                        [value]="priorita"
+                      >
+                        {{ priorita | capitalize }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <span class="custom-error"
-                  *ngIf="editForm.get('priorita')?.hasError('required') && editForm.get('priorita')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('priorita')?.hasError('required') &&
+                    editForm.get('priorita')?.touched
+                  "
+                >
                   Priorità è obbligatorio!
                 </span>
               </div>
 
-
               <!-- Note Verifica -->
               <div class="col-md-4 mb-3">
-                <label for="noteVerifica" class="form-label">Note Verifica</label>
+                <label for="noteVerifica" class="form-label"
+                  >Note Verifica</label
+                >
                 <div class="input-group">
-                  <input type="text" id="noteVerifica" class="form-control" formControlName="noteVerifica" />
+                  <input
+                    type="text"
+                    id="noteVerifica"
+                    class="form-control"
+                    formControlName="noteVerifica"
+                  />
                 </div>
               </div>
 
               <!-- Data Approvazione -->
               <div class="col-md-4 mb-3">
-                <label for="dataApprovazione" class="form-label">Data Approvazione</label>
+                <label for="dataApprovazione" class="form-label"
+                  >Data Approvazione</label
+                >
                 <mat-form-field appearance="fill" style="width: 100%">
-                  <input matInput [matDatepicker]="pickerdataApprovazione"  id="dataApprovazione" name="dataApprovazione"
-                  formControlName="dataApprovazione"/>
-                  <mat-datepicker-toggle matSuffix [for]="pickerdataApprovazione"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="pickerdataApprovazione"
+                    id="dataApprovazione"
+                    name="dataApprovazione"
+                    formControlName="dataApprovazione"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="pickerdataApprovazione"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #pickerdataApprovazione></mat-datepicker>
                 </mat-form-field>
 
-           <!--      <span class="custom-error" *ngIf="editForm.get('dataApprovazione')?.hasError('required') && editForm.get('dataApprovazione')?.touched">
+                <!--      <span class="custom-error" *ngIf="editForm.get('dataApprovazione')?.hasError('required') && editForm.get('dataApprovazione')?.touched">
                     Data Approvazione è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataApprovazione')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataApprovazione')?.dirty || editForm.get('dataApprovazione')?.touched)">
-                 Inserisci una data valida nel formato gg/mm/aaaa!
-                  </span> 
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm
+                      .get('dataApprovazione')
+                      ?.hasError('matDatepickerParse') &&
+                    (editForm.get('dataApprovazione')?.dirty ||
+                      editForm.get('dataApprovazione')?.touched)
+                  "
+                >
+                  Inserisci una data valida nel formato gg/mm/aaaa!
+                </span>
               </div>
-
 
               <!-- Data Pianificazione -->
               <div class="col-md-4 mb-3">
-                <label for="dataPianificazione" class="form-label">Data Pianificazione</label>
+                <label for="dataPianificazione" class="form-label"
+                  >Data Pianificazione</label
+                >
                 <mat-form-field appearance="fill" style="width: 100%">
-                  <input matInput [matDatepicker]="pickerdataPianificazione"  id="dataPianificazione" name="dataPianificazione"
-                  formControlName="dataPianificazione"/>
-                  <mat-datepicker-toggle matSuffix [for]="pickerdataPianificazione"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="pickerdataPianificazione"
+                    id="dataPianificazione"
+                    name="dataPianificazione"
+                    formControlName="dataPianificazione"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="pickerdataPianificazione"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #pickerdataPianificazione></mat-datepicker>
                 </mat-form-field>
-<!-- 
+                <!-- 
                 <span class="custom-error" *ngIf="editForm.get('dataPianificazione')?.hasError('required') && editForm.get('dataPianificazione')?.touched">
                     Data Pianificazione è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataPianificazione')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataPianificazione')?.dirty || editForm.get('dataPianificazione')?.touched)">
-                 Inserisci una data valida nel formato gg/mm/aaaa!
-                  </span> 
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm
+                      .get('dataPianificazione')
+                      ?.hasError('matDatepickerParse') &&
+                    (editForm.get('dataPianificazione')?.dirty ||
+                      editForm.get('dataPianificazione')?.touched)
+                  "
+                >
+                  Inserisci una data valida nel formato gg/mm/aaaa!
+                </span>
               </div>
-
 
               <!-- Data Inizio Lavori -->
               <div class="col-md-4 mb-3">
-                <label for="dataInizioLavori" class="form-label">Data Inizio Lavori</label>
+                <label for="dataInizioLavori" class="form-label"
+                  >Data Inizio Lavori</label
+                >
                 <mat-form-field appearance="fill" style="width: 100%">
-                  <input matInput [matDatepicker]="pickerdataInizioLavori"  id="dataInizioLavori" name="dataInizioLavori"
-                  formControlName="dataInizioLavori"/>
-                  <mat-datepicker-toggle matSuffix [for]="pickerdataInizioLavori"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="pickerdataInizioLavori"
+                    id="dataInizioLavori"
+                    name="dataInizioLavori"
+                    formControlName="dataInizioLavori"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="pickerdataInizioLavori"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #pickerdataInizioLavori></mat-datepicker>
                 </mat-form-field>
-<!-- 
+                <!-- 
                 <span class="custom-error" *ngIf="editForm.get('dataInizioLavori')?.hasError('required') && editForm.get('dataInizioLavori')?.touched">
                    Data Inizio Lavori è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataInizioLavori')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataInizioLavori')?.dirty || editForm.get('dataInizioLavori')?.touched)">
-                 Inserisci una data valida nel formato gg/mm/aaaa!
-                  </span> 
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm
+                      .get('dataInizioLavori')
+                      ?.hasError('matDatepickerParse') &&
+                    (editForm.get('dataInizioLavori')?.dirty ||
+                      editForm.get('dataInizioLavori')?.touched)
+                  "
+                >
+                  Inserisci una data valida nel formato gg/mm/aaaa!
+                </span>
               </div>
-
-
 
               <!-- Data Fine Lavori -->
               <div class="col-md-4 mb-3">
-                <label for="dataFineLavori" class="form-label">Data Fine Lavori</label>
+                <label for="dataFineLavori" class="form-label"
+                  >Data Fine Lavori</label
+                >
                 <mat-form-field appearance="fill" style="width: 100%">
-                  <input matInput [matDatepicker]="pickerdataFineLavori"  id="dataFineLavori" name="dataFineLavori"
-                  formControlName="dataFineLavori"/>
-                  <mat-datepicker-toggle matSuffix [for]="pickerdataFineLavori"></mat-datepicker-toggle>
+                  <input
+                    matInput
+                    [matDatepicker]="pickerdataFineLavori"
+                    id="dataFineLavori"
+                    name="dataFineLavori"
+                    formControlName="dataFineLavori"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="pickerdataFineLavori"
+                  ></mat-datepicker-toggle>
                   <mat-datepicker #pickerdataFineLavori></mat-datepicker>
                 </mat-form-field>
-<!-- 
+                <!-- 
                 <span class="custom-error" *ngIf="editForm.get('dataFineLavori')?.hasError('required') && editForm.get('dataFineLavori')?.touched">
                    Data Fine Lavori è obbligatorio!
                  </span>
  -->
-                <span class="custom-error" *ngIf="editForm.get('dataFineLavori')?.hasError('matDatepickerParse')
-                 && (editForm.get('dataFineLavori')?.dirty || editForm.get('dataFineLavori')?.touched)">
-                 Inserisci una data valida nel formato gg/mm/aaaa!
-                  </span> 
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm
+                      .get('dataFineLavori')
+                      ?.hasError('matDatepickerParse') &&
+                    (editForm.get('dataFineLavori')?.dirty ||
+                      editForm.get('dataFineLavori')?.touched)
+                  "
+                >
+                  Inserisci una data valida nel formato gg/mm/aaaa!
+                </span>
               </div>
-
-
 
               <!-- Esito Collaudo -->
               <div class="col-md-4 mb-3">
-                <label for="esitoCollaudo" class="form-label">Esito Collaudo</label>
+                <label for="esitoCollaudo" class="form-label"
+                  >Esito Collaudo</label
+                >
                 <div class="input-group">
-                  <input type="text" id="esitoCollaudo" class="form-control" formControlName="esitoCollaudo" />
+                  <input
+                    type="text"
+                    id="esitoCollaudo"
+                    class="form-control"
+                    formControlName="esitoCollaudo"
+                  />
                 </div>
               </div>
 
@@ -241,136 +418,246 @@
               <div class="col-md-4 mb-3">
                 <label for="piano" class="form-label">Piano</label>
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="piano" name="piano" formControlName="pianoId">
-                    <option [ngValue]="null">Seleziona piano</option>
-                    <option *ngFor="let item of piani" [value]="item.id"  [selected]="item.id === editForm.get('pianoId')?.value">
-                      {{ item.descrizione }}
-                    </option>
-                  </select>
-                    </div>
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="piano"
+                      name="piano"
+                      formControlName="pianoId"
+                    >
+                      <option [ngValue]="null">Seleziona piano</option>
+                      <option
+                        *ngFor="let item of piani"
+                        [value]="item.id"
+                        [selected]="item.id === editForm.get('pianoId')?.value"
+                      >
+                        {{ item.descrizione }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-           <!--     <span class="custom-error" *ngIf="editForm.get('pianoId')?.hasError('required') && editForm.get('pianoId')?.touched">>
+                <!--     <span class="custom-error" *ngIf="editForm.get('pianoId')?.hasError('required') && editForm.get('pianoId')?.touched">>
                     Piano è obbligatorio!
                    </span> -->
               </div>
-
 
               <!-- Appalto -->
               <div class="col-md-4 mb-3">
                 <label for="appalto" class="form-label">Appalto</label>
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="appalto" name="appalto" formControlName="appaltoId">
-                    <option [ngValue]="null">Seleziona appalto</option>
-                    <option *ngFor="let item of appalti" [value]="item.id"  [selected]="item.id === editForm.get('appaltoId')?.value">
-                      {{ item.codiceCIG }}
-                    </option>
-                  </select>
-                    </div>
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="appalto"
+                      name="appalto"
+                      formControlName="appaltoId"
+                    >
+                      <option [ngValue]="null">Seleziona appalto</option>
+                      <option
+                        *ngFor="let item of appalti"
+                        [value]="item.id"
+                        [selected]="
+                          item.id === editForm.get('appaltoId')?.value
+                        "
+                      >
+                        {{ item.codiceCIG }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              <!--  <span class="custom-error" *ngIf="editForm.get('appaltoId')?.hasError('required') && editForm.get('appaltoId')?.touched">>
+                <!--  <span class="custom-error" *ngIf="editForm.get('appaltoId')?.hasError('required') && editForm.get('appaltoId')?.touched">>
                 Appalto è obbligatorio!
                    </span> -->
               </div>
 
               <!-- Origine Richiesta  -->
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="origineRichiesta">Origine Richiesta*</label>
+                <label class="form-label" for="origineRichiesta"
+                  >Origine Richiesta *</label
+                >
                 <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="origineRichiesta" name="origineRichiesta" formControlName="origineRichiesta">
-                    <!--  <option value="" selected="">
+                  <div class="input-group select-wrapper w-100">
+                    <select
+                      class="form-control"
+                      id="origineRichiesta"
+                      name="origineRichiesta"
+                      formControlName="origineRichiesta"
+                    >
+                      <!--  <option value="" selected="">
                                       Seleziona Origine Richiesta
                                     </option> -->
-                    <option *ngFor="let origine of origineList" [value]="origine">
-                      {{ origine | capitalize }}
-                    </option>
-                  </select>
-                    </div>
+                      <option
+                        *ngFor="let origine of origineList"
+                        [value]="origine"
+                      >
+                        {{ origine | capitalize }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-                <span class="custom-error"
-                  *ngIf="editForm.get('origineRichiesta')?.hasError('required') && editForm.get('origineRichiesta')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('origineRichiesta')?.hasError('required') &&
+                    editForm.get('origineRichiesta')?.touched
+                  "
+                >
                   Origine Richiesta è obbligatorio!
                 </span>
               </div>
               <!-- Budget Stimato -->
               <div class="col-md-4 mb-3">
-                <label for="budgetStimato" class="form-label">Budget Stimato</label>
+                <label for="budgetStimato" class="form-label"
+                  >Budget Stimato</label
+                >
                 <div class="input-group">
-                  <input type="text" id="budgetStimato" class="form-control" formControlName="budgetStimato" />
+                  <input
+                    type="text"
+                    id="budgetStimato"
+                    class="form-control"
+                    formControlName="budgetStimato"
+                  />
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetStimato')?.hasError('pattern') && editForm.get('budgetStimato')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('budgetStimato')?.hasError('pattern') &&
+                    editForm.get('budgetStimato')?.touched
+                  "
+                >
                   Inserisci un budget valido!
                 </span>
               </div>
 
               <!-- Budget Effettivo -->
               <div class="col-md-4 mb-3">
-                <label for="budgetEffettivo" class="form-label">Budget Effettivo</label>
+                <label for="budgetEffettivo" class="form-label"
+                  >Budget Effettivo</label
+                >
                 <div class="input-group">
-                  <input type="text" id="budgetEffettivo" class="form-control" formControlName="budgetEffettivo" />
+                  <input
+                    type="text"
+                    id="budgetEffettivo"
+                    class="form-control"
+                    formControlName="budgetEffettivo"
+                  />
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('budgetEffettivo')?.hasError('pattern') && editForm.get('budgetEffettivo')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('budgetEffettivo')?.hasError('pattern') &&
+                    editForm.get('budgetEffettivo')?.touched
+                  "
+                >
                   Inserisci un budget valido!
                 </span>
               </div>
 
               <!-- Periodo Pianificato -->
               <div class="col-md-4 mb-3">
-                <label for="periodoPianificato" class="form-label">Periodo Pianificato</label>
+                <label for="periodoPianificato" class="form-label"
+                  >Periodo Pianificato</label
+                >
                 <div class="input-group">
-                  <input type="text" id="periodoPianificato" class="form-control"
-                    formControlName="periodoPianificato" />
+                  <input
+                    type="text"
+                    id="periodoPianificato"
+                    class="form-control"
+                    formControlName="periodoPianificato"
+                  />
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('periodoPianificato')?.hasError('required') && editForm.get('periodoPianificato')?.touched">
-                  Periodo Pianificato  è obbligatorio!
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('periodoPianificato')?.hasError('required') &&
+                    editForm.get('periodoPianificato')?.touched
+                  "
+                >
+                  Periodo Pianificato è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('periodoPianificato')?.hasError('pattern') && editForm.get('periodoPianificato')?.touched">
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('periodoPianificato')?.hasError('pattern') &&
+                    editForm.get('periodoPianificato')?.touched
+                  "
+                >
                   Periodo Pianificato non valido(es. "Q1 2024" / "GEN 2024" )!
                 </span>
               </div>
 
-              
-
               <!-- Descrizione -->
               <div class="col-md-8 mb-3">
-                <label for="descrizione" class="form-label">Descrizione*</label>
+                <label for="descrizione" class="form-label"
+                  >Descrizione *</label
+                >
                 <div class="input-group">
-                  <textarea type="text" id="descrizione" class="form-control" formControlName="descrizione" minlength="10" maxlength="1000" rows="4"></textarea>
+                  <textarea
+                    type="text"
+                    id="descrizione"
+                    class="form-control"
+                    formControlName="descrizione"
+                    minlength="10"
+                    maxlength="1000"
+                    rows="4"
+                  ></textarea>
                 </div>
-                
-                <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('required') && editForm.get('descrizione')?.touched">
+
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('descrizione')?.hasError('required') &&
+                    editForm.get('descrizione')?.touched
+                  "
+                >
                   Descrizione è obbligatorio!
-               </span>
+                </span>
 
-               <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('minlength') && editForm.get('descrizione')?.touched">
-                Descrizione deve contenere tra 10 e 1000 caratteri!!
-             </span>
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    editForm.get('descrizione')?.hasError('minlength') &&
+                    editForm.get('descrizione')?.touched
+                  "
+                >
+                  Descrizione deve contenere tra 10 e 1000 caratteri!!
+                </span>
               </div>
-
-
             </div>
           </div>
 
           <!-- Buttons -->
           <div class="col-12 mt-5 d-flex justify-content-between">
-            <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
-              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
               Indietro
             </button>
 
             <div>
-              <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm()">
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm()"
+              >
                 <i class="bi bi-arrow-counterclockwise me-1"></i>
                 Reset
               </button>
 
-              <button type="submit" class="btn btn-primary py-2" [disabled]="editForm.invalid">
+              <button
+                type="submit"
+                class="btn btn-primary py-2"
+                [disabled]="editForm.invalid"
+              >
                 Salva
               </button>
             </div>
-
           </div>
         </form>
       </div>

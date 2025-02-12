@@ -104,11 +104,11 @@ export class PatrimonioComponent implements OnInit {
         this.patrimonioList = this.patrimonioList.filter(
           (patrimonio) => patrimonio.id !== this.patrimonioId
         );
-        // this.notificationService.success(`Unità Immobiliare "${this.patrimonioId}" deleted successfully.`);
+        // this.notificationService.success(`Unità Immobiliare "${this.patrimonioId}" eliminata con successo.`);
       },
       error: (error: any) => {
         console.error(error);
-        // this.notificationService.error(`Failed to delete Unità Immobiliare "${this.patrimonioId}". Please try again.`);
+        // this.notificationService.error(`Impossibile eliminare l'Unità Immobiliare "${this.patrimonioId}". Riprova.`);
       },
     });
   }

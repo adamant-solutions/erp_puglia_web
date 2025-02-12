@@ -582,8 +582,11 @@ export class EditPatrimonioComponent implements OnInit {
         },
         error: (err) => {
           this.errorMessage =
-            'Failed to update Unità Immobiliare. Please try again.';
-          console.error('Error updating Unità Immobiliare:', err);
+            "Impossibile aggiornare l'Unità Immobiliare. Riprova.";
+          console.error(
+            "Errore durante l'aggiornamento dell'Unità Immobiliare:",
+            err
+          );
         },
       });
   }

@@ -57,7 +57,7 @@
             <label class="form-label">Unità Immobiliare*</label>
             <div class="input-group" [ngClass]="{'is-invalid': submitted && contratoForm.get('unitaImmobiliare')?.invalid}">
               <select class="form-control" formControlName="unitaImmobiliare">
-                <option [ngValue]="null">Seleziona unità immobiliare</option>
+                <option [ngValue]="null">Seleziona un'Unità Immobiliare</option>
                 <option *ngFor="let unita of unitaImmobiliariOptions" [ngValue]="unita">
                   {{unita.descrizione}}
                 </option>
