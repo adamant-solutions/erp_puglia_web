@@ -1,7 +1,7 @@
 export interface Patrimonio {
   id: number;
 
-  metriQuadri: number; // Float
+  metriQuadri: number; // Required, Float
   quartiere: string; // Required
   tipoAmministrazione: TipoAmministrazione; // Enum, Required
   statoDisponibilita: StatoDisponibilita; // Enum, Required
