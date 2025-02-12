@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Appalto, Piani, StatoAppalto, TipoAppalto } from 'src/app/core/models/manutenzione.model';
 import { AppaltiService } from 'src/app/core/services/manutenzione-services/appalti.service';
 import { PianiService } from 'src/app/core/services/manutenzione-services/piani.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-appalti',
@@ -32,11 +33,12 @@ appalto: Appalto = {
   dataPubblicazione: '',
   dataScadenza: '',
   dataAggiudicazione: '',
-  impresaAggiudicatariaId: 0,
-  pianoId: 0,
-  importo: 0,
+  impresaAggiudicatariaId: null,
+  pianoId: null,
+  importo: null,
   note: ''
 }
+submitted: boolean = false;
 
 pianiList: Piani[] = [];
 statoList: StatoAppalto[] = [
@@ -60,7 +62,7 @@ tipoAppaltoList: TipoAppalto[]=[
 private route = inject(ActivatedRoute);
 private router = inject(Router);
 
-constructor(private appaltoSrc: AppaltiService,private pSrc: PianiService,private datePipe: DatePipe) {}
+constructor(private appaltoSrc: AppaltiService,private pSrc: PianiService,private datePipe: DatePipe,private notificationService : NotificationService) {}
 
 ngOnInit(): void {
   this.route.data.subscribe(({ dataPiano }) => {
@@ -88,6 +90,7 @@ formatDate(date: string): string {
 }
 
 onSubmit(form: NgForm) {
+  this.submitted = true;
   const sendData = {
     ...form.value,
     dataPubblicazione: this.formatDate(form.controls['dataPubblicazione'].value),
@@ -98,11 +101,19 @@ onSubmit(form: NgForm) {
     console.log('Form Submitted', sendData);
     this.appaltoSrc.addAppalto(sendData).subscribe({
       next: (res) => {
-        alert('Dati salvati con successo!');
+        this.notificationService.addNotification({
+          message: 'Dati salvati con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['manutenzione/appalti/appalto-dettagli/' + res.id]);
       },
       error: (err) =>{
-        alert('Error!');
+        this.notificationService.addNotification({
+          message: "Si è verificato un errore!",
+          type: 'error',
+          timeout: 5000,
+        });
       }
     })
 

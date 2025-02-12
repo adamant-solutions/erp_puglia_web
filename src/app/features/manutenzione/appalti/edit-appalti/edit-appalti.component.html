@@ -14,30 +14,32 @@
               <div class="col-md-4 mb-3">
                 <label for="codiceCIG" class="form-label">Codice CIG*</label>
                 <div class="input-group">
-                <input type="text" id="codiceCIG" class="form-control" formControlName="codiceCIG" maxlength="10" />
+                <input type="text" id="codiceCIG" class="form-control" formControlName="codiceCIG" maxlength="10" [ngClass]="{'is-invalid': editForm.get('codiceCIG')?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('codiceCIG')?.hasError('required') && editForm.get('codiceCIG')?.touched">
+                <div class="custom-error" *ngIf="editForm.get('codiceCIG')?.invalid && submitted">
+                <span *ngIf="editForm.get('codiceCIG')?.hasError('required')">
                   Codice CIG è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('codiceCIG')?.hasError('minlength') && editForm.get('codiceCIG')?.touched">
+                <span *ngIf="editForm.get('codiceCIG')?.hasError('minlength')">
                   Codice CIG deve essere lungo 10 caratteri.!
                 </span>
               </div>
-
+            </div>
               <!-- Codice CUP -->
               <div class="col-md-4 mb-3">
                 <label for="codiceCUP" class="form-label">Codice CUP*</label>
                 <div class="input-group">
-                <input type="text" id="codiceCUP" class="form-control" formControlName="codiceCUP" maxlength="15"/>
+                <input type="text" id="codiceCUP" class="form-control" formControlName="codiceCUP" maxlength="15" [ngClass]="{'is-invalid': editForm.get('codiceCUP')?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('codiceCUP')?.hasError('required') && editForm.get('codiceCUP')?.touched">
+                <div class="custom-error" *ngIf="editForm.get('codiceCUP')?.invalid && submitted">
+                <span *ngIf="editForm.get('codiceCUP')?.hasError('required')">
                   Codice CUP è obbligatorio!
                 </span>
-                <span class="custom-error" *ngIf="editForm.get('codiceCUP')?.hasError('minlength') && editForm.get('codiceCUP')?.touched">
+                <span *ngIf="editForm.get('codiceCUP')?.hasError('minlength')">
                   Codice CUP deve essere lungo 15 caratteri.!
                 </span>
               </div>
-
+            </div>
               <!-- Tipo Appalto --> 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="tipoAppalto"
@@ -51,6 +53,7 @@
                     id="tipoAppalto"
                     name="tipoAppalto"
                     formControlName="tipoAppalto" 
+                    [ngClass]="{'is-invalid': editForm.get('tipoAppalto')?.invalid && submitted}"
                   >
                    <!--  <option value="" selected="">
                       Seleziona Tipo Appalto
@@ -64,7 +67,7 @@
                   </select>
                     </div>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('tipoAppalto')?.hasError('required') && editForm.get('tipoAppalto')?.touched">
+                <span class="custom-error" *ngIf="editForm.get('tipoAppalto')?.hasError('required') && submitted">
                   Tipo Appalto è obbligatorio!
                 </span>
               </div>
@@ -79,6 +82,7 @@
                     id="stato"
                     name="stato"
                     formControlName="stato" 
+                    [ngClass]="{'is-invalid': editForm.get('stato')?.invalid && submitted}"
                   >
                    <!--  <option value="" selected="">
                       Seleziona stato
@@ -92,7 +96,7 @@
                   </select>
                       </div>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('stato')?.hasError('required') && editForm.get('stato')?.touched">
+                <span class="custom-error" *ngIf="editForm.get('stato')?.hasError('required') && submitted">
                   Stato Appalto è obbligatorio!
                 </span>
               </div>
@@ -124,8 +128,8 @@
                   <mat-datepicker #pickerdataPubblicazione></mat-datepicker>
                 </mat-form-field>
 
-                <span class="custom-error" *ngIf="editForm.get('dataPubblicazione')?.hasError('required') && editForm.get('dataPubblicazione')?.touched">
-                    Data Pubblicazione è obbligatorio!
+                <span class="custom-error" *ngIf="editForm.get('dataPubblicazione')?.hasError('required') && submitted">
+                    Data Pubblicazione è obbligatoria!
                  </span>
 
                 <span class="custom-error" *ngIf="editForm.get('dataPubblicazione')?.hasError('matDatepickerParse')
@@ -147,8 +151,8 @@
                   <mat-datepicker #pickerdataScadenza></mat-datepicker>
                 </mat-form-field>
 
-                <span class="custom-error" *ngIf="editForm.get('dataScadenza')?.hasError('required') && editForm.get('dataScadenza')?.touched">
-                  Data Scadenza è obbligatorio!
+                <span class="custom-error" *ngIf="editForm.get('dataScadenza')?.hasError('required') && submitted">
+                  Data Scadenza è obbligatoria!
                  </span>
 
                 <span class="custom-error" *ngIf="editForm.get('dataScadenza')?.hasError('matDatepickerParse')
@@ -182,6 +186,7 @@
                       <div class="d-flex align-items-center">
                         <div class="input-group select-wrapper w-100">
                     <select class="form-control" id="impresaAggiudicatariaId" name="impresaAggiudicatariaId" formControlName="impresaAggiudicatariaId"  ><!--  (change)="selectPiano($event)" -->
+                      <option [ngValue]="null">Seleziona impresa</option>
                       <option *ngFor="let imprese of impreseList" [value]="imprese.id"  [selected]="imprese.id === editForm.get('impresaAggiudicatariaId')?.value">
                         {{ imprese.ragioneSociale }}
                       </option>
@@ -195,17 +200,18 @@
   
                   <!-- Oggetto -->
                   <div class="col-md-8 mb-3">
-                    <label for="oggetto" class="form-label">Oggetto</label>
+                    <label for="oggetto" class="form-label">Oggetto*</label>
                     <div class="input-group">
-                    <textarea id="oggetto" class="form-control" formControlName="oggetto" minlength="10" maxlength="500" rows="3"></textarea></div>
-                    <span class="custom-error" *ngIf="editForm.get('oggetto')?.hasError('required') && editForm.get('oggetto')?.touched">
+                    <textarea id="oggetto" class="form-control" formControlName="oggetto" minlength="10" maxlength="500" rows="3" [ngClass]="{'is-invalid': editForm.get('oggetto')?.invalid && submitted}"></textarea></div>
+                    <div class="custom-error" *ngIf="editForm.get('oggetto')?.invalid && submitted">
+                    <span *ngIf="editForm.get('oggetto')?.hasError('required')">
                       Oggetto è obbligatorio!
                     </span>
-                    <span class="custom-error" *ngIf="editForm.get('oggetto')?.hasError('minlength') && editForm.get('oggetto')?.touched">
+                    <span *ngIf="editForm.get('oggetto')?.hasError('minlength')">
                       L'oggetto deve contenere tra 10 e 500 caratteri!
                     </span>
                   </div>
-                  
+                </div>
             </div>
           </div>
 
@@ -222,7 +228,7 @@
               Reset
             </button>
 
-            <button type="submit" class="btn btn-primary py-2" [disabled]="editForm.invalid">
+            <button type="submit" class="btn btn-primary py-2">
               Salva
             </button>
           </div>

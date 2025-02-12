@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Appalto, Imprese, StatoAppalto, TipoAppalto } from 'src/app/core/models/manutenzione.model';
-import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { AppaltiService } from 'src/app/core/services/manutenzione-services/appalti.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-appalti',
@@ -36,6 +36,7 @@ export class EditAppaltiComponent {
   }
 
   editForm!: FormGroup;
+  submitted: boolean = false;
   impreseList: Imprese[] = [];
   statoList: StatoAppalto[] = [
     StatoAppalto.IN_PROGRAMMAZIONE,
@@ -60,7 +61,7 @@ export class EditAppaltiComponent {
   private router = inject(Router);
 
 
-  constructor(private appSrc: AppaltiService,private bootstrap: BootstrapService,private fb: FormBuilder) { }
+  constructor(private appSrc: AppaltiService,private fb: FormBuilder,private notificationService: NotificationService) { }
   ngOnInit() {
     this.route.data.subscribe(({ data , dataImprese}) => {
       this.appalto = data
@@ -88,6 +89,7 @@ export class EditAppaltiComponent {
   }  
 
   onSubmit() {
+    this.submitted  = true
    // console.log('Form Submitted', this.editForm.value);
     if (this.editForm.valid) {
       const sendData = {
@@ -97,11 +99,19 @@ export class EditAppaltiComponent {
       console.log('Form Submitted', this.editForm.value);
       this.appSrc.editAppalto(sendData).subscribe({
         next: (res) => {
-          alert('Dati salvati con successo!');
+          this.notificationService.addNotification({
+            message: 'Dati salvati con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['manutenzione/appalti/appalto-dettagli/' + this.appalto.id]);
         },
         error: (err) =>{
-          alert('Error!');
+          this.notificationService.addNotification({
+            message: "Si è verificato un errore!",
+            type: 'error',
+            timeout: 5000,
+          });
         }
       })
   

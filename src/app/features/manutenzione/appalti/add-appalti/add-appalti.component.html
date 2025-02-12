@@ -15,66 +15,70 @@
               <div class="col-md-4 mb-3">
                 <label for="codiceCIG" class="form-label">Codice CIG*</label>
                 <div class="input-group">
-                  <input type="text" id="codiceCIG" class="form-control" name="codiceCIG" [(ngModel)]="appalto.codiceCIG" maxlength="10" required #CIGRef="ngModel"/>
+                  <input type="text" id="codiceCIG" class="form-control" name="codiceCIG" [(ngModel)]="appalto.codiceCIG" maxlength="10" required #CIGRef="ngModel" [ngClass]="{'is-invalid': CIGRef?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="CIGRef?.errors?.['required'] && (CIGRef.dirty || CIGRef.touched)">
+                <div  class="custom-error" *ngIf="CIGRef?.invalid && submitted">
+                <span *ngIf="CIGRef?.errors?.['required']">
                     Codice CIG è obbligatorio!
                    </span>
-                   <span class="custom-error" *ngIf="CIGRef?.errors?.['maxlength'] && (CIGRef.dirty || CIGRef.touched)">
+                   <span class="custom-error" *ngIf="CIGRef?.errors?.['maxlength']">
                     Codice CIG deve essere lungo 10 caratteri.!
                    </span>
               </div>
-
+</div>
               <!-- Codice CUP -->
               <div class="col-md-4 mb-3">
                 <label for="codiceCUP" class="form-label">Codice CUP*</label>
                 <div class="input-group">
-                  <input type="text" id="codiceCUP" class="form-control" name="codiceCUP" [(ngModel)]="appalto.codiceCUP" maxlength="15" required #CUPref="ngModel"/>
+                  <input type="text" id="codiceCUP" class="form-control" name="codiceCUP" [(ngModel)]="appalto.codiceCUP" maxlength="15" required #CUPref="ngModel"  [ngClass]="{'is-invalid': CUPref?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="CUPref?.errors?.['required'] && (CUPref.dirty || CUPref.touched)">
+                <div class="custom-error" *ngIf="CUPref?.invalid && submitted">
+                <span *ngIf="CUPref?.errors?.['required']">
                     Codice CUP è obbligatorio!
                    </span>
-                   <span class="custom-error" *ngIf="CUPref?.errors?.['maxlength'] && (CUPref.dirty || CUPref.touched)">
+                   <span *ngIf="CUPref?.errors?.['maxlength']">
                     Codice CUP deve essere lungo 15 caratteri.!
                    </span>
               </div>
-
+            </div>
               <!-- Tipo Appalto --> 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="tipoAppalto">Tipo Appalto*</label>
                 <div class="d-flex align-items-center">
                     <div class="input-group select-wrapper w-100">
 
-                  <select class="form-control" id="tipoAppalto" name="tipoAppalto" [(ngModel)]="appalto.tipoAppalto" required #tiporef="ngModel">
+                  <select class="form-control" id="tipoAppalto" name="tipoAppalto" [(ngModel)]="appalto.tipoAppalto" required #tiporef="ngModel"  [ngClass]="{'is-invalid': tiporef?.invalid && submitted}">
                     <option *ngFor="let tipoAppalto of tipoAppaltoList" [value]="tipoAppalto">
                       {{ tipoAppalto | capitalize }}
                     </option>
                   </select>
                 </div>
                 </div>
-                <span class="custom-error" *ngIf="tiporef?.errors?.['required'] && (tiporef.dirty || tiporef.touched)">
+                <div class="custom-error" *ngIf="tiporef?.invalid && submitted">
+                <span *ngIf="tiporef?.errors?.['required']">
                     Tipo Appalto è obbligatorio!
                    </span>
               </div>
-
+</div>
               <!-- Stato -->
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="stato">Stato*</label>
                 <div class="d-flex align-items-center">
                     <div class="input-group select-wrapper w-100">
      
-                  <select class="form-control" id="stato" name="stato" [(ngModel)]="appalto.stato" required #statoRef="ngModel">
+                  <select class="form-control" id="stato" name="stato" [(ngModel)]="appalto.stato" required #statoRef="ngModel" [ngClass]="{'is-invalid': statoRef?.invalid && submitted}">
                     <option *ngFor="let stato of statoList" [value]="stato">
                       {{ stato | capitalize }}
                     </option>
                   </select>
                 </div>
                 </div>
-                <span class="custom-error" *ngIf="statoRef?.errors?.['required'] && (statoRef.dirty || statoRef.touched)">
+                <div class="custom-error" *ngIf="statoRef?.invalid && submitted">
+                <span *ngIf="statoRef?.errors?.['required']">
                     Stato Appalto è obbligatorio!
                    </span>
               </div>
-  
+            </div>
               <!-- Importo Base Asta -->
            <!--    <div class="col-md-4 mb-3">
                 <label for="importoBaseAsta" class="form-label">Importo Base Asta</label>
@@ -96,16 +100,17 @@
               <div class="col-md-4 mb-3">
                 <label for="importo" class="form-label">Importo</label>
                 <div class="input-group">
-                  <input type="text" id="importo" class="form-control" name="importo" [(ngModel)]="appalto.importo"  required pattern="^\d+(\.\d+)?$" #importoRef="ngModel"/>
+                  <input type="text" id="importo" class="form-control" name="importo" [(ngModel)]="appalto.importo"  required pattern="^\d+(\.\d+)?$" #importoRef="ngModel" [ngClass]="{'is-invalid': importoRef?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="importoRef?.errors?.['required'] && (importoRef.dirty || importoRef.touched)">
+                <div class="custom-error" *ngIf="importoRef?.invalid && submitted">
+                <span *ngIf="importoRef?.errors?.['required']">
                     Importo è obbligatorio!
                    </span>
-                   <span class="custom-error" *ngIf="importoRef?.errors?.['pattern'] && (importoRef.dirty || importoRef.touched)">
+                   <span *ngIf="importoRef?.errors?.['pattern']">
                     Importo non valido!
                    </span>
               </div>
-
+            </div>
               <!-- Data Pubblicazione -->
 
                    <div class="col-md-4 mb-3">
@@ -113,22 +118,21 @@
                     
                     <mat-form-field appearance="fill" style="width: 100%">
                       <input matInput [matDatepicker]="pickerdataPubblicazione"  id="dataPubblicazione" name="dataPubblicazione"
-                        [(ngModel)]="appalto.dataPubblicazione" #dataPubblicazioneRef="ngModel" required />
+                        [(ngModel)]="appalto.dataPubblicazione" #dataPubblicazioneRef="ngModel" required/>
                       <mat-datepicker-toggle matSuffix [for]="pickerdataPubblicazione"></mat-datepicker-toggle>
                       <mat-datepicker #pickerdataPubblicazione></mat-datepicker>
                     </mat-form-field>
 
-                    <span class="custom-error" *ngIf="dataPubblicazioneRef?.errors?.['required']
-                    && (dataPubblicazioneRef.dirty || dataPubblicazioneRef.touched)">
+                    <div class="custom-error" *ngIf="dataPubblicazioneRef?.invalid && submitted">
+                    <span *ngIf="dataPubblicazioneRef?.errors?.['required']">
                         Data Pubblicazione è obbligatorio!
                      </span>
 
-                    <span class="custom-error" *ngIf="dataPubblicazioneRef?.errors?.['matDatepickerParse']
-                     && (dataPubblicazioneRef.dirty || dataPubblicazioneRef.touched)">
+                    <span *ngIf="dataPubblicazioneRef?.errors?.['matDatepickerParse'] && (dataPubblicazioneRef.dirty || dataPubblicazioneRef.touched)">
                      Inserisci una data valida nel formato gg/mm/aaaa!
                       </span>
                   </div>
-
+</div>
 
               <!-- Data Scadenza -->
               <div class="col-md-4 mb-3">
@@ -140,19 +144,18 @@
                   <mat-datepicker-toggle matSuffix [for]="pickerdataScadenza"></mat-datepicker-toggle>
                   <mat-datepicker #pickerdataScadenza></mat-datepicker>
                 </mat-form-field>
-
-                <span class="custom-error" *ngIf="dataScadenzaRef?.errors?.['required']
-                && (dataScadenzaRef.dirty || dataScadenzaRef.touched)">
+                <div class="custom-error" *ngIf="dataScadenzaRef?.invalid && submitted">
+                <span *ngIf="dataScadenzaRef?.errors?.['required']">
                     Data Scadenza è obbligatorio!
                  </span>
 
 
-                <span class="custom-error" *ngIf="dataScadenzaRef?.errors?.['matDatepickerParse']
+                <span *ngIf="dataScadenzaRef?.errors?.['matDatepickerParse']
                  && (dataScadenzaRef.dirty || dataScadenzaRef.touched)">
                    Inserisci una data valida nel formato gg/mm/aaaa!
                   </span>
               </div>
-
+              </div>
 
               <!-- Data Aggiudicazione -->
           <!--     <div class="col-md-4 mb-3">
@@ -185,14 +188,14 @@
                             <div class="d-flex align-items-center">
                                 <div class="input-group select-wrapper w-100">
 
-                              <select class="form-control" id="pianoId" name="pianoId" [(ngModel)]="appalto.pianoId" required #pianoref="ngModel" (change)="selectPiano($event)">
+                              <select class="form-control" id="pianoId" name="pianoId" [(ngModel)]="appalto.pianoId" required #pianoref="ngModel" (change)="selectPiano($event)"  [ngClass]="{'is-invalid': pianoref?.invalid && submitted}">
                                 <option *ngFor="let piano of pianiList" [value]="piano.id">
                                   {{ piano.descrizione }}
                                 </option>
                               </select>
                             </div>
                             </div>
-                            <span class="custom-error" *ngIf="pianoref?.errors?.['required'] && (pianoref.dirty || pianoref.touched)">
+                            <span class="custom-error" *ngIf="pianoref?.errors?.['required'] && submitted">
                                 Piano è obbligatorio!
                                </span>
                           </div>
@@ -203,15 +206,17 @@
               <div class="col-md-8 mb-3">
                 <label for="oggetto" class="form-label">Oggetto</label>
                 <div class="input-group">
-                  <textarea id="oggetto" class="form-control" name="oggetto" [(ngModel)]="appalto.oggetto" required #ogRef="ngModel" minlength="10" maxlength="500" rows="3">
+                  <textarea id="oggetto" class="form-control" name="oggetto" [(ngModel)]="appalto.oggetto" required #ogRef="ngModel" minlength="10" maxlength="500" rows="3"  [ngClass]="{'is-invalid': ogRef?.invalid && submitted}">
                   </textarea>
                 </div>
-                <span class="custom-error" *ngIf="ogRef?.errors?.['required'] && (ogRef.dirty || ogRef.touched)">
+                <div class="custom-error" *ngIf="ogRef?.invalid && submitted">
+                <span *ngIf="ogRef?.errors?.['required']">
                     Oggetto è obbligatorio!
                    </span>
-                   <span class="custom-error" *ngIf="ogRef?.errors?.['minlength'] && (ogRef.dirty || ogRef.touched)">
+                   <span *ngIf="ogRef?.errors?.['minlength'] && (ogRef.dirty || ogRef.touched)">
                     L'oggetto deve contenere tra 10 e 500 caratteri!
                    </span>
+              </div>
               </div>
 
                <!-- Note -->
@@ -239,7 +244,7 @@
                     Reset
                   </button>
     
-                  <button type="submit" class="btn btn-primary py-2" [disabled]="appaltoForm.invalid">
+                  <button type="submit" class="btn btn-primary py-2">
                     Salva
                   </button>
                 </div>
