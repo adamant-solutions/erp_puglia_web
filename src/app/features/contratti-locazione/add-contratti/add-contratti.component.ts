@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { StatoContratto } from 'src/app/core/models/contratto.model';
@@ -198,6 +198,14 @@ export class AddContrattiComponent {
     if (!date) return '';
     const d = new Date(date);
     return d.toISOString().split('T')[0];
+  }
+
+  indietro() {
+    this.router.navigate(['/contratti-locazione']);
+  }
+
+  resetForm(form: any) {
+    form.reset();
   }
 
 

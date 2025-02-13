@@ -211,12 +211,20 @@
             </div>
           </div>
 
-          <div class="col-12 mt-5">
-            <button type="submit" class="btn btn-primary me-2">
-              <i class="bi bi-save me-1"></i>
-              Salva Stato
+          <!-- buttons -->
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button type="button" class="btn btn-outline-primary py-2" (click)="indietroC()">
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
             </button>
-            <button
+
+            <div>
+<!--               <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm(editForm)">
+                <i class="bi bi-x-circle me-1"></i>
+                Annulla
+              </button>
+ -->
+              <button
               type="button"
               class="btn btn-danger me-2"
               (click)="openConfermaModal()"
@@ -224,15 +232,14 @@
               <i class="bi bi-stop-circle me-1"></i>
               Termina Contratto
             </button>
-            <button
-              type="button"
-              class="btn btn-outline-primary"
-              (click)="indietroC()"
-            >
-              <i class="bi bi-arrow-left me-1"></i>
-              Indietro
-            </button>
+
+              <button type="submit" class="btn btn-primary py-2">   
+                <i class="bi bi-save me-1"></i>
+                Salva Stato
+              </button>
+            </div>
           </div>
+          
         </form>
       </div>
     </div>

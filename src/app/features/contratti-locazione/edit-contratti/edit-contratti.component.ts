@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Contratti, StatoContratto } from 'src/app/core/models/contratto.model';
 import { ContrattiService } from 'src/app/core/services/contratti.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 interface SelectOption {
   id: number;
   descrizione: string;
@@ -24,7 +25,8 @@ export class EditContrattiComponent {
   documenti: any[] = [];
   unitaImmobiliariOptions: SelectOption[] = [];
   intestatariOptions: SelectOption[] = [];
-  contratto!:Contratti
+  contratto!: Contratti;
+  errorMsg = '';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
@@ -35,7 +37,8 @@ private modal: any;
     private route: ActivatedRoute,
     private contrattiService: ContrattiService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private notifService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -132,10 +135,20 @@ private modal: any;
           if (this.modal) {
             this.modal.hide();
           }
+          this.notifService.addNotification({
+            message: 'Il contratto è stato terminato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
+
           this.router.navigate(['/contratti-locazione']);
         },
         error: (error) => {
-   
+          this.notifService.addNotification({
+            message: 'Si è verificato un errore.Il contratto non è stato terminato!',
+            type: 'error',
+            timeout: 5000,
+          });
         }
       });
     }
@@ -180,14 +193,36 @@ private modal: any;
        
         this.contrattiService.updateStato(+id, statoContratto).subscribe({
           next: (response) => {
-            console.log('Stato updated successfully:', response);
+            this.notifService.addNotification({
+              message: 'Lo stato è stato aggiornato con successo!',
+              type: 'success',
+              timeout: 3000,
+            });
             this.router.navigate(['/contratti-locazione']);
           },
           error: (error) => {
+            this.notifService.addNotification({
+              message: this.handleError(error.error),
+              type: 'error',
+              timeout: 5000,
+            });
             console.error('Errore nell\'aggiornamento dello stato:', error);
           }
         });
       }
+    }
+  }
+
+  private handleError(error: any) : string{
+    switch (error.status) {
+      case 400:
+        return this.errorMsg = 'Dati non validi. Controlla i campi obbligatori.';
+      case 422:
+        return this.errorMsg = 'Dati non validi o contratto già esistente.';
+      case 500:
+        return this.errorMsg = error.message;
+      default:
+        return this.errorMsg = 'Errore durante il salvataggio del contratto.';
     }
   }
 
@@ -223,4 +258,6 @@ private modal: any;
     }
     return '';
   }
+
+
 }
