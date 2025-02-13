@@ -44,7 +44,8 @@ registerLocaleData(localeIt);
   { provide: 'morositaUrl', useValue:environment.morositaUrl },
   { provide: 'manutenzioneUrl', useValue: environment.manutenzioneUrl},
   {provide: 'condominiUrl', useValue:environment.condominiUrl},
-  {provide: 'periodiGestioniUrl',useValue:environment.periodiGestioniUrl}
+  {provide: 'periodiGestioniUrl',useValue:environment.periodiGestioniUrl},
+  {provide: 'condominiLightUrl', useValue:environment.condominiLightUrl}
   ],
   bootstrap: [AppComponent],
 })

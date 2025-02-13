@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PeriodiGestione } from '../../models/periodi-gestione.model';
+import { CondominioLight } from '../../models/condominio-light.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { PeriodiGestione } from '../../models/periodi-gestione.model';
 export class PeriodoGestioneService {
   constructor(
     private http: HttpClient,
-    @Inject('periodiGestioniUrl') private periodiGestioniUrl: string
+    @Inject('periodiGestioniUrl') private periodiGestioniUrl: string,
+    @Inject('condominiLightUrl') private condominiLightUrl: string
   ) {}
 
   getAllPeriodi(): Observable<any> {
@@ -70,5 +72,9 @@ export class PeriodoGestioneService {
 
   riaprePeriodo(id: number): Observable<PeriodiGestione> {
     return this.http.put<PeriodiGestione>(`${this.periodiGestioniUrl}/${id}/riapri`, {});
+  }
+
+  getAllCondominiLight(): Observable<CondominioLight[]> {
+    return this.http.get<CondominioLight[]>(this.condominiLightUrl);
   }
 }
