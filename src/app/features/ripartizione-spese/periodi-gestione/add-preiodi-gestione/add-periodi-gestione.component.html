@@ -1,0 +1,117 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Nuovo periodo di gestione'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+        <form [formGroup]="addForm" class="row g-3" (ngSubmit)="onSubmit()">
+          <div class="col-12">
+            <div class="row d-flex">
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="dataInizio">Data Inizio *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('dataInizio')">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="dataInizio"
+                    formControlName="dataInizio"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('dataInizio')">
+                  Data inizio obbligatoria
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="dataFine">Data Fine *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('dataFine')">
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="dataFine"
+                    formControlName="dataFine"
+                  />
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('dataFine')">
+                  Data fine obbligatoria
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="stato">Stato *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('stato')">
+                  <select
+                    class="form-control"
+                    id="stato"
+                    formControlName="stato"
+                  >
+                    <option value="">Seleziona stato</option>
+                    <option value="PREVENTIVO">Preventivo</option>
+                    <option value="CONSUNTIVO">Consuntivo</option>
+                    <option value="CONGUAGLIATO">Conguagliato</option>
+                    <option value="CHIUSO">Chiuso</option>
+                  </select>
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('stato')">
+                  Stato obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="condominioId">Condominio *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('condominioId')">
+                  <select
+                    class="form-control"
+                    id="condominioId"
+                    formControlName="condominioId"
+                  >
+                    <option value="">Seleziona condominio</option>
+                    <option *ngFor="let cond of condominiList" [value]="cond.id">
+                      {{ cond.denominazione }}
+                    </option>
+                  </select>
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('condominioId')">
+                  Condominio obbligatorio
+                </div>
+              </div>
+
+              <div class="col-md-8 mb-3">
+                <label class="form-label" for="note">Note</label>
+                <div class="input-group">
+                  <textarea
+                    class="form-control"
+                    id="note"
+                    formControlName="note"
+                    rows="3"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-5">
+            <button type="submit" class="btn btn-primary me-3">
+              Salva
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

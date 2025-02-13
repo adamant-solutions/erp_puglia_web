@@ -13,7 +13,8 @@ export const environment = {
   morositaUrl: API_BASE_URL + 'morosita',
   manutenzioneUrl: API_BASE_URL + 'manutenzione',
   condominiUrl: API_BASE_URL + 'spese/condomini',
-  periodiGestioniUrl: API_BASE_URL + 'spese/periodi'
+  periodiGestioniUrl: API_BASE_URL + 'spese/periodi',
+  condominiLightUrl:API_BASE_URL + 'spese/condomini/light'
 };
 
 /*

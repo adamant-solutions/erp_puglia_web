@@ -3,6 +3,7 @@ import { PeriodoGestioneService } from '../../services/ripartizione-spese/period
 import { inject } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { PeriodiGestione } from '../../models/periodi-gestione.model';
+import { CondominioLight } from '../../models/condominio-light.model';
 
 export interface PeriodoSearchParams {
   pagina?: number;
@@ -74,6 +75,17 @@ export const periodoAttivoResolver: ResolveFn<any> = (
   return periodoService.getPeriodoAttivo(condominioId).pipe(
     catchError(error => {
       return of(null);
+    })
+  );
+};
+
+
+export const condominiLightResolver: ResolveFn<CondominioLight[]> = (route, state) => {
+  const condominioLightService = inject(PeriodoGestioneService);
+  return condominioLightService.getAllCondominiLight().pipe(
+    catchError(error => {
+     
+      return of([]);
     })
   );
 };
