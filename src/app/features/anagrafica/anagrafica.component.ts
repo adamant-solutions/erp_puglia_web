@@ -97,11 +97,11 @@ export class AnagraficaComponent implements OnInit {
         this.anagraficaList = this.anagraficaList.filter(
           (anagrafica) => anagrafica.id !== this.anagraficaId
         );
-        // this.notificationService.success(`Anagrafica "${this.anagraficaId}" deleted successfully.`);
+        // this.notificationService.success(`Anagrafica per "${this.anagraficaMainIdentificationData}" eliminata con successo.`);
       },
       error: (error) => {
         console.error(error);
-        // this.notificationService.error(`Failed to delete anagrafica "${this.anagraficaId}". Please try again.`);
+        // this.notificationService.error(`Impossibile eliminare anagrafica per "${this.anagraficaMainIdentificationData}". Riprova.`);
       },
     });
   }

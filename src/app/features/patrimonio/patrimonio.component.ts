@@ -25,6 +25,9 @@ export class PatrimonioComponent implements OnInit {
   patrimonioList: Patrimonio[] = [];
 
   patrimonioId!: number;
+  patrimonioIndirizzo!: string;
+  patrimonioCivico!: string;
+  patrimonioComune!: string;
 
   patrimonioSearchParams: PatrimonioSearchParams = {
     comune: '',
@@ -94,6 +97,11 @@ export class PatrimonioComponent implements OnInit {
   // Delete patrimonio
   deletePatrimonioModal(patrimonio: Patrimonio | any) {
     this.patrimonioId = patrimonio.id;
+
+    this.patrimonioIndirizzo = patrimonio.indirizzo;
+    this.patrimonioCivico = patrimonio.civico;
+    this.patrimonioComune = patrimonio.comune;
+
     this.bootstrapService.showModal('deletePatrimonioModal');
   }
 
@@ -104,11 +112,11 @@ export class PatrimonioComponent implements OnInit {
         this.patrimonioList = this.patrimonioList.filter(
           (patrimonio) => patrimonio.id !== this.patrimonioId
         );
-        // this.notificationService.success(`Unità Immobiliare "${this.patrimonioId}" eliminata con successo.`);
+        // this.notificationService.success(`Unità Immobiliare con indirizzo "${this.patrimonioIndirizzo}", civico "${this.patrimonioCivico}" e comune "${this.patrimonioComune}" eliminata con successo.`);
       },
       error: (error: any) => {
         console.error(error);
-        // this.notificationService.error(`Impossibile eliminare l'Unità Immobiliare "${this.patrimonioId}". Riprova.`);
+        // this.notificationService.error(`Impossibile eliminare l'Unità Immobiliare con indirizzo "${this.patrimonioIndirizzo}", civico "${this.patrimonioCivico}" e comune "${this.patrimonioComune}". Riprova.`);
       },
     });
   }
