@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PeriodoGestioneService } from 'src/app/core/services/ripartizione-spese/periodi-gestione.service';
 import { CondominioLight } from 'src/app/core/models/condominio-light.model';
 import { Location } from '@angular/common';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-periodo-gestione',
@@ -20,10 +21,12 @@ export class AddPeriodoGestioneComponent implements OnInit {
   addForm: FormGroup;
   condominiList: CondominioLight[] = [];
   submitted = false;
+  errorMsg: string = "";
 
   constructor(
     private formBuilder: FormBuilder,
     private periodoService: PeriodoGestioneService,
+    private notifService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
     private location: Location
@@ -89,12 +92,34 @@ export class AddPeriodoGestioneComponent implements OnInit {
     const periodoData = this.addForm.value;
     this.periodoService.createPeriodo(periodoData).subscribe({
       next: (response) => {
+        this.notifService.addNotification({
+          message: 'Dati salvati con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['ripartizione-spese/periodi-gestione']);
       },
       error: (error) => {
-      
+        this.notifService.addNotification({
+          message: this.handleError(error.error),
+          type: 'error',
+          timeout: 5000,
+        });
       }
     });
+  }
+
+  private handleError(error: any) : string{
+    switch (error.status) {
+      case 400:
+        return this.errorMsg = '';
+      case 422:
+        return this.errorMsg = ''; 
+      case 500:
+        return this.errorMsg = error.message;
+      default:
+        return this.errorMsg = '';
+    }
   }
 
   indietro(): void {
