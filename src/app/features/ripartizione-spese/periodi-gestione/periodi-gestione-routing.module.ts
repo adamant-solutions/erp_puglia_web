@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PeriodiGestioneListComponent } from './periodi-gestione-list/periodi-gestione-list.component';
+import { PeriodiListComponent } from './periodi-gestione-list/periodi-gestione-list.component';
+import { periodiAllResolver } from 'src/app/core/resolvers/ripartizione-spese/periodi-gestione.resolver';
 
 const routes: Routes = [
 {path:'',
-  component:PeriodiGestioneListComponent
+  component:PeriodiListComponent,
+  resolve:{
+    periodiAllResolver
+  },runGuardsAndResolvers:'always'
 }
 
 ];
