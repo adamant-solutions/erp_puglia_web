@@ -12,6 +12,7 @@ import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { TipoDocumento } from 'src/app/core/models/anagrafica.model';
 import * as moment from 'moment';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 type UploadDocumentType = 'CI' | 'PP' | 'PT';
 @Component({
   selector: 'app-add-anagrafica',
@@ -46,11 +47,22 @@ export class AddAnagraficaComponent implements OnInit {
   ];
   submitted: boolean = false;
 
+  provinces = [
+    { sigla: 'BA', nome: 'Bari' },
+    { sigla: 'BT', nome: 'Barletta-Andria-Trani' },
+    { sigla: 'BR', nome: 'Brindisi' },
+    { sigla: 'FG', nome: 'Foggia' },
+    { sigla: 'LE', nome: 'Lecce' },
+    { sigla: 'TA', nome: 'Taranto' },
+  ];
+
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
     private anagraficaService: AnagraficaService,
-    private bootstrapService: BootstrapService
+    private bootstrapService: BootstrapService,
+    private notifService: NotificationService
   ) {
     this.uploadForm = this.formBuilder.group({
       documentType: ['', Validators.required],
@@ -173,6 +185,11 @@ export class AddAnagraficaComponent implements OnInit {
     this.anagraficaService.addAnagrafica(formData).subscribe({
       next: (response) => {
         this.submitted = false;
+        this.notifService.addNotification({
+          message: 'Anagrafica è stata salvata con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['/anagrafica']);
       },
       error: (error) => {
@@ -182,10 +199,16 @@ export class AddAnagraficaComponent implements OnInit {
         ) {
           this.errorMessage =
             'Errore: Il numero di documenti nel JSON non corrisponde ai file caricati';
+        } else if (error.status === 500){
+          this.errorMessage = error.error.message;
         } else {
           this.errorMessage = "Errore durante la creazione dell'anagrafica";
         }
-        console.error('Error:', error);
+        this.notifService.addNotification({
+          message: this.errorMessage,
+          type: 'error',
+          timeout: 5000,
+        });
       },
     });
   }
