@@ -1,4 +1,7 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Contratto'"></app-breadcrumbs>
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Modifica Contratto'"
+></app-breadcrumbs>
 
 <section class="pt-4 pb-5">
   <div class="container">
@@ -6,14 +9,16 @@
       <div class="col-12">
         <h1 class="mb-5">Modifica Contratto</h1>
 
-    
-        <form [formGroup]="editForm" (ngSubmit)="onSubmit()"  class="row g-3">
+        <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato Contratto</label>
             <div class="input-group">
               <select class="form-control" formControlName="statoContratto">
-                <option *ngFor="let stato of statoContrattoOptions" [value]="stato">
-                  {{stato.charAt(0) + stato.slice(1).toLowerCase()}}
+                <option
+                  *ngFor="let stato of statoContrattoOptions"
+                  [value]="stato"
+                >
+                  {{ stato.charAt(0) + stato.slice(1).toLowerCase() }}
                 </option>
               </select>
               <span class="input-group-text">
@@ -21,50 +26,78 @@
               </span>
             </div>
             <div class="invalid-feedback">
-              {{ getErrorMessage('statoContratto') }}
+              {{ getErrorMessage("statoContratto") }}
             </div>
           </div>
           <div class="col-md-4 mb-3">
             <label class="form-label">Canone Mensile</label>
-            <input type="number" class="form-control" formControlName="canoneMensile" 
-                   [class.is-invalid]="editForm.get('canoneMensile')?.invalid && editForm.get('canoneMensile')?.touched">
+            <input
+              type="number"
+              class="form-control"
+              formControlName="canoneMensile"
+              [class.is-invalid]="
+                editForm.get('canoneMensile')?.invalid &&
+                editForm.get('canoneMensile')?.touched
+              "
+            />
             <div class="invalid-feedback">
-              {{ getErrorMessage('canoneMensile') }}
+              {{ getErrorMessage("canoneMensile") }}
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Inizio</label>
-            <input type="date" class="form-control" formControlName="dataInizio"
-                   [class.is-invalid]="editForm.get('dataInizio')?.invalid && editForm.get('dataInizio')?.touched">
+            <input
+              type="date"
+              class="form-control"
+              formControlName="dataInizio"
+              [class.is-invalid]="
+                editForm.get('dataInizio')?.invalid &&
+                editForm.get('dataInizio')?.touched
+              "
+            />
             <div class="invalid-feedback">
-              {{ getErrorMessage('dataInizio') }}
+              {{ getErrorMessage("dataInizio") }}
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Fine</label>
-            <input type="date" class="form-control" formControlName="dataFine"
-                   [class.is-invalid]="editForm.get('dataFine')?.invalid && editForm.get('dataFine')?.touched">
+            <input
+              type="date"
+              class="form-control"
+              formControlName="dataFine"
+              [class.is-invalid]="
+                editForm.get('dataFine')?.invalid &&
+                editForm.get('dataFine')?.touched
+              "
+            />
             <div class="invalid-feedback">
-              {{ getErrorMessage('dataFine') }}
+              {{ getErrorMessage("dataFine") }}
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Descrizione</label>
-            <input type="text" class="form-control" formControlName="descrizione"
-                   [class.is-invalid]="editForm.get('descrizione')?.invalid && editForm.get('descrizione')?.touched">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="descrizione"
+              [class.is-invalid]="
+                editForm.get('descrizione')?.invalid &&
+                editForm.get('descrizione')?.touched
+              "
+            />
             <div class="invalid-feedback">
-              {{ getErrorMessage('descrizione') }}
+              {{ getErrorMessage("descrizione") }}
             </div>
           </div>
 
-       
-
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label class="form-label" for="unitaImmobiliare">Unità Immobiliare</label>
+              <label class="form-label" for="unitaImmobiliare"
+                >Unità Immobiliare</label
+              >
               <div class="input-group">
                 <select
                   class="form-control"
@@ -72,9 +105,14 @@
                   formControlName="unitaImmobiliare"
                   (change)="onUnitaImmobiliareChange($event)"
                 >
-                 
-                  <option *ngFor="let unita of unitaImmobiliariOptions" [value]="unita" [selected]="unita.id === editForm.get('unitaImmobiliare')?.value.id">
-                    {{ unita.descrizione }} 
+                  <option
+                    *ngFor="let unita of unitaImmobiliariOptions"
+                    [value]="unita"
+                    [selected]="
+                      unita.id === editForm.get('unitaImmobiliare')?.value.id
+                    "
+                  >
+                    {{ unita.descrizione }}
                   </option>
                 </select>
                 <span class="input-group-text">
@@ -83,64 +121,94 @@
               </div>
               <span
                 class="custom-error"
-                *ngIf="editForm.get('unitaImmobiliare')?.invalid && editForm.get('unitaImmobiliare')?.touched"
+                *ngIf="
+                  editForm.get('unitaImmobiliare')?.invalid &&
+                  editForm.get('unitaImmobiliare')?.touched
+                "
               >
-                {{ getErrorMessage('unitaImmobiliare') }}
+                {{ getErrorMessage("unitaImmobiliare") }}
               </span>
             </div>
           </div>
-        <div formArrayName="intestatari" class="row">
-          <div class="col-md-6 mb-3">
-            <!-- <button class="btn" type="button" (click)="addIntestatario()">Add Intestatario</button> -->
-        
-            <div *ngFor="let intestatarioGroup of intestatari?.controls; let i = index" [formGroupName]="i">
-              <div class="d-flex justify-content-between align-items-center">
-                <label class="form-label">Intestatario {{ i + 1 }}</label>
-                <!-- <button class="btn btn-clear-danger btn-sm" type="button" (click)="removeIntestatario(i)">
-                  Remove
+          <div formArrayName="intestatari" class="row">
+            <div class="col-md-6 mb-3">
+              <!-- <button class="btn" type="button" (click)="addIntestatario()">Aggiungi Intestatario</button> -->
+
+              <div
+                *ngFor="
+                  let intestatarioGroup of intestatari?.controls;
+                  let i = index
+                "
+                [formGroupName]="i"
+              >
+                <div class="d-flex justify-content-between align-items-center">
+                  <label class="form-label">Intestatario {{ i + 1 }}</label>
+                  <!-- <button class="btn btn-clear-danger btn-sm" type="button" (click)="removeIntestatario(i)">
+                  Elimina
                 </button> -->
-              </div>
-              <div class="input-group" formGroupName="intestatario">
-                <select class="form-control" formControlName="id" (change)="onIntestatariChange($event,i)"
-                  [id]="'intestatarioId_' + i">
-                  <option [value]="null" disabled>Select Intestatario</option>
-                  <option *ngFor="let option of intestatariOptions" [value]="option.id">
-                    {{ option.descrizione }}
-        
-                  </option>
-                </select>
-                <span class="input-group-text">
-                  <i class="bi bi-caret-down-fill"></i>
+                </div>
+                <div class="input-group" formGroupName="intestatario">
+                  <select
+                    class="form-control"
+                    formControlName="id"
+                    (change)="onIntestatariChange($event, i)"
+                    [id]="'intestatarioId_' + i"
+                  >
+                    <option [value]="null" disabled>Select Intestatario</option>
+                    <option
+                      *ngFor="let option of intestatariOptions"
+                      [value]="option.id"
+                    >
+                      {{ option.descrizione }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+
+                <span
+                  class="custom-error"
+                  *ngIf="
+                    intestatarioGroup.invalid &&
+                    (intestatarioGroup.touched || intestatarioGroup.dirty)
+                  "
+                >
                 </span>
-              </div>
-        
-              <span class="custom-error"
-                *ngIf="intestatarioGroup.invalid && (intestatarioGroup.touched || intestatarioGroup.dirty)">
-        
-              </span>
-            <br>
-          
-            <div class="col-md-12 mb-3">
-              <label class="form-label">Data Inizio</label>
-              <input type="date" class="form-control" formControlName="dataInizio" [id]="'data-inizio-'+i"
-                [class.is-invalid]="editForm.get('dataInizio')?.invalid && editForm.get('dataInizio')?.touched">
-              <!-- <div class="invalid-feedback">
+                <br />
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label">Data Inizio</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="dataInizio"
+                    [id]="'data-inizio-' + i"
+                    [class.is-invalid]="
+                      editForm.get('dataInizio')?.invalid &&
+                      editForm.get('dataInizio')?.touched
+                    "
+                  />
+                  <!-- <div class="invalid-feedback">
                 {{ getErrorMessage('dataInizio') }}
               </div> -->
+                </div>
+              </div>
             </div>
           </div>
-        </div>
- </div>
-        
 
           <div class="mt-4">
             <h3>Documenti</h3>
-            <input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx">
-            <div *ngIf="documenti.length === 0; ">
+            <input
+              type="file"
+              #fileInput
+              style="display: none"
+              (change)="onFileSelected($event)"
+              accept=".pdf,.doc,.docx"
+            />
+            <div *ngIf="documenti.length === 0">
               <div class="text-muted">Nessun documento presente</div>
-            
             </div>
-           
           </div>
 
           <div class="col-12 mt-5">
@@ -148,11 +216,19 @@
               <i class="bi bi-save me-1"></i>
               Salva Stato
             </button>
-            <button type="button" class="btn btn-danger me-2" (click)="openConfermaModal()">
+            <button
+              type="button"
+              class="btn btn-danger me-2"
+              (click)="openConfermaModal()"
+            >
               <i class="bi bi-stop-circle me-1"></i>
               Termina Contratto
             </button>
-            <button type="button" class="btn btn-outline-primary" (click)="indietroC()">
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              (click)="indietroC()"
+            >
               <i class="bi bi-arrow-left me-1"></i>
               Indietro
             </button>
@@ -163,20 +239,35 @@
   </div>
 </section>
 
-
-<div class="modal fade" #confermaModal tabindex="-1" aria-labelledby="confermaTerminazioneModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  #confermaModal
+  tabindex="-1"
+  aria-labelledby="confermaTerminazioneModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="confermaTerminazioneModalLabel">Conferma Terminazione</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="confermaTerminazioneModalLabel">
+          Conferma Terminazione
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
-        <p>Sei sicuro di voler terminare questo contratto? Questa azione non può essere annullata.</p>
+        <p>
+          Sei sicuro di voler terminare questo contratto? Questa azione non può
+          essere annullata.
+        </p>
         <div class="form-group">
-          <textarea 
-            class="form-control" 
-            [(ngModel)]="motivoFine" 
+          <textarea
+            class="form-control"
+            [(ngModel)]="motivoFine"
             placeholder="Inserisci il motivo..."
             required
             rows="3"
@@ -184,10 +275,12 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-        <button 
-          type="button" 
-          class="btn btn-danger" 
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
           (click)="confirmTermina()"
           [disabled]="!motivoFine.trim()"
         >
