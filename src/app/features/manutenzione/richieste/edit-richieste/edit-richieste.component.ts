@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModelLight } from 'src/app/core/models/contratto.model';
 import { OrigineRichiesta, PrioritaIntervento, Richiesta, StatoRichiesta, TipoManutenzione } from 'src/app/core/models/manutenzione.model';
 import { RichiesteService } from 'src/app/core/services/manutenzione-services/richieste.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-richieste',
@@ -25,7 +26,7 @@ export class EditRichiesteComponent {
   richiedente: ModelLight[] = [];
   piani: ModelLight[] = [];
   appalti: any[] = [];
-
+  submitted: boolean = false;
   
   statoList: StatoRichiesta[] = [
     StatoRichiesta.APPROVATA,
@@ -60,7 +61,7 @@ export class EditRichiesteComponent {
 
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  constructor(private fb: FormBuilder,private richiesteService: RichiesteService) { }
+  constructor(private fb: FormBuilder,private richiesteService: RichiesteService,private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.route.data.subscribe(({ data, unitaData, richiedenteData, pianiData ,appaltiData }) => {
@@ -100,16 +101,25 @@ export class EditRichiesteComponent {
   }
 
   onSubmit() {
+    this.submitted = true;
     console.log('Form Submitted', this.editForm.value);
     if (this.editForm.valid) {
-      console.log('Form Submitted', this.editForm.value);
+     // console.log('Form Submitted', this.editForm.value);
       this.richiesteService.editRichiesta(this.editForm.getRawValue()).subscribe({
         next: (res) => {
-          alert('Dati salvati con successo!');
+          this.notificationService.addNotification({
+            message: 'Dati salvati con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['manutenzione/richieste/richiesta-dettagli/' + this.richiesta.id]);
         },
         error: (err) =>{
-          alert('Error!');
+          this.notificationService.addNotification({
+            message: "Si è verificato un errore!",
+            type: 'error',
+            timeout: 5000,
+          });
         }
       })
   

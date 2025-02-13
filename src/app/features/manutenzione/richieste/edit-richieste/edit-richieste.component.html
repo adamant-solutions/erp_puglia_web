@@ -111,7 +111,7 @@
                   class="custom-error"
                   *ngIf="
                     editForm.get('dataRichiesta')?.hasError('required') &&
-                    editForm.get('dataRichiesta')?.touched
+                    submitted
                   "
                 >
                   Data Richiesta è obbligatorio!
@@ -209,9 +209,9 @@
                       name="priorita"
                       formControlName="priorita"
                     >
-                      <!--  <option value="" selected="">
-                                    Seleziona priorita
-                                  </option> -->
+                   <!--  <option [ngValue]="null">
+                      Seleziona priorita
+                    </option> -->
                       <option
                         *ngFor="let priorita of prioritaList"
                         [value]="priorita"
@@ -556,7 +556,7 @@
               <!-- Periodo Pianificato -->
               <div class="col-md-4 mb-3">
                 <label for="periodoPianificato" class="form-label"
-                  >Periodo Pianificato</label
+                  >Periodo Pianificato*</label
                 >
                 <div class="input-group">
                   <input
@@ -564,13 +564,14 @@
                     id="periodoPianificato"
                     class="form-control"
                     formControlName="periodoPianificato"
+                    [ngClass] ="{'is-invalid': editForm.get('periodoPianificato')?.invalid && submitted}"
                   />
                 </div>
                 <span
                   class="custom-error"
                   *ngIf="
                     editForm.get('periodoPianificato')?.hasError('required') &&
-                    editForm.get('periodoPianificato')?.touched
+                    submitted
                   "
                 >
                   Periodo Pianificato è obbligatorio!
@@ -600,6 +601,7 @@
                     minlength="10"
                     maxlength="1000"
                     rows="4"
+                    [ngClass]="{'is-invalid': editForm.get('descrizione')?.invalid && submitted}"
                   ></textarea>
                 </div>
 
@@ -607,7 +609,7 @@
                   class="custom-error"
                   *ngIf="
                     editForm.get('descrizione')?.hasError('required') &&
-                    editForm.get('descrizione')?.touched
+                    submitted
                   "
                 >
                   Descrizione è obbligatorio!
@@ -616,8 +618,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    editForm.get('descrizione')?.hasError('minlength') &&
-                    editForm.get('descrizione')?.touched
+                    editForm.get('descrizione')?.hasError('minlength') && submitted
                   "
                 >
                   Descrizione deve contenere tra 10 e 1000 caratteri!!
@@ -653,7 +654,6 @@
               <button
                 type="submit"
                 class="btn btn-primary py-2"
-                [disabled]="editForm.invalid"
               >
                 Salva
               </button>

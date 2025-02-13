@@ -24,7 +24,9 @@
                       id="unitaImmobiliareId"
                       name="unitaImmobiliareId"
                       formControlName="unitaImmobiliareId"
+                      [ngClass]="{'is-invalid': addForm.get('unitaImmobiliareId')?.invalid && submitted}"
                     >
+                     <option [ngValue]="null">Seleziona unità immobiliare</option>
                       <option
                         *ngFor="let item of unita"
                         [value]="item.id"
@@ -42,8 +44,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('unitaImmobiliareId')?.hasError('required') &&
-                    addForm.get('unitaImmobiliareId')?.touched
+                  addForm.get('unitaImmobiliareId')?.invalid && submitted
                   "
                 >
                   Unità Immobiliare è obbligatoria!
@@ -62,7 +63,9 @@
                       id="richiedenteId"
                       name="richiedenteId"
                       formControlName="richiedenteId"
+                      [ngClass]="{'is-invalid': addForm.get('richiedenteId')?.invalid && submitted}"
                     >
+                    <option [ngValue]="null">Seleziona richiedente</option>
                       <option
                         *ngFor="let item of richiedente"
                         [value]="item.id"
@@ -78,8 +81,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('richiedenteId')?.hasError('required') &&
-                    addForm.get('richiedenteId')?.touched
+                  addForm.get('richiedenteId')?.invalid && submitted
                   "
                 >
                   Richiedente è obbligatorio!
@@ -110,8 +112,8 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('dataRichiesta')?.hasError('required') &&
-                    addForm.get('dataRichiesta')?.touched
+                    addForm.get('dataRichiesta')?.invalid &&
+                    submitted
                   "
                 >
                   Data Richiesta è obbligatorio!
@@ -143,10 +145,11 @@
                       id="tipoManutenzione"
                       name="tipoManutenzione"
                       formControlName="tipoManutenzione"
+                      [ngClass]="{'is-invalid': addForm.get('tipoManutenzione')?.invalid && submitted}"
                     >
-                      <!--  <option value="" selected="">
+                        <option [ngValue]="null">
                       Seleziona Tipo Manutenzione
-                    </option> -->
+                    </option> 
                       <option
                         *ngFor="let tipoManutenzione of tipoMList"
                         [value]="tipoManutenzione"
@@ -159,8 +162,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('tipoManutenzione')?.hasError('required') &&
-                    addForm.get('tipoManutenzione')?.touched
+                    addForm.get('tipoManutenzione')?.invalid && submitted
                   "
                 >
                   Tipo Manutenzione è obbligatorio!
@@ -177,10 +179,11 @@
                       id="stato"
                       name="stato"
                       formControlName="stato"
+                      [ngClass]="{'is-invalid': addForm.get('stato')?.invalid && submitted}"
                     >
-                      <!--  <option value="" selected="">
+                        <option [ngValue]="null">
                                     Seleziona stato
-                                  </option> -->
+                                  </option>
                       <option *ngFor="let stato of statoList" [value]="stato">
                         {{ stato | capitalize }}
                       </option>
@@ -190,8 +193,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('stato')?.hasError('required') &&
-                    addForm.get('stato')?.touched
+                  addForm.get('stato')?.invalid && submitted
                   "
                 >
                   Stato Appalto è obbligatorio!
@@ -208,10 +210,11 @@
                       id="priorita"
                       name="priorita"
                       formControlName="priorita"
+                      [ngClass]="{'is-invalid': addForm.get('priorita')?.invalid && submitted}"
                     >
-                      <!--  <option value="" selected="">
+                      <option [ngValue]="null">
                                     Seleziona priorita
-                                  </option> -->
+                                  </option>
                       <option
                         *ngFor="let priorita of prioritaList"
                         [value]="priorita"
@@ -224,8 +227,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    addForm.get('priorita')?.hasError('required') &&
-                    addForm.get('priorita')?.touched
+                  addForm.get('priorita')?.invalid && submitted
                   "
                 >
                   Priorità è obbligatorio!
@@ -481,10 +483,11 @@
                       id="origineRichiesta"
                       name="origineRichiesta"
                       formControlName="origineRichiesta"
+                      [ngClass]="{'is-invalid': addForm.get('origineRichiesta')?.invalid && submitted}"
                     >
-                      <!--  <option value="" selected="">
-                                      Seleziona Origine Richiesta
-                                    </option> -->
+                       <option [ngValue]="null">
+                                      Seleziona origine richiesta
+                                    </option> 
                       <option
                         *ngFor="let origine of origineList"
                         [value]="origine"
@@ -498,7 +501,7 @@
                   class="custom-error"
                   *ngIf="
                     addForm.get('origineRichiesta')?.hasError('required') &&
-                    addForm.get('origineRichiesta')?.touched
+                   submitted
                   "
                 >
                   Origine Richiesta è obbligatorio!
@@ -521,7 +524,7 @@
                   class="custom-error"
                   *ngIf="
                     addForm.get('budgetStimato')?.hasError('pattern') &&
-                    addForm.get('budgetStimato')?.touched
+                    submitted
                   "
                 >
                   Inserisci un budget valido!
@@ -545,7 +548,7 @@
                   class="custom-error"
                   *ngIf="
                     addForm.get('budgetEffettivo')?.hasError('pattern') &&
-                    addForm.get('budgetEffettivo')?.touched
+                    submitted
                   "
                 >
                   Inserisci un budget valido!
@@ -555,7 +558,7 @@
               <!-- Periodo Pianificato -->
               <div class="col-md-4 mb-3">
                 <label for="periodoPianificato" class="form-label"
-                  >Periodo Pianificato</label
+                  >Periodo Pianificato*</label
                 >
                 <div class="input-group">
                   <input
@@ -563,26 +566,27 @@
                     id="periodoPianificato"
                     class="form-control"
                     formControlName="periodoPianificato"
+                    [ngClass]="{'is-invalid': addForm.get('periodoPianificato')?.invalid && submitted}"
                   />
                 </div>
-                <span
-                  class="custom-error"
+                <div class="custom-error"  *ngIf="addForm.get('periodoPianificato')?.invalid && submitted">
+                  <span
                   *ngIf="
-                    addForm.get('periodoPianificato')?.hasError('required') &&
-                    addForm.get('periodoPianificato')?.touched
+                    addForm.get('periodoPianificato')?.hasError('required')
                   "
                 >
                   Periodo Pianificato è obbligatorio!
                 </span>
                 <span
-                  class="custom-error"
                   *ngIf="
-                    addForm.get('periodoPianificato')?.hasError('pattern') &&
-                    addForm.get('periodoPianificato')?.touched
+                    addForm.get('periodoPianificato')?.hasError('pattern')
+                  
                   "
                 >
                   Periodo Pianificato non valido(es. "Q1 2024" / "GEN 2024" )!
                 </span>
+                </div>
+     
               </div>
 
               <!-- Descrizione -->
@@ -598,14 +602,15 @@
                     minlength="10"
                     maxlength="1000"
                     rows="4"
-                  >
+                    required
+                    [ngClass]="{'is-invalid': addForm.get('descrizione')?.invalid && submitted}">
                   </textarea>
                 </div>
                 <span
                   class="custom-error"
                   *ngIf="
                     addForm.get('descrizione')?.hasError('required') &&
-                    addForm.get('descrizione')?.touched
+                    submitted
                   "
                 >
                   Descrizione è obbligatorio!
@@ -614,7 +619,7 @@
                   class="custom-error"
                   *ngIf="
                     addForm.get('descrizione')?.hasError('minlength') &&
-                    addForm.get('descrizione')?.touched
+                    submitted
                   "
                 >
                   Descrizione deve contenere tra 10 e 1000 caratteri!!
@@ -650,7 +655,6 @@
               <button
                 type="submit"
                 class="btn btn-primary py-2"
-                [disabled]="addForm.invalid"
               >
                 Salva
               </button>
