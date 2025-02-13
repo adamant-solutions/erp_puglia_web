@@ -27,7 +27,7 @@
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Canone Mensile*</label>
-            <input type="number" class="form-control" formControlName="canoneMensile"
+            <input type="number" class="form-control" min="0" formControlName="canoneMensile"
               [ngClass]="{'is-invalid': submitted && contratoForm.get('canoneMensile')?.invalid}">
               <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('canoneMensile')?.errors?.['required']">
                 Canone Mensile è obbligatorio
@@ -67,7 +67,7 @@
               </span>
             </div>
             <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('unitaImmobiliare')?.errors?.['required']">
-              Unità Immobiliare obbligatorio
+                Unità Immobiliare è obbligatorio
             </div>
           </div>
 

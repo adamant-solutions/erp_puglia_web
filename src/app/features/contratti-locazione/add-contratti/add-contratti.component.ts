@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { StatoContratto } from 'src/app/core/models/contratto.model';
 import { ContrattiService } from 'src/app/core/services/contratti.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 interface SelectOption {
   id: number;
@@ -37,6 +38,7 @@ export class AddContrattiComponent {
     private route: ActivatedRoute,
     private router: Router,
     private contrattiService: ContrattiService,
+    private notifService: NotificationService
   
   ) {
     this.contratoForm = this.initForm();
@@ -108,14 +110,22 @@ export class AddContrattiComponent {
       
       this.contrattiService.addContratto(formData).subscribe({
         next: (createdContratto) => {
+            this.notifService.addNotification({
+              message: 'Dati salvati con successo!',
+              type: 'success',
+              timeout: 3000,
+            });
           this.router.navigate(['/contratti-locazione']);
         },
         error: (error) => {
-          this.handleError(error);
-     
-          if (error.error && error.error.errors) {
+          this.notifService.addNotification({
+            message: this.handleError(error.error),
+            type: 'error',
+            timeout: 5000,
+          });
+          /* if (error.error && error.error.errors) {
             this.handleValidationErrors(error.error.errors);
-          }
+          } */
         }
       });
     }
@@ -163,22 +173,19 @@ export class AddContrattiComponent {
     return formData;
   }
 
-  private handleError(error: any) {
+  private handleError(error: any) : string{
     switch (error.status) {
       case 400:
-        this.errorMsg = 'Dati non validi. Controlla i campi obbligatori.';
-        break;
+        return this.errorMsg = 'Dati non validi. Controlla i campi obbligatori.';
       case 422:
-        this.errorMsg = 'Dati non validi o contratto già esistente.';
-        break;
+        return this.errorMsg = 'Dati non validi o contratto già esistente.';
       case 500:
-        this.errorMsg = 'Errore del server. Riprova più tardi.';
-        break;
+        return this.errorMsg = error.message;
       default:
-        this.errorMsg = 'Errore durante il salvataggio del contratto.';
+        return this.errorMsg = 'Errore durante il salvataggio del contratto.';
     }
-    // this.messageService.error(this.errorMsg);
   }
+
   private handleValidationErrors(errors: any[]) {
     errors.forEach(err => {
       const field = this.contratoForm.get(err.fieldName);

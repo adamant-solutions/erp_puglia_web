@@ -13,3 +13,9 @@ svg.text-success {
 svg.text-danger {
     fill: #dc3545 !important;
 }
+.toast {
+    min-width: 400px;
+    max-width: 600px; 
+    width: auto; 
+  }
+  
