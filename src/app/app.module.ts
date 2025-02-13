@@ -20,6 +20,7 @@ import { ContrattiService } from './core/services/contratti.service';
 import { environment } from 'src/environments/environment';
 import { LoaderComponent } from './shared/loader.component';
 import { ToastComponent } from './core/components/toast/toast.component';
+import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 
 registerLocaleData(localeIt);
 
@@ -32,7 +33,7 @@ registerLocaleData(localeIt);
     SharedModule
   ],
   providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'it' },
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withInterceptors([authInterceptor,loaderInterceptor])),
   AuthorizationService,
   PatrimonioService,
   AnagraficaService,

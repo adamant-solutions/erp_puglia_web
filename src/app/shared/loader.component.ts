@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { LoaderService } from '../core/services/loader.service';
 
 @Component({
   selector: 'app-loader',
@@ -8,17 +7,7 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent {
-  isLoading$ = new BehaviorSubject<boolean>(false);
+  isLoading$ = this.loaderService.isLoading$;
 
-  constructor(private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        window.scrollTo(0,0)
-        this.isLoading$.next(true);
-      }
-      if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
-        this.isLoading$.next(false);
-      }
-    });
-  }
+  constructor(private loaderService: LoaderService) {}
 }
