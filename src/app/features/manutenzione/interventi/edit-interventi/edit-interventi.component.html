@@ -12,11 +12,11 @@
                             <!-- Richiesta -->
 
                             <div class="col-md-4 mb-3">
-                                <label for="richiestaId" class="form-label">Richiesta</label>
+                                <label for="richiestaId" class="form-label">Richiesta*</label>
                                 <div class="d-flex align-items-center">
                                     <div class="input-group select-wrapper w-100">
                                     <select id="richiestaId" class="form-control" formControlName="richiestaId"
-                                        name="richiestaId">
+                                        name="richiestaId"  [ngClass]="{'is-invalid': interventoForm.get('richiestaId')?.invalid && submitted}">
                                         <option [ngValue]="null">
                                             Seleziona richiesta
                                         </option>
@@ -26,6 +26,9 @@
                                     </select>
                                 </div>
                             </div>
+                            <span class="custom-error" *ngIf="interventoForm.get('richiestaId')?.hasError('required') && submitted">
+                                Richiesta è obbligatoria!
+                              </span>
                         </div>
 
                             <!-- Data Inizio -->
@@ -41,7 +44,7 @@
                                 </mat-form-field>
 
                                 <span class="custom-error"
-                                    *ngIf="interventoForm.get('dataInizio')?.hasError('required') && interventoForm.get('dataInizio')?.touched">
+                                    *ngIf="interventoForm.get('dataInizio')?.hasError('required') && submitted">
                                     Data Inizio è obbligatorio!
                                 </span>
 
@@ -65,7 +68,7 @@
                                   <mat-datepicker #pickerdataFine></mat-datepicker>
                                 </mat-form-field>
                 
-                                <span class="custom-error" *ngIf="interventoForm.get('dataFine')?.hasError('required') && interventoForm.get('dataFine')?.touched">
+                                <span class="custom-error" *ngIf="interventoForm.get('dataFine')?.hasError('required') && submitted">
                                     Data Fine è obbligatorio!
                                  </span>
                 
@@ -79,7 +82,7 @@
                             <!-- Data Intervento -->
 
                             <div class="col-md-4 mb-3">
-                                <label for="dataIntervento" class="form-label">Data Intervento</label>
+                                <label for="dataIntervento" class="form-label">Data Intervento*</label>
                                 
                                 <mat-form-field appearance="fill" style="width: 100%">
                                   <input matInput [matDatepicker]="pickerdataIntervento"  id="dataIntervento" name="dataIntervento"
@@ -88,7 +91,7 @@
                                   <mat-datepicker #pickerdataIntervento></mat-datepicker>
                                 </mat-form-field>
                 
-                                <span class="custom-error" *ngIf="interventoForm.get('dataIntervento')?.hasError('required') && interventoForm.get('dataIntervento')?.touched">
+                                <span class="custom-error" *ngIf="interventoForm.get('dataIntervento')?.hasError('required') && submitted">
                                     Data Intervento è obbligatorio!
                                  </span>
                 
@@ -198,18 +201,18 @@
 
                             <!-- Descrizione -->
                             <div class="col-md-8 mb-3">
-                                <label for="descrizione" class="form-label">Descrizione</label>
+                                <label for="descrizione" class="form-label">Descrizione*</label>
                                 <div class="input-group">
                                     <textarea id="descrizione" class="form-control" formControlName="descrizione"
-                                        rows="3"></textarea>
+                                        rows="3" [ngClass]="{'is-invalid': interventoForm.get('descrizione')?.invalid && submitted}"></textarea>
                                 </div>
-                                <div *ngIf="interventoForm.get('descrizione')?.invalid && interventoForm.get('descrizione')?.touched"
-                                    class="text-danger">
+                                <div *ngIf="interventoForm.get('descrizione')?.invalid && submitted"
+                                    class="custom-error">
                                     <span *ngIf="interventoForm.get('descrizione')?.errors?.['required']">
-                                        Descrizione è obbligatorio.
+                                        Descrizione è obbligatoria!
                                     </span>
                                     <span *ngIf="interventoForm.get('descrizione')?.errors?.['minlength']">
-                                        Inserisci almeno 10 caratteri.
+                                        Inserisci almeno 10 caratteri!
                                     </span>
                                 </div>
                             </div>
@@ -249,7 +252,7 @@
                                 Reset
                             </button>
 
-                            <button type="submit" class="btn btn-primary py-2" [disabled]="interventoForm.invalid">
+                            <button type="submit" class="btn btn-primary py-2">
                                 Salva
                             </button>
                         </div>

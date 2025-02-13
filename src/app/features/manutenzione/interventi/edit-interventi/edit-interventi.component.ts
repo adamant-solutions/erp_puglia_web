@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Interventi, StatoIntervento } from 'src/app/core/models/manutenzione.model';
 import { InterventiService } from 'src/app/core/services/manutenzione-services/interventi.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-interventi',
@@ -20,7 +21,8 @@ export class EditInterventiComponent {
   interventoForm!: FormGroup;
   intervento!: Interventi;
   imprese: any[] = [];
-  richieste: any[] = []
+  richieste: any[] = [];
+  submitted: boolean = false;
 
   
   statoList: StatoIntervento[] = [
@@ -34,7 +36,7 @@ export class EditInterventiComponent {
   private route = inject(ActivatedRoute);
 
 
-  constructor(private fb: FormBuilder,private intService: InterventiService) { }
+  constructor(private fb: FormBuilder,private intService: InterventiService,private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -51,10 +53,10 @@ export class EditInterventiComponent {
   initForm() {
     this.interventoForm = this.fb.group({
       id: [this.intervento.id],
-      richiestaId: [this.intervento.richiestaId],
-      dataInizio: [this.intervento.dataInizio],
+      richiestaId: [this.intervento.richiestaId,[Validators.required]],
+      dataInizio: [this.intervento.dataInizio,[Validators.required]],
       dataFine: [this.intervento.dataFine],
-      dataIntervento: [this.intervento.dataIntervento],
+      dataIntervento: [this.intervento.dataIntervento,[Validators.required]],
       descrizione: [this.intervento.descrizione,[Validators.required,Validators.minLength(10)]],
       materialiUtilizzati: [this.intervento.materialiUtilizzati],
       oreLavoro: [this.intervento.oreLavoro],
@@ -71,15 +73,24 @@ export class EditInterventiComponent {
 
 
   onSubmit() {
+    this.submitted = true;
     if (this.interventoForm.valid) {
       console.log('Form Submitted', this.interventoForm.value);
       this.intService.editInterventi(this.interventoForm.value).subscribe({
         next: (res) => {
-          alert('Dati salvati con successo!');
+          this.notificationService.addNotification({
+            message: 'Dati salvati con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['manutenzione/interventi/interventi-dettagli/' + this.intervento.id]);
         },
         error: (err) =>{
-          alert('Error!');
+          this.notificationService.addNotification({
+            message: "Si è verificato un errore!",
+            type: 'error',
+            timeout: 5000,
+          });
         }
       })
 

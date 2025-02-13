@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Interventi, PrioritaIntervento, StatoIntervento } from 'src/app/core/models/manutenzione.model';
 import { InterventiService } from 'src/app/core/services/manutenzione-services/interventi.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-interventi',
@@ -19,7 +20,8 @@ export class AddInterventiComponent {
   interventoForm!: FormGroup;
   intervento!: Interventi;
   appalti: any[] = [];
-  richieste: any[] = []
+  richieste: any[] = [];
+  submitted: boolean = false;
 
   
   statoList: StatoIntervento[] = [
@@ -40,7 +42,7 @@ export class AddInterventiComponent {
   private route = inject(ActivatedRoute);
 
 
-  constructor(private fb: FormBuilder,private intService: InterventiService) { }
+  constructor(private fb: FormBuilder,private intService: InterventiService,private notificationService: NotificationService) { }
 
   ngOnInit(): void {
 
@@ -56,7 +58,7 @@ export class AddInterventiComponent {
   initForm() {
     this.interventoForm = this.fb.group({
       id: -1,
-      richiestaId: [null], //id64
+      richiestaId: [null,[Validators.required]], //id64
       appaltoId: [null], //plani i lidhur me appalton
       descrizione: [null,[Validators.required,Validators.minLength(10)]],
       dataInizio: [null,[Validators.required]],
@@ -78,15 +80,24 @@ export class AddInterventiComponent {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.interventoForm.valid) {
       console.log('Form Submitted', this.interventoForm.value);
       this.intService.addInterventi(this.interventoForm.value).subscribe({
         next: (res) => {
-          alert('Dati salvati con successo!');
+          this.notificationService.addNotification({
+            message: 'Dati salvati con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['manutenzione/interventi/interventi-dettagli/' + res.id]);
         },
         error: (err) =>{
-          alert('Error!');
+          this.notificationService.addNotification({
+            message: "Si è verificato un errore!",
+            type: 'error',
+            timeout: 5000,
+          });
         }
       })
 
