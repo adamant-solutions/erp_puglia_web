@@ -111,7 +111,7 @@ export class AddContrattiComponent {
       this.contrattiService.addContratto(formData).subscribe({
         next: (createdContratto) => {
             this.notifService.addNotification({
-              message: 'Dati salvati con successo!',
+              message: 'Contratti è stato salvato con successo!',
               type: 'success',
               timeout: 3000,
             });
