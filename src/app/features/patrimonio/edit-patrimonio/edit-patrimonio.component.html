@@ -699,10 +699,11 @@
                       <span
                         class="custom-error"
                         *ngIf="
-                          modificaForm
+                          documentiList.controls[i]
                             .get('tipoDocumento')
                             ?.hasError('required') &&
-                          (modificaForm.get('tipoDocumento')?.touched ||
+                          (documentiList.controls[i].get('tipoDocumento')
+                            ?.touched ||
                             submitted)
                         "
                       >
@@ -728,10 +729,11 @@
                       <span
                         class="custom-error"
                         *ngIf="
-                          modificaForm
+                          documentiList.controls[i]
                             .get('dataDocumento')
                             ?.hasError('required') &&
-                          (modificaForm.get('dataDocumento')?.touched ||
+                          (documentiList.controls[i].get('dataDocumento')
+                            ?.touched ||
                             submitted)
                         "
                       >
