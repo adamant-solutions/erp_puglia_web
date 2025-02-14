@@ -50,7 +50,7 @@ export class PeriodoGestioneService {
   }
 
   updatePeriodo(id: number, periodo: PeriodiGestione): Observable<PeriodiGestione> {
-    return this.http.put<PeriodiGestione>(`${this.periodiGestioniUrl}/${id}`, periodo);
+    return this.http.put<PeriodiGestione>(`${this.periodiGestioniUrl}`, periodo);
   }
 
   deletePeriodo(id: number): Observable<void> {

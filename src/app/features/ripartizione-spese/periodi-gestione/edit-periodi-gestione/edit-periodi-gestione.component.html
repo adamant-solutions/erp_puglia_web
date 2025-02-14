@@ -1,0 +1,96 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Periodo'">
+</app-breadcrumbs>
+
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">Modifica Periodo di Gestione</h1>
+
+        <form [formGroup]="periodoForm" (ngSubmit)="onSubmit()" class="row g-3">
+          <input type="hidden" formControlName="version">
+          <input type="hidden" formControlName="condominioId">
+
+          <div class="col-md-6">
+            <label class="form-label" for="dataInizio">Data Inizio</label>
+            <div class="input-group">
+              <input
+                type="date"
+                class="form-control"
+                id="dataInizio"
+                formControlName="dataInizio"
+                [class.is-invalid]="isFieldInvalid('dataInizio')"
+              />
+            </div>
+            <div class="text-danger small mt-1" *ngIf="isFieldInvalid('dataInizio')">
+              {{ getErrorMessage('dataInizio') }}
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="dataFine">Data Fine</label>
+            <div class="input-group">
+              <input
+                type="date"
+                class="form-control"
+                id="dataFine"
+                formControlName="dataFine"
+                [class.is-invalid]="isFieldInvalid('dataFine')"
+              />
+            </div>
+            <div class="text-danger small mt-1" *ngIf="isFieldInvalid('dataFine')">
+              {{ getErrorMessage('dataFine') }}
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="stato">Stato</label>
+            <div class="input-group">
+              <select
+                class="form-control"
+                id="stato"
+                formControlName="stato"
+                [class.is-invalid]="isFieldInvalid('stato')"
+              >
+                <option value="">Seleziona uno stato</option>
+                <option value="PREVENTIVO">Preventivo</option>
+                <option value="CONSUNTIVO">Consuntivo</option>
+                <option value="CONGUAGLIATO">Conguagliato</option>
+                <option value="CHIUSO">Chiuso</option>
+              </select>
+            </div>
+            <div class="text-danger small mt-1" *ngIf="isFieldInvalid('stato')">
+              {{ getErrorMessage('stato') }}
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label" for="note">Note</label>
+            <textarea
+              class="form-control"
+              id="note"
+              formControlName="note"
+              rows="3"
+            ></textarea>
+          </div>
+
+          <div class="col-12">
+            <button type="button" class="btn btn-primary" style="width: auto;">
+              <i class="bi bi-arrow-right-circle me-2"></i>
+              Avanza stato
+            </button>
+          </div>
+
+          <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary me-2">
+              Salva
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="onCancel()">
+              Annulla
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
