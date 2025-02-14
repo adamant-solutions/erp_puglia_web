@@ -58,15 +58,47 @@
                 </div>
               </div>
 
+              <!-- Provincia Dropdown -->
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia *</label>
+                <div class="input-group" [class.is-invalid]="shouldShowError('provincia')">
+                  <select
+                    class="form-control"
+                    id="provincia"
+                    formControlName="provincia"
+                  >
+                    <option value="" disabled selected>Seleziona una provincia</option>
+                    <option *ngFor="let provincia of provinces" [value]="provincia.sigla">
+                      {{ provincia.nome }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
+                </div>
+                <div class="invalid-feedback" *ngIf="shouldShowError('provincia')">
+                  Provincia obbligatoria
+                </div>
+              </div>
+
+              <!-- Comune Dropdown -->
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="comune">Comune *</label>
                 <div class="input-group" [class.is-invalid]="shouldShowError('comune')">
-                  <input
-                    type="text"
+                  <select
                     class="form-control"
                     id="comune"
                     formControlName="comune"
-                  />
+                    [disabled]="!addForm.get('provincia')?.value"
+                  >
+                    <option value="" disabled selected>Seleziona un comune</option>
+                    <option *ngFor="let comune of filteredComuni" [value]="comune.nome">
+                      {{ comune.nome }}
+                    </option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-caret-down-fill"></i>
+                  </span>
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('comune')">
                   Comune obbligatorio
@@ -74,25 +106,10 @@
               </div>
 
               <div class="col-md-4 mb-3">
-                <label class="form-label" for="provincia">Provincia *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('provincia')">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="provincia"
-                    formControlName="provincia"
-                    maxlength="2"
-                  />
-                </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('provincia')">
-                  Provincia obbligatoria
-                </div>
-              </div>
-
-              <div class="col-md-4 mb-3">
                 <label class="form-label" for="cap">CAP *</label>
                 <div class="input-group" [class.is-invalid]="shouldShowError('cap')">
                   <input
+                  maxlength="5"
                     type="text"
                     class="form-control"
                     id="cap"
