@@ -668,8 +668,12 @@
                       <span
                         class="custom-error"
                         *ngIf="
-                          addForm.get('tipoDocumento')?.hasError('required') &&
-                          (addForm.get('tipoDocumento')?.touched || submitted)
+                          documentiList.controls[i]
+                            .get('tipoDocumento')
+                            ?.hasError('required') &&
+                          (documentiList.controls[i].get('tipoDocumento')
+                            ?.touched ||
+                            submitted)
                         "
                       >
                         Il tipo documento è obbligatorio!
@@ -694,8 +698,12 @@
                       <span
                         class="custom-error"
                         *ngIf="
-                          addForm.get('dataDocumento')?.hasError('required') &&
-                          (addForm.get('dataDocumento')?.touched || submitted)
+                          documentiList.controls[i]
+                            .get('dataDocumento')
+                            ?.hasError('required') &&
+                          (documentiList.controls[i].get('dataDocumento')
+                            ?.touched ||
+                            submitted)
                         "
                       >
                         Data documento è obbligatoria!
