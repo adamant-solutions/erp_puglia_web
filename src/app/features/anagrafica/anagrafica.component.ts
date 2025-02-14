@@ -184,15 +184,20 @@ export class AnagraficaComponent implements OnInit {
 
   showDownloadModal(anagraficaId: number) {
     this.selectedAnagraficaId = anagraficaId;
-
+  
     this.anagraficaService.getAnagraficaById(anagraficaId).subscribe({
       next: (anagrafica) => {
         this.currentAnagrafica = anagrafica;
-        this.selectedDocumentType = null;
+
+        if (anagrafica.cittadino.documenti_identita?.length === 1) {
+          this.selectedDocumentType = anagrafica.cittadino.documenti_identita[0].tipo_documento;
+        } else {
+          this.selectedDocumentType = null;
+        }
         this.bootstrapService.showModal('downloadModal');
       },
       error: (error) => {
-        console.error('Error fetching anagrafica details:', error);
+   
       },
     });
   }
