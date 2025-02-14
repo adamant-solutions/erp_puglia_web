@@ -43,7 +43,7 @@ export class PeriodiListComponent {
       this.searchDataInizioParam = params['dataInizio'] || '';
       this.searchDataFineParam = params['dataFine'] || '';
       this.searchStatoParam = params['stato'] || '';
-      this.currentPage = parseInt(params['page'] || '0');
+      this.currentPage = parseInt(params['pagina'] || '0');
       this.pageSize = parseInt(params['size'] || '10');
     });
 
@@ -74,7 +74,7 @@ export class PeriodiListComponent {
     }
 
     const queryParams: any = {
-      page: this.currentPage,
+      pagina: this.currentPage,
       size: this.pageSize
     };
 
@@ -95,7 +95,7 @@ export class PeriodiListComponent {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { 
-        page: this.currentPage,
+        pagina: this.currentPage,
         size: this.pageSize
       },
       queryParamsHandling: 'merge'
@@ -110,7 +110,7 @@ export class PeriodiListComponent {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        page: 0,
+        pagina: 0,
         size: this.pageSize
       }
     });
@@ -127,7 +127,7 @@ export class PeriodiListComponent {
         next: () => {
           this.deleteModal.hide();
           this.successModal.show();
-          this.refreshList();
+          // this.refreshList();
         },
         error: (error: any) => {
       
@@ -137,41 +137,10 @@ export class PeriodiListComponent {
     }
   }
 
-  refreshList(): void {
-   
-    const queryParams = {
-      page: this.currentPage,
-      size: this.pageSize,
-      dataInizio: this.searchDataInizioParam,
-      dataFine: this.searchDataFineParam,
-      stato: this.searchStatoParam
-    };
-
-    this.periodoService.getPeriodi(
-      queryParams.page,
-      queryParams.size,
-      queryParams.dataInizio,
-      queryParams.dataFine,
-      queryParams.stato
-    ).subscribe({
-      next: (responseData) => {
-        if (responseData.body) {
-          this.periodiList = responseData.body;
-          if (responseData.headers && responseData.headers.get('x-paging-totalrecordcount')) {
-            this.totalPages = parseInt(responseData.headers.get('x-paging-totalrecordcount') || '0');
-          }
-        }
-      },
-      error: (err) => {
-        this.periodiList = [];
-        this.totalPages = 0;
-      }
-    });
-  }
 
   closeSuccessModal(): void {
     this.successModal.hide();
     this.periodoToDelete = null;
-    this.refreshList();
+   
   }
 }

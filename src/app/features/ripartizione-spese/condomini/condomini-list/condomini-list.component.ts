@@ -40,7 +40,7 @@ export class CondominiListComponent {
       this.searchDenominazioneParam = params['denominazione'] || '';
       this.searchComuneParam = params['comune'] || '';
       this.searchProvinciaParam = params['provincia'] || '';
-      this.currentPage = parseInt(params['page'] || '0');
+      this.currentPage = parseInt(params['pagina'] || '0');
       this.pageSize = parseInt(params['size'] || '10');
     });
 
@@ -81,7 +81,7 @@ export class CondominiListComponent {
     }
 
     const queryParams: any = {
-      page: this.currentPage,
+      pagina: this.currentPage,
       size: this.pageSize
     };
 
@@ -105,7 +105,7 @@ export class CondominiListComponent {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: { 
-        page: this.currentPage,
+        pagina: this.currentPage,
         size: this.pageSize
       },
       queryParamsHandling: 'merge'
@@ -121,7 +121,7 @@ export class CondominiListComponent {
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: {
-        page: 0,
+        pagina: 0,
         size: this.pageSize
       }
     });

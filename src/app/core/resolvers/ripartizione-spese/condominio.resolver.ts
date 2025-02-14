@@ -23,7 +23,7 @@ export const condominiAllResolver: ResolveFn<Condominio[]> = (route, state) => {
     state,
     condominioService: CondominioService = inject(CondominioService)
   ) => {
-    const page = route.queryParams['page'] ? +route.queryParams['page'] : 0;
+    const pagina = route.queryParams['pagina'] ? +route.queryParams['pagina'] : 0;
     const size = route.queryParams['size'] ? +route.queryParams['size'] : 10;
     const codice = route.queryParams['codice']?.trim();
     const denominazione = route.queryParams['denominazione']?.trim();
@@ -34,7 +34,7 @@ export const condominiAllResolver: ResolveFn<Condominio[]> = (route, state) => {
       return condominioService.getAllCondomini();
     }
     
-    return condominioService.getCondomini(page, size, codice, denominazione, comune, provincia);
+    return condominioService.getCondomini(pagina, size, codice, denominazione, comune, provincia);
   };
 
 

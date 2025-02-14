@@ -21,14 +21,14 @@ export class PeriodoGestioneService {
   }
 
   getPeriodi(
-    page: number, 
+    pagina: number, 
     size: number, 
     dataInizio?: string, 
     dataFine?: string, 
     stato?: string
   ): Observable<any> {
     let params = new HttpParams()
-      .set('page', page.toString())
+      .set('pagina', pagina.toString())
       .set('size', size.toString());
 
     if (dataInizio) params = params.set('dataInizio', dataInizio);
