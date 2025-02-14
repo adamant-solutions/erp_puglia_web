@@ -24,14 +24,14 @@ export const periodoResolver: ResolveFn<any> = (
   state,
   periodoService: PeriodoGestioneService = inject(PeriodoGestioneService)
 ) => {
-  const page = route.queryParams['page'] ? +route.queryParams['page'] : 0;
+  const pagina = route.queryParams['pagina'] ? +route.queryParams['pagina'] : 0;
   const size = route.queryParams['size'] ? +route.queryParams['size'] : 10;
   const dataInizio = route.queryParams['dataInizio'];
   const dataFine = route.queryParams['dataFine'];
   const stato = route.queryParams['stato'];
   
 
-  return periodoService.getPeriodi(page, size, dataInizio, dataFine, stato);
+  return periodoService.getPeriodi(pagina, size, dataInizio, dataFine, stato);
 };
 
 

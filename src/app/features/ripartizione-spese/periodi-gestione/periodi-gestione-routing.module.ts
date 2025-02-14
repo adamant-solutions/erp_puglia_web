@@ -4,6 +4,7 @@ import { PeriodiListComponent } from './periodi-gestione-list/periodi-gestione-l
 import { condominiLightResolver, periodiAllResolver, periodoByIdResolver, periodoResolver } from 'src/app/core/resolvers/ripartizione-spese/periodi-gestione.resolver';
 import { AddPeriodoGestioneComponent } from './add-periodi-gestione/add-periodi-gestione.component';
 import { ViewPeriodiGestioneComponent } from './view-periodi-gestione/view-periodi-gestione.component';
+import { EditPeriodiGestioneComponent } from './edit-periodi-gestione/edit-periodi-gestione.component';
 
 const routes: Routes = [
 {path:'',
@@ -27,6 +28,13 @@ const routes: Routes = [
   resolve: {
     periodo: periodoByIdResolver,
     condomini: condominiLightResolver
+  }
+},
+{
+  path: 'modifica-periodo/:id',
+  component: EditPeriodiGestioneComponent,
+  resolve: {
+    periodoByIdResolver
   }
 }
 

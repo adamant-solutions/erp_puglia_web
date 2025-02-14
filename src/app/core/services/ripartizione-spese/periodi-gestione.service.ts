@@ -21,14 +21,14 @@ export class PeriodoGestioneService {
   }
 
   getPeriodi(
-    page: number, 
+    pagina: number, 
     size: number, 
     dataInizio?: string, 
     dataFine?: string, 
     stato?: string
   ): Observable<any> {
     let params = new HttpParams()
-      .set('page', page.toString())
+      .set('pagina', pagina.toString())
       .set('size', size.toString());
 
     if (dataInizio) params = params.set('dataInizio', dataInizio);
@@ -50,7 +50,7 @@ export class PeriodoGestioneService {
   }
 
   updatePeriodo(id: number, periodo: PeriodiGestione): Observable<PeriodiGestione> {
-    return this.http.put<PeriodiGestione>(`${this.periodiGestioniUrl}/${id}`, periodo);
+    return this.http.put<PeriodiGestione>(`${this.periodiGestioniUrl}`, periodo);
   }
 
   deletePeriodo(id: number): Observable<void> {

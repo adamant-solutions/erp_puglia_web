@@ -1,7 +1,7 @@
 import { ResolveFn } from '@angular/router';
 import { CondominioService } from '../../services/ripartizione-spese/condominio.service';
 import { inject } from '@angular/core';
-import { catchError, map, of } from 'rxjs';
+import { catchError, forkJoin, map, of } from 'rxjs';
 import { Condominio } from '../../models/condominio.model';
 
 export interface CondominioSearchParams {
@@ -23,7 +23,7 @@ export const condominiAllResolver: ResolveFn<Condominio[]> = (route, state) => {
     state,
     condominioService: CondominioService = inject(CondominioService)
   ) => {
-    const page = route.queryParams['page'] ? +route.queryParams['page'] : 0;
+    const pagina = route.queryParams['pagina'] ? +route.queryParams['pagina'] : 0;
     const size = route.queryParams['size'] ? +route.queryParams['size'] : 10;
     const codice = route.queryParams['codice']?.trim();
     const denominazione = route.queryParams['denominazione']?.trim();
@@ -34,7 +34,7 @@ export const condominiAllResolver: ResolveFn<Condominio[]> = (route, state) => {
       return condominioService.getAllCondomini();
     }
     
-    return condominioService.getCondomini(page, size, codice, denominazione, comune, provincia);
+    return condominioService.getCondomini(pagina, size, codice, denominazione, comune, provincia);
   };
 
 
@@ -48,5 +48,24 @@ export const condominioByIdResolver: ResolveFn<any> = (
     catchError(error => {
       return of(null);
     })
+  );
+};
+
+export const condominioUnitasResolver: ResolveFn<any> = (
+  route,
+  state,
+  condominioService: CondominioService = inject(CondominioService)
+) => {
+  const ID = route.params['id'];
+
+  return forkJoin({
+    unitaIds: condominioService.getUnitaIdsForCondominio(ID)
+,
+    unitaList: condominioService.getUnitaImmobiliare()
+  }).pipe(
+    map((result) => ({
+      unitaIds: Array.isArray(result.unitaIds) ? result.unitaIds : [result.unitaIds],
+      unitaList: result.unitaList || [] 
+    }))
   );
 };

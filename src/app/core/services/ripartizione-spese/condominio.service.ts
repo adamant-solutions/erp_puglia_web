@@ -21,9 +21,9 @@ export class CondominioService {
     });
   }
 
-  getCondomini(page: number, size: number, codice?: string, denominazione?: string, comune?: string, provincia?: string): Observable<any> {
+  getCondomini(pagina: number, size: number, codice?: string, denominazione?: string, comune?: string, provincia?: string): Observable<any> {
     let params = new HttpParams()
-      .set('page', page.toString())
+      .set('pagina', pagina.toString())
       .set('size', size.toString());
   
     if (codice) params = params.set('codice', codice);
