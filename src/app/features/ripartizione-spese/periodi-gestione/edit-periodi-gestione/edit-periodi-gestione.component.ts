@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PeriodiGestione } from 'src/app/core/models/periodi-gestione.model';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { PeriodoGestioneService } from 'src/app/core/services/ripartizione-spese/periodi-gestione.service';
 
 @Component({
@@ -24,12 +25,14 @@ export class EditPeriodiGestioneComponent implements OnInit {
     dataFine: 'Data Fine obbligatoria',
     stato: 'Stato obbligatorio'
   };
+  errorMsg: string = ''
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private periodoService: PeriodoGestioneService
+    private periodoService: PeriodoGestioneService,
+    private notificationService:NotificationService
   ) {
     this.periodoForm = this.fb.group({
       dataInizio: ['', Validators.required],
@@ -97,14 +100,34 @@ export class EditPeriodiGestioneComponent implements OnInit {
 
     this.periodoService.updatePeriodo(this.periodoId, periodoData).subscribe({
       next: () => {
+        this.notificationService.addNotification({
+          message: 'Salvato con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['ripartizione-spese/periodi-gestione']);
       },
       error: (error) => {
-        if (error.status === 400) {
-         
-        }
+        this.notificationService.addNotification({
+          message: this.handleError(error.error),
+          type: 'error',
+          timeout: 5000,
+        });
       }
     });
+  }
+
+  private handleError(error: any) : string{
+    switch (error.status) {
+      case 400:
+        return this.errorMsg = '';
+      case 422:
+        return this.errorMsg = ''; 
+      case 500:
+        return this.errorMsg = error.message;
+      default:
+        return this.errorMsg = '';
+    }
   }
 
   onCancel() {
