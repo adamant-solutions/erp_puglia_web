@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Condominio } from 'src/app/core/models/condominio.model';
 import { ModelLight } from 'src/app/core/models/contratto.model';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { CondominioService } from 'src/app/core/services/ripartizione-spese/condominio.service';
 
 @Component({
@@ -23,12 +23,14 @@ export class EditCondominiComponent implements OnInit {
   condominioId!: number;
   selectedUnitaId: string = '';
   formSubmitAttempted = false;
+  errorMsg: string = '';
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private condominioService: CondominioService
+    private condominioService: CondominioService,
+    private notificationService: NotificationService
   ) {
     this.formSubmitAttempted = false;
     this.editForm = this.fb.group({
@@ -51,42 +53,24 @@ export class EditCondominiComponent implements OnInit {
           const condominio = data['condominio'];
           this.condominioId = condominio.id;
           this.editForm.patchValue(condominio);
-          this.loadUnitaImmobiliari();
         }
+        if (data['unitaImmobiliari']?.body) {
+          this.unitaImmobiliariList = data['unitaImmobiliari'].body;
+        }
+        const { unitaIds, unitaList } = data['condominioUnitasResolver'];
+
+        this.selectedUnitaImmobiliari = unitaList.filter((unita: any) => unitaIds.includes(unita.id));
       },
       error: (error) => {
    
       }
     });
 
-    this.route.data.subscribe({
-      next: (data) => {
-        if (data['unitaImmobiliari']?.body) {
-          this.unitaImmobiliariList = data['unitaImmobiliari'].body;
-        }
-      },
-      error: (error) => {
-    
-      }
-    });
   }
 
   shouldShowError(controlName: string): boolean {
     const control = this.editForm.get(controlName);
     return !!(control && control.invalid && this.formSubmitAttempted);
-  }
-
-  loadUnitaImmobiliari() {
-    this.condominioService.getUnitaIdsForCondominio(this.condominioId).subscribe({
-      next: (unitaIds) => {
-        this.selectedUnitaImmobiliari = this.unitaImmobiliariList.filter(
-          unita => unitaIds.includes(unita.id)
-        );
-      },
-      error: (error) => {
-   
-      }
-    });
   }
 
   onSubmit() {
@@ -100,10 +84,19 @@ export class EditCondominiComponent implements OnInit {
   
       this.condominioService.updateCondominio(updatedCondominio).subscribe({
         next: () => {
+          this.notificationService.addNotification({
+            message: 'Condominio è stato salvato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['ripartizione-spese/condomini']);
         },
         error: (error) => {
-        
+          this.notificationService.addNotification({
+            message: this.handleError(error.error),
+            type: 'error',
+            timeout: 5000,
+          });
         }
       });
     }
@@ -121,9 +114,18 @@ export class EditCondominiComponent implements OnInit {
         next: () => {
           this.selectedUnitaImmobiliari.push(unita);
           this.selectedUnitaId = '';
+          this.notificationService.addNotification({
+            message: 'Unità immobiliare è stato salvato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
         },
         error: (error) => {
-        
+          this.notificationService.addNotification({
+            message: this.handleError(error.error),
+            type: 'error',
+            timeout: 5000,
+          });
         }
       });
     }
@@ -145,4 +147,19 @@ export class EditCondominiComponent implements OnInit {
   indietro() {
     this.router.navigate(['ripartizione-spese/condomini']);
   }
+
+  
+  private handleError(error: any) : string{
+    switch (error.status) {
+      case 400:
+        return this.errorMsg = 'Dati non validi. Controlla i campi obbligatori.';
+      case 422:
+        return this.errorMsg = 'Dati non validi o condominio già esistente.';
+      case 500:
+        return this.errorMsg = error.message;
+      default:
+        return this.errorMsg = 'Errore durante il salvataggio del condominio.';
+    }
+  }
+
 }
