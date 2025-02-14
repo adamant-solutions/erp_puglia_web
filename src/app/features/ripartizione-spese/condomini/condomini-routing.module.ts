@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CondominiListComponent } from './condomini-list/condomini-list.component';
-import {  condominioByIdResolver, condominioResolver } from 'src/app/core/resolvers/ripartizione-spese/condominio.resolver';
+import {  condominioByIdResolver, condominioResolver, condominioUnitasResolver } from 'src/app/core/resolvers/ripartizione-spese/condominio.resolver';
 import { ViewCondominiComponent } from './view-condomini/view-condomini.component';
 import { EditCondominiComponent } from './edit-condomini/edit-condomini.component';
 import { unitaImmobiliareResolver } from 'src/app/core/resolvers/contratti.resolver';
@@ -21,7 +21,9 @@ const routes: Routes = [
     path: 'condominio-dettagli/:id',
     component: ViewCondominiComponent,
     resolve: {
-      condominio: condominioByIdResolver
+      condominio: condominioByIdResolver,
+      condominioUnitasResolver,
+      unitaImmobiliari: unitaImmobiliareResolver,
     }
   },
   {
@@ -29,7 +31,8 @@ const routes: Routes = [
     component: EditCondominiComponent,
     resolve: {
       condominio: condominioByIdResolver,
-      unitaImmobiliari: unitaImmobiliareResolver
+      unitaImmobiliari: unitaImmobiliareResolver,
+      condominioUnitasResolver
     }
   },
   {
