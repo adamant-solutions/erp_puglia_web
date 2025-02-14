@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PeriodiListComponent } from './periodi-gestione-list/periodi-gestione-list.component';
-import { condominiLightResolver, periodiAllResolver, periodoByIdResolver } from 'src/app/core/resolvers/ripartizione-spese/periodi-gestione.resolver';
+import { condominiLightResolver, periodiAllResolver, periodoByIdResolver, periodoResolver } from 'src/app/core/resolvers/ripartizione-spese/periodi-gestione.resolver';
 import { AddPeriodoGestioneComponent } from './add-periodi-gestione/add-periodi-gestione.component';
 import { ViewPeriodiGestioneComponent } from './view-periodi-gestione/view-periodi-gestione.component';
 
@@ -9,7 +9,8 @@ const routes: Routes = [
 {path:'',
   component:PeriodiListComponent,
   resolve:{
-    periodiAllResolver
+    
+    periodoResolver
   },runGuardsAndResolvers:'always'
 },
 {

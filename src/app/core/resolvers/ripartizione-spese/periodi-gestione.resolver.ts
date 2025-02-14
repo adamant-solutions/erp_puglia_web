@@ -26,14 +26,11 @@ export const periodoResolver: ResolveFn<any> = (
 ) => {
   const page = route.queryParams['page'] ? +route.queryParams['page'] : 0;
   const size = route.queryParams['size'] ? +route.queryParams['size'] : 10;
-  const dataInizio = route.queryParams['dataInizio']?.trim();
-  const dataFine = route.queryParams['dataFine']?.trim();
-  const stato = route.queryParams['stato']?.trim();
+  const dataInizio = route.queryParams['dataInizio'];
+  const dataFine = route.queryParams['dataFine'];
+  const stato = route.queryParams['stato'];
   
-  if (!dataInizio && !dataFine && !stato) {
-    return periodoService.getAllPeriodi();
-  }
-  
+
   return periodoService.getPeriodi(page, size, dataInizio, dataFine, stato);
 };
 

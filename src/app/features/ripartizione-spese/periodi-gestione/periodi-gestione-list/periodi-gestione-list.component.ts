@@ -38,6 +38,7 @@ export class PeriodiListComponent {
     this.deleteModal = new bootstrap.Modal(document.getElementById('deletePeriodoModal'));
     this.successModal = new bootstrap.Modal(document.getElementById('deletePeriodoModal2'));
 
+  
     this.route.queryParams.subscribe(params => {
       this.searchDataInizioParam = params['dataInizio'] || '';
       this.searchDataFineParam = params['dataFine'] || '';
@@ -46,10 +47,11 @@ export class PeriodiListComponent {
       this.pageSize = parseInt(params['size'] || '10');
     });
 
+  
     this.route.data.subscribe({
       next: (data) => {
-        if (data['periodiAllResolver']) {
-          const responseData = data['periodiAllResolver'];
+        if (data['periodoResolver']) { 
+          const responseData = data['periodoResolver'];
           if (responseData.body) {
             this.periodiList = responseData.body;
             if (responseData.headers && responseData.headers.get('x-paging-totalrecordcount')) {
@@ -136,17 +138,33 @@ export class PeriodiListComponent {
   }
 
   refreshList(): void {
-    this.route.data.subscribe({
-      next: (data) => {
-        if (data['periodiAllResolver']) {
-          const responseData = data['periodiAllResolver'];
-          if (responseData.body) {
-            this.periodiList = responseData.body;
-            if (responseData.headers && responseData.headers.get('x-paging-totalrecordcount')) {
-              this.totalPages = parseInt(responseData.headers.get('x-paging-totalrecordcount') || '0');
-            }
+   
+    const queryParams = {
+      page: this.currentPage,
+      size: this.pageSize,
+      dataInizio: this.searchDataInizioParam,
+      dataFine: this.searchDataFineParam,
+      stato: this.searchStatoParam
+    };
+
+    this.periodoService.getPeriodi(
+      queryParams.page,
+      queryParams.size,
+      queryParams.dataInizio,
+      queryParams.dataFine,
+      queryParams.stato
+    ).subscribe({
+      next: (responseData) => {
+        if (responseData.body) {
+          this.periodiList = responseData.body;
+          if (responseData.headers && responseData.headers.get('x-paging-totalrecordcount')) {
+            this.totalPages = parseInt(responseData.headers.get('x-paging-totalrecordcount') || '0');
           }
         }
+      },
+      error: (err) => {
+        this.periodiList = [];
+        this.totalPages = 0;
       }
     });
   }
