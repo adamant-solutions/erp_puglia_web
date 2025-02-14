@@ -56,7 +56,6 @@ export class AddAnagraficaComponent implements OnInit {
     { sigla: 'TA', nome: 'Taranto' },
   ];
 
-
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
@@ -85,12 +84,12 @@ export class AddAnagraficaComponent implements OnInit {
         dataDiNascita: ['', [Validators.required]],
 
         residenza: this.formBuilder.group({
-          indirizzo: [''],
-          civico: [''],
-          cap: ['', [Validators.pattern('^[0-9]{5}$')]],
-          comuneResidenza: [''],
-          provinciaResidenza: [''],
-          statoResidenza: [''],
+          indirizzo: ['', Validators.required],
+          civico: ['', Validators.required],
+          cap: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
+          comuneResidenza: ['', Validators.required],
+          provinciaResidenza: ['', Validators.required],
+          statoResidenza: ['', Validators.required],
         }),
         contatti: this.formBuilder.group({
           telefono: [''],
@@ -199,7 +198,7 @@ export class AddAnagraficaComponent implements OnInit {
         ) {
           this.errorMessage =
             'Errore: Il numero di documenti nel JSON non corrisponde ai file caricati';
-        } else if (error.status === 500){
+        } else if (error.status === 500) {
           this.errorMessage = error.error.message;
         } else {
           this.errorMessage = "Errore durante la creazione dell'anagrafica";
