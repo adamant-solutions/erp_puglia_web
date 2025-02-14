@@ -10,31 +10,30 @@
 
         <div class="col-12 mb-5">
           <form [formGroup]="searchForm" class="row g-3" (ngSubmit)="onSearch()">
+
             <div class="col-md-3">
               <label class="form-label" for="contrattoId">Contratto</label>
-              <div class="select-container">
-                <select 
-                  class="custom-select"
-                  id="contrattoId" 
-                  formControlName="contrattoId"
+              <div class="d-flex align-items-center">
+                  <div class="input-group select-wrapper w-100">
+                <select class="form-control"   id="contrattoId" 
+                formControlName="contrattoId">
+                <option value="">Seleziona un contratto</option>
+                <option 
+                  *ngFor="let contratto of contrattiLight" 
+                  [value]="contratto.id"
                 >
-                  <option value="" disabled>Seleziona un contratto</option>
-                  <option 
-                    *ngFor="let contratto of contrattiLight" 
-                    [value]="contratto.id"
-                  >
-                    {{ contratto.descrizione }}
-                  </option>
+                  {{ contratto.descrizione }}
+                </option>
                 </select>
-                <div class="select-arrow">
-                  <i class="bi bi-chevron-down"></i>
-                </div>
+                  </div>
               </div>
             </div>
 
+
             <div class="col-md-3">
               <label class="form-label" for="stato">Stato</label>
-              <div class="select-container">
+              <div class="d-flex align-items-center">
+                <div class="input-group select-wrapper w-100">
                 <select
                   class="custom-select"
                   id="stato"
@@ -48,12 +47,11 @@
                     {{option.label}}
                   </option>
                 </select>
-                <div class="select-arrow">
-                  <i class="bi bi-funnel"></i>
-                </div>
+
               </div>
             </div>
-
+            </div>
+            
             <div class="col-md-3">
               <label class="form-label" for="importoMin">Importo Minimo</label>
               <div class="input-group custom-input-group">
@@ -98,7 +96,7 @@
                 class="btn btn-primary me-3"
                 [disabled]="searchForm.invalid "
               >
-                <i class="bi bi-search me-1"></i>
+                <!-- <i class="bi bi-search me-1"></i> -->
                 Cerca
               </button>
 
@@ -108,7 +106,7 @@
                 (click)="onReset()"
               
               >
-                <i class="bi bi-arrow-counterclockwise me-1"></i>
+                <!-- <i class="bi bi-arrow-counterclockwise me-1"></i> -->
                 Reset
               </button>
             </div>
