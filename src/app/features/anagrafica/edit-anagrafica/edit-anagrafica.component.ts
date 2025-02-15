@@ -14,7 +14,6 @@ type UploadDocumentType = 'CI' | 'PP' | 'PT';
   templateUrl: './edit-anagrafica.component.html',
   styleUrls: ['./edit-anagrafica.component.css'],
 })
-
 export class EditAnagraficaComponent implements OnInit {
   pageTitle: string = 'Modifica Anagrafica';
   uploadForm: FormGroup;
@@ -29,7 +28,7 @@ export class EditAnagraficaComponent implements OnInit {
   private documentTypeMap: Record<TipoDocumento, UploadDocumentType> = {
     [TipoDocumento.CARTA_DEL_IDENTITA]: 'CI',
     [TipoDocumento.PASSAPORTO]: 'PP',
-    [TipoDocumento.PATENTE]: 'PT'
+    [TipoDocumento.PATENTE]: 'PT',
   };
   anagrafica!: Anagrafica;
   anagraficaId!: number;
@@ -49,9 +48,11 @@ export class EditAnagraficaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private anagraficaService: AnagraficaService,
     private bootstrapService: BootstrapService
-  ) { this.uploadForm = this.formBuilder.group({
-    documentType: ['', Validators.required]
-  });}
+  ) {
+    this.uploadForm = this.formBuilder.group({
+      documentType: ['', Validators.required],
+    });
+  }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({ anagraficaByIdResolver }) => {
@@ -71,7 +72,10 @@ export class EditAnagraficaComponent implements OnInit {
       cittadino: this.formBuilder.group({
         id: [this.anagrafica.cittadino?.id || ''],
         nome: [this.anagrafica.cittadino?.nome || '', Validators.required],
-        cognome: [this.anagrafica.cittadino?.cognome || '', Validators.required],
+        cognome: [
+          this.anagrafica.cittadino?.cognome || '',
+          Validators.required,
+        ],
         codiceFiscale: [
           this.anagrafica.cittadino?.codiceFiscale || '',
           Validators.required,
@@ -87,17 +91,29 @@ export class EditAnagraficaComponent implements OnInit {
         ],
         residenza: this.formBuilder.group({
           id: [this.anagrafica.cittadino?.residenza?.id || ''],
-          indirizzo: [this.anagrafica.cittadino?.residenza?.indirizzo || ''],
-          civico: [this.anagrafica.cittadino?.residenza?.civico || ''],
-          cap: [this.anagrafica.cittadino?.residenza?.cap || ''],
+          indirizzo: [
+            this.anagrafica.cittadino?.residenza?.indirizzo || '',
+            Validators.required,
+          ],
+          civico: [
+            this.anagrafica.cittadino?.residenza?.civico || '',
+            Validators.required,
+          ],
+          cap: [
+            this.anagrafica.cittadino?.residenza?.cap || '',
+            [Validators.required, Validators.pattern('^[0-9]{5}$')],
+          ],
           comuneResidenza: [
             this.anagrafica.cittadino?.residenza?.comuneResidenza || '',
+            Validators.required,
           ],
           provinciaResidenza: [
             this.anagrafica.cittadino?.residenza?.provinciaResidenza || '',
+            Validators.required,
           ],
           statoResidenza: [
             this.anagrafica.cittadino?.residenza?.statoResidenza || '',
+            Validators.required,
           ],
         }),
         contatti: this.formBuilder.group({
@@ -118,26 +134,31 @@ export class EditAnagraficaComponent implements OnInit {
           stato: [this.anagrafica.cittadino?.luogo_nascita?.stato || ''],
         }),
         documenti_identita: this.formBuilder.array(
-          (this.anagrafica.cittadino?.documenti_identita || []).map((doc: any) =>
-            this.formBuilder.group({
-              id: [doc.id || ''],
-              tipo_documento: [doc.tipo_documento || ''],
-              numero_documento: [doc.numero_documento || ''],
-              data_emissione: [
-                doc.data_emissione ? this.formatDateForBE(doc.data_emissione) : '',
-              ],
-              data_scadenza: [
-                doc.data_scadenza ? this.formatDateForBE(doc.data_scadenza) : '',
-              ],
-              ente_emittente: [doc.ente_emittente || ''],
-              nomeFile: [doc.nomeFile || ''],
-              contentType: [doc.contentType || '']
-            })
+          (this.anagrafica.cittadino?.documenti_identita || []).map(
+            (doc: any) =>
+              this.formBuilder.group({
+                id: [doc.id || ''],
+                tipo_documento: [doc.tipo_documento || ''],
+                numero_documento: [doc.numero_documento || ''],
+                data_emissione: [
+                  doc.data_emissione
+                    ? this.formatDateForBE(doc.data_emissione)
+                    : '',
+                ],
+                data_scadenza: [
+                  doc.data_scadenza
+                    ? this.formatDateForBE(doc.data_scadenza)
+                    : '',
+                ],
+                ente_emittente: [doc.ente_emittente || ''],
+                nomeFile: [doc.nomeFile || ''],
+                contentType: [doc.contentType || ''],
+              })
           )
         ),
       }),
     });
-  
+
     this.initialFormValues = this.modificaForm.getRawValue();
   }
 
@@ -154,11 +175,10 @@ export class EditAnagraficaComponent implements OnInit {
       ente_emittente: ['', Validators.required],
       nomeFile: [''],
       contentType: [''],
-      id: [null] 
+      id: [null],
     });
     this.documentiIdentita.push(documentoGroup);
   }
- 
 
   indietro() {
     this.router.navigate(['/anagrafica']);
@@ -177,54 +197,58 @@ export class EditAnagraficaComponent implements OnInit {
     }
 
     const formValue = this.modificaForm.getRawValue();
-    
-   
-    formValue.cittadino.dataDiNascita = moment(formValue.cittadino.dataDiNascita)
-      .format('YYYY-MM-DD');
 
- 
+    formValue.cittadino.dataDiNascita = moment(
+      formValue.cittadino.dataDiNascita
+    ).format('YYYY-MM-DD');
+
     if (formValue.cittadino.documenti_identita) {
-      formValue.cittadino.documenti_identita = formValue.cittadino.documenti_identita.map((doc: { data_emissione: moment.MomentInput; data_scadenza: moment.MomentInput; }) => ({
-        ...doc,
-        data_emissione: moment(doc.data_emissione)
-          .format('YYYY-MM-DDTHH:mm:ss.SSSZ'),
-        data_scadenza: moment(doc.data_scadenza)
-          .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
-      }));
+      formValue.cittadino.documenti_identita =
+        formValue.cittadino.documenti_identita.map(
+          (doc: {
+            data_emissione: moment.MomentInput;
+            data_scadenza: moment.MomentInput;
+          }) => ({
+            ...doc,
+            data_emissione: moment(doc.data_emissione).format(
+              'YYYY-MM-DDTHH:mm:ss.SSSZ'
+            ),
+            data_scadenza: moment(doc.data_scadenza).format(
+              'YYYY-MM-DDTHH:mm:ss.SSSZ'
+            ),
+          })
+        );
     }
 
-    this.anagraficaService.modificaAnagrafica(formValue)
-      .subscribe({
-        next: (response) => {
-          this.submitted = false;
-          this.anagrafica = response;
-          this.initForm();
-        },
-        error: (error) => {
-         
-        }
-      });
+    this.anagraficaService.modificaAnagrafica(formValue).subscribe({
+      next: (response) => {
+        this.submitted = false;
+        this.anagrafica = response;
+        this.initForm();
+      },
+      error: (error) => {},
+    });
   }
   private formatDateForBE(date: string | Date): string {
     return moment(date).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
   }
 
-
   openUploadModal(index: number) {
     this.currentDocumentIndex = index;
     const documentiFormArray = this.documentiIdentita;
     const currentDoc = documentiFormArray.at(index);
-    const selectedType = currentDoc.get('tipo_documento')?.value as TipoDocumento;
-    
+    const selectedType = currentDoc.get('tipo_documento')
+      ?.value as TipoDocumento;
+
     if (selectedType) {
       const uploadModalType = this.documentTypeMap[selectedType];
       this.uploadForm.patchValue({
-        documentType: uploadModalType
+        documentType: uploadModalType,
       });
     } else {
       this.uploadForm.reset();
     }
-    
+
     this.selectedFile = null;
     this.bootstrapService.showModal('uploadModal');
   }
@@ -236,49 +260,53 @@ export class EditAnagraficaComponent implements OnInit {
   }
 
   saveDocument() {
-    if (this.uploadForm.valid && this.selectedFile && this.currentDocumentIndex !== -1) {
+    if (
+      this.uploadForm.valid &&
+      this.selectedFile &&
+      this.currentDocumentIndex !== -1
+    ) {
       const documenti = this.documentiIdentita;
       const currentDoc = documenti.at(this.currentDocumentIndex);
-      
+
       if (currentDoc) {
-       
         currentDoc.patchValue({
           nomeFile: this.selectedFile.name,
-          contentType: this.selectedFile.type
+          contentType: this.selectedFile.type,
         });
-        
-      
+
         const anagrafica = this.modificaForm.getRawValue();
-        
-        this.anagraficaService.modificaAnagrafica(anagrafica, this.selectedFile)
+
+        this.anagraficaService
+          .modificaAnagrafica(anagrafica, this.selectedFile)
           .subscribe({
             next: (response) => {
-            
               if (!currentDoc.get('id')?.value) {
-               
                 const updatedDoc = response.cittadino.documenti_identita?.find(
-                  doc => doc.nomeFile === this.selectedFile?.name
+                  (doc) => doc.nomeFile === this.selectedFile?.name
                 );
                 if (updatedDoc) {
                   currentDoc.patchValue({ id: updatedDoc.id });
                 }
               }
-              
+
               this.hasUploadedFile = true;
               this.bootstrapService.hideModal('uploadModal');
             },
             error: (error) => {
-              if (error.status === 400 && error.error?.message?.includes('unique constraint')) {
+              if (
+                error.status === 400 &&
+                error.error?.message?.includes('unique constraint')
+              ) {
                 this.errorMessage = 'Questo documento è già stato caricato.';
               } else {
-                this.errorMessage = 'Errore durante il caricamento del documento.';
+                this.errorMessage =
+                  'Errore durante il caricamento del documento.';
               }
-            }
+            },
           });
       }
     }
   }
-
 
   deleteDocument(index: number) {
     this.showDeleteFileModal(index);
@@ -293,9 +321,10 @@ export class EditAnagraficaComponent implements OnInit {
     if (this.deleteFileIndex !== -1) {
       const documento = this.documentiIdentita.at(this.deleteFileIndex);
       const documentoId = documento.get('id')?.value;
-      
+
       if (documentoId) {
-        this.anagraficaService.deleteDocument(this.anagraficaId, documentoId)
+        this.anagraficaService
+          .deleteDocument(this.anagraficaId, documentoId)
           .subscribe({
             next: () => {
               this.documentiIdentita.removeAt(this.deleteFileIndex);
@@ -308,7 +337,7 @@ export class EditAnagraficaComponent implements OnInit {
               this.errorMessage = 'Failed to delete document. ';
               this.bootstrapService.hideModal('deleteFileModal');
               this.deleteFileIndex = -1;
-            }
+            },
           });
       } else {
         this.documentiIdentita.removeAt(this.deleteFileIndex);
@@ -320,18 +349,17 @@ export class EditAnagraficaComponent implements OnInit {
     }
   }
 
-
-   removeFile() {
+  removeFile() {
     if (this.currentDocumentIndex !== -1) {
       const documento = this.documentiIdentita.at(this.currentDocumentIndex);
       const documentoId = documento.get('id')?.value;
-      
+
       if (documentoId) {
         this.showDeleteFileModal(this.currentDocumentIndex);
       } else {
         documento.patchValue({
           nomeFile: null,
-          contentType: null
+          contentType: null,
         });
         this.hasUploadedFile = false;
         this.selectedFile = null;

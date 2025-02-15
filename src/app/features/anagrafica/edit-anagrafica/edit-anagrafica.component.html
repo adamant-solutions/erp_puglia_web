@@ -212,7 +212,7 @@
                 <div class="col-12 mb-3"><strong>Residenza:</strong></div>
 
                 <div class="col-md-4 mb-3">
-                  <label class="form-label" for="indirizzo">Indirizzo</label>
+                  <label class="form-label" for="indirizzo">Indirizzo *</label>
                   <div class="input-group">
                     <input
                       type="text"
@@ -225,10 +225,23 @@
                       <i class="bi bi-geo-alt"></i>
                     </span>
                   </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm
+                        .get('cittadino.residenza.indirizzo')
+                        ?.hasError('required') &&
+                      (modificaForm.get('cittadino.residenza.indirizzo')
+                        ?.touched ||
+                        submitted)
+                    "
+                  >
+                    Indirizzo è obbligatorio!
+                  </span>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                  <label class="form-label" for="civico">Civico</label>
+                  <label class="form-label" for="civico">Civico *</label>
                   <div class="input-group">
                     <input
                       type="text"
@@ -241,10 +254,23 @@
                       <i class="bi bi-house"></i>
                     </span>
                   </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm
+                        .get('cittadino.residenza.civico')
+                        ?.hasError('required') &&
+                      (modificaForm.get('cittadino.residenza.civico')
+                        ?.touched ||
+                        submitted)
+                    "
+                  >
+                    Civico è obbligatorio!
+                  </span>
                 </div>
 
                 <div class="col-md-4 mb-3">
-                  <label class="form-label" for="cap">CAP</label>
+                  <label class="form-label" for="cap">CAP *</label>
                   <div class="input-group">
                     <input
                       type="text"
@@ -257,29 +283,24 @@
                       <i class="bi bi-mailbox"></i>
                     </span>
                   </div>
-                </div>
-
-                <div class="col-md-4 mb-3">
-                  <label class="form-label" for="comuneResidenza"
-                    >Comune residenza</label
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm
+                        .get('cittadino.residenza.cap')
+                        ?.hasError('required') &&
+                      (modificaForm.get('cittadino.residenza.cap')?.touched ||
+                        submitted)
+                    "
                   >
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="comuneResidenza"
-                      name="comuneResidenza"
-                      formControlName="comuneResidenza"
-                    />
-                    <span class="input-group-text">
-                      <i class="bi bi-buildings"></i>
-                    </span>
-                  </div>
+                    CAP è obbligatorio!
+                  </span>
+                  <!-- Pattern error: Cap non è valido! -->
                 </div>
 
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="provinciaResidenza"
-                    >Provincia residenza</label
+                    >Provincia residenza *</label
                   >
                   <div class="input-group">
                     <input
@@ -293,11 +314,56 @@
                       <i class="bi bi-buildings"></i>
                     </span>
                   </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm
+                        .get('cittadino.residenza.provinciaResidenza')
+                        ?.hasError('required') &&
+                      (modificaForm.get(
+                        'cittadino.residenza.provinciaResidenza'
+                      )?.touched ||
+                        submitted)
+                    "
+                  >
+                    Provincia di residenza è obbligatoria!
+                  </span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comuneResidenza"
+                    >Comune residenza *</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comuneResidenza"
+                      name="comuneResidenza"
+                      formControlName="comuneResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm
+                        .get('cittadino.residenza.comuneResidenza')
+                        ?.hasError('required') &&
+                      (modificaForm.get('cittadino.residenza.comuneResidenza')
+                        ?.touched ||
+                        submitted)
+                    "
+                  >
+                    Comune di residenza è obbligatorio!
+                  </span>
                 </div>
 
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="statoResidenza"
-                    >Stato residenza</label
+                    >Stato residenza *</label
                   >
                   <div class="input-group">
                     <input
@@ -311,6 +377,19 @@
                       <i class="bi bi-buildings"></i>
                     </span>
                   </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modificaForm
+                        .get('cittadino.residenza.statoResidenza')
+                        ?.hasError('required') &&
+                      (modificaForm.get('cittadino.residenza.statoResidenza')
+                        ?.touched ||
+                        submitted)
+                    "
+                  >
+                    Stato di residenza è obbligatorio!
+                  </span>
                 </div>
               </div>
 
@@ -495,6 +574,9 @@
                             nome="tipo_documento"
                             formControlName="tipo_documento"
                           >
+                            <option value="" disabled>
+                              Seleziona un tipo di documento
+                            </option>
                             <option
                               *ngFor="let tipo of documentTypes"
                               [value]="tipo"
@@ -503,7 +585,7 @@
                             </option>
                           </select>
                           <span class="input-group-text">
-                            <i class="bi bi-file-person"></i>
+                            <i class="bi bi-chevron-down"></i>
                           </span>
                         </div>
                       </div>
@@ -684,7 +766,7 @@
           <div class="mb-3">
             <label class="form-label">Tipo Documento</label>
             <select class="form-select" formControlName="documentType">
-              <option value="">Seleziona tipo</option>
+              <option value="" disabled>Seleziona tipo</option>
               <option value="CI">Carta d'Identità</option>
               <option value="PP">Passaporto</option>
               <option value="PT">Patente</option>
