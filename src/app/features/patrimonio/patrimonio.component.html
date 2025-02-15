@@ -56,7 +56,7 @@
                   name="statoDisponibilita"
                   [(ngModel)]="patrimonioSearchParams.statoDisponibilita"
                 >
-                  <option value="" selected="">
+                  <option value="" disabled selected>
                     Seleziona uno stato di disponibilità
                   </option>
                   <option
@@ -66,8 +66,8 @@
                     {{ statoDisponibilita | capitalize }}
                   </option>
                 </select>
-                <!--      <span class="input-group-text">
-                  <i class="bi bi-caret-down-fill"></i>
+                <!-- <span class="input-group-text">
+                  <i class="bi bi-chevron-down"></i>
                 </span> -->
               </div>
             </div>
