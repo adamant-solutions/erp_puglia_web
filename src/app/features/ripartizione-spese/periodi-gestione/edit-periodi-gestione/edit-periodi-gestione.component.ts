@@ -17,7 +17,7 @@ export class EditPeriodiGestioneComponent implements OnInit {
   
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Periodi di Gestione', link: '/periodi' }
+    { label: 'Periodi di Gestione', link: '/ripartizione-spese/periodi-gestione' }
   ];
 
   validationMessages = {
