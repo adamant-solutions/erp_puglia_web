@@ -25,6 +25,12 @@ export class EditSollecitiComponent {
     this.morositaId = Number(this.route.parent?.snapshot.paramMap.get('id'));
     this.sollecitoId = Number(this.route.snapshot.paramMap.get('sollecitoId'));
     this.sollecito = this.route.snapshot.data['sollecito'];
+    this.breadcrumbList = [
+      { label: 'ERP - di Regione Puglia', link: '/' },
+      { label: 'Morosità', link: '/morosita' },
+      { label: 'Dettagli Morosità', link: `/morosita/edit-morosita/${this.morositaId}` },
+      {label:'Solleciti', link:`/morosita/edit-morosita/${this.morositaId}/solleciti`}
+    ];
   }
 
   onSubmit() {
