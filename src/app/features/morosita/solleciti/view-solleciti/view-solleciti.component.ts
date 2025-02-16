@@ -39,6 +39,12 @@ export class ViewSollecitiComponent implements OnInit {
     });
 
     this.currentMorositaId = Number(this.route.parent?.snapshot.paramMap.get('id'));
+    this.breadcrumbList = [
+      { label: 'ERP - di Regione Puglia', link: '/' },
+      { label: 'Morosità', link: '/morosita' },
+      { label: 'Dettagli Morosità', link: `/morosita/edit-morosita/${this.currentMorositaId}` },
+      {label:'Solleciti', link:`/morosita/edit-morosita/${this.currentMorositaId}/solleciti`}
+    ];
   }
 
   indietro(): void {
