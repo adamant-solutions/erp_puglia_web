@@ -40,7 +40,7 @@ export class SollecitiComponent {
 
   openDeleteModal(sollecito: Sollecito) {
     if (!this.morositaId) {
-      console.error('MorositaId not found');
+ 
       return;
     }
     this.sollecitoToDelete = sollecito.id;

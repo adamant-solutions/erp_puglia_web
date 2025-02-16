@@ -41,6 +41,8 @@ const esitiInvioOptions = [
   styleUrls: ['./add-solleciti.component.css']
 })
 export class AddSollecitiComponent implements OnInit {
+
+
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
   ];
@@ -62,7 +64,12 @@ export class AddSollecitiComponent implements OnInit {
 
   ngOnInit() {
     this.morositaId = Number(this.route.parent?.snapshot.paramMap.get('id'));
-    
+      this.breadcrumbList = [
+      { label: 'ERP - di Regione Puglia', link: '/' },
+      { label: 'Morosità', link: '/morosita' },
+      { label: 'Dettagli Morosità', link: `/morosita/view-morosita/${this.morositaId}` },
+      {label:'Solleciti', link:`/morosita/view-morosita/${this.morositaId}/solleciti`}
+    ];
     this.addForm = this.fb.group({
       tipoSollecito: ['', Validators.required],
       dataInvio: ['', Validators.required],
