@@ -109,15 +109,17 @@
                 <label class="form-label" for="cap">CAP *</label>
                 <div class="input-group" [class.is-invalid]="shouldShowError('cap')">
                   <input
-                  maxlength="5"
                     type="text"
                     class="form-control"
                     id="cap"
                     formControlName="cap"
+                    maxlength="5"
+                    (keypress)="onCapKeyPress($event)"
                   />
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('cap')">
-                  CAP obbligatorio
+                  <span *ngIf="addForm.get('cap')?.errors?.['required']">CAP obbligatorio</span>
+                  <span *ngIf="addForm.get('cap')?.errors?.['pattern']">Il CAP deve essere composto da 5 numeri</span>
                 </div>
               </div>
 
