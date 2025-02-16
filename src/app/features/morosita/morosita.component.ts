@@ -52,6 +52,9 @@ export class MorositaComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
     this.initializeModal();
+
+  
+  
   }
 
   private initializeModal(): void {
@@ -70,14 +73,19 @@ export class MorositaComponent implements OnInit {
         this.totalItems = data['morositaResolver'].totalElements || 0;
       }
     });
-
+  
+  
     this.route.queryParams.subscribe(params => {
       this.currentPage = Number(params['pagina']) || 0;
-      this.searchForm.patchValue({
-        contrattoId: params['contrattoId'] || '',
-        stato: params['stato'] || '',
-        importoMin: params['importoMinimo'] || '',
-        importoMax: params['importoMassimo'] || ''
+      
+    
+      setTimeout(() => {
+        this.searchForm.patchValue({
+          contrattoId: params['contrattoId'] || '',
+          stato: params['stato'] || '',
+          importoMin: params['importoMinimo'] || '',
+          importoMax: params['importoMassimo'] || ''
+        });
       });
     });
   }
