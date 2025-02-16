@@ -12,7 +12,7 @@ import { PeriodiGestione } from 'src/app/core/models/periodi-gestione.model';
 export class ViewPeriodiGestioneComponent {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Periodi di Gestione', link: '/periodi' }
+    { label: 'Periodi di Gestione', link: '/ripartizione-spese/periodi-gestione' }
   ];
   pageTitle = 'Visualizza Periodo di Gestione';
   viewForm: FormGroup;
