@@ -13,7 +13,7 @@ import { CondominioService } from 'src/app/core/services/ripartizione-spese/cond
 export class EditCondominiComponent implements OnInit {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Condomini', link: '/condomini' }
+    { label: 'Condomini', link: '/ripartizione-spese/condomini' }
   ];
   @ViewChild('unitaSelect') unitaSelect!: ElementRef;
   pageTitle = 'Modifica Condominio';
