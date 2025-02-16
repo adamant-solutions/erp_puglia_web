@@ -13,10 +13,8 @@
         <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
             <fieldset>
-         
-
               <div class="row d-flex">
-             
+                <!-- Tipo Sollecito -->
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="tipoSollecito">Tipo Sollecito *</label>
                   <div class="input-group">
@@ -36,14 +34,13 @@
                   </div>
                   <span
                     class="custom-error"
-                    *ngIf="addForm.get('tipoSollecito')?.hasError('required') && 
-                          (addForm.get('tipoSollecito')?.touched || submitted)"
+                    *ngIf="addForm.get('tipoSollecito')?.hasError('required') && submitted"
                   >
                     Tipo sollecito è obbligatorio!
                   </span>
                 </div>
 
-             
+                <!-- Data Invio -->
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Data Invio *</label>
                   <mat-form-field appearance="fill" style="width: 100%">
@@ -61,14 +58,13 @@
                   </mat-form-field>
                   <span
                     class="custom-error"
-                    *ngIf="addForm.get('dataInvio')?.hasError('required') && 
-                          (addForm.get('dataInvio')?.touched || submitted)"
+                    *ngIf="addForm.get('dataInvio')?.hasError('required') && submitted"
                   >
                     Data invio è obbligatoria!
                   </span>
                 </div>
 
-              
+                <!-- Data Scadenza -->
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Data Scadenza *</label>
                   <mat-form-field appearance="fill" style="width: 100%">
@@ -86,14 +82,13 @@
                   </mat-form-field>
                   <span
                     class="custom-error"
-                    *ngIf="addForm.get('dataScadenza')?.hasError('required') && 
-                          (addForm.get('dataScadenza')?.touched || submitted)"
+                    *ngIf="addForm.get('dataScadenza')?.hasError('required') && submitted"
                   >
                     Data scadenza è obbligatoria!
                   </span>
                 </div>
 
-           
+                <!-- The rest of your form fields remain the same -->
                 <div class="col-md-12 mb-3">
                   <label class="form-label" for="note">Note</label>
                   <div class="input-group">
@@ -109,7 +104,6 @@
                   </div>
                 </div>
 
-             
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="esitoInvio">Esito Invio</label>
                   <div class="input-group">
@@ -129,7 +123,6 @@
                   </div>
                 </div>
 
-         
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="esitoRisposta">Esito Risposta</label>
                   <div class="input-group">

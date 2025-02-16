@@ -90,8 +90,15 @@ export class AddSollecitiComponent implements OnInit {
   }
 
   resetForm() {
-    this.submitted = false;
-    this.addForm.reset();
+    this.submitted = false;  
+    this.addForm.reset({
+      tipoSollecito: '',
+      dataInvio: '',
+      dataScadenza: '',
+      note: '',
+      esitoInvio: '',
+      esitoRisposta: ''
+    });
   }
 
   indietro() {
