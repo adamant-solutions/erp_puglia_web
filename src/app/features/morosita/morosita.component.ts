@@ -69,8 +69,10 @@ export class MorositaComponent implements OnInit {
       this.contrattiLight = data['contrattiLightResolver'] || [];
       this.createContrattoMap(); 
       if (data['morositaResolver']) {
-        this.morositaList = data['morositaResolver'] || [];
-        this.totalItems = data['morositaResolver'].totalElements || 0;
+        this.morositaList = data['morositaResolver'].body || [];
+       
+        this.totalItems = data['morositaCountResolver'];
+ 
       }
     });
   

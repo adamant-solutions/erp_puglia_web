@@ -27,6 +27,19 @@ export const morositaByIdResolver: ResolveFn<Morosita | null> = (
   );
 };
 
+export const morositaCountResolver: ResolveFn<any> = () => {
+  const morositaService = inject(MorositaService);
+
+  return morositaService.morositaCount().pipe(
+    catchError((error) => {
+    
+      return of(null);
+    })
+  );
+};
+
+
+
 
 export const morositaResolver: ResolveFn<any> = (route) => {
   const morositaService = inject(MorositaService);
@@ -46,6 +59,8 @@ export const morositaResolver: ResolveFn<any> = (route) => {
     })
   );
 };
+
+
 
 export const contrattiLightResolver: ResolveFn<ModelLight[]> = (): Observable<ModelLight[]> => {
   return inject(MorositaService).getContrattiLight().pipe(

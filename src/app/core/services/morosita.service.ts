@@ -21,7 +21,7 @@ export class MorositaService {
       .set('pagina', searchMorosita.pagina || 0)
     
 
-    return this.http.get<any>(this.morositaUrl, { params });
+    return this.http.get<any>(this.morositaUrl, { params, observe:'response' });
   }
 
   getMorositaById(id: number): Observable<Morosita> {
@@ -33,6 +33,12 @@ export class MorositaService {
     const url = `${this.morositaUrl}/${id}`;
     return this.http.put<Morosita>(url, morosita);
   }
+
+
+morositaCount(){
+  const url = `${this.morositaUrl}/count`;
+  return this.http.get(url)
+}
 
 
   searchMorosita(params: MorositaSearchParams): Observable<any> {
@@ -52,7 +58,7 @@ export class MorositaService {
       queryParams = queryParams.set('importoMassimo', params.importoMassimo);
     }
   
-    return this.http.get<any>(this.morositaUrl, { params: queryParams });
+    return this.http.get<any>(this.morositaUrl, { params: queryParams, observe:'response' });
   }
 
   getContrattiLight(): Observable<ModelLight[]> {
