@@ -13,15 +13,6 @@ td {
 i {
   font-size: 20px;
 }
-i.bi-chevron-expand {
-  margin-left: 10px;
-  cursor: pointer;
-  color: #525252;
-}
-i.bi-chevron-expand:before {
-  font-size: 16px;
-}
-
 
 /* modali */
 .modal {
