@@ -34,12 +34,7 @@
 
                 <span
                   class="custom-error"
-                  *ngIf="
-                    modificaForm.get('metriQuadri')?.invalid &&
-                    (modificaForm.get('metriQuadri')?.touched ||
-                      modificaForm.get('metriQuadri')?.dirty ||
-                      submitted)
-                  "
+                  *ngIf="modificaForm.get('metriQuadri')?.invalid && submitted"
                 >
                   <span
                     *ngIf="modificaForm.get('metriQuadri')?.errors?.['required']"

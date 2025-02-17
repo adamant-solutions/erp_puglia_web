@@ -580,24 +580,26 @@ export class EditPatrimonioComponent implements OnInit {
       .modificaPatrimonio(formValue, filesToUpload)
       .subscribe({
         next: () => {
+          this.submitted = false;
+
           this.notificationService.addNotification({
             message: 'Unità immobiliare è stato salvato con successo!',
             type: 'success',
             timeout: 3000,
           });
-          this.router.navigate(['/patrimonio']);
+
+          this.router.navigate([]);
         },
-        error: (err) => {
-            this.notificationService.addNotification({
-              message: this.handleError(err.error),
-              type: 'error',
-              timeout: 20000,
-            });
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: this.handleError(error.error),
+            type: 'error',
+            timeout: 20000,
+          });
         },
       });
   }
 
-   
   private handleError(error: any): string {
     switch (error.status) {
       case 400:
@@ -605,7 +607,7 @@ export class EditPatrimonioComponent implements OnInit {
       case 422:
         return 'Dati non validi o unità immobiliare già esistente.';
       case 409:
-          return error.message;
+        return error.message;
       case 500:
         return error.message;
       default:
