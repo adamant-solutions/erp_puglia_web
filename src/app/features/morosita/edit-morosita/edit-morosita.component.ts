@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModelLight } from 'src/app/core/models/contratto.model';
 import { Morosita } from 'src/app/core/models/morosita.model';
 import { MorositaService } from 'src/app/core/services/morosita.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-morosita',
@@ -16,6 +17,7 @@ export class EditMorositaComponent implements OnInit {
   initialFormValues: any;
   morositaId!: number;
   formSubmitAttempted = false;
+  errorMsg = '';
 
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
@@ -26,7 +28,8 @@ export class EditMorositaComponent implements OnInit {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private morositaService: MorositaService
+    private morositaService: MorositaService,
+    private notifService: NotificationService
   ) {
     this.editForm = this.fb.group({
       contrattoId: ['', Validators.required],
@@ -108,13 +111,30 @@ export class EditMorositaComponent implements OnInit {
       this.morositaService.updateMorosita(this.morositaId, updatedMorosita)
         .subscribe({
           next: () => {
+            this.notifService.addNotification({
+              message: 'Morosità è stato salvato con successo!',
+              type: 'success',
+              timeout: 3000,
+            });
             this.router.navigate(['/morosita']);
           },
           error: (error) => {
-            
+            this.notifService.addNotification({
+              message:  this.handleError(error.error),
+              type: 'error',
+              timeout: 5000,
+            }); 
           }
         });
     }
+  }
+
+  private handleError(error: any): string{
+    return this.errorMsg = error.status === 400 ? 'Dati non validi' : 
+                    error.status === 500 ? error.message :
+                    error.status === 409 ? error.message :
+                    error.status === 422 ? 'Morosità già esistente' :
+                    'Errore durante il salvataggio';
   }
 
   shouldShowError(controlName: string): boolean {

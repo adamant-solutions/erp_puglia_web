@@ -66,9 +66,9 @@ export class EditImpreseComponent {
       }
     })
 
-  
+/*   
    console.log("Province:" ,this.impresaForm.get('provincia'))
-   console.log("Citta:" ,this.impresaForm.get('citta'))
+   console.log("Citta:" ,this.impresaForm.get('citta')) */
   }
 
   initForm() {
