@@ -16,6 +16,7 @@ import {
 } from 'src/app/core/models/patrimonio.model';
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import * as moment from 'moment';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-patrimonio',
@@ -327,7 +328,8 @@ export class AddPatrimonioComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private patrimonioService: PatrimonioService
+    private patrimonioService: PatrimonioService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -488,11 +490,37 @@ export class AddPatrimonioComponent implements OnInit {
 
     this.patrimonioService.addPatrimonio(formData).subscribe({
       next: (response) => {
+        this.notificationService.addNotification({
+          message: 'Unità immobiliare è stato salvato con successo!',
+          type: 'success',
+          timeout: 3000,
+        });
         this.router.navigate(['/patrimonio']);
       },
       error: (error) => {
-        console.error('Error:', error);
+        this.notificationService.addNotification({
+          message: this.handleError(error.error),
+          type: 'error',
+          timeout: 5000,
+        });
       },
     });
+  }
+
+
+  
+  private handleError(error: any): string {
+    switch (error.status) {
+      case 400:
+        return 'Dati non validi. Controlla i campi obbligatori.';
+      case 422:
+        return 'Dati non validi o unità immobiliare già esistente.';
+        case 409:
+          return error.message;
+      case 500:
+        return error.message;
+      default:
+        return 'Errore durante il salvataggio unità immobiliare.';
+    }
   }
 }

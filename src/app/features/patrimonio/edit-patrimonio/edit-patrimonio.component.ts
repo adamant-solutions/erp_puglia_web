@@ -10,6 +10,7 @@ import {
 import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import * as moment from 'moment';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-edit-patrimonio',
@@ -329,7 +330,8 @@ export class EditPatrimonioComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private patrimonioService: PatrimonioService,
-    private bootstrapService: BootstrapService
+    private bootstrapService: BootstrapService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit() {
@@ -499,7 +501,7 @@ export class EditPatrimonioComponent implements OnInit {
               this.deleteFileIndex = -1;
             },
             error: (error) => {
-              this.errorMessage = 'Failed to delete document.';
+              this.errorMessage = 'Eliminazione del documento non riuscita.';
               this.bootstrapService.hideModal('deleteFileModal');
               this.deleteFileIndex = -1;
             },
@@ -578,16 +580,36 @@ export class EditPatrimonioComponent implements OnInit {
       .modificaPatrimonio(formValue, filesToUpload)
       .subscribe({
         next: () => {
+          this.notificationService.addNotification({
+            message: 'Unità immobiliare è stato salvato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['/patrimonio']);
         },
         error: (err) => {
-          this.errorMessage =
-            "Impossibile aggiornare l'Unità Immobiliare. Riprova.";
-          console.error(
-            "Errore durante l'aggiornamento dell'Unità Immobiliare:",
-            err
-          );
+            this.notificationService.addNotification({
+              message: this.handleError(err.error),
+              type: 'error',
+              timeout: 20000,
+            });
         },
       });
+  }
+
+   
+  private handleError(error: any): string {
+    switch (error.status) {
+      case 400:
+        return 'Dati non validi. Controlla i campi obbligatori.';
+      case 422:
+        return 'Dati non validi o unità immobiliare già esistente.';
+      case 409:
+          return error.message;
+      case 500:
+        return error.message;
+      default:
+        return 'Errore durante il salvataggio unità immobiliare.';
+    }
   }
 }
