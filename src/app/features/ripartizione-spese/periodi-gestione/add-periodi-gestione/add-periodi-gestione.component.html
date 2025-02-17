@@ -45,21 +45,15 @@
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="stato">Stato *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('stato')">
+                <div class="input-group">
                   <select
                     class="form-control"
                     id="stato"
                     formControlName="stato"
+                    [disabled]="true"
                   >
-                    <option value="">Seleziona stato</option>
                     <option value="PREVENTIVO">Preventivo</option>
-                    <option value="CONSUNTIVO">Consuntivo</option>
-                    <option value="CONGUAGLIATO">Conguagliato</option>
-                    <option value="CHIUSO">Chiuso</option>
                   </select>
-                </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('stato')">
-                  Stato obbligatorio
                 </div>
               </div>
 

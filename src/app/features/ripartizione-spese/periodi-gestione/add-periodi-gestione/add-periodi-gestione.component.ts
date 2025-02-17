@@ -34,7 +34,7 @@ export class AddPeriodoGestioneComponent implements OnInit {
     this.addForm = this.formBuilder.group({
       dataInizio: ['', [Validators.required]],
       dataFine: ['', [Validators.required]],
-      stato: ['', [Validators.required]],
+      stato: [{value: 'PREVENTIVO', disabled: true}],  
       condominioId: ['', [Validators.required]],
       note: [''],
       version: [1]
@@ -79,7 +79,6 @@ export class AddPeriodoGestioneComponent implements OnInit {
     this.submitted = true;
 
     if (this.addForm.invalid) {
-  
       Object.keys(this.addForm.controls).forEach(key => {
         const control = this.addForm.get(key);
         if (control) {
@@ -89,7 +88,7 @@ export class AddPeriodoGestioneComponent implements OnInit {
       return;
     }
 
-    const periodoData = this.addForm.value;
+    const periodoData = this.addForm.getRawValue();
     this.periodoService.createPeriodo(periodoData).subscribe({
       next: (response) => {
         this.notifService.addNotification({
