@@ -8,7 +8,10 @@ import {
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import * as moment from 'moment';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+
 type UploadDocumentType = 'CI' | 'PP' | 'PT';
+
 @Component({
   selector: 'app-edit-anagrafica',
   templateUrl: './edit-anagrafica.component.html',
@@ -47,7 +50,8 @@ export class EditAnagraficaComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private anagraficaService: AnagraficaService,
-    private bootstrapService: BootstrapService
+    private bootstrapService: BootstrapService,
+    private notificationService: NotificationService
   ) {
     this.uploadForm = this.formBuilder.group({
       documentType: ['', Validators.required],
@@ -221,13 +225,42 @@ export class EditAnagraficaComponent implements OnInit {
     }
 
     this.anagraficaService.modificaAnagrafica(formValue).subscribe({
-      next: (response) => {
+      next: () => {
         this.submitted = false;
+
+        this.notificationService.addNotification({
+          message: "L'anagrafica è stata salvata con successo!",
+          type: 'success',
+          timeout: 3000,
+        });
+
         this.router.navigate([]);
       },
-      error: (error) => {},
+      error: (error) => {
+        this.notificationService.addNotification({
+          message: this.handleError(error.error),
+          type: 'error',
+          timeout: 20000,
+        });
+      },
     });
   }
+
+  private handleError(error: any): string {
+    switch (error.status) {
+      case 400:
+        return 'Dati non validi. Controlla i campi obbligatori.';
+      case 422:
+        return 'Dati non validi o anagrafica già esistente.';
+      case 409:
+        return error.message;
+      case 500:
+        return error.message;
+      default:
+        return "Errore durante il salvataggio dell'anagrafica.";
+    }
+  }
+
   private formatDateForBE(date: string | Date): string {
     return moment(date).format('YYYY-MM-DDTHH:mm:ss.SSSZ');
   }
