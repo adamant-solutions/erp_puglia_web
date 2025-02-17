@@ -31,7 +31,7 @@
                 <div class="input-group">
                 <input type="text" id="descrizione" class="form-control" formControlName="descrizione"  [ngClass]="{'is-invalid': editForm.get('descrizione')?.invalid && submitted}"/>
                 </div>
-                <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('required')">
+                <span class="custom-error" *ngIf="editForm.get('descrizione')?.hasError('required') && submitted">
                   Descrizione è obbligatorio!
                 </span>
               </div>
@@ -70,9 +70,9 @@
               <div class="col-md-4 mb-3">
                 <label for="budgetResiduo" class="form-label">Budget Residuo*</label>
                 <div class="input-group">
-                <input type="text" id="budgetResiduo" class="form-control" formControlName="budgetResiduo"/>
+                <input type="text" id="budgetResiduo" class="form-control" formControlName="budgetResiduo"  [ngClass]="{'is-invalid': editForm.get('budgetResiduo')?.invalid && submitted}"/>
                 </div>
-                <div class="custom-error" [ngClass]="{'is-invalid': editForm.get('budgetResiduo')?.invalid && submitted}">
+                <div class="custom-error" *ngIf="editForm.get('budgetResiduo')?.invalid && submitted">
                 <span *ngIf="editForm.get('budgetResiduo')?.hasError('required')">
                   Budget Residuo è obbligatorio!
                 </span>
