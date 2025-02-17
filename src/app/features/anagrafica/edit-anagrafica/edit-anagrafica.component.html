@@ -41,8 +41,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.nome')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.nome')?.touched || submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Nome è obbligatorio!
@@ -68,9 +67,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.cognome')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.cognome')?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Cognome è obbligatorio!
@@ -98,9 +95,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.codiceFiscale')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.codiceFiscale')?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Codice fiscale è obbligatorio!
@@ -129,9 +124,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.genere')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.genere')?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Genere è obbligatorio!
@@ -159,9 +152,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.cittadinanza')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.cittadinanza')?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Cittadinanza è obbligatoria!
@@ -189,15 +180,13 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.dataDiNascita')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.dataDiNascita')?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Data di nascita è obbligatoria!
                   </div>
                   <!-- 
-                  <div class="custom-error" *ngIf="modificaForm.get('cittadino.dataDiNascita')?.errors?.invalidDate && modificaForm.get('cittadino.dataDiNascita')?.touched">
+                  <div class="custom-error" *ngIf="modificaForm.get('cittadino.dataDiNascita')?.errors?.invalidDate">
                       Please enter a valid date in the format dd/MM/yyyy.
                   </div>
                   -->
@@ -230,10 +219,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.residenza.indirizzo')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.residenza.indirizzo')
-                        ?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Indirizzo è obbligatorio!
@@ -259,10 +245,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.residenza.civico')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.residenza.civico')
-                        ?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Civico è obbligatorio!
@@ -288,9 +271,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.residenza.cap')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.residenza.cap')?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     CAP è obbligatorio!
@@ -319,11 +300,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.residenza.provinciaResidenza')
-                        ?.hasError('required') &&
-                      (modificaForm.get(
-                        'cittadino.residenza.provinciaResidenza'
-                      )?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Provincia di residenza è obbligatoria!
@@ -351,10 +328,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.residenza.comuneResidenza')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.residenza.comuneResidenza')
-                        ?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Comune di residenza è obbligatorio!
@@ -382,10 +356,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.residenza.statoResidenza')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.residenza.statoResidenza')
-                        ?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Stato di residenza è obbligatorio!
@@ -491,10 +462,7 @@
                     *ngIf="
                       modificaForm
                         .get('cittadino.luogo_nascita.comune')
-                        ?.hasError('required') &&
-                      (modificaForm.get('cittadino.luogo_nascita.comune')
-                        ?.touched ||
-                        submitted)
+                        ?.hasError('required') && submitted
                     "
                   >
                     Comune è obbligatorio!
