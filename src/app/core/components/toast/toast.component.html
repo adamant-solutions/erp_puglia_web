@@ -6,12 +6,12 @@
       'with-icon-error': notification.type === 'error'
     }">
       <div class="toast-body">
-        <p class="mb-0">
+        <span class="content">
           <svg class="icon" [ngClass]="notification.type === 'success' ? 'text-success' : 'text-danger'">
             <use [attr.href]="'/assets/svg/sprites.svg#' + (notification.type === 'success' ? 'it-check-circle' : 'it-close-circle')"></use>
           </svg>
-          {{ notification.message }}
-        </p>
+         <p class="mb-0 ps-2"> {{ notification.message }}</p> 
+        </span>
       
       </div>
       <button type="button" class="btn-close me-2 m-auto" (click)="remove(notification)"></button>

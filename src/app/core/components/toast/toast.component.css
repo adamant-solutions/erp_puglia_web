@@ -19,3 +19,6 @@ svg.text-danger {
     width: auto; 
   }
   
+  .content{
+    display: flex;
+  }
