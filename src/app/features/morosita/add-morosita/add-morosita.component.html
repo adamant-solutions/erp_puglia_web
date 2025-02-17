@@ -25,32 +25,54 @@
               Contratto è obbligatorio
             </div>
           </div>
-
-     
+          
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Rilevazione*</label>
-            <input type="date" class="form-control" formControlName="dataRilevazione"
-              [ngClass]="{'is-invalid': isFieldInvalid('dataRilevazione')}">
-              <div class="invalid-feedback" *ngIf="isFieldInvalid('dataRilevazione')">
-                Data Rilevazione è obbligatoria
-              </div>
-          </div>
+            
+            <mat-form-field appearance="fill" style="width: 100%">
+              <input matInput [matDatepicker]="pickerdataRilevazione" name="dataRilevazione"
+              formControlName="dataRilevazione"  id="dataRilevazione"  [ngClass]="{'is-invalid': isFieldInvalid('dataRilevazione')}"/>
+              <mat-datepicker-toggle matSuffix [for]="pickerdataRilevazione"></mat-datepicker-toggle>
+              <mat-datepicker #pickerdataRilevazione></mat-datepicker>
+            </mat-form-field>
 
-  
-          <div class="col-md-4 mb-3">
-            <label class="form-label">Data Scadenza*</label>
-            <input type="date" class="form-control" formControlName="dataScadenza"
-              [ngClass]="{'is-invalid': isFieldInvalid('dataScadenza')}">
-              <div class="invalid-feedback" *ngIf="isFieldInvalid('dataScadenza')">
-                Data Scadenza è obbligatoria
-              </div>
+             <div class="invalid-feedback" *ngIf="isFieldInvalid('dataRilevazione')">
+              Data Rilevazione è obbligatoria
+            </div>
+
+            <span class="invalid-feedback" *ngIf="morositaForm?.get('dataRilevazione')?.hasError('matDatepickerParse')">
+               Inserisci una data valida nel formato gg/mm/aaaa!
+              </span>
           </div>
+     
+
+
+                    <!-- Data Scadenza -->
+                    <div class="col-md-4 mb-3">
+                      <label class="form-label">Data Scadenza*</label>
+                      
+                      <mat-form-field appearance="fill" style="width: 100%">
+                        <input matInput [matDatepicker]="pickerdataScadenza" name="dataScadenza"
+                        formControlName="dataScadenza"  id="dataScadenza"  [ngClass]="{'is-invalid': isFieldInvalid('dataScadenza')}"/>
+                        <mat-datepicker-toggle matSuffix [for]="pickerdataScadenza"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerdataScadenza></mat-datepicker>
+                      </mat-form-field>
+      
+                       <div class="invalid-feedback" *ngIf="isFieldInvalid('dataScadenza')">
+                        Data Scadenza è obbligatoria
+                      </div>
+      
+                      <span class="invalid-feedback" *ngIf="morositaForm?.get('dataScadenza')?.hasError('matDatepickerParse')">
+                         Inserisci una data valida nel formato gg/mm/aaaa!
+                        </span>
+                    </div>
+               
 
     
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Dovuto*</label>
             <input type="number" class="form-control" formControlName="importoDovuto"
-              [ngClass]="{'is-invalid': isFieldInvalid('importoDovuto')}">
+              [ngClass]="{'is-invalid': isFieldInvalid('importoDovuto')}" min="0">
               <div class="invalid-feedback" *ngIf="isFieldInvalid('importoDovuto')">
                 Importo Dovuto è obbligatorio
               </div>
@@ -60,7 +82,7 @@
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Versato*</label>
             <input type="number" class="form-control" formControlName="importoVersato"
-              [ngClass]="{'is-invalid': isFieldInvalid('importoVersato')}">
+              [ngClass]="{'is-invalid': isFieldInvalid('importoVersato')}" min="0">
               <div class="invalid-feedback" *ngIf="isFieldInvalid('importoVersato')">
                 Importo Versato è obbligatorio
               </div>
@@ -70,7 +92,7 @@
           <div class="col-md-4 mb-3">
             <label class="form-label">Importo Morosità*</label>
             <input type="number" class="form-control" formControlName="importoMorosita"
-              [ngClass]="{'is-invalid': isFieldInvalid('importoMorosita')}">
+              [ngClass]="{'is-invalid': isFieldInvalid('importoMorosita')}" min="0">
               <div class="invalid-feedback" *ngIf="isFieldInvalid('importoMorosita')">
                 Importo Morosità è obbligatorio
               </div>
@@ -99,7 +121,7 @@
           <div class="col-md-4 mb-3">
             <label class="form-label">Tentativi Contatto*</label>
             <input type="number" class="form-control" formControlName="tentativiContatto"
-              [ngClass]="{'is-invalid': isFieldInvalid('tentativiContatto')}">
+              [ngClass]="{'is-invalid': isFieldInvalid('tentativiContatto')}" min="0">
               <div class="invalid-feedback" *ngIf="isFieldInvalid('tentativiContatto')">
                 Tentativi Contatto è obbligatorio
               </div>
@@ -107,7 +129,7 @@
 
    
           <div class="col-md-4 mb-3">
-            <label class="form-label">Modalità Contatto</label>
+            <label class="form-label">Modalità Contatto*</label>
             <div class="input-group">
               <select class="form-select" formControlName="modalitaContatto">
                 <option value="">Seleziona modalità</option>
@@ -118,6 +140,9 @@
               <span class="input-group-text">
                 <i class="bi bi-caret-down-fill"></i>
               </span>
+            </div>
+            <div class="invalid-feedback" *ngIf="isFieldInvalid('modalitaContatto')">
+              Modalita Contatto è obbligatoria
             </div>
           </div>
 
@@ -134,13 +159,23 @@
           </div>
 
   
-          <div class="col-12 mt-4">
+          <div class="col-12 mt-5 d-flex justify-content-between">
+          
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              routerLink="/morosita"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
+              Indietro
+            </button>
             <button type="submit" class="btn btn-primary me-2">
-              <i class="bi bi-save me-1"></i>Salva
+              Salva
             </button>
-            <button type="button" class="btn btn-outline-secondary" routerLink="/morosita">
-              <i class="bi bi-x-circle me-1"></i>Annulla
-            </button>
+          
           </div>
         </form>
 

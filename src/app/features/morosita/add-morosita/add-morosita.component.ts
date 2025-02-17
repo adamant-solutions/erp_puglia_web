@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MorositaService } from 'src/app/core/services/morosita.service';
 import { ModelLight } from 'src/app/core/models/contratto.model';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-add-morosita',
@@ -39,7 +40,8 @@ statoOptions = [
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private morositaService: MorositaService
+    private morositaService: MorositaService,
+    private notifService: NotificationService
   ) {
     this.morositaForm = this.initForm();
   }
@@ -61,7 +63,7 @@ statoOptions = [
       stato: ['', Validators.required],
       note: [''],
       tentativiContatto: ['', [Validators.required, Validators.min(0)]],
-      modalitaContatto: [''],
+      modalitaContatto: ['',[Validators.required]],
       esitoContatto: ['']
     });
   }
@@ -71,14 +73,29 @@ statoOptions = [
     if (this.morositaForm.valid) {
       const formData = this.morositaForm.value;
       this.morositaService.addMorosita(formData).subscribe({
-        next: () => this.router.navigate(['/morosita']),
-        error: this.handleError.bind(this)
+        next: () => {
+          this.notifService.addNotification({
+            message: 'Morosità è stato salvato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
+          this.router.navigate(['/morosita'])
+        },
+        error: (error) => {
+          this.notifService.addNotification({
+            message:  this.handleError(error.error),
+            type: 'error',
+            timeout: 5000,
+          }); 
+        }
       });
     }
   }
 
-  private handleError(error: any) {
-    this.errorMsg = error.status === 400 ? 'Dati non validi' : 
+  private handleError(error: any): string{
+    return this.errorMsg = error.status === 400 ? 'Dati non validi' : 
+                    error.status === 500 ? error.message :
+                    error.status === 409 ? error.message :
                     error.status === 422 ? 'Morosità già esistente' :
                     'Errore durante il salvataggio';
   }
