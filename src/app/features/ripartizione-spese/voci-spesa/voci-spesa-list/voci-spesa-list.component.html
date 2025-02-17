@@ -1,1 +1,178 @@
-<p>voci-spesa-list works!</p>
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Voci di Spesa'">
+</app-breadcrumbs>
+
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+
+        <div class="col-12 mb-5">
+            <form class="row g-3 form-container" [formGroup]="searchForm" (ngSubmit)="cercaVociSpesa()">
+              <div class="col-md-4">
+                <label class="form-label" for="tipoSpesa">Tipo Spesa</label>
+                <select class="form-select" id="tipoSpesa" formControlName="tipoSpesa">
+                  <option value="">Seleziona tipo</option>
+                  <option value="SERVIZI">Servizi</option>
+                  <option value="RISCALDAMENTO">Riscaldamento</option>
+                  <option value="ASCENSORE">Ascensore</option>
+                </select>
+              </div>
+          
+              <div class="col-md-6">
+                <label class="form-label">Importo Preventivo</label>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="input-group">
+                  
+                      <input type="number" class="form-control" formControlName="importoMinPreventivo" placeholder="Min €" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="input-group">
+                  
+                      <input type="number" class="form-control" formControlName="importoMaxPreventivo" placeholder="Max €" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-md-6">
+                <label class="form-label">Importo Consuntivo</label>
+                <div class="row">
+                  <div class="col-6">
+                    <div class="input-group">
+                    
+                      <input type="number" class="form-control" formControlName="importoMinConsuntivo" placeholder="Min €" />
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="input-group">
+                  
+                      <input type="number" class="form-control" formControlName="importoMaxConsuntivo" placeholder="Max €" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div class="col-12 mt-4 d-flex justify-content-start">
+                <button type="submit" class="btn btn-primary me-3">
+                  <i class="bi bi-search me-2"></i>Cerca
+                </button>
+                <button type="button" class="btn btn-secondary" (click)="cancellaCerca()">
+                  <i class="bi bi-x-circle me-2"></i>Reset
+                </button>
+              </div>
+            </form>
+          </div>
+       
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-3"
+            [routerLink]="['nuova-voce-spesa']"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+            </svg>
+            <span>Aggiungi voce di spesa</span>
+          </button>
+        </div>
+
+     
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Azioni</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Tipo Spesa</th>
+                <th scope="col">Importo Preventivo</th>
+                <th scope="col">Importo Consuntivo</th>
+                <th scope="col">Importo Conguaglio</th>
+                <th scope="col">Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let voceSpesa of vociSpesaList">
+                <td scope="row">
+                  <a
+                    [routerLink]="['voce-spesa-dettagli', voceSpesa.id]"
+                    title="Vedi dettagli"
+                    class="me-3"
+                  >
+                    <i class="bi bi-eye-fill"></i>
+                  </a>
+                  <a
+                    [routerLink]="['modifica-voce-spesa', voceSpesa.id]"
+                    title="Modifica"
+                    class="me-3"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                  <a
+                    (click)="openDeleteModal(voceSpesa)"
+                    title="Cancella"
+                    style="cursor: pointer; color: #0052a3"
+                  >
+                    <i class="bi bi-trash3"></i>
+                  </a>
+                </td>
+                <td>{{ voceSpesa.descrizione }}</td>
+                <td>{{ voceSpesa.tipoSpesa }}</td>
+                <td>{{ voceSpesa.importoPreventivo | currency:'EUR' }}</td>
+                <td>{{ voceSpesa.importoConsuntivo | currency:'EUR' }}</td>
+                <td>{{ voceSpesa.importoConguaglio | currency:'EUR' }}</td>
+                <td>{{ voceSpesa.note }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <mat-paginator
+          #paginator
+          [length]="totalPages"
+          [pageSize]="pageSize"
+          [pageIndex]="currentPage"
+          (page)="onPageChange($event)"
+          aria-label="Select page"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<div
+  class="modal fade"
+  id="deleteVoceSpesaModal"
+  tabindex="-1"
+  aria-labelledby="deleteVoceSpesaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <p>
+          Sei sicuro di voler eliminare la voce di spesa <b>{{ voceSpesaToDelete?.descrizione }}</b>?
+        </p>
+      </div>
+      <div class="modal-footer" style="justify-content: center">
+        <button type="button" class="btn btn-primary" (click)="confirmDelete()">
+          Sì
+        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
