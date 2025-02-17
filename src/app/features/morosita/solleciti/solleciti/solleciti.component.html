@@ -8,11 +8,6 @@
       <div class="row">
         <div class="col-12">
           <h1 id="main-content" class="mb-4">Solleciti</h1>
-  
-          <div *ngIf="sollecitiList.length === 0" class="alert alert-info" role="alert">
-            <i class="bi bi-info-circle me-2"></i>
-            Nessun sollecito trovato
-          </div>
 
           <div  class="col-12 d-flex justify-content-end">
             <button
@@ -25,6 +20,13 @@
               <span>Aggiungi solleciti</span>
             </button>
           </div>
+  
+          <div *ngIf="sollecitiList.length === 0" class="alert alert-info" role="alert">
+            <i class="bi bi-info-circle me-2"></i>
+            Nessun sollecito trovato
+          </div>
+
+        
   
           <ng-container *ngIf="sollecitiList.length > 0">
             <div class="table-responsive">
