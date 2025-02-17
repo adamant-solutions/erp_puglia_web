@@ -9,13 +9,6 @@
         <form [formGroup]="impresaForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
             <div class="row d-flex">
-          <!--     <option
-              *ngFor="let provincia of provinces"
-              [value]="provincia.sigla"
-            >
-              {{ provincia.nome }}
-            </option>
- -->
               <!-- Ragione Sociale -->
               <div class="col-md-4 mb-3">
                 <label for="ragioneSociale" class="form-label">Ragione Sociale*</label>
@@ -68,17 +61,9 @@
                 </div>
               </div>
 
-              <!-- Città -->
-              <div class="col-md-4 mb-3">
-                <label for="citta" class="form-label">Città</label>
-                <div class="input-group">
-                <input type="text" id="citta" class="form-control" formControlName="citta" />
-                </div>
-              </div>
-
-              <!-- Provincia -->
+               <!-- Provincia -->
               
-              <div class="col-md-4 mb-3">
+               <div class="col-md-4 mb-3">
                 <label class="form-label" for="provincia">Provincia</label>
                 <div class="d-flex align-items-center">
                     <div class="input-group select-wrapper w-100">
@@ -94,6 +79,30 @@
                     </div>
                 </div>
               </div>
+
+              <!-- Città -->
+             
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="citta">Città</label>
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+                  <select  class="form-control"
+                  id="citta" class="form-control" formControlName="citta">
+                    <option value="" selected="">
+                      Seleziona un comune 
+                    </option>
+                    <option
+                    *ngFor="let comune of filteredComuni"
+                    [value]="comune.nome"
+                  >
+                    {{ comune.nome }}
+                  </option>
+                  </select>
+                    </div>
+                </div>
+              </div>
+
+
 
               <!-- CAP -->
               <div class="col-md-4 mb-3">
@@ -144,7 +153,7 @@
                   PEC è obbligatoria!
                 </span>
                 <span *ngIf="impresaForm.get('pec')?.hasError('pattern')">
-                  PEC non valido! (es. nome.cognome@pec.it)
+                  PEC non valido! (es. nomeimprese@pec.it)
                 </span>
                 </div>
               </div>

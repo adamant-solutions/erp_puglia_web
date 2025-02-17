@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Imprese } from 'src/app/core/models/manutenzione.model';
+import { comuni, provinces } from 'src/app/core/models/province-data.model';
 import { ImpreseService } from 'src/app/core/services/manutenzione-services/imprese.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 
@@ -33,18 +34,22 @@ export class AddImpreseComponent {
     pec: ''
   };
   submitted: boolean = false;
-  provinces = [
-    { sigla: 'BA', nome: 'Bari' },
-    { sigla: 'BT', nome: 'Barletta-Andria-Trani' },
-    { sigla: 'BR', nome: 'Brindisi' },
-    { sigla: 'FG', nome: 'Foggia' },
-    { sigla: 'LE', nome: 'Lecce' },
-    { sigla: 'TA', nome: 'Taranto' },
-  ];
+  provinces = [...provinces]
+  comuni = [...comuni]
+  filteredComuni: any[] = [];
 
   private impreseService = inject(ImpreseService);
   private router = inject(Router);
   private notifService = inject(NotificationService);
+
+  selectProvincia(event: any){
+    const province = event.target.value;
+    if (province) {
+      this.filteredComuni = this.comuni.filter(
+        c => c.provincia === province
+      );
+    }
+  }
 
   onSubmit(form: NgForm) {
     this.submitted = true;

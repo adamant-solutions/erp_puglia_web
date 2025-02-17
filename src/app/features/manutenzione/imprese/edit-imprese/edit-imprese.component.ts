@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Imprese } from 'src/app/core/models/manutenzione.model';
+import { comuni, provinces } from 'src/app/core/models/province-data.model';
 import { ImpreseService } from 'src/app/core/services/manutenzione-services/imprese.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 
@@ -33,14 +34,10 @@ export class EditImpreseComponent {
     pec: ''
   }
   
-  provinces = [
-    { sigla: 'BA', nome: 'Bari' },
-    { sigla: 'BT', nome: 'Barletta-Andria-Trani' },
-    { sigla: 'BR', nome: 'Brindisi' },
-    { sigla: 'FG', nome: 'Foggia' },
-    { sigla: 'LE', nome: 'Lecce' },
-    { sigla: 'TA', nome: 'Taranto' },
-  ];
+  provinces = [...provinces]
+  comuni = [...comuni]
+  filteredComuni: any[] = [];
+
 
   private impreseService = inject(ImpreseService);
   private router = inject(Router);
@@ -54,9 +51,24 @@ export class EditImpreseComponent {
     this.route.data.subscribe(({ data }) => {
       this.impresa = data
       this.initForm();
+
+      this.impresaForm.get('provincia')?.valueChanges.subscribe(selectedProvincia => {
+        this.filteredComuni = this.comuni.filter(comune => comune.provincia === selectedProvincia);
+        if (this.impresaForm.get('provincia')?.value !== selectedProvincia) {
+          this.impresaForm.get('citta')?.reset();
+        }
+      });
+  
+      if (this.impresa.provincia) {
+        this.filteredComuni = this.comuni.filter(
+          c => c.provincia === this.impresa.provincia
+        );
+      }
     })
 
-
+  
+   console.log("Province:" ,this.impresaForm.get('provincia'))
+   console.log("Citta:" ,this.impresaForm.get('citta'))
   }
 
   initForm() {
