@@ -223,8 +223,7 @@ export class EditAnagraficaComponent implements OnInit {
     this.anagraficaService.modificaAnagrafica(formValue).subscribe({
       next: (response) => {
         this.submitted = false;
-        this.anagrafica = response;
-        this.initForm();
+        this.router.navigate([]);
       },
       error: (error) => {},
     });
