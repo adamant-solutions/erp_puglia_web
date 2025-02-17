@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationService } from 'src/app/core/services/notification.service';
 import { SollecitoService } from 'src/app/core/services/sollecito.service';
 
 
@@ -54,12 +55,14 @@ export class AddSollecitiComponent implements OnInit {
 
   tipiSollecitoOptions = tipiSollecitoOptions;
   esitiInvioOptions = esitiInvioOptions;
+  errorMsg: string = ''
 
   constructor(
     private fb: FormBuilder,
     private sollecitoService: SollecitoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private notificationService:NotificationService
   ) {}
 
   ngOnInit() {
@@ -90,7 +93,11 @@ export class AddSollecitiComponent implements OnInit {
             this.router.navigate(['../'], { relativeTo: this.route });
           },
           error: (error) => {
-            console.error('Error creating sollecito:', error);
+            this.notificationService.addNotification({
+              message: this.handleError(error.error),
+              type: 'error',
+              timeout: 5000,
+            });
           }
         });
     }
@@ -106,6 +113,16 @@ export class AddSollecitiComponent implements OnInit {
       esitoInvio: '',
       esitoRisposta: ''
     });
+  }
+
+  private handleError(error: any) : string{
+    switch (error.status) {
+     
+      case 500:
+        return this.errorMsg = error.message;
+      default:
+        return this.errorMsg = 'Errore durante il salvataggio del sollecito.';
+    }
   }
 
   indietro() {
