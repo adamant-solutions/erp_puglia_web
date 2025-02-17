@@ -37,7 +37,7 @@ export class EditPeriodiGestioneComponent implements OnInit {
     this.periodoForm = this.fb.group({
       dataInizio: ['', Validators.required],
       dataFine: ['', Validators.required],
-      stato: ['', Validators.required],
+      stato: [{value: '', disabled: true}, Validators.required],
       note: [''],
       condominioId: ['', Validators.required],
       version: ['', Validators.required]
@@ -80,6 +80,32 @@ export class EditPeriodiGestioneComponent implements OnInit {
     });
   }
 
+  onAvanzaStato() {
+    if (this.periodoId) {
+      this.periodoService.avanzaStato(this.periodoId).subscribe({
+        next: (response) => {
+   
+          this.periodoForm.patchValue({
+            stato: response.stato
+          });
+          
+          this.notificationService.addNotification({
+            message: 'Stato avanzato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: this.handleError(error.error),
+            type: 'error',
+            timeout: 5000,
+          });
+        }
+      });
+    }
+  }
+
   onSubmit() {
     this.formSubmitted = true; 
     
@@ -87,7 +113,7 @@ export class EditPeriodiGestioneComponent implements OnInit {
       return; 
     }
 
-    const formValue = this.periodoForm.value;
+    const formValue = this.periodoForm.getRawValue();
     const periodoData: PeriodiGestione = {
       id: this.periodoId,
       dataInizio: formValue.dataInizio,
@@ -120,7 +146,7 @@ export class EditPeriodiGestioneComponent implements OnInit {
   private handleError(error: any) : string{
     switch (error.status) {
       case 400:
-        return this.errorMsg = '';
+        return this.errorMsg = error.message;
       case 422:
         return this.errorMsg = ''; 
       case 500:

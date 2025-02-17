@@ -44,6 +44,11 @@ export class PeriodoGestioneService {
   getPeriodoById(id: number): Observable<PeriodiGestione> {
     return this.http.get<PeriodiGestione>(`${this.periodiGestioniUrl}/${id}`);
   }
+  
+
+avanzaStato(periodoId: number): Observable<PeriodiGestione> {
+  return this.http.put<PeriodiGestione>(`${this.periodiGestioniUrl}/${periodoId}/avanza-stato`, {});
+}
 
   createPeriodo(periodo: PeriodiGestione): Observable<PeriodiGestione> {
     return this.http.post<PeriodiGestione>(this.periodiGestioniUrl, periodo);
