@@ -9,14 +9,20 @@
         <form [formGroup]="impresaForm" (ngSubmit)="onSubmit()" class="row g-3">
           <div class="col-12">
             <div class="row d-flex">
-
+          <!--     <option
+              *ngFor="let provincia of provinces"
+              [value]="provincia.sigla"
+            >
+              {{ provincia.nome }}
+            </option>
+ -->
               <!-- Ragione Sociale -->
               <div class="col-md-4 mb-3">
                 <label for="ragioneSociale" class="form-label">Ragione Sociale*</label>
                 <div class="input-group">
                 <input type="text" id="ragioneSociale" class="form-control" formControlName="ragioneSociale" />
               </div>
-                <span class="custom-error" *ngIf="impresaForm.get('ragioneSociale')?.invalid && impresaForm.get('ragioneSociale')?.touched">
+                <span class="custom-error" *ngIf="impresaForm.get('ragioneSociale')?.invalid && submitted">
                   Ragione Sociale è obbligatoria!
                 </span>
                

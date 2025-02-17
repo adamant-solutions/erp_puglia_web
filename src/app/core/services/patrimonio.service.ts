@@ -106,7 +106,7 @@ export class PatrimonioService {
       .pipe(
         catchError((error) =>
           throwError(
-            () => new Error("Impossibile aggiornare l'Unità Immobiliare.")
+            () => error
           )
         )
       );
