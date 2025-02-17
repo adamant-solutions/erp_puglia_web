@@ -77,13 +77,51 @@
                 </div>
               </div>
 
-              <!-- Città -->
-              <div class="col-md-4  mb-3">
-                <label for="citta" class="form-label">Città</label>
-                <div class="input-group">
-                  <input type="text" id="citta" class="form-control" name="citta" [(ngModel)]="impresa.citta" />
+              
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="provincia">Provincia</label>
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+                  <select class="form-control" id="provincia" name="provincia"
+                  [(ngModel)]="impresa.provincia" #provinciaRef="ngModel" (change)="selectProvincia($event)">
+                    <option value="">
+                      Seleziona provincia
+                    </option>
+                    <option *ngFor="let provincia of provinces" [value]="provincia.sigla">
+                      {{ provincia.nome }}
+                    </option>
+                  </select>
+                    </div>
                 </div>
               </div>
+
+
+              <!-- Città -->
+
+              <div class="col-md-4 mb-3">
+                <label class="form-label" for="citta">Città</label>
+                <div class="d-flex align-items-center">
+                    <div class="input-group select-wrapper w-100">
+                  <select  class="form-control"
+                  id="citta"
+                  name="citta"
+                  [(ngModel)]="impresa.citta"
+                  #cittaRef="ngModel">
+                    <option value="">
+                      Seleziona un comune
+                    </option>
+                    <option
+                    *ngFor="let comune of filteredComuni"
+                    [value]="comune.nome"
+                  >
+                    {{ comune.nome }}
+                  </option>
+                  </select>
+                    </div>
+                </div>
+              </div>
+
+
 
               <!-- Provincia -->
  <!--              <div class="col-md-4  mb-3">
@@ -98,23 +136,6 @@
                 </span>
 
               </div> -->
-
-              <div class="col-md-4 mb-3">
-                <label class="form-label" for="provincia">Provincia</label>
-                <div class="d-flex align-items-center">
-                    <div class="input-group select-wrapper w-100">
-                  <select class="form-control" id="provincia" name="provincia"
-                  [(ngModel)]="impresa.provincia" #provinciaRef="ngModel">
-                    <option value="" selected="">
-                      Seleziona Provincia
-                    </option>
-                    <option *ngFor="let provincia of provinces" [value]="provincia.sigla">
-                      {{ provincia.nome }}
-                    </option>
-                  </select>
-                    </div>
-                </div>
-              </div>
 
               <!-- CAP -->
               <div class="col-md-4  mb-3">
@@ -182,7 +203,7 @@
                 *ngIf="
                 pecRef?.errors?.['pattern']"
               >
-              PEC non valido! (es. nome.cognome@pec.it)
+              PEC non valido! (es. nomeimprese@pec.it)
               </span>  
                 </div>
 
