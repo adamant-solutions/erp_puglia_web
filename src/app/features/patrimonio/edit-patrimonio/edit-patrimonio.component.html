@@ -65,7 +65,7 @@
                   class="custom-error"
                   *ngIf="
                     modificaForm.get('quartiere')?.hasError('required') &&
-                    (modificaForm.get('quartiere')?.touched || submitted)
+                    submitted
                   "
                 >
                   Quartiere è obbligatorio!
@@ -105,9 +105,7 @@
                   *ngIf="
                     modificaForm
                       .get('tipoAmministrazione')
-                      ?.hasError('required') &&
-                    (modificaForm.get('tipoAmministrazione')?.touched ||
-                      submitted)
+                      ?.hasError('required') && submitted
                   "
                 >
                   Tipo amministrazione è obbligatorio!
@@ -145,9 +143,7 @@
                   *ngIf="
                     modificaForm
                       .get('statoDisponibilita')
-                      ?.hasError('required') &&
-                    (modificaForm.get('statoDisponibilita')?.touched ||
-                      submitted)
+                      ?.hasError('required') && submitted
                   "
                 >
                   Stato disponibilità è obbligatorio!
@@ -180,9 +176,9 @@
                   class="custom-error"
                   *ngIf="
                     (modificaForm.get('provincia')?.hasError('required') &&
-                      (modificaForm.get('provincia')?.touched || submitted)) ||
+                      submitted) ||
                     (modificaForm.get('provincia')?.hasError('maxlength') &&
-                      (modificaForm.get('provincia')?.touched || submitted))
+                      submitted)
                   "
                 >
                   <!-- Display error for required field -->
@@ -227,7 +223,7 @@
                   class="custom-error"
                   *ngIf="
                     modificaForm.get('comune')?.hasError('required') &&
-                    (modificaForm.get('comune')?.touched || submitted)
+                    submitted
                   "
                 >
                   Comune è obbligatorio!
@@ -250,7 +246,7 @@
                   class="custom-error"
                   *ngIf="
                     modificaForm.get('indirizzo')?.hasError('required') &&
-                    (modificaForm.get('indirizzo')?.touched || submitted)
+                    submitted
                   "
                 >
                   Indirizzo è obbligatorio!
@@ -275,10 +271,9 @@
                   class="custom-error"
                   *ngIf="
                     (modificaForm.get('sezioneUrbana')?.hasError('required') &&
-                      (modificaForm.get('sezioneUrbana')?.touched ||
-                        submitted)) ||
+                      submitted) ||
                     (modificaForm.get('sezioneUrbana')?.hasError('maxlength') &&
-                      (modificaForm.get('sezioneUrbana')?.touched || submitted))
+                      submitted)
                   "
                 >
                   <!-- Display error for required field -->
@@ -317,9 +312,9 @@
                   class="custom-error"
                   *ngIf="
                     (modificaForm.get('foglio')?.hasError('required') &&
-                      (modificaForm.get('foglio')?.touched || submitted)) ||
+                      submitted) ||
                     (modificaForm.get('foglio')?.hasError('maxlength') &&
-                      (modificaForm.get('foglio')?.touched || submitted))
+                      submitted)
                   "
                 >
                   <!-- Display error for required field -->
@@ -354,9 +349,9 @@
                   class="custom-error"
                   *ngIf="
                     (modificaForm.get('particella')?.hasError('required') &&
-                      (modificaForm.get('particella')?.touched || submitted)) ||
+                      submitted) ||
                     (modificaForm.get('particella')?.hasError('maxlength') &&
-                      (modificaForm.get('particella')?.touched || submitted))
+                      submitted)
                   "
                 >
                   <!-- Display error for required field -->
@@ -397,13 +392,11 @@
                     (modificaForm
                       .get('categoriaCatastale')
                       ?.hasError('required') &&
-                      (modificaForm.get('categoriaCatastale')?.touched ||
-                        submitted)) ||
+                      submitted) ||
                     (modificaForm
                       .get('categoriaCatastale')
                       ?.hasError('maxlength') &&
-                      (modificaForm.get('categoriaCatastale')?.touched ||
-                        submitted))
+                      submitted)
                   "
                 >
                   <!-- Display error for required field -->
@@ -450,13 +443,11 @@
                     (modificaForm
                       .get('classeCatastale')
                       ?.hasError('required') &&
-                      (modificaForm.get('classeCatastale')?.touched ||
-                        submitted)) ||
+                      submitted) ||
                     (modificaForm
                       .get('classeCatastale')
                       ?.hasError('maxlength') &&
-                      (modificaForm.get('classeCatastale')?.touched ||
-                        submitted))
+                      submitted)
                   "
                 >
                   <!-- Display error for required field -->
@@ -497,10 +488,7 @@
                 <span
                   class="custom-error"
                   *ngIf="
-                    modificaForm.get('renditaCatastale')?.invalid &&
-                    (modificaForm.get('renditaCatastale')?.touched ||
-                      modificaForm.get('renditaCatastale')?.dirty ||
-                      submitted)
+                    modificaForm.get('renditaCatastale')?.invalid && submitted
                   "
                 >
                   <span
@@ -535,9 +523,7 @@
                   class="custom-error"
                   *ngIf="
                     modificaForm.get('consistenzaCatastale')?.invalid &&
-                    (modificaForm.get('consistenzaCatastale')?.touched ||
-                      modificaForm.get('consistenzaCatastale')?.dirty ||
-                      submitted)
+                    submitted
                   "
                 >
                   <span
@@ -696,10 +682,7 @@
                         *ngIf="
                           documentiList.controls[i]
                             .get('tipoDocumento')
-                            ?.hasError('required') &&
-                          (documentiList.controls[i].get('tipoDocumento')
-                            ?.touched ||
-                            submitted)
+                            ?.hasError('required') && submitted
                         "
                       >
                         Il tipo documento è obbligatorio!
@@ -726,10 +709,7 @@
                         *ngIf="
                           documentiList.controls[i]
                             .get('dataDocumento')
-                            ?.hasError('required') &&
-                          (documentiList.controls[i].get('dataDocumento')
-                            ?.touched ||
-                            submitted)
+                            ?.hasError('required') && submitted
                         "
                       >
                         Data documento è obbligatoria!
@@ -769,12 +749,7 @@
                             .get('documenti')
                             ?.get(i.toString())
                             ?.get('percorsoFile')
-                            ?.hasError('required') &&
-                          (modificaForm
-                            .get('documenti')
-                            ?.get(i.toString())
-                            ?.get('percorsoFile')?.touched ||
-                            submitted)
+                            ?.hasError('required') && submitted
                         "
                       >
                         Nome File è obbligatorio!
