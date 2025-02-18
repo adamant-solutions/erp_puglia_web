@@ -287,6 +287,7 @@
                   </span>
                 </div>
 
+                <!-- Provincia residenza -->
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="provinciaResidenza"
                     >Provincia residenza *</label
@@ -298,9 +299,7 @@
                       name="provinciaResidenza"
                       formControlName="provinciaResidenza"
                     >
-                      <option value="" disabled selected>
-                        Seleziona una provincia
-                      </option>
+                      <option value="">Seleziona una provincia</option>
                       <option
                         *ngFor="let provincia of provinces"
                         [value]="provincia.sigla"
@@ -324,6 +323,7 @@
                   </span>
                 </div>
 
+                <!-- Comune residenza -->
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="comuneResidenza"
                     >Comune residenza *</label
@@ -339,9 +339,7 @@
                           ?.value
                       "
                     >
-                      <option value="" disabled selected>
-                        Seleziona un comune di residenza
-                      </option>
+                      <option value="">Seleziona un comune di residenza</option>
                       <option
                         *ngFor="let comune of filteredComuni"
                         [value]="comune.nome"
