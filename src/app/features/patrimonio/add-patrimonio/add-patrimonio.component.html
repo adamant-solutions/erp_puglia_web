@@ -151,9 +151,7 @@
                     name="provincia"
                     formControlName="provincia"
                   >
-                    <option value="" disabled selected>
-                      Seleziona una provincia
-                    </option>
+                    <option value="">Seleziona una provincia</option>
                     <option
                       *ngFor="let provincia of provinces"
                       [value]="provincia.sigla"
@@ -201,9 +199,7 @@
                     formControlName="comune"
                     [disabled]="!addForm.get('provincia')?.value"
                   >
-                    <option value="" disabled selected>
-                      Seleziona un comune
-                    </option>
+                    <option value="">Seleziona un comune</option>
                     <option
                       *ngFor="let comune of filteredComuni"
                       [value]="comune.nome"
