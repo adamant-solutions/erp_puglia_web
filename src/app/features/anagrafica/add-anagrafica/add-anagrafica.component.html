@@ -269,14 +269,21 @@
                   <span
                     class="custom-error"
                     *ngIf="
-                      addForm
-                        .get('cittadino.residenza.cap')
-                        ?.hasError('required') && submitted
+                      addForm.get('cittadino.residenza.cap')?.invalid &&
+                      submitted
                     "
                   >
-                    CAP è obbligatorio!
+                    <span
+                      *ngIf="addForm.get('cittadino.residenza.cap')?.errors?.['required']"
+                    >
+                      CAP è obbligatorio!
+                    </span>
+                    <span
+                      *ngIf="addForm.get('cittadino.residenza.cap')?.errors?.['pattern']"
+                    >
+                      Il formato del CAP non è valido!
+                    </span>
                   </span>
-                  <!-- Pattern error: Cap non è valido! -->
                 </div>
 
                 <div class="col-md-4 mb-3">

@@ -266,17 +266,25 @@
                       <i class="bi bi-mailbox"></i>
                     </span>
                   </div>
+
                   <span
                     class="custom-error"
                     *ngIf="
-                      modificaForm
-                        .get('cittadino.residenza.cap')
-                        ?.hasError('required') && submitted
+                      modificaForm.get('cittadino.residenza.cap')?.invalid &&
+                      submitted
                     "
                   >
-                    CAP è obbligatorio!
+                    <span
+                      *ngIf="modificaForm.get('cittadino.residenza.cap')?.errors?.['required']"
+                    >
+                      CAP è obbligatorio!
+                    </span>
+                    <span
+                      *ngIf="modificaForm.get('cittadino.residenza.cap')?.errors?.['pattern']"
+                    >
+                      Il formato del CAP non è valido!
+                    </span>
                   </span>
-                  <!-- Pattern error: Cap non è valido! -->
                 </div>
 
                 <div class="col-md-4 mb-3">
