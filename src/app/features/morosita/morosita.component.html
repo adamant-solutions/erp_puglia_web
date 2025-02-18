@@ -113,7 +113,17 @@
           </form>
         </div>
 
-      
+        <div class="col-12 d-flex justify-content-end">
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-3"
+            [routerLink]="['add-morosita']"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+            </svg>
+            <span>Aggiungi Morosità</span>
+          </button>
+        </div>
      
    
         <div *ngIf="morositaList.length === 0" class="alert alert-info" role="alert">
@@ -124,17 +134,7 @@
      
         <ng-container *ngIf="morositaList.length > 0">
         
-          <div class="col-12 d-flex justify-content-end">
-            <button
-              class="btn btn-primary btn-icon btn-xs mb-3"
-              [routerLink]="['add-morosita']"
-            >
-              <svg class="icon icon-white me-1">
-                <use href="assets/svg/sprites.svg#it-plus-circle"></use>
-              </svg>
-              <span>Aggiungi Morosità</span>
-            </button>
-          </div>
+      
 
         
           <div class="table-responsive">
