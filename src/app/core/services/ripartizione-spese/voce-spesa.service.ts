@@ -1,35 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { VoceSpesaDTO, VoceSpesaSearchParams } from '../../models/voce-spesa.model';
+import { VoceSpesaDTO } from '../../models/voce-spesa.model';
 import { PeriodoLight } from '../../models/periodi-gestione.model';
 
-@Injectable({ providedIn: 'root' })
+export interface VoceSpesaSearchParams {
+  descrizione?: string;
+  periodoId?: string;
+  page?: number;
+  size?: number;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class VoceSpesaService {
   private baseUrl = 'spese/voci-spesa';
-  private getLight = 'spese'
+  private periodoLightUrl = 'spese/periodi/light';
+  private defaultPageSize = 10;
 
   constructor(private http: HttpClient) {}
 
-  getVociSpesa(
-    pagina: number = 0,
-    size: number = 10,
-    searchParams?: VoceSpesaSearchParams
-  ): Observable<HttpResponse<VoceSpesaDTO[]>> {
-    let params = new HttpParams()
-      .set('page', pagina.toString())
-      .set('size', size.toString());
+  getVociSpesa(params: VoceSpesaSearchParams): Observable<HttpResponse<VoceSpesaDTO[]>> {
+    let httpParams = new HttpParams()
+      .set('page', (params.page || 0).toString())
+     
 
-    if (searchParams) {
-      Object.entries(searchParams).forEach(([key, value]) => {
-        if (value !== undefined && value !== null && value !== '') {
-          params = params.set(key, value.toString());
-        }
-      });
+    if (params.descrizione) {
+      httpParams = httpParams.set('descrizione', params.descrizione);
+    }
+
+    if (params.periodoId !== undefined && params.periodoId !== null) {
+      httpParams = httpParams.set('periodoId', params.periodoId.toString());
     }
 
     return this.http.get<VoceSpesaDTO[]>(this.baseUrl, {
-      params,
+      params: httpParams,
       observe: 'response'
     });
   }
@@ -38,11 +44,15 @@ export class VoceSpesaService {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 
-  createVoceSpesa(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}`, data);
+  createVoceSpesa(data: VoceSpesaDTO): Observable<VoceSpesaDTO> {
+    return this.http.post<VoceSpesaDTO>(this.baseUrl, data);
+  }
+
+  updateVoceSpesa(id: number, data: VoceSpesaDTO): Observable<VoceSpesaDTO> {
+    return this.http.put<VoceSpesaDTO>(`${this.baseUrl}/${id}`, data);
   }
 
   getPeriodi(): Observable<PeriodoLight[]> {
-    return this.http.get<PeriodoLight[]>(`${this.getLight}/periodi/light`);
+    return this.http.get<PeriodoLight[]>(this.periodoLightUrl);
   }
 }

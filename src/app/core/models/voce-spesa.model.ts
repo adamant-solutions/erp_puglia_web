@@ -18,13 +18,7 @@ export interface PageableResponse<T> {
   }
 
 
-  export interface VoceSpesaSearchParams {
+ export interface VoceSpesaSearchParams {
     descrizione?: string;
-    tipoSpesa?: string;
-    importoMinPreventivo?: number;
-    importoMaxPreventivo?: number;
-    importoMinConsuntivo?: number;
-    importoMaxConsuntivo?: number;
-    note?: string;
-    periodoId?: number;
+    periodoId?: string;
   }

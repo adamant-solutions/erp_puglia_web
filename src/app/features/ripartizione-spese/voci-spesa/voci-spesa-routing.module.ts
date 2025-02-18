@@ -9,8 +9,9 @@ const routes: Routes = [
     path: '',
     component: VociSpesaListComponent,
     resolve: {
-      vociSpesa: vociSpesaResolver
-    }
+      vociSpesa: vociSpesaResolver,
+      periodi: periodiResolver
+    }, runGuardsAndResolvers:'always'
   },
   {
     path:'nuovo-voci-spesa',
