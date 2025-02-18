@@ -129,7 +129,7 @@ export class PatrimonioService {
       .delete(`${this.patrimonioUrl}/${patrimonioId}/documenti/${documentoId}`)
       .pipe(
         catchError((error) =>
-          throwError(() => new Error('Failed to delete document'))
+          throwError(() => error)
         )
       );
   }

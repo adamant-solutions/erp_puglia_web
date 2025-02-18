@@ -205,12 +205,20 @@
                   }}
                 </td> -->
                 <td scope="row">
-                  <!--  <a href="javascript:void(0)" 
-                     (click)="showDownloadModal(contrattoItem.id)"
-                     title="Download" 
-                     class="it-download">
-                    <i class="bi bi-download"></i>
-                  </a> -->
+                  <ng-container *ngIf="contrattoItem.documenti.length > 0">
+                    <a
+                      href="javascript:void(0)"
+                      (click)="
+                        showDownloadModal(
+                          contrattoItem.id,
+                          contrattoItem.documenti
+                        )
+                      "
+                      title="Scarica"
+                    >
+                      <i class="bi bi-download"></i>
+                    </a>
+                  </ng-container>
                 </td>
               </tr>
             </tbody>
@@ -297,40 +305,52 @@
   </div>
 </div>
 
-<!-- 
+ 
 <div class="modal" tabindex="-1" role="dialog" id="downloadModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Scegli il tipo di documento che vuoi scaricare</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title">
+          Scegli il tipo di documento che vuoi scaricare
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
-        <div class="form-check" *ngFor="let doc of currentAnagrafica?.cittadino?.documenti_identita">
-          <input name="downloadFormat" 
-                 type="radio" 
-                 [id]="'doc' + doc.id" 
-                 [value]="doc.tipo_documento" 
-                 class="form-check-input" 
-                 [(ngModel)]="selectedDocumentType" />
+        <div class="form-check" *ngFor="let doc of documentsToDownload">
+          <input
+            name="downloadFormat"
+            type="radio"
+            [id]="'doc' + doc.id"
+            [value]="doc.id"
+            class="form-check-input"
+            [(ngModel)]="selectedDocumentoId"
+          />
           <label class="form-check-label" [for]="'doc' + doc.id">
-            {{doc.tipo_documento}}
+            {{ doc.nomeFile }} 
           </label>
         </div>
-        <div *ngIf="!currentAnagrafica?.cittadino?.documenti_identita?.length" 
-             class="alert alert-info">
+        <div *ngIf="!documentsToDownload.length" class="alert alert-info">
           Nessun documento disponibile per il download.
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" 
-                class="btn btn-primary" 
-                [disabled]="!selectedDocumentType"
-                (click)="downloadDocument()">
-          Download
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="!selectedDocumentoId"
+          (click)="downloadDocument()"
+        >
+          Scarica
         </button>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
       </div>
     </div>
   </div>
-</div> -->
+</div>

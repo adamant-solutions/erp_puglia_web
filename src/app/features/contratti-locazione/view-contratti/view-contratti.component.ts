@@ -121,7 +121,7 @@ export class ViewContrattiComponent {
 
 
   private formatDate(dateString: string): string {
-    return dateString ? new Date(dateString).toLocaleDateString() : '';
+    return dateString ? new Date(dateString).toLocaleDateString('it-IT') : '';
   }
 
   indietroC() {

@@ -364,9 +364,18 @@ export class EditAnagraficaComponent implements OnInit {
               this.selectedFile = null;
               this.bootstrapService.hideModal('deleteFileModal');
               this.deleteFileIndex = -1;
+              this.notificationService.addNotification({
+                message: "Il documento è stato eliminato con successo!",
+                type: 'success',
+                timeout: 3000,
+              });
             },
             error: (error) => {
-              this.errorMessage = 'Failed to delete document. ';
+              this.notificationService.addNotification({
+                message: "Eliminazione del documento non riuscita!",
+                type: 'error',
+                timeout: 5000,
+              });
               this.bootstrapService.hideModal('deleteFileModal');
               this.deleteFileIndex = -1;
             },

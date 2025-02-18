@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { Contratti, ModelLight } from '../models/contratto.model';
 import { ContrattiSearchParams } from '../resolvers/contratti.resolver';
 
@@ -65,6 +65,30 @@ export class ContrattiService {
 
   uploadDocument(contrattoId: number, formData: FormData): Observable<any> {
     return this.http.post(`${this.contrattiUrl}/contratti/${contrattoId}/documenti`, formData);
+  }
+
+  downloadDocument(
+    contrattoId: number,
+    documentoId: number
+  ): Observable<Blob> {
+    return this.http
+      .get(
+        `${this.contrattiUrl}/${contrattoId}/documenti/${documentoId}/download`,
+        {
+          responseType: 'blob',
+          observe: 'response',
+        }
+      )
+      .pipe(
+        map((response: HttpResponse<Blob>) => {
+          const contentType =
+            response.headers.get('content-type') || 'application/octet-stream';
+          return new Blob([response.body as BlobPart], { type: contentType });
+        }),
+        catchError((error) =>
+          throwError(() => error)
+        )
+      );
   }
 
   addContratto(contrattoData: FormData): Observable<Contratti> {
