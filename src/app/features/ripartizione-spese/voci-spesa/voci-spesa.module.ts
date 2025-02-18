@@ -5,9 +5,11 @@ import { VociSpesaRoutingModule } from './voci-spesa-routing.module';
 import { VociSpesaListComponent } from './voci-spesa-list/voci-spesa-list.component';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AddVociSpesaComponent } from './add-voci-spesa/add-voci-spesa.component';
 @NgModule({
   declarations: [
-    VociSpesaListComponent
+    VociSpesaListComponent,
+    AddVociSpesaComponent
   ],
   imports: [
     CommonModule,
