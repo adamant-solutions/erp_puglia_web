@@ -46,6 +46,7 @@ export class AddAnagraficaComponent implements OnInit {
     TipoDocumento.PATENTE,
   ];
   submitted: boolean = false;
+  today : Date = new Date();
 
   provinces = [
     { sigla: 'BA', nome: 'Bari' },

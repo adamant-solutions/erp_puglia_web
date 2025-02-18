@@ -99,6 +99,6 @@ export class AnagraficaService {
 
   private handleError(error: any): Observable<never> {
     console.error('API Error:', error);
-    return throwError(() => new Error('An error occurred while processing your request.'));
+    return throwError(() => error);
   }
 }

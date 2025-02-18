@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import {
@@ -8,8 +8,8 @@ import {
 import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
-import { HttpResponse } from '@angular/common/http';
 import { AnagraficaSearchParams } from 'src/app/core/resolvers/anagrafica.resolver';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-anagrafica',
@@ -43,7 +43,8 @@ export class AnagraficaComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private anagraficaService: AnagraficaService,
-    private bootstrapService: BootstrapService
+    private bootstrapService: BootstrapService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -93,15 +94,18 @@ export class AnagraficaComponent implements OnInit {
   deleteAnagrafica() {
     this.anagraficaService.deleteAnagrafica(this.anagraficaId).subscribe({
       next: () => {
-        // Update the list by filtering out the deleted item
+         this.bootstrapService.showModal('deleteAnagraficaModalAfter'); 
         this.anagraficaList = this.anagraficaList.filter(
           (anagrafica) => anagrafica.id !== this.anagraficaId
         );
-        // this.notificationService.success(`Anagrafica per "${this.anagraficaMainIdentificationData}" eliminata con successo.`);
+
       },
       error: (error) => {
-        console.error(error);
-        // this.notificationService.error(`Impossibile eliminare anagrafica per "${this.anagraficaMainIdentificationData}". Riprova.`);
+        this.notificationService.addNotification({
+          message: error.error.message,
+          type: 'error',
+          timeout: 7000,
+        });
       },
     });
   }
@@ -155,7 +159,7 @@ export class AnagraficaComponent implements OnInit {
       .downloadDocument(this.selectedAnagraficaId, selectedDocument.id)
       .subscribe({
         next: (blob: Blob) => {
-          console.log('Download response received', blob);
+          console.log('Il file è stato scaricato con successo!', blob);
 
           const url = window.URL.createObjectURL(blob);
 
@@ -175,9 +179,18 @@ export class AnagraficaComponent implements OnInit {
           }, 100);
 
           this.bootstrapService.hideModal('downloadModal');
+          this.notificationService.addNotification({
+            message: 'Il file è stato scaricato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
         },
         error: (error) => {
-          console.error('Download failed:', error);
+          this.notificationService.addNotification({
+            message: "Download del file non riuscito!",
+            type: 'error',
+            timeout: 3000,
+          });
         },
       });
   }
