@@ -209,6 +209,12 @@
             <div *ngIf="documenti.length === 0">
               <div class="text-muted">Nessun documento presente</div>
             </div>
+
+            <div *ngIf="documenti.length !== 0">
+              <ul class="list-unstyled">
+                <li *ngFor="let doc of documenti">{{ doc.nomeFile }}</li>
+              </ul>
+            </div>
           </div>
 
           <!-- buttons -->

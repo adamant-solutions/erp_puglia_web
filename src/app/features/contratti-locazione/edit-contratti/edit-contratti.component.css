@@ -110,3 +110,8 @@ input[type="file"].form-control {
   text-decoration: none; 
 }
 
+
+.list-unstyled li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #dee2e6;
+}

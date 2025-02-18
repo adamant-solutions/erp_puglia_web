@@ -58,7 +58,7 @@ export class ContrattiLocazioneComponent {
         this.searchDataInizioToParam = params['dataInizioTo'] || '';
         this.searchDataFineToParam = params['dataFineTo'] || '';
         this.getList();
-      console.log(this.contrattiList)
+        //console.log(this.contrattiList)
     });
 
   }

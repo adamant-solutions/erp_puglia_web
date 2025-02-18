@@ -149,15 +149,15 @@
         
           <div class="col-12 mb-3">
             <label class="form-label">Documenti</label>
-            <div class="input-group">
+            <div class="input-group" style="border: none">
               <input 
-                type="file" 
-                #fileInput
-                class="form-control" 
-                multiple 
-                (change)="onFileSelected($event)"
-                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              >
+              type="file" 
+              #fileInput
+              style="display: none;" 
+              multiple 
+              (change)="onFileSelected($event)"
+              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+            >
               <button 
                 type="button" 
                 class="btn btn-outline-secondary" 
