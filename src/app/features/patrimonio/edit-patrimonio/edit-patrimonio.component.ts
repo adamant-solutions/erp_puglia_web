@@ -499,6 +499,11 @@ export class EditPatrimonioComponent implements OnInit {
               this.selectedFiles[this.deleteFileIndex] = null;
               this.bootstrapService.hideModal('deleteFileModal');
               this.deleteFileIndex = -1;
+              this.notificationService.addNotification({
+                message: "Il documento è stato eliminato con successo!",
+                type: 'success',
+                timeout: 3000,
+              });
             },
             error: (error) => {
               this.errorMessage = 'Eliminazione del documento non riuscita.';
