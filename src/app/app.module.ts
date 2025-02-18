@@ -22,31 +22,45 @@ import { LoaderComponent } from './shared/loader.component';
 import { ToastComponent } from './core/components/toast/toast.component';
 import { loaderInterceptor } from './core/interceptors/loader.interceptor';
 
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomPaginatorIntl } from './core/services/custom-paginator-intl';
+
 registerLocaleData(localeIt);
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, TabsComponent, FooterComponent,LoaderComponent, ToastComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    TabsComponent,
+    FooterComponent,
+    LoaderComponent,
+    ToastComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    SharedModule
+    SharedModule,
   ],
-  providers: [ DatePipe, { provide: LOCALE_ID, useValue: 'it' },
-    provideHttpClient(withInterceptors([authInterceptor,loaderInterceptor])),
-  AuthorizationService,
-  PatrimonioService,
-  AnagraficaService,
-  ContrattiService,
-  { provide: 'tokenUrl', useValue: environment.tokenUrl },
-  { provide: 'patrimonioUrl', useValue: environment.patrimonioUrl },
-  { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
-  { provide: 'contrattiUrl', useValue: environment.contrattiUrl },
-  { provide: 'morositaUrl', useValue:environment.morositaUrl },
-  { provide: 'manutenzioneUrl', useValue: environment.manutenzioneUrl},
-  {provide: 'condominiUrl', useValue:environment.condominiUrl},
-  {provide: 'periodiGestioniUrl',useValue:environment.periodiGestioniUrl},
-  {provide: 'condominiLightUrl', useValue:environment.condominiLightUrl}
+  providers: [
+    DatePipe,
+    { provide: LOCALE_ID, useValue: 'it' },
+    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor])),
+    AuthorizationService,
+    PatrimonioService,
+    AnagraficaService,
+    ContrattiService,
+    { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
+
+    { provide: 'tokenUrl', useValue: environment.tokenUrl },
+    { provide: 'patrimonioUrl', useValue: environment.patrimonioUrl },
+    { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
+    { provide: 'contrattiUrl', useValue: environment.contrattiUrl },
+    { provide: 'morositaUrl', useValue: environment.morositaUrl },
+    { provide: 'manutenzioneUrl', useValue: environment.manutenzioneUrl },
+    { provide: 'condominiUrl', useValue: environment.condominiUrl },
+    { provide: 'periodiGestioniUrl', useValue: environment.periodiGestioniUrl },
+    { provide: 'condominiLightUrl', useValue: environment.condominiLightUrl },
   ],
   bootstrap: [AppComponent],
 })
