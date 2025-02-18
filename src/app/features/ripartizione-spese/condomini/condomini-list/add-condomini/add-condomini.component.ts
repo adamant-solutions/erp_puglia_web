@@ -347,7 +347,7 @@ export class AddCondominiComponent implements OnInit {
   private handleError(error: any): string {
     switch (error.status) {
       case 400:
-        return 'Dati non validi. Controlla i campi obbligatori.';
+        return 'Il codice fiscale deve essere composto da 11 cifre numeriche';
       case 422:
         return 'Dati non validi o condominio già esistente.';
       case 500:
