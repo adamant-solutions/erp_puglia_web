@@ -1,8 +1,10 @@
 import { inject } from '@angular/core';
-import { ResolveFn } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, ResolveFn, RouterStateSnapshot } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { VoceSpesaDTO,VoceSpesaSearchParams } from '../../models/voce-spesa.model';
 import { VoceSpesaService } from '../../services/ripartizione-spese/voce-spesa.service';
+import { PeriodoLight } from '../../models/periodi-gestione.model';
+import { Observable } from 'rxjs';
 
 export const vociSpesaResolver: ResolveFn<HttpResponse<VoceSpesaDTO[]>> = (
     route,
@@ -26,3 +28,10 @@ export const vociSpesaResolver: ResolveFn<HttpResponse<VoceSpesaDTO[]>> = (
     return voceSpesaService.getVociSpesa(pagina, size, searchParams);
   };
   
+  export const periodiResolver: ResolveFn<PeriodoLight[]> = (
+    route,
+    state,
+    voceSpesaService: VoceSpesaService = inject(VoceSpesaService)
+  ) => {
+    return voceSpesaService.getPeriodi();
+  };

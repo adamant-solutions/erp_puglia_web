@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { VoceSpesaDTO, VoceSpesaSearchParams } from '../../models/voce-spesa.model';
+import { PeriodoLight } from '../../models/periodi-gestione.model';
 
 @Injectable({ providedIn: 'root' })
 export class VoceSpesaService {
   private baseUrl = 'spese/voci-spesa';
+  private getLight = 'spese'
 
   constructor(private http: HttpClient) {}
 
@@ -34,5 +36,13 @@ export class VoceSpesaService {
 
   deleteVoceSpesa(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
+
+  createVoceSpesa(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}`, data);
+  }
+
+  getPeriodi(): Observable<PeriodoLight[]> {
+    return this.http.get<PeriodoLight[]>(`${this.getLight}/periodi/light`);
   }
 }

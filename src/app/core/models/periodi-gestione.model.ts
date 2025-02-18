@@ -8,3 +8,8 @@ export interface PeriodiGestione {
     version: number
   }
   
+  export interface PeriodoLight {
+    id: number;
+    anno: number;
+    descrizione: string;
+  }
