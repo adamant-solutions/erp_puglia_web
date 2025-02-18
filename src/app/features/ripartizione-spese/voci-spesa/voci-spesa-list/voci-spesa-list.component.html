@@ -9,51 +9,11 @@
 
         <div class="col-12 mb-5">
             <form class="row g-3 form-container" [formGroup]="searchForm" (ngSubmit)="cercaVociSpesa()">
-              <div class="col-md-4">
-                <label class="form-label" for="tipoSpesa">Tipo Spesa</label>
-                <select class="form-select" id="tipoSpesa" formControlName="tipoSpesa">
-                  <option value="">Seleziona tipo</option>
-                  <option value="SERVIZI">Servizi</option>
-                  <option value="RISCALDAMENTO">Riscaldamento</option>
-                  <option value="ASCENSORE">Ascensore</option>
-                </select>
-              </div>
+           
           
-              <div class="col-md-6">
-                <label class="form-label">Importo Preventivo</label>
-                <div class="row">
-                  <div class="col-6">
-                    <div class="input-group">
-                  
-                      <input type="number" class="form-control" formControlName="importoMinPreventivo" placeholder="Min €" />
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="input-group">
-                  
-                      <input type="number" class="form-control" formControlName="importoMaxPreventivo" placeholder="Max €" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
           
-              <div class="col-md-6">
-                <label class="form-label">Importo Consuntivo</label>
-                <div class="row">
-                  <div class="col-6">
-                    <div class="input-group">
-                    
-                      <input type="number" class="form-control" formControlName="importoMinConsuntivo" placeholder="Min €" />
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="input-group">
-                  
-                      <input type="number" class="form-control" formControlName="importoMaxConsuntivo" placeholder="Max €" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+         
           
               <div class="col-12 mt-4 d-flex justify-content-start">
                 <button type="submit" class="btn btn-primary me-3">
@@ -86,9 +46,9 @@
                 <th scope="col">Azioni</th>
                 <th scope="col">Descrizione</th>
                 <th scope="col">Tipo Spesa</th>
-                <th scope="col">Importo Preventivo</th>
-                <th scope="col">Importo Consuntivo</th>
-                <th scope="col">Importo Conguaglio</th>
+                <th scope="col"> Preventivo</th>
+                <th scope="col"> Consuntivo</th>
+                <th scope="col"> Conguaglio</th>
                 <th scope="col">Note</th>
               </tr>
             </thead>
