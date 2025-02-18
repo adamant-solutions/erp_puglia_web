@@ -299,7 +299,7 @@
                       formControlName="provinciaResidenza"
                     >
                       <option value="" disabled selected>
-                        Seleziona una Provincia
+                        Seleziona una provincia
                       </option>
                       <option
                         *ngFor="let provincia of provinces"
@@ -329,15 +329,28 @@
                     >Comune residenza *</label
                   >
                   <div class="input-group">
-                    <input
-                      type="text"
+                    <select
                       class="form-control"
                       id="comuneResidenza"
                       name="comuneResidenza"
                       formControlName="comuneResidenza"
-                    />
+                      [disabled]="
+                        !addForm.get('cittadino.residenza.provinciaResidenza')
+                          ?.value
+                      "
+                    >
+                      <option value="" disabled selected>
+                        Seleziona un comune di residenza
+                      </option>
+                      <option
+                        *ngFor="let comune of filteredComuni"
+                        [value]="comune.nome"
+                      >
+                        {{ comune.nome }}
+                      </option>
+                    </select>
                     <span class="input-group-text">
-                      <i class="bi bi-buildings"></i>
+                      <i class="bi bi-chevron-down"></i>
                     </span>
                   </div>
                   <span
