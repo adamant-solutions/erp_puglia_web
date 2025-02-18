@@ -75,7 +75,7 @@ export class PatrimonioService {
           return new Blob([response.body as BlobPart], { type: contentType });
         }),
         catchError((error) =>
-          throwError(() => new Error('Failed to download document'))
+          throwError(() => error)
         )
       );
   }
@@ -117,12 +117,9 @@ export class PatrimonioService {
       .delete(`${this.patrimonioUrl}/${patrimonioId}`)
       .pipe(
         catchError((error) =>
-          throwError(
-            () =>
-              new Error(
-                "Impossibile eliminare l'Unità Immobiliare e i suoi documenti."
-              )
-          )
+        {
+          throw(error)
+        }
         )
       );
   }

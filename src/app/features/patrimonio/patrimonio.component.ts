@@ -9,6 +9,7 @@ import { PatrimonioService } from 'src/app/core/services/patrimonio.service';
 import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PageEvent } from '@angular/material/paginator';
 import { PatrimonioSearchParams } from 'src/app/core/resolvers/patrimonio.resolver';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-patrimonio',
@@ -51,7 +52,8 @@ export class PatrimonioComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private patrimonioService: PatrimonioService,
-    private bootstrapService: BootstrapService
+    private bootstrapService: BootstrapService,
+    private notificationService: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -108,22 +110,26 @@ export class PatrimonioComponent implements OnInit {
   deletePatrimonio() {
     this.patrimonioService.deletePatrimonio(this.patrimonioId).subscribe({
       next: () => {
+        this.bootstrapService.showModal('deletePatrimonioModal2'); 
         // Update the list by filtering out the deleted item
         this.patrimonioList = this.patrimonioList.filter(
           (patrimonio) => patrimonio.id !== this.patrimonioId
         );
-        // this.notificationService.success(`Unità Immobiliare con indirizzo "${this.patrimonioIndirizzo}", civico "${this.patrimonioCivico}" e comune "${this.patrimonioComune}" eliminata con successo.`);
       },
       error: (error: any) => {
-        console.error(error);
-        // this.notificationService.error(`Impossibile eliminare l'Unità Immobiliare con indirizzo "${this.patrimonioIndirizzo}", civico "${this.patrimonioCivico}" e comune "${this.patrimonioComune}". Riprova.`);
+       /*  console.error(error); */
+        this.notificationService.addNotification({
+          message: error.error.message,
+          type: 'error',
+          timeout: 7000,
+        });
       },
     });
   }
 
   // Filter / Search
   getFilteredData(pageNumber: number) {
-    // Update the query parameters to reflect the filter state in the URL
+  
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
@@ -172,8 +178,8 @@ export class PatrimonioComponent implements OnInit {
 
     this.patrimonioService
       .downloadDocument(this.selectedPatrimonioId, this.selectedDocumentoId)
-      .subscribe(
-        (blob: Blob) => {
+      .subscribe({
+        next: (blob: Blob) => {
           const url = window.URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
@@ -181,10 +187,19 @@ export class PatrimonioComponent implements OnInit {
           a.click();
           window.URL.revokeObjectURL(url);
           this.bootstrapService.hideModal('downloadModal');
+          this.notificationService.addNotification({
+            message: 'Il file è stato scaricato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
         },
-        (error) => {
-          console.error('Error downloading document:', error);
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: "Download del file non riuscito!",
+            type: 'error',
+            timeout: 3000,
+          });
         }
-      );
+      });
   }
 }
