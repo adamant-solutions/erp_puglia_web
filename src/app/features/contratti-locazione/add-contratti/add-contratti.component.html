@@ -36,16 +36,38 @@
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Inizio*</label>
-            <input type="date" class="form-control" formControlName="dataInizio"
-              [ngClass]="{'is-invalid': submitted && contratoForm.get('dataInizio')?.invalid}">
-              <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']">
+            
+            <mat-form-field appearance="fill" style="width: 100%">
+              <input matInput [matDatepicker]="pickerdataInizio" name="dataInizio"
+              formControlName="dataInizio"  id="dataInizio" />
+              <mat-datepicker-toggle matSuffix [for]="pickerdataInizio"></mat-datepicker-toggle>
+              <mat-datepicker #pickerdataInizio></mat-datepicker>
+            </mat-form-field>
+           
+              <div class="invalid-feedback"  *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']">
                 Data Inizio è obbligatoria
               </div>
+
+              <div class="invalid-feedback"  *ngIf="contratoForm.get('dataInizio')?.errors?.['matDatepickerParse']">
+               Inserisci una data valida nel formato gg/mm/aaaa!
+              </div>
+          
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Fine</label>
-            <input type="date" class="form-control" formControlName="dataFine">
+            
+            <mat-form-field appearance="fill" style="width: 100%">
+              <input matInput [matDatepicker]="pickerdataFine" name="dataFine"
+              formControlName="dataFine"  id="dataFine" />
+              <mat-datepicker-toggle matSuffix [for]="pickerdataFine"></mat-datepicker-toggle>
+              <mat-datepicker #pickerdataFine></mat-datepicker>
+            </mat-form-field>
+
+              <div class="invalid-feedback"  *ngIf="contratoForm.get('dataFine')?.errors?.['matDatepickerParse']">
+               Inserisci una data valida nel formato gg/mm/aaaa!
+              </div>
+          
           </div>
 
           <div class="col-md-8 mb-3">
@@ -84,6 +106,7 @@
               <div *ngFor="let intestatarioGroup of intestatari.controls; let i=index" [formGroupName]="i"
                 class="row mb-3">
                 <div class="col-md-6">
+                  <label class="form-label">Intestatari*</label>
                   <div class="input-group" formGroupName="intestatario"
                     [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('intestatario.id')?.invalid}">
                     <select class="form-control" formControlName="id">
@@ -97,15 +120,27 @@
                     </button>
                   </div>
                   <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('intestatario.id')?.errors?.['required']">
-                    Intestatari obbligatorio
+                    Intestatari è obbligatorio
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <input type="date" class="form-control" formControlName="dataInizio"
-                    [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('dataInizio')?.invalid}">
+                <div class="col-md-6 ">
+        
+                  <label class="form-label">Data Inizio*</label>
+                  
+                  <mat-form-field appearance="fill" style="width: 100%;" >
+                    <input matInput [matDatepicker]="pickerdataInizio" name="dataInizioI"
+                    formControlName="dataInizio"  id="dataInizioI" [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('dataInizio')?.invalid}" />
+                    <mat-datepicker-toggle matSuffix [for]="pickerdataInizio"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerdataInizio></mat-datepicker>
+                  </mat-form-field>
+                 
                   <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('dataInizio')?.errors?.['required']">
-                    Data Inizio obbligatoria
+                    Data Inizio è obbligatoria
                   </div>
+      
+                    <div class="invalid-feedback"  *ngIf="intestatarioGroup.get('dataInizio')?.errors?.['matDatepickerParse']">
+                     Inserisci una data valida nel formato gg/mm/aaaa!
+                    </div>
                 </div>
               </div>
             </div>
