@@ -2,7 +2,10 @@ import {Component, inject} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router, ActivatedRoute } from '@angular/router';
 import { StatoContratto, ModelLight, Contratti } from 'src/app/core/models/contratto.model';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+
 import { ContrattiService } from 'src/app/core/services/contratti.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-contratti-locazione',
@@ -26,6 +29,9 @@ export class ContrattiLocazioneComponent {
   searchDataInizioFromParam = '';
   searchDataInizioToParam = '';
   searchDataFineToParam = '';
+  selectedContrattoId!: number;
+  selectedDocumentoId!: any;
+  documentsToDownload: any[] = [];
 
     
   statoContratti: StatoContratto[] = ['ATTIVO', 'SCADUTO', 'DISDETTO', 'ANNULLATO'];
@@ -37,6 +43,8 @@ export class ContrattiLocazioneComponent {
 
   constructor(
     private contrattiSvc: ContrattiService,
+    private bootstrapService: BootstrapService,
+    private notificationService: NotificationService
   
    ) { }
   ngOnInit() {
@@ -121,6 +129,53 @@ export class ContrattiLocazioneComponent {
 
 
 
+  showDownloadModal(contrattoId: number, documents: any[]) {
+    this.selectedContrattoId = contrattoId;
+    this.documentsToDownload = documents;
+    this.selectedDocumentoId = documents.length > 0 ? documents[0].id : null;
+    this.bootstrapService.showModal('downloadModal');
+  }
+
+  downloadDocument() {
+    if (!this.selectedDocumentoId) {
+      console.error('No document selected');
+      return;
+    }
+
+    const selectedDocument = this.documentsToDownload.find(
+      (doc) => doc.id === this.selectedDocumentoId
+    );
+    if (!selectedDocument) {
+      console.error('Selected document not found');
+      return;
+    }
+
+    this.contrattiSvc
+      .downloadDocument(this.selectedContrattoId, this.selectedDocumentoId)
+      .subscribe({
+        next: (blob: Blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${selectedDocument.nomeFile}`;
+          a.click();
+          window.URL.revokeObjectURL(url);
+          this.bootstrapService.hideModal('downloadModal');
+          this.notificationService.addNotification({
+            message: 'Il file è stato scaricato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: "Download del file non riuscito!",
+            type: 'error',
+            timeout: 3000,
+          });
+        }
+      });
+  }
 
 
 }
