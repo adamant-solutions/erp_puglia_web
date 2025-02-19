@@ -176,24 +176,7 @@
                   </div>
                 </div>
 
-                <div class="col-md-4 mb-3">
-                  <label class="form-label" for="comuneResidenza"
-                    >Comune residenza</label
-                  >
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="comuneResidenza"
-                      name="comuneResidenza"
-                      formControlName="comuneResidenza"
-                    />
-                    <span class="input-group-text">
-                      <i class="bi bi-buildings"></i>
-                    </span>
-                  </div>
-                </div>
-
+                <!-- Provincia residenza -->
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="provinciaResidenza"
                     >Provincia residenza</label
@@ -205,6 +188,25 @@
                       id="provinciaResidenza"
                       name="provinciaResidenza"
                       formControlName="provinciaResidenza"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-buildings"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <!-- Comune residenza -->
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="comuneResidenza"
+                    >Comune residenza</label
+                  >
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="comuneResidenza"
+                      name="comuneResidenza"
+                      formControlName="comuneResidenza"
                     />
                     <span class="input-group-text">
                       <i class="bi bi-buildings"></i>
@@ -458,11 +460,14 @@
                         <label class="form-label">File</label>
                         <div class="input-group">
                           <input
-                          type="text"
-                          class="form-control"
-                          [value]="documentiIdentita.at(i).get('nomeFile')?.value || 'Nessun file caricato'"
-                          readonly
-                        />
+                            type="text"
+                            class="form-control"
+                            [value]="
+                              documentiIdentita.at(i).get('nomeFile')?.value ||
+                              'Nessun file caricato'
+                            "
+                            readonly
+                          />
                           <span class="input-group-text">
                             <i class="bi bi-folder"></i>
                           </span>
