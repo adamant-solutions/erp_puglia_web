@@ -19,6 +19,7 @@
                   id="nome"
                   name="nome"
                   [(ngModel)]="anagraficaSearchParams.nome"
+                  (keyup.enter)="getFilteredData(0)"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-person"></i>
@@ -35,6 +36,7 @@
                   id="cognome"
                   name="cognome"
                   [(ngModel)]="anagraficaSearchParams.cognome"
+                  (keyup.enter)="getFilteredData(0)"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-person"></i>
@@ -53,6 +55,7 @@
                   id="codiceFiscale"
                   name="codiceFiscale"
                   [(ngModel)]="anagraficaSearchParams.codiceFiscale"
+                  (keyup.enter)="getFilteredData(0)"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-ticket-detailed"></i>
