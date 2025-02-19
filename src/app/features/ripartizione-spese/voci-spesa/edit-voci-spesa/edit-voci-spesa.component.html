@@ -1,0 +1,178 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Modifica Voce Spesa'"
+>
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">Modifica Voce Spesa</h1>
+
+        <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()" class="row g-3" *ngIf="voceSpesa">
+          <div class="col-12">
+            <fieldset>
+              <div class="row d-flex">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="periodoId">Periodo *</label>
+                  <div class="input-group">
+                    <select 
+                      class="form-control" 
+                      id="periodoId" 
+                      formControlName="periodoId"
+                    >
+                      <option value="">Seleziona periodo</option>
+                      <option *ngFor="let periodo of periodi" [value]="periodo.id">
+                        {{periodo.descrizione}}
+                      </option>
+                      
+                    </select>
+                    <span class="input-group-text">
+                        <i class="bi bi-calendar"></i>
+                      </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="modifyForm.get('periodoId')?.hasError('required') && submitted"
+                  >
+                    Periodo è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="descrizione">Descrizione *</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="descrizione"
+                      formControlName="descrizione"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-text-paragraph"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="modifyForm.get('descrizione')?.hasError('required') && submitted"
+                  >
+                    Descrizione è obbligatoria!
+                  </span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tipoSpesa">Tipo Spesa *</label>
+                  <div class="input-group">
+                    <select 
+                      class="form-control" 
+                      id="tipoSpesa" 
+                      formControlName="tipoSpesa"
+                    >
+                      <option value="">Seleziona tipo</option>
+                      <option *ngFor="let tipo of tipiSpesaOptions" [value]="tipo.value">
+                        {{tipo.label}}
+                      </option>
+                    </select>
+                    <span class="input-group-text">
+                      <i class="bi bi-list"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="modifyForm.get('tipoSpesa')?.hasError('required') && submitted"
+                  >
+                    Tipo spesa è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="importoPreventivo">Importo Preventivo *</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="importoPreventivo"
+                      formControlName="importoPreventivo"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                  <span
+                    class="custom-error"
+                    *ngIf="modifyForm.get('importoPreventivo')?.hasError('required') && submitted"
+                  >
+                    Importo preventivo è obbligatorio!
+                  </span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="importoConsuntivo">Importo Consuntivo</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="importoConsuntivo"
+                      formControlName="importoConsuntivo"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="importoConguaglio">Importo Conguaglio</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="importoConguaglio"
+                      formControlName="importoConguaglio"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="note">Note</label>
+                  <div class="input-group">
+                    <textarea
+                      class="form-control"
+                      id="note"
+                      formControlName="note"
+                      rows="3"
+                    ></textarea>
+                    <span class="input-group-text">
+                      <i class="bi bi-chat-text"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col-12 mt-5 d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+
+            <div>
+              <button type="submit" class="btn btn-primary py-2">
+                Salva 
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

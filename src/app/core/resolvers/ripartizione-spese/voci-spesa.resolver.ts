@@ -27,3 +27,13 @@ export const periodiResolver: ResolveFn<PeriodoLight[]> = (
 ) => {
   return voceSpesaService.getPeriodi();
 };
+
+
+export const voceSpesaResolverID: ResolveFn<VoceSpesaDTO> = (
+  route,
+  state,
+  voceSpesaService: VoceSpesaService = inject(VoceSpesaService)
+) => {
+  const id = route.paramMap.get('id');
+  return voceSpesaService.getVoceSpesa(Number(id));
+};

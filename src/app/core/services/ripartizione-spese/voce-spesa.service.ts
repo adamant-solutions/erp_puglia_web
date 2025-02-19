@@ -48,8 +48,12 @@ export class VoceSpesaService {
     return this.http.post<VoceSpesaDTO>(this.baseUrl, data);
   }
 
-  updateVoceSpesa(id: number, data: VoceSpesaDTO): Observable<VoceSpesaDTO> {
-    return this.http.put<VoceSpesaDTO>(`${this.baseUrl}/${id}`, data);
+  getVoceSpesa(id: number): Observable<VoceSpesaDTO> {
+    return this.http.get<VoceSpesaDTO>(`${this.baseUrl}/${id}`);
+  }
+
+  updateVoceSpesa(data: VoceSpesaDTO): Observable<VoceSpesaDTO> {
+    return this.http.put<VoceSpesaDTO>(`${this.baseUrl}`, data);
   }
 
   getPeriodi(): Observable<PeriodoLight[]> {
