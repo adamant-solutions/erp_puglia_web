@@ -64,7 +64,7 @@
                 <th scope="col"> Preventivo</th>
                 <th scope="col"> Consuntivo</th>
                 <th scope="col"> Conguaglio</th>
-                <th scope="col">Note</th>
+                <th scope="col">Periodo</th>
               </tr>
             </thead>
             <tbody>
@@ -97,8 +97,9 @@
                 <td>{{ voceSpesa.importoPreventivo | currency:'EUR' }}</td>
                 <td>{{ voceSpesa.importoConsuntivo | currency:'EUR' }}</td>
                 <td>{{ voceSpesa.importoConguaglio | currency:'EUR' }}</td>
-                <td>{{ voceSpesa.note }}</td>
+                <td >{{ getPeriodoDescrizione(voceSpesa.periodoId) }}</td>
               </tr>
+              
             </tbody>
           </table>
         </div>

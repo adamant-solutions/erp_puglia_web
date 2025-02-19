@@ -187,4 +187,9 @@ export class VociSpesaListComponent implements OnInit, OnDestroy {
     }
     this.voceSpesaToDelete = null;
   }
+
+  getPeriodoDescrizione(periodoId: number): string {
+    const periodo = this.periodi.find(p => p.id === periodoId);
+    return periodo ? periodo.descrizione : '';
+  }
 }

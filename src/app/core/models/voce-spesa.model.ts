@@ -1,4 +1,5 @@
 export interface VoceSpesaDTO {
+periodoId: number;
     id: number;
     tipoSpesa: 'SERVIZI' | 'RISCALDAMENTO' | 'ASCENSORE';
     descrizione: string;
