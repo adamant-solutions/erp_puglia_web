@@ -65,11 +65,7 @@
     background-color: #fff;
   }
   
-  .container textarea.form-control {
-    min-height: 100px;
-    resize: vertical;
-  }
-  
+
   
   .container .mat-form-field {
     width: 100%;

@@ -63,7 +63,7 @@ export class VociSpesaListComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe(params => {
       this.searchForm.patchValue({
         descrizione: params['descrizione'] || '',
-        periodoId: params['periodoId'] || ''
+       periodoId: params['periodoId']?.toString() || ''
       });
       
       this.currentPage = parseInt(params['pagina'] || '0');
@@ -103,31 +103,27 @@ export class VociSpesaListComponent implements OnInit, OnDestroy {
     if (this.paginator) {
       this.paginator.firstPage();
     }
-
+  
     const queryParams: any = {
       pagina: this.currentPage,
-
     };
-
+  
     const descrizione = this.searchForm.get('descrizione')?.value;
     const periodoId = this.searchForm.get('periodoId')?.value;
-
+  
     if (descrizione) {
       queryParams.descrizione = descrizione;
     }
-    if (periodoId) {
-      queryParams.periodoId = periodoId;
+    if (periodoId !== null && periodoId !== '') { 
+      queryParams.periodoId = periodoId.toString(); 
     }
-
+  
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams,
       queryParamsHandling: 'merge'
-    }).then(() => {
-    
     });
   }
-
   onPageChange(event: PageEvent): void {
     this.currentPage = event.pageIndex;
   

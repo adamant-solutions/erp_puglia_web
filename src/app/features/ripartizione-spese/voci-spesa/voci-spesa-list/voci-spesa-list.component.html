@@ -22,14 +22,10 @@
             
             <div class="col-md-6">
               <label for="periodoId" class="form-label">Periodo</label>
-              <select
-                class="form-select"
-                id="periodoId"
-                formControlName="periodoId"
-              >
+              <select class="form-select" id="periodoId" formControlName="periodoId">
                 <option value="">Seleziona periodo</option>
-                <option *ngFor="let periodo of periodi" [value]="periodo.id">
-                  {{ periodo.descrizione }}
+                <option *ngFor="let periodo of periodi" [value]="periodo.id" [selected]="periodo.id.toString() === searchForm.get('periodoId')?.value">
+                  {{ periodo.descrizione }} 
                 </option>
               </select>
             </div>
