@@ -564,6 +564,16 @@
                             <i class="bi bi-chevron-down"></i>
                           </span>
                         </div>
+                        <span
+                          class="custom-error"
+                          *ngIf="
+                            documentiIdentita.controls[i]
+                              .get('tipo_documento')
+                              ?.hasError('required') && submitted
+                          "
+                        >
+                          Il tipo di documento è obbligatorio!
+                        </span>
                       </div>
 
                       <div class="col-md-4 mb-3">
@@ -579,6 +589,16 @@
                             <i class="bi bi-file-earmark-binary"></i>
                           </span>
                         </div>
+                        <span
+                          class="custom-error"
+                          *ngIf="
+                            documentiIdentita.controls[i]
+                              .get('numero_documento')
+                              ?.hasError('required') && submitted
+                          "
+                        >
+                          Il numero del documento è obbligatorio!
+                        </span>
                       </div>
 
                       <div class="col-md-4 mb-3">
@@ -596,6 +616,16 @@
                           ></mat-datepicker-toggle>
                           <mat-datepicker #picker_emissione></mat-datepicker>
                         </mat-form-field>
+                        <span
+                          class="custom-error"
+                          *ngIf="
+                            documentiIdentita.controls[i]
+                              .get('data_emissione')
+                              ?.hasError('required') && submitted
+                          "
+                        >
+                          Data di emissione è obbligatoria!
+                        </span>
                       </div>
 
                       <div class="col-md-4 mb-3">
@@ -613,6 +643,16 @@
                           ></mat-datepicker-toggle>
                           <mat-datepicker #picker_scadenza></mat-datepicker>
                         </mat-form-field>
+                        <span
+                          class="custom-error"
+                          *ngIf="
+                            documentiIdentita.controls[i]
+                              .get('data_scadenza')
+                              ?.hasError('required') && submitted
+                          "
+                        >
+                          Data di scadenza è obbligatoria!
+                        </span>
                       </div>
 
                       <div class="col-md-4 mb-3">
@@ -628,6 +668,16 @@
                             <i class="bi bi-buildings"></i>
                           </span>
                         </div>
+                        <span
+                          class="custom-error"
+                          *ngIf="
+                            documentiIdentita.controls[i]
+                              .get('ente_emittente')
+                              ?.hasError('required') && submitted
+                          "
+                        >
+                          Ente emittente è obbligatorio!
+                        </span>
                       </div>
 
                       <div class="col-md-3 mb-3">
