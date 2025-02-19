@@ -6,10 +6,12 @@ import { VociSpesaListComponent } from './voci-spesa-list/voci-spesa-list.compon
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddVociSpesaComponent } from './add-voci-spesa/add-voci-spesa.component';
+import { EditVociSpesaComponent } from './edit-voci-spesa/edit-voci-spesa.component';
 @NgModule({
   declarations: [
     VociSpesaListComponent,
-    AddVociSpesaComponent
+    AddVociSpesaComponent,
+    EditVociSpesaComponent
   ],
   imports: [
     CommonModule,
