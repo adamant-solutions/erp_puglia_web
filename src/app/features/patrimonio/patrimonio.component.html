@@ -22,6 +22,7 @@
                   id="comune"
                   name="comune"
                   [(ngModel)]="patrimonioSearchParams.comune"
+                  (keyup.enter)="getFilteredData(0)"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-buildings"></i>
@@ -38,6 +39,7 @@
                   id="indirizzo"
                   name="indirizzo"
                   [(ngModel)]="patrimonioSearchParams.indirizzo"
+                  (keyup.enter)="getFilteredData(0)"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-geo-alt"></i>
@@ -55,6 +57,7 @@
                   id="statoDisponibilita"
                   name="statoDisponibilita"
                   [(ngModel)]="patrimonioSearchParams.statoDisponibilita"
+                  (change)="getFilteredData(0)"
                 >
                   <option value="" disabled selected>
                     Seleziona uno stato di disponibilità
