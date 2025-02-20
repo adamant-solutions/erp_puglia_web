@@ -176,7 +176,13 @@
                 </td>
                 <td scope="row">{{ patrimonioItem.comune }}</td>
                 <td scope="row">{{ patrimonioItem.provincia }}</td>
-                <td scope="row">{{ patrimonioItem.indirizzo }}</td>
+                <td scope="row">
+                  {{ patrimonioItem.indirizzo }}
+                  {{
+                    patrimonioItem.civico ? ", " + patrimonioItem.civico : ""
+                  }}
+                </td>
+
                 <td scope="row">{{ patrimonioItem.sezioneUrbana }}</td>
                 <!--
                 <td scope="row">{{ patrimonioItem.foglio }}</td>
