@@ -15,7 +15,7 @@ import { TipoSpesa } from '../add-voci-spesa/add-voci-spesa.component';
 export class EditVociSpesaComponent {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Voci Spesa', link: '/spese' }
+    { label: 'Voci Spesa', link: '/ripartizione-spese/voci-spesa' }
   ];
 
   modifyForm!: FormGroup;
