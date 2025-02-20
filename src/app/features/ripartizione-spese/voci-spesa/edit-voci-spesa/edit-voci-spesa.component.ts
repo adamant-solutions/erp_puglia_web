@@ -28,7 +28,10 @@ export class EditVociSpesaComponent {
   errorMsg: string = '';
   periodi: PeriodoLight[] = [];
   voceSpesa!: VoceSpesaDTO;
-
+  quotaSubmitted = false;
+  isEditingQuota = false;
+  currentQuotaId?: number;
+  quotaForm!: FormGroup;
   constructor(
     private fb: FormBuilder,
     private vociSpesaService: VoceSpesaService,
@@ -119,4 +122,109 @@ export class EditVociSpesaComponent {
   indietro() {
     this.router.navigate(['ripartizione-spese/voci-spesa']);
   }
+
+  // onAddQuota() {
+  //   this.quotaSubmitted = true;
+
+  //   if (this.quotaForm.valid && this.voceSpesa?.id) {
+  //     const newQuota: QuotaVoceSpesa = {
+  //       idVoceSpesa: this.voceSpesa.id,
+  //       descrizione: this.quotaForm.value.descrizione,
+  //       millesimi: this.quotaForm.value.millesimi
+  //     };
+
+  //     this.vociSpesaService.addQuota(this.voceSpesa.id, newQuota).subscribe({
+  //       next: (quota) => {
+  //         this.quote.push(quota);
+  //         this.quotaForm.reset();
+  //         this.quotaSubmitted = false;
+  //         this.notificationService.addNotification({
+  //           message: 'Quota aggiunta con successo',
+  //           type: 'success',
+  //           timeout: 5000,
+  //         });
+  //       },
+  //       error: (error) => {
+  //         this.notificationService.addNotification({
+  //           message: 'Errore durante l\'aggiunta della quota',
+  //           type: 'error',
+  //           timeout: 5000,
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
+
+  // onEditQuota(quota: QuotaVoceSpesa) {
+  //   this.isEditingQuota = true;
+  //   this.currentQuotaId = quota.id;
+  //   this.quotaForm.patchValue({
+  //     descrizione: quota.descrizione,
+  //     millesimi: quota.millesimi
+  //   });
+  // }
+
+  // onUpdateQuota() {
+  //   this.quotaSubmitted = true;
+
+  //   if (this.quotaForm.valid && this.voceSpesa?.id && this.currentQuotaId) {
+  //     const updatedQuota: QuotaVoceSpesa = {
+  //       id: this.currentQuotaId,
+  //       idVoceSpesa: this.voceSpesa.id,
+  //       descrizione: this.quotaForm.value.descrizione,
+  //       millesimi: this.quotaForm.value.millesimi
+  //     };
+
+  //     this.vociSpesaService.updateQuota(this.voceSpesa.id, this.currentQuotaId, updatedQuota).subscribe({
+  //       next: (quota) => {
+  //         const index = this.quote.findIndex(q => q.id === this.currentQuotaId);
+  //         if (index !== -1) {
+  //           this.quote[index] = quota;
+  //         }
+  //         this.resetQuotaForm();
+  //         this.notificationService.addNotification({
+  //           message: 'Quota modificata con successo',
+  //           type: 'success',
+  //           timeout: 5000,
+  //         });
+  //       },
+  //       error: (error) => {
+  //         this.notificationService.addNotification({
+  //           message: 'Errore durante la modifica della quota',
+  //           type: 'error',
+  //           timeout: 5000,
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
+
+  // onDeleteQuota(quotaId: number) {
+  //   if (this.voceSpesa?.id) {
+  //     this.vociSpesaService.deleteQuota(this.voceSpesa.id, quotaId).subscribe({
+  //       next: () => {
+  //         this.quote = this.quote.filter(q => q.id !== quotaId);
+  //         this.notificationService.addNotification({
+  //           message: 'Quota eliminata con successo',
+  //           type: 'success',
+  //           timeout: 5000,
+  //         });
+  //       },
+  //       error: (error) => {
+  //         this.notificationService.addNotification({
+  //           message: 'Errore durante l\'eliminazione della quota',
+  //           type: 'error',
+  //           timeout: 5000,
+  //         });
+  //       }
+  //     });
+  //   }
+  // }
+
+  // resetQuotaForm() {
+  //   this.quotaForm.reset();
+  //   this.isEditingQuota = false;
+  //   this.currentQuotaId = undefined;
+  //   this.quotaSubmitted = false;
+  // }
 }

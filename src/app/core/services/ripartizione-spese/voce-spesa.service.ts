@@ -59,4 +59,31 @@ export class VoceSpesaService {
   getPeriodi(): Observable<PeriodoLight[]> {
     return this.http.get<PeriodoLight[]>(this.periodoLightUrl);
   }
+
+  // addQuota(idVoce: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {
+  //   return this.http.post<QuotaVoceSpesa>(
+  //     `${this.baseUrl}/${idVoce}/quote`,
+  //     quota
+  //   );
+  // }
+
+  // updateQuota(idVoce: number, idQuota: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {
+  //   return this.http.put<QuotaVoceSpesa>(
+  //     `${this.baseUrl}/${idVoce}/quote/${idQuota}`,
+  //     quota
+  //   );
+  // }
+
+
+  // getQuote(idVoce: number): Observable<QuotaVoceSpesa[]> {
+  //   return this.http.get<QuotaVoceSpesa[]>(
+  //     `${this.baseUrl}/${idVoce}/quote`
+  //   );
+  // }
+
+  // deleteQuota(idVoce: number, idQuota: number): Observable<void> {
+  //   return this.http.delete<void>(
+  //     `${this.baseUrl}/${idVoce}/quote/${idQuota}`
+  //   );
+  // }
 }
