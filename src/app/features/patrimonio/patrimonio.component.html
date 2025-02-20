@@ -252,10 +252,9 @@
       </div>
       <div class="modal-body text-center">
         <p>
-          Sei sicuro di voler eliminare l'Unità Immobiliare con indirizzo "<b>{{
-            patrimonioIndirizzo
-          }}</b
-          >", civico "<b>{{ patrimonioCivico }}</b
+          Sei sicuro di voler eliminare l'Unità Immobiliare con indirizzo "<b
+            >{{ patrimonioIndirizzo }}
+            {{ patrimonioCivico ? ", " + patrimonioCivico : "" }}</b
           >" e comune "<b>{{ patrimonioComune }}</b
           >"?
         </p>
@@ -287,8 +286,9 @@
     <div class="modal-content p-4">
       <div class="modal-body text-center">
         <p>
-          Unità Immobiliare con indirizzo "<b>{{ patrimonioIndirizzo }}</b
-          >", civico "<b>{{ patrimonioCivico }}</b
+          Unità Immobiliare con indirizzo "<b
+            >{{ patrimonioIndirizzo }}
+            {{ patrimonioCivico ? ", " + patrimonioCivico : "" }}</b
           >" e comune "<b>{{ patrimonioComune }}</b
           >" eliminata!
         </p>
