@@ -127,10 +127,8 @@ export class PeriodiListComponent {
         next: () => {
           this.deleteModal.hide();
           this.successModal.show();
-          // this.refreshList();
         },
         error: (error: any) => {
-      
           this.deleteModal.hide();
         }
       });
@@ -141,6 +139,18 @@ export class PeriodiListComponent {
   closeSuccessModal(): void {
     this.successModal.hide();
     this.periodoToDelete = null;
+    
    
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        pagina: this.currentPage,
+        size: this.pageSize,
+        dataInizio: this.searchDataInizioParam || null,
+        dataFine: this.searchDataFineParam || null,
+        stato: this.searchStatoParam || null
+      },
+      queryParamsHandling: 'merge'
+    });
   }
 }
