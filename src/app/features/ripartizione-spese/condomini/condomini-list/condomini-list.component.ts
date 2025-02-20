@@ -3,6 +3,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { Condominio } from 'src/app/core/models/condominio.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CondominioService } from 'src/app/core/services/ripartizione-spese/condominio.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 declare var bootstrap: any;
 
 @Component({
@@ -29,7 +30,7 @@ export class CondominiListComponent {
   condominioToDelete: Condominio | null = null;
   deleteModal: any;
   successModal: any;
-  constructor(private route: ActivatedRoute,  private router: Router,private condominioService: CondominioService) {}
+  constructor(private route: ActivatedRoute,  private router: Router,private condominioService: CondominioService,private notificationService:NotificationService) {}
 
   ngOnInit() {
     this.deleteModal = new bootstrap.Modal(document.getElementById('deleteCondominioModal'));
@@ -136,46 +137,73 @@ export class CondominiListComponent {
     if (this.condominioToDelete) {
       this.condominioService.deleteCondominio(this.condominioToDelete.id).subscribe({
         next: () => {
-         
+          this.notificationService.addNotification({
+            message: 'Condominio eliminato con successo',
+            type: 'success',
+            timeout: 5000,
+          });
           this.deleteModal.hide();
+          this.successModal.show();
           
        
-          this.successModal.show();
-  
-        
+          this.condominiList = this.condominiList.filter(
+            item => item.id !== this.condominioToDelete?.id
+          );
+          
+       
           this.refreshList();
         },
         error: (error) => {
-          console.error('Error deleting condominio:', error);
+          this.notificationService.addNotification({
+            message: error.error.message,
+            type: 'error',
+            timeout: 5000,
+          });
           this.deleteModal.hide();
-         
         }
       });
     }
   }
   
   refreshList(): void {
- 
-    this.route.data.subscribe({
-      next: (data) => {
-        if (data['condomini']) {
-          const responseData = data['condomini'];
-          if (responseData.body) {
-            this.condominiList = responseData.body;
-            if (responseData.headers && responseData.headers.get('x-paging-totalrecordcount')) {
-              this.totalPages = parseInt(responseData.headers.get('x-paging-totalrecordcount') || '0');
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        pagina: this.currentPage,
+        size: this.pageSize,
+        codice: this.searchCodiceParam || null,
+        denominazione: this.searchDenominazioneParam || null,
+        comune: this.searchComuneParam || null,
+        provincia: this.searchProvinciaParam || null,
+        refresh: new Date().getTime() 
+      },
+      queryParamsHandling: 'merge'
+    }).then(() => {
+     
+      this.route.data.subscribe({
+        next: (data) => {
+          if (data['condomini']) {
+            const responseData = data['condomini'];
+            if (responseData.body) {
+              this.condominiList = responseData.body;
+              if (responseData.headers && responseData.headers.get('x-paging-totalrecordcount')) {
+                this.totalPages = parseInt(responseData.headers.get('x-paging-totalrecordcount') || '0');
+              }
             }
           }
+        },
+        error: (err) => {
+          this.condominiList = [];
+          this.totalPages = 0;
         }
-      }
+      });
     });
   }
   
   closeSuccessModal(): void {
     this.successModal.hide();
     this.condominioToDelete = null;
-
-    this.refreshList();
   }
 
 }

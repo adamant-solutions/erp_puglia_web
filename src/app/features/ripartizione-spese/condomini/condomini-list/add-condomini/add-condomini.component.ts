@@ -298,10 +298,15 @@ export class AddCondominiComponent implements OnInit {
     this.addForm = this.fb.group({
       codice: ['', Validators.required],
       denominazione: ['', Validators.required],
-      indirizzo: ['', Validators.required],
+      indirizzo: ['', [Validators.required,Validators.minLength(5)]],
       comune: ['', Validators.required],
       provincia: ['', Validators.required],
-      cap: ['', Validators.required],
+      cap: ['', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(5),
+        Validators.pattern('^[0-9]*$')
+      ]],
       codiceFiscale: ['', Validators.required],
       version: [1]
     });
@@ -316,7 +321,7 @@ export class AddCondominiComponent implements OnInit {
 
   shouldShowError(fieldName: string): boolean {
     const field = this.addForm.get(fieldName);
-    return field ? field.invalid && this.submitted : false;
+    return field ? (field.invalid && (field.dirty || field.touched || this.submitted)) : false;
   }
 
   onSubmit(): void {
@@ -335,7 +340,7 @@ export class AddCondominiComponent implements OnInit {
           },
           error: (error) => {
             this.notificationService.addNotification({
-              message: this.handleError(error.error),
+              message: this.handleError(error),
               type: 'error',
               timeout: 5000,
             });
@@ -344,14 +349,14 @@ export class AddCondominiComponent implements OnInit {
     }
   }
 
-  private handleError(error: any): string {
-    switch (error.status) {
+  private handleError(err: any): string {
+    switch (err.status) {
       case 400:
         return 'Il codice fiscale deve essere composto da 11 cifre numeriche';
       case 422:
         return 'Dati non validi o condominio già esistente.';
       case 500:
-        return error.message;
+        return err.error.message;
       default:
         return 'Errore durante il salvataggio del condominio.';
     }
