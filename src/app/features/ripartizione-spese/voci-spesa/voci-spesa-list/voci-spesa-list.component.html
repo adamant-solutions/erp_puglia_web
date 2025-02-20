@@ -92,18 +92,31 @@
                     <i class="bi bi-trash3"></i>
                   </a>
                 </td>
-                <td>{{ voceSpesa.descrizione }}</td>
-                <td>{{ voceSpesa.tipoSpesa }}</td>
-                <td>{{ voceSpesa.importoPreventivo | currency:'EUR' }}</td>
-                <td>{{ voceSpesa.importoConsuntivo | currency:'EUR' }}</td>
-                <td>{{ voceSpesa.importoConguaglio | currency:'EUR' }}</td>
-                <td >{{ getPeriodoDescrizione(voceSpesa.periodoId) }}</td>
+                <td>{{ voceSpesa.descrizione || 'N/A' }}</td>
+                <td>{{ voceSpesa.tipoSpesa || 'N/A' }}</td>
+                <td>{{ voceSpesa.importoPreventivo !== null && voceSpesa.importoPreventivo !== undefined ? (voceSpesa.importoPreventivo | currency:'EUR') : 'N/A' }}</td>
+                <td>{{ voceSpesa.importoConsuntivo !== null && voceSpesa.importoConsuntivo !== undefined ? (voceSpesa.importoConsuntivo | currency:'EUR') : 'N/A' }}</td>
+                <td>{{ voceSpesa.importoConguaglio !== null && voceSpesa.importoConguaglio !== undefined ? (voceSpesa.importoConguaglio | currency:'EUR') : 'N/A' }}</td>
+                <td 
+                data-bs-toggle="tooltip"
+                [attr.title]="getPeriodoDescrizione(voceSpesa.periodoId).full"
+                data-bs-placement="top"
+              >
+                {{ getPeriodoDescrizione(voceSpesa.periodoId).short }}
+              </td>
               </tr>
               
             </tbody>
           </table>
+          <div *ngIf="vociSpesaList.length === 0" class="text-center py-5">
+            <div class="empty-state">
+              <i class="bi bi-inbox fs-1 text-muted mb-3"></i>
+              <h4 class="text-muted">Nessuna voce di spesa presente</h4>
+              <p class="text-muted">Non sono state ancora aggiunte voci di spesa. Clicca su "Aggiungi voce di spesa" per iniziare.</p>
+            </div>
+          </div>
         </div>
-
+      
         <mat-paginator
           #paginator
           [length]="totalPages"

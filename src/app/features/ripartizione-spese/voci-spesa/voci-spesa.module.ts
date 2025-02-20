@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AddVociSpesaComponent } from './add-voci-spesa/add-voci-spesa.component';
 import { EditVociSpesaComponent } from './edit-voci-spesa/edit-voci-spesa.component';
+
+
+
 @NgModule({
   declarations: [
     VociSpesaListComponent,
@@ -17,7 +20,8 @@ import { EditVociSpesaComponent } from './edit-voci-spesa/edit-voci-spesa.compon
     CommonModule,
     VociSpesaRoutingModule,
     FormsModule,
-    SharedModule
+    SharedModule,
+    
   ]
 })
 export class VociSpesaModule { }
