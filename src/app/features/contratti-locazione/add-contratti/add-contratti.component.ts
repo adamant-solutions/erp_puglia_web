@@ -105,6 +105,9 @@ export class AddContrattiComponent {
 
   onSubmit() {
     this.submitted = true;
+    if(!this.intestatari.controls.length){
+      this.addIntestatario();
+    }
     if (this.contratoForm.valid) {
       const formData = this.prepareFormData();
       
