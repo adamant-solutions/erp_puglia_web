@@ -39,7 +39,7 @@
                   />
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('denominazione')">
-                  Denominazione obbligatoria
+                  Denominazione è obbligatoria
                 </div>
               </div>
 
@@ -51,14 +51,19 @@
                     class="form-control"
                     id="indirizzo"
                     formControlName="indirizzo"
+                    minlength="5"
                   />
                 </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('indirizzo')">
-                  Indirizzo obbligatorio
+                <div class="invalid-feedback" *ngIf="this.addForm.get('indirizzo')?.hasError('required')">
+                  Indirizzo è obbligatorio
                 </div>
+                <div class="invalid-feedback" *ngIf="this.addForm.get('indirizzo')?.hasError('minlength')">
+                  L'indirizzo deve essere più lungo di 5 caratteri
+                </div>
+               
               </div>
 
-              <!-- Provincia Dropdown -->
+         
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="provincia">Provincia *</label>
                 <div class="input-group" [class.is-invalid]="shouldShowError('provincia')">
@@ -77,11 +82,11 @@
                   </span>
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('provincia')">
-                  Provincia obbligatoria
+                  Provincia è obbligatoria
                 </div>
               </div>
 
-              <!-- Comune Dropdown -->
+          
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="comune">Comune *</label>
                 <div class="input-group" [class.is-invalid]="shouldShowError('comune')">
@@ -101,7 +106,7 @@
                   </span>
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('comune')">
-                  Comune obbligatorio
+                  Comune è obbligatorio
                 </div>
               </div>
 
@@ -118,8 +123,15 @@
                   />
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('cap')">
-                  <span *ngIf="addForm.get('cap')?.errors?.['required']">CAP obbligatorio</span>
-                  <span *ngIf="addForm.get('cap')?.errors?.['pattern']">Il CAP deve essere composto da 5 numeri</span>
+                  <span *ngIf="addForm.get('cap')?.errors?.['required']">
+                    CAP obbligatorio
+                  </span>
+                  <span *ngIf="addForm.get('cap')?.errors?.['minlength'] || addForm.get('cap')?.errors?.['maxlength']">
+                    Il CAP deve essere composto da 5 numeri
+                  </span>
+                  <span *ngIf="addForm.get('cap')?.errors?.['pattern']">
+                    Il CAP deve contenere solo numeri
+                  </span>
                 </div>
               </div>
 
@@ -134,7 +146,7 @@
                   />
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('codiceFiscale')">
-                  Codice Fiscale obbligatorio
+                  Codice Fiscale è obbligatorio
                 </div>
               </div>
             </div>
