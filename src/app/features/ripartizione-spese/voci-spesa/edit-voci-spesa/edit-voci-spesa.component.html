@@ -107,48 +107,111 @@
             </fieldset>
           </div>
 
-          <div class="col-12 mt-4 mb-3">
-            <h4>Unità Immobiliari</h4>
-            <hr>
-          </div>
-
-          <div class="col-12">
-            <div class="row mb-3" *ngFor="let unita of unitaDisponibili">
-              <div class="col-md-4">
-                <label class="form-label" [for]="'unita' + unita.id">Unità Immobiliari {{unita.id}}#</label>
-                <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="bi bi-building"></i>
-                  </span>
-                  <input type="text" class="form-control" [id]="'unita' + unita.id" [value]="unita.descrizione" disabled />
-                </div>
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-light">
+                <h4 class="mb-0">Unità Disponibili</h4>
               </div>
-
-              <div class="col-md-3">
-                <label class="form-label" [for]="'millesimi' + unita.id">Millesimi</label>
-                <div class="input-group">
-                  <input type="number" class="form-control" [id]="'millesimi' + unita.id" [(ngModel)]="unita.millesimi"
-                    [ngModelOptions]="{standalone: true}" step="0.01" placeholder="Millesimi" />
-                  <span class="input-group-text">
-                    <i class="bi bi-currency-euro"></i>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-5 d-flex align-items-end">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-outline-primary me-2" *ngIf="!unita.quotaId"
-                    (click)="onAddQuota(unita)">
-                    <i class="bi bi-plus-circle me-1"></i> Aggiorna quota
-                  </button>
-                  <button type="button" class="btn btn-outline-secondary" *ngIf="unita.quotaId"
-                    (click)="onUpdateQuota(unita)">
-                    <i class="bi bi-pencil me-1"></i> Modifica quota
-                  </button>
+              <div class="card-body">
+                <div class="units-container">
+             
+                  <div *ngIf="unitaDisponibili.length === 0" class="text-center text-muted">
+                    Nessuna Unità Disponibile
+                  </div>
+          
+             
+                  <div class="unit-item" *ngFor="let unita of unitaDisponibili">
+                    <div class="unit-content">
+                      <div class="unit-description">
+                        <label class="form-label">Descrizione</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" [value]="unita.descrizione" readonly />
+                          <span class="input-group-text">
+                            <i class="bi bi-building"></i>
+                          </span>
+                        </div>
+                      </div>
+          
+                      <div class="unit-millesimi mt-2">
+                        <label class="form-label">Millesimi</label>
+                        <div class="input-group">
+                          <input type="number" 
+                                 class="form-control" 
+                                 [(ngModel)]="unita.millesimi" 
+                                 [ngModelOptions]="{standalone: true}"
+                                 step="0.01" />
+                          <span class="input-group-text">
+                            <i class="bi bi-currency-euro"></i>
+                          </span>
+                        </div>
+                      </div>
+          
+                      <div class="text-end mt-2">
+                        <button type="button" 
+                                class="btn btn-outline-primary btn-sm"
+                                (click)="onAddQuota(unita)">
+                          <i class="bi bi-plus-circle me-1"></i>
+                          Aggiorna quota
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          
+    
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header bg-light">
+                <h4 class="mb-0">Quote</h4>
+              </div>
+              <div class="card-body">
+                <div class="quotes-container">
+             
+                  <div *ngIf="quote.length === 0" class="text-center text-muted">
+                    Nessuna Quota
+                  </div>
+          
+                
+                  <div class="quote-item" *ngFor="let quota of quote">
+                    <div class="quote-content">
+                      <div class="quote-millesimi">
+                        <label class="form-label">Millesimi</label>
+                        <div class="input-group">
+                          <input type="number" 
+                                 class="form-control" 
+                                 [(ngModel)]="quota.millesimi" 
+                                 [ngModelOptions]="{standalone: true}"
+                                 step="0.01" />
+                          <span class="input-group-text">
+                            <i class="bi bi-currency-euro"></i>
+                          </span>
+                        </div>
+                      </div>
+          
+                      <div class="text-end mt-2">
+                        <button type="button" 
+                                class="btn btn-outline-primary btn-sm me-2"
+                                (click)="editQuota(quota)">
+                          <i class="bi bi-pencil me-1"></i>
+                          Modifica quota
+                        </button>
+                        <button type="button" 
+                                class="btn btn-outline-danger btn-sm"
+                                (click)="deleteQuota(quota)">
+                          <i class="bi bi-trash"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+                  
+               
 
           <div class="col-12 mt-5 d-flex justify-content-between">
             <button
@@ -171,3 +234,34 @@
     </div>
   </div>
 </section>
+
+<div class="modal fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" [attr.aria-hidden]="!showDeleteModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">
+          <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+          Conferma eliminazione
+        </h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">Sei sicuro di voler eliminare questa quota? Questa azione non può essere annullata.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="closeDeleteModal()">
+          <i class="bi bi-x-circle me-2"></i>
+          Annulla
+        </button>
+        <button type="button" class="btn btn-primary" (click)="confirmDelete()">
+          <i class="bi bi-check-circle me-2"></i>
+          Conferma
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'"></div>

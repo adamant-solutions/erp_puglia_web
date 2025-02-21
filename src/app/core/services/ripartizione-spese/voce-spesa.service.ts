@@ -80,16 +80,27 @@ export class VoceSpesaService {
     );
   }
 
+  getVoceSpesaById(id: number): Observable<any> {
+    return this.http.get(`${this.baseUrl}/${id}`);
+  }
+  getUnitaImmobiliariDisponibili(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${id}/unita-disponibili`);
+  }
 
+  getQuote(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${id}/quote`);
+  }
+
+  
   // getQuote(idVoce: number): Observable<QuotaVoceSpesa[]> {
   //   return this.http.get<QuotaVoceSpesa[]>(
   //     `${this.baseUrl}/${idVoce}/quote`
   //   );
   // }
 
-  // deleteQuota(idVoce: number, idQuota: number): Observable<void> {
-  //   return this.http.delete<void>(
-  //     `${this.baseUrl}/${idVoce}/quote/${idQuota}`
-  //   );
-  // }
+  deleteQuota(idVoce: number, idQuota: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/${idVoce}/quote/${idQuota}`
+    );
+  }
 }

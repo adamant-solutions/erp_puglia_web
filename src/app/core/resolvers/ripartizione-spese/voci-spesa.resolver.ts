@@ -1,9 +1,10 @@
 import { inject } from '@angular/core';
-import { ResolveFn } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, ResolveFn } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { VoceSpesaDTO } from '../../models/voce-spesa.model';
 import { VoceSpesaService } from '../../services/ripartizione-spese/voce-spesa.service';
 import { PeriodoLight } from '../../models/periodi-gestione.model';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 
 export const vociSpesaResolver: ResolveFn<HttpResponse<VoceSpesaDTO[]>> = (
   route,
@@ -36,4 +37,18 @@ export const voceSpesaResolverID: ResolveFn<VoceSpesaDTO> = (
 ) => {
   const id = route.paramMap.get('id');
   return voceSpesaService.getVoceSpesa(Number(id));
+};
+
+
+
+export const voceSpesaResolver: ResolveFn<any> = (route: ActivatedRouteSnapshot) => {
+  const voceSpesaService = inject(VoceSpesaService);
+  const voceSpesaId = Number(route.params['id']);
+
+  return forkJoin({
+    voceSpesa: voceSpesaService.getVoceSpesaById(voceSpesaId),
+    unita: voceSpesaService.getUnitaImmobiliariDisponibili(voceSpesaId),
+    quote: voceSpesaService.getQuote(voceSpesaId),
+    periodi: voceSpesaService.getPeriodi()
+  });
 };
