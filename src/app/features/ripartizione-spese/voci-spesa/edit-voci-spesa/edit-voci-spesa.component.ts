@@ -220,8 +220,54 @@ export class EditVociSpesaComponent implements OnInit {
   }
 
   editQuota(quota: any) {
-  
- 
+    if (!this.voceSpesa?.id || !quota.millesimi || !quota.id) {
+      this.notificationService.addNotification({
+        message: 'Dati mancanti per la modifica della quota',
+        type: 'error',
+        timeout: 5000
+      });
+      return;
+    }
+
+    const updatedQuota = {
+      unitaImmobiliareId: quota.unitaImmobiliareId,
+      millesimi: quota.millesimi
+    };
+
+    this.voceSpesaService.updateQuota(this.voceSpesa.id, quota.id, updatedQuota).subscribe({
+      next: () => {
+        this.notificationService.addNotification({
+          message: 'Quota modificata con successo',
+          type: 'success',
+          timeout: 5000
+        });
+        this.refreshQuote();
+      },
+      error: (error) => {
+        this.notificationService.addNotification({
+          message: 'Errore durante la modifica della quota',
+          type: 'error',
+          timeout: 5000
+        });
+      }
+    });
+  }
+
+  private refreshQuote() {
+    if (this.voceSpesa?.id) {
+      this.voceSpesaService.getQuote(this.voceSpesa.id).subscribe({
+        next: (quote) => {
+          this.quote = quote;
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: 'Errore durante il caricamento delle quote',
+            type: 'error',
+            timeout: 5000
+          });
+        }
+      });
+    }
   }
 
   deleteQuota(quota: any) {
