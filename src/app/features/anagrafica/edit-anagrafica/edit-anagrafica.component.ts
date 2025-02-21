@@ -229,7 +229,7 @@ export class EditAnagraficaComponent implements OnInit {
         this.submitted = false;
 
         this.notificationService.addNotification({
-          message: "L'anagrafica è stata salvata con successo!",
+          message: "L'anagrafica salvata con successo!",
           type: 'success',
           timeout: 3000,
         });

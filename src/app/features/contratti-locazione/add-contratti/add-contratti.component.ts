@@ -13,20 +13,24 @@ interface SelectOption {
 @Component({
   selector: 'app-add-contratti',
   templateUrl: './add-contratti.component.html',
-  styleUrls: ['./add-contratti.component.css']
+  styleUrls: ['./add-contratti.component.css'],
 })
 export class AddContrattiComponent {
   pageTitle = 'Nuovo Contratto';
   contratoForm: FormGroup;
   submitted = false;
   errorMsg = '';
-  statoContrattoOptions: StatoContratto[] = ['ATTIVO', 'SCADUTO', 'DISDETTO', 'ANNULLATO'];
+  statoContrattoOptions: StatoContratto[] = [
+    'ATTIVO',
+    'SCADUTO',
+    'DISDETTO',
+    'ANNULLATO',
+  ];
   unitaImmobiliariOptions: SelectOption[] = [];
   intestatariOptions: SelectOption[] = [];
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
-   
   ];
 
   @ViewChild('confermaModal') confermaModal!: ElementRef;
@@ -39,7 +43,6 @@ export class AddContrattiComponent {
     private router: Router,
     private contrattiService: ContrattiService,
     private notifService: NotificationService
-  
   ) {
     this.contratoForm = this.initForm();
   }
@@ -57,7 +60,7 @@ export class AddContrattiComponent {
       canoneMensile: [null, [Validators.required, Validators.min(1)]],
       unitaImmobiliare: [null, Validators.required],
       intestatari: this.fb.array([], Validators.required),
-      documenti: [null] 
+      documenti: [null],
     });
   }
   onFileSelected(event: any) {
@@ -66,12 +69,12 @@ export class AddContrattiComponent {
   }
   removeFile(index: number) {
     this.selectedFiles.splice(index, 1);
-   
+
     if (this.fileInput) {
       this.fileInput.nativeElement.value = '';
     }
   }
-  
+
   private loadData() {
     this.route.data.subscribe({
       next: (data) => {
@@ -81,7 +84,7 @@ export class AddContrattiComponent {
       error: (error) => {
         this.errorMsg = 'Errore nel caricamento dei dati';
         console.error(error);
-      }
+      },
     });
   }
 
@@ -92,9 +95,9 @@ export class AddContrattiComponent {
   addIntestatario() {
     const intestatarioGroup = this.fb.group({
       intestatario: this.fb.group({
-        id: ['', Validators.required]
+        id: ['', Validators.required],
       }),
-      dataInizio: ['', Validators.required]
+      dataInizio: ['', Validators.required],
     });
     this.intestatari.push(intestatarioGroup);
   }
@@ -105,19 +108,19 @@ export class AddContrattiComponent {
 
   onSubmit() {
     this.submitted = true;
-    if(!this.intestatari.controls.length){
+    if (!this.intestatari.controls.length) {
       this.addIntestatario();
     }
     if (this.contratoForm.valid) {
       const formData = this.prepareFormData();
-      
+
       this.contrattiService.addContratto(formData).subscribe({
         next: (createdContratto) => {
-            this.notifService.addNotification({
-              message: 'Contratti è stato salvato con successo!',
-              type: 'success',
-              timeout: 3000,
-            });
+          this.notifService.addNotification({
+            message: 'Contratti salvato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
           this.router.navigate(['/contratti-locazione']);
         },
         error: (error) => {
@@ -129,14 +132,14 @@ export class AddContrattiComponent {
           /* if (error.error && error.error.errors) {
             this.handleValidationErrors(error.error.errors);
           } */
-        }
+        },
       });
     }
   }
   private prepareFormData(): FormData {
     const formValue = this.contratoForm.getRawValue();
     const formData = new FormData();
-    
+
     const contratto = {
       dataInizio: this.formatDate(formValue.dataInizio),
       dataFine: formValue.dataFine ? this.formatDate(formValue.dataFine) : null,
@@ -144,53 +147,53 @@ export class AddContrattiComponent {
       statoContratto: formValue.statoContratto,
       descrizione: formValue.descrizione || '',
       unitaImmobiliare: {
-        id: formValue.unitaImmobiliare.id 
+        id: formValue.unitaImmobiliare.id,
       },
       intestatari: formValue.intestatari.map((int: any) => ({
         intestatario: {
-          id: int.intestatario.id.id 
+          id: int.intestatario.id.id,
         },
-        dataInizio: this.formatDate(int.dataInizio)
+        dataInizio: this.formatDate(int.dataInizio),
       })),
       documenti: this.selectedFiles
-        .filter(file => file.name.toLowerCase().endsWith('.pdf'))
-        .map(file => ({
+        .filter((file) => file.name.toLowerCase().endsWith('.pdf'))
+        .map((file) => ({
           nomeFile: file.name,
           // tipoDocumento: 'DOCUMENTO_PDF'
-        }))
+        })),
     };
-  
+
     formData.append(
       'contratto',
       new Blob([JSON.stringify(contratto)], { type: 'application/json' }),
       'contratto.json'
     );
-  
 
     this.selectedFiles
-      .filter(file => file.name.toLowerCase().endsWith('.pdf'))
-      .forEach(file => {
+      .filter((file) => file.name.toLowerCase().endsWith('.pdf'))
+      .forEach((file) => {
         formData.append('documenti', file, file.name);
       });
-  
+
     return formData;
   }
 
-  private handleError(error: any) : string{
+  private handleError(error: any): string {
     switch (error.status) {
       case 400:
-        return this.errorMsg = 'Dati non validi. Controlla i campi obbligatori.';
+        return (this.errorMsg =
+          'Dati non validi. Controlla i campi obbligatori.');
       case 422:
-        return this.errorMsg = 'Dati non validi o contratto già esistente.';
+        return (this.errorMsg = 'Dati non validi o contratto già esistente.');
       case 500:
-        return this.errorMsg = error.message;
+        return (this.errorMsg = error.message);
       default:
-        return this.errorMsg = 'Errore durante il salvataggio del contratto.';
+        return (this.errorMsg = 'Errore durante il salvataggio del contratto.');
     }
   }
 
   private handleValidationErrors(errors: any[]) {
-    errors.forEach(err => {
+    errors.forEach((err) => {
       const field = this.contratoForm.get(err.fieldName);
       if (field) {
         field.setErrors({ serverError: err.message });
@@ -210,10 +213,4 @@ export class AddContrattiComponent {
   resetForm(form: any) {
     form.reset();
   }
-
-
-  }
-
-
-
-
+}

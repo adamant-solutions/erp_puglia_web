@@ -461,7 +461,7 @@ export class AddAnagraficaComponent implements OnInit {
       next: (response) => {
         this.submitted = false;
         this.notifService.addNotification({
-          message: 'Anagrafica è stata salvata con successo!',
+          message: "L'anagrafica salvata con successo!",
           type: 'success',
           timeout: 3000,
         });

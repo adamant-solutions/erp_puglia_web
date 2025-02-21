@@ -491,7 +491,7 @@ export class AddPatrimonioComponent implements OnInit {
     this.patrimonioService.addPatrimonio(formData).subscribe({
       next: (response) => {
         this.notificationService.addNotification({
-          message: 'Unità immobiliare è stato salvato con successo!',
+          message: 'Unità immobiliare salvata con successo!',
           type: 'success',
           timeout: 3000,
         });

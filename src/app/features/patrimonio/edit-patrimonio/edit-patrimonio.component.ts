@@ -588,7 +588,7 @@ export class EditPatrimonioComponent implements OnInit {
           this.submitted = false;
 
           this.notificationService.addNotification({
-            message: 'Unità immobiliare è stato salvato con successo!',
+            message: 'Unità immobiliare salvata con successo!',
             type: 'success',
             timeout: 3000,
           });

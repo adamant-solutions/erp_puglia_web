@@ -7,7 +7,7 @@ import { CondominioService } from 'src/app/core/services/ripartizione-spese/cond
 @Component({
   selector: 'app-add-condomini',
   templateUrl: './add-condomini.component.html',
-  styleUrls: ['./add-condomini.component.css']
+  styleUrls: ['./add-condomini.component.css'],
 })
 export class AddCondominiComponent implements OnInit {
   addForm: FormGroup;
@@ -286,7 +286,6 @@ export class AddCondominiComponent implements OnInit {
     { nome: 'Torricella', provincia: 'TA' },
   ];
 
-
   filteredComuni: any[] = [];
 
   constructor(
@@ -297,59 +296,63 @@ export class AddCondominiComponent implements OnInit {
   ) {
     this.addForm = this.fb.group({
       codice: ['', Validators.required],
-      denominazione: ['', [
-        Validators.required,
-        Validators.minLength(3),
-     
-      ]],
-      indirizzo: ['', [Validators.required,Validators.minLength(5)]],
+      denominazione: ['', [Validators.required, Validators.minLength(3)]],
+      indirizzo: ['', [Validators.required, Validators.minLength(5)]],
       comune: ['', Validators.required],
       provincia: ['', Validators.required],
-      cap: ['', [
-        Validators.required,
-        Validators.minLength(5),
-        Validators.maxLength(5),
-        Validators.pattern('^[0-9]*$')
-      ]],
+      cap: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(5),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
       codiceFiscale: ['', Validators.required],
-      version: [1]
+      version: [1],
     });
   }
 
   ngOnInit(): void {
-    this.addForm.get('provincia')?.valueChanges.subscribe(selectedProvincia => {
-      this.filteredComuni = this.comuni.filter(comune => comune.provincia === selectedProvincia);
-      this.addForm.get('comune')?.reset();
-    });
+    this.addForm
+      .get('provincia')
+      ?.valueChanges.subscribe((selectedProvincia) => {
+        this.filteredComuni = this.comuni.filter(
+          (comune) => comune.provincia === selectedProvincia
+        );
+        this.addForm.get('comune')?.reset();
+      });
   }
 
   shouldShowError(fieldName: string): boolean {
     const field = this.addForm.get(fieldName);
-    return field ? (field.invalid && (field.dirty || field.touched || this.submitted)) : false;
+    return field
+      ? field.invalid && (field.dirty || field.touched || this.submitted)
+      : false;
   }
 
   onSubmit(): void {
     this.submitted = true;
 
     if (this.addForm.valid) {
-      this.condominioService.createCondominio(this.addForm.value)
-        .subscribe({
-          next: () => {
-            this.notificationService.addNotification({
-              message: 'Condominio è stato salvato con successo!',
-              type: 'success',
-              timeout: 3000,
-            });
-            this.router.navigate(['ripartizione-spese/condomini']);
-          },
-          error: (error) => {
-            this.notificationService.addNotification({
-              message: this.handleError(error),
-              type: 'error',
-              timeout: 5000,
-            });
-          }
-        });
+      this.condominioService.createCondominio(this.addForm.value).subscribe({
+        next: () => {
+          this.notificationService.addNotification({
+            message: 'Condominio salvato con successo!',
+            type: 'success',
+            timeout: 3000,
+          });
+          this.router.navigate(['ripartizione-spese/condomini']);
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: this.handleError(error),
+            type: 'error',
+            timeout: 5000,
+          });
+        },
+      });
     }
   }
 
@@ -366,10 +369,8 @@ export class AddCondominiComponent implements OnInit {
     }
   }
 
-
   onCapKeyPress(event: KeyboardEvent): boolean {
-  
-    const charCode = (event.which) ? event.which : event.keyCode;
+    const charCode = event.which ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }

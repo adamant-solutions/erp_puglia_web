@@ -112,7 +112,7 @@ export class EditMorositaComponent implements OnInit {
         .subscribe({
           next: () => {
             this.notifService.addNotification({
-              message: 'Morosità è stato salvato con successo!',
+              message: 'Morosità salvata con successo!',
               type: 'success',
               timeout: 3000,
             });

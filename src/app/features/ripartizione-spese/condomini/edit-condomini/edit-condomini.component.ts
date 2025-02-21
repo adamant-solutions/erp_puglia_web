@@ -8,12 +8,12 @@ import { CondominioService } from 'src/app/core/services/ripartizione-spese/cond
 @Component({
   selector: 'app-edit-condomini',
   templateUrl: './edit-condomini.component.html',
-  styleUrls: ['./edit-condomini.component.css']
+  styleUrls: ['./edit-condomini.component.css'],
 })
 export class EditCondominiComponent implements OnInit {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Condomini', link: '/ripartizione-spese/condomini' }
+    { label: 'Condomini', link: '/ripartizione-spese/condomini' },
   ];
   @ViewChild('unitaSelect') unitaSelect!: ElementRef;
   pageTitle = 'Modifica Condominio';
@@ -308,31 +308,32 @@ export class EditCondominiComponent implements OnInit {
       provincia: ['', [Validators.required, Validators.maxLength(2)]],
       cap: ['', Validators.required],
       codiceFiscale: ['', Validators.required],
-      version: [0]
+      version: [0],
     });
   }
   ngOnInit() {
-   
-    this.editForm.get('provincia')?.valueChanges.subscribe(selectedProvincia => {
-      this.filteredComuni = this.comuni.filter(comune => comune.provincia === selectedProvincia);
-      if (this.editForm.get('provincia')?.value !== selectedProvincia) {
-        this.editForm.get('comune')?.reset();
-      }
-    });
+    this.editForm
+      .get('provincia')
+      ?.valueChanges.subscribe((selectedProvincia) => {
+        this.filteredComuni = this.comuni.filter(
+          (comune) => comune.provincia === selectedProvincia
+        );
+        if (this.editForm.get('provincia')?.value !== selectedProvincia) {
+          this.editForm.get('comune')?.reset();
+        }
+      });
 
     this.route.data.subscribe({
       next: (data) => {
         if (data['condominio']) {
           const condominio = data['condominio'];
           this.condominioId = condominio.id;
-          
-       
+
           this.editForm.patchValue(condominio);
-          
-        
+
           if (condominio.provincia) {
             this.filteredComuni = this.comuni.filter(
-              c => c.provincia === condominio.provincia
+              (c) => c.provincia === condominio.provincia
             );
           }
         }
@@ -340,11 +341,11 @@ export class EditCondominiComponent implements OnInit {
           this.unitaImmobiliariList = data['unitaImmobiliari'].body;
         }
         const { unitaIds, unitaList } = data['condominioUnitasResolver'];
-        this.selectedUnitaImmobiliari = unitaList.filter((unita: any) => unitaIds.includes(unita.id));
+        this.selectedUnitaImmobiliari = unitaList.filter((unita: any) =>
+          unitaIds.includes(unita.id)
+        );
       },
-      error: (error) => {
-   
-      }
+      error: (error) => {},
     });
   }
 
@@ -355,17 +356,17 @@ export class EditCondominiComponent implements OnInit {
 
   onSubmit() {
     this.formSubmitAttempted = true;
-    
+
     if (this.editForm.valid) {
       const updatedCondominio = {
         ...this.editForm.value,
-        unitaImmobiliari: this.selectedUnitaImmobiliari
+        unitaImmobiliari: this.selectedUnitaImmobiliari,
       };
-  
+
       this.condominioService.updateCondominio(updatedCondominio).subscribe({
         next: () => {
           this.notificationService.addNotification({
-            message: 'Condominio è stato salvato con successo!',
+            message: 'Condominio salvato con successo!',
             type: 'success',
             timeout: 3000,
           });
@@ -377,69 +378,75 @@ export class EditCondominiComponent implements OnInit {
             type: 'error',
             timeout: 5000,
           });
-        }
+        },
       });
     }
   }
-
 
   addUnitaImmobiliare(unitaId: string) {
     if (!unitaId) return;
 
     const numericUnitaId = +unitaId;
-    const unita = this.unitaImmobiliariList.find(u => u.id === numericUnitaId);
+    const unita = this.unitaImmobiliariList.find(
+      (u) => u.id === numericUnitaId
+    );
 
-    if (unita && !this.selectedUnitaImmobiliari.find(u => u.id === unita.id)) {
-      this.condominioService.addUnitaToCondominio(this.condominioId, numericUnitaId).subscribe({
-        next: () => {
-          this.selectedUnitaImmobiliari.push(unita);
-          this.selectedUnitaId = '';
-          this.notificationService.addNotification({
-            message: 'Unità immobiliare è stato salvato con successo!',
-            type: 'success',
-            timeout: 3000,
-          });
-        },
-        error: (error) => {
-          this.notificationService.addNotification({
-            message: this.handleError(error.error),
-            type: 'error',
-            timeout: 5000,
-          });
-        }
-      });
+    if (
+      unita &&
+      !this.selectedUnitaImmobiliari.find((u) => u.id === unita.id)
+    ) {
+      this.condominioService
+        .addUnitaToCondominio(this.condominioId, numericUnitaId)
+        .subscribe({
+          next: () => {
+            this.selectedUnitaImmobiliari.push(unita);
+            this.selectedUnitaId = '';
+            this.notificationService.addNotification({
+              message: 'Unità immobiliare salvata con successo!',
+              type: 'success',
+              timeout: 3000,
+            });
+          },
+          error: (error) => {
+            this.notificationService.addNotification({
+              message: this.handleError(error.error),
+              type: 'error',
+              timeout: 5000,
+            });
+          },
+        });
     }
   }
 
   removeUnitaImmobiliare(unitaId: number) {
-    this.condominioService.removeUnitaFromCondominio(this.condominioId, unitaId).subscribe({
-      next: () => {
-        this.selectedUnitaImmobiliari = this.selectedUnitaImmobiliari.filter(
-          u => u.id !== unitaId
-        );
-      },
-      error: (error) => {
-       
-      }
-    });
+    this.condominioService
+      .removeUnitaFromCondominio(this.condominioId, unitaId)
+      .subscribe({
+        next: () => {
+          this.selectedUnitaImmobiliari = this.selectedUnitaImmobiliari.filter(
+            (u) => u.id !== unitaId
+          );
+        },
+        error: (error) => {},
+      });
   }
 
   indietro() {
     this.router.navigate(['ripartizione-spese/condomini']);
   }
 
-  
-  private handleError(error: any) : string{
+  private handleError(error: any): string {
     switch (error.status) {
       case 400:
-        return this.errorMsg = 'Dati non validi. Controlla i campi obbligatori.';
+        return (this.errorMsg =
+          'Dati non validi. Controlla i campi obbligatori.');
       case 422:
-        return this.errorMsg = 'Dati non validi o condominio già esistente.';
+        return (this.errorMsg = 'Dati non validi o condominio già esistente.');
       case 500:
-        return this.errorMsg = error.message;
+        return (this.errorMsg = error.message);
       default:
-        return this.errorMsg = 'Errore durante il salvataggio del condominio.';
+        return (this.errorMsg =
+          'Errore durante il salvataggio del condominio.');
     }
   }
-
 }
