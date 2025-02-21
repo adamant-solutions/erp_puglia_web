@@ -327,9 +327,7 @@ export class AddCondominiComponent implements OnInit {
 
   shouldShowError(fieldName: string): boolean {
     const field = this.addForm.get(fieldName);
-    return field
-      ? field.invalid && (field.dirty || field.touched || this.submitted)
-      : false;
+    return field ? field.invalid && this.submitted : false;
   }
 
   onSubmit(): void {
