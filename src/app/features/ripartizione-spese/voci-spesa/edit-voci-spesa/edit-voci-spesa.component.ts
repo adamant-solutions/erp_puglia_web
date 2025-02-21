@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { VoceSpesaService } from 'src/app/core/services/ripartizione-spese/voce-spesa.service';
 import { TipoSpesa } from '../add-voci-spesa/add-voci-spesa.component';
 import { UnitaDisponibile } from 'src/app/core/models/unita-disponibile.model';
+import { QuotaVoceSpesa } from 'src/app/core/models/quote-voce-spesa.model';
 
 @Component({
   selector: 'app-edit-voci-spesa',
@@ -18,10 +19,11 @@ export class EditVociSpesaComponent {
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Voci Spesa', link: '/ripartizione-spese/voci-spesa' }
   ];
+  
   unitaDisponibili: UnitaDisponibile[] = [];
   modifyForm!: FormGroup;
   submitted = false;
-   tipiSpesaOptions = [
+  tipiSpesaOptions = [
     { value: TipoSpesa.SERVIZI, label: 'Servizi' },
     { value: TipoSpesa.RISCALDAMENTO, label: 'Riscaldamento' },
     { value: TipoSpesa.ASCENSORE, label: 'Ascensore' }
@@ -29,10 +31,7 @@ export class EditVociSpesaComponent {
   errorMsg: string = '';
   periodi: PeriodoLight[] = [];
   voceSpesa!: VoceSpesaDTO;
-  quotaSubmitted = false;
-  isEditingQuota = false;
-  currentQuotaId?: number;
-  quotaForm!: FormGroup;
+
   constructor(
     private fb: FormBuilder,
     private vociSpesaService: VoceSpesaService,
@@ -45,7 +44,6 @@ export class EditVociSpesaComponent {
     this.unitaDisponibili = this.route.snapshot.data['unitaDisponibili'];
     this.periodi = this.route.snapshot.data['periodi'];
     this.voceSpesa = this.route.snapshot.data['voceSpesaResolverID'];
-    
 
     this.modifyForm = this.fb.group({
       descrizione: ['', Validators.required],
@@ -57,9 +55,7 @@ export class EditVociSpesaComponent {
       note: ['']
     });
 
-    
     if (this.voceSpesa) {
-
       const formValue = {
         descrizione: this.voceSpesa.descrizione,
         tipoSpesa: this.voceSpesa.tipoSpesa,
@@ -78,14 +74,12 @@ export class EditVociSpesaComponent {
     this.submitted = true;
 
     if (this.modifyForm.valid && this.voceSpesa) {
-
       const updatedVoceSpesa: VoceSpesaDTO = {
         ...this.voceSpesa,
         descrizione: this.modifyForm.value.descrizione,
         tipoSpesa: this.modifyForm.value.tipoSpesa,
         importoPreventivo: this.modifyForm.value.importoPreventivo,
         periodoId: this.modifyForm.value.periodoId,
-      
         importoConsuntivo: this.modifyForm.value.importoConsuntivo || undefined,
         importoConguaglio: this.modifyForm.value.importoConguaglio || undefined,
         note: this.modifyForm.value.note || undefined
@@ -111,10 +105,56 @@ export class EditVociSpesaComponent {
     }
   }
 
-  onMillesimiChange(unitaId: number, value: number) {
-    const unita = this.unitaDisponibili.find(u => u.id === unitaId);
-    if (unita) {
-      unita.millesimi = value;
+  onAddQuota(unita: UnitaDisponibile) {
+    if (this.voceSpesa?.id && unita.millesimi) {
+      const newQuota: QuotaVoceSpesa = {
+        unitaImmobiliareId: unita.id,
+        millesimi: unita.millesimi
+      };
+
+      this.vociSpesaService.addQuota(this.voceSpesa.id, newQuota).subscribe({
+        next: (response) => {
+          unita.quotaId = response.id; 
+          this.notificationService.addNotification({
+            message: 'Quota aggiunta con successo',
+            type: 'success',
+            timeout: 5000,
+          });
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: 'Errore durante l\'aggiunta della quota',
+            type: 'error',
+            timeout: 5000,
+          });
+        }
+      });
+    }
+  }
+
+  onUpdateQuota(unita: UnitaDisponibile) {
+    if (this.voceSpesa?.id && unita.millesimi && unita.quotaId) {
+      const updatedQuota: QuotaVoceSpesa = {
+        unitaImmobiliareId: unita.id,
+        millesimi: unita.millesimi
+      };
+
+      this.vociSpesaService.updateQuota(this.voceSpesa.id, unita.quotaId, updatedQuota).subscribe({
+        next: () => {
+          this.notificationService.addNotification({
+            message: 'Quota modificata con successo',
+            type: 'success',
+            timeout: 5000,
+          });
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: 'Errore durante la modifica della quota',
+            type: 'error',
+            timeout: 5000,
+          });
+        }
+      });
     }
   }
 
@@ -127,87 +167,10 @@ export class EditVociSpesaComponent {
     }
   }
 
-
-
   indietro() {
     this.router.navigate(['ripartizione-spese/voci-spesa']);
   }
-
-  // onAddQuota() {
-  //   this.quotaSubmitted = true;
-
-  //   if (this.quotaForm.valid && this.voceSpesa?.id) {
-  //     const newQuota: QuotaVoceSpesa = {
-  //       idVoceSpesa: this.voceSpesa.id,
-  //       descrizione: this.quotaForm.value.descrizione,
-  //       millesimi: this.quotaForm.value.millesimi
-  //     };
-
-  //     this.vociSpesaService.addQuota(this.voceSpesa.id, newQuota).subscribe({
-  //       next: (quota) => {
-  //         this.quote.push(quota);
-  //         this.quotaForm.reset();
-  //         this.quotaSubmitted = false;
-  //         this.notificationService.addNotification({
-  //           message: 'Quota aggiunta con successo',
-  //           type: 'success',
-  //           timeout: 5000,
-  //         });
-  //       },
-  //       error: (error) => {
-  //         this.notificationService.addNotification({
-  //           message: 'Errore durante l\'aggiunta della quota',
-  //           type: 'error',
-  //           timeout: 5000,
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
-
-  // onEditQuota(quota: QuotaVoceSpesa) {
-  //   this.isEditingQuota = true;
-  //   this.currentQuotaId = quota.id;
-  //   this.quotaForm.patchValue({
-  //     descrizione: quota.descrizione,
-  //     millesimi: quota.millesimi
-  //   });
-  // }
-
-  // onUpdateQuota() {
-  //   this.quotaSubmitted = true;
-
-  //   if (this.quotaForm.valid && this.voceSpesa?.id && this.currentQuotaId) {
-  //     const updatedQuota: QuotaVoceSpesa = {
-  //       id: this.currentQuotaId,
-  //       idVoceSpesa: this.voceSpesa.id,
-  //       descrizione: this.quotaForm.value.descrizione,
-  //       millesimi: this.quotaForm.value.millesimi
-  //     };
-
-  //     this.vociSpesaService.updateQuota(this.voceSpesa.id, this.currentQuotaId, updatedQuota).subscribe({
-  //       next: (quota) => {
-  //         const index = this.quote.findIndex(q => q.id === this.currentQuotaId);
-  //         if (index !== -1) {
-  //           this.quote[index] = quota;
-  //         }
-  //         this.resetQuotaForm();
-  //         this.notificationService.addNotification({
-  //           message: 'Quota modificata con successo',
-  //           type: 'success',
-  //           timeout: 5000,
-  //         });
-  //       },
-  //       error: (error) => {
-  //         this.notificationService.addNotification({
-  //           message: 'Errore durante la modifica della quota',
-  //           type: 'error',
-  //           timeout: 5000,
-  //         });
-  //       }
-  //     });
-  //   }
-  // }
+}
 
   // onDeleteQuota(quotaId: number) {
   //   if (this.voceSpesa?.id) {
@@ -237,4 +200,4 @@ export class EditVociSpesaComponent {
   //   this.currentQuotaId = undefined;
   //   this.quotaSubmitted = false;
   // }
-}
+

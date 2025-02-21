@@ -1,8 +1,4 @@
-
-<app-breadcrumbs
-  [crumbsList]="breadcrumbList"
-  [currentPage]="'Modifica Voce Spesa'"
->
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Voce Spesa'">
 </app-breadcrumbs>
 
 <section class="pt-4 pb-5">
@@ -18,25 +14,17 @@
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="periodoId">Periodo *</label>
                   <div class="input-group">
-                    <select 
-                      class="form-control" 
-                      id="periodoId" 
-                      formControlName="periodoId"
-                    >
+                    <select class="form-control" id="periodoId" formControlName="periodoId">
                       <option value="">Seleziona periodo</option>
                       <option *ngFor="let periodo of periodi" [value]="periodo.id">
                         {{periodo.descrizione}}
                       </option>
-                      
                     </select>
                     <span class="input-group-text">
-                        <i class="bi bi-calendar"></i>
-                      </span>
+                      <i class="bi bi-calendar"></i>
+                    </span>
                   </div>
-                  <span
-                    class="custom-error"
-                    *ngIf="modifyForm.get('periodoId')?.hasError('required') && submitted"
-                  >
+                  <span class="custom-error" *ngIf="modifyForm.get('periodoId')?.hasError('required') && submitted">
                     Periodo è obbligatorio!
                   </span>
                 </div>
@@ -44,20 +32,12 @@
                 <div class="col-md-12 mb-3">
                   <label class="form-label" for="descrizione">Descrizione *</label>
                   <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control"
-                      id="descrizione"
-                      formControlName="descrizione"
-                    />
+                    <input type="text" class="form-control" id="descrizione" formControlName="descrizione" />
                     <span class="input-group-text">
                       <i class="bi bi-text-paragraph"></i>
                     </span>
                   </div>
-                  <span
-                    class="custom-error"
-                    *ngIf="modifyForm.get('descrizione')?.hasError('required') && submitted"
-                  >
+                  <span class="custom-error" *ngIf="modifyForm.get('descrizione')?.hasError('required') && submitted">
                     Descrizione è obbligatoria!
                   </span>
                 </div>
@@ -65,11 +45,7 @@
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="tipoSpesa">Tipo Spesa *</label>
                   <div class="input-group">
-                    <select 
-                      class="form-control" 
-                      id="tipoSpesa" 
-                      formControlName="tipoSpesa"
-                    >
+                    <select class="form-control" id="tipoSpesa" formControlName="tipoSpesa">
                       <option value="">Seleziona tipo</option>
                       <option *ngFor="let tipo of tipiSpesaOptions" [value]="tipo.value">
                         {{tipo.label}}
@@ -79,10 +55,7 @@
                       <i class="bi bi-list"></i>
                     </span>
                   </div>
-                  <span
-                    class="custom-error"
-                    *ngIf="modifyForm.get('tipoSpesa')?.hasError('required') && submitted"
-                  >
+                  <span class="custom-error" *ngIf="modifyForm.get('tipoSpesa')?.hasError('required') && submitted">
                     Tipo spesa è obbligatorio!
                   </span>
                 </div>
@@ -90,20 +63,13 @@
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="importoPreventivo">Importo Preventivo *</label>
                   <div class="input-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="importoPreventivo"
-                      formControlName="importoPreventivo"
-                    />
+                    <input type="number" class="form-control" id="importoPreventivo" formControlName="importoPreventivo" />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
                     </span>
                   </div>
-                  <span
-                    class="custom-error"
-                    *ngIf="modifyForm.get('importoPreventivo')?.hasError('required') && submitted"
-                  >
+                  <span class="custom-error"
+                    *ngIf="modifyForm.get('importoPreventivo')?.hasError('required') && submitted">
                     Importo preventivo è obbligatorio!
                   </span>
                 </div>
@@ -111,12 +77,7 @@
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="importoConsuntivo">Importo Consuntivo</label>
                   <div class="input-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="importoConsuntivo"
-                      formControlName="importoConsuntivo"
-                    />
+                    <input type="number" class="form-control" id="importoConsuntivo" formControlName="importoConsuntivo" />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
                     </span>
@@ -126,12 +87,7 @@
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="importoConguaglio">Importo Conguaglio</label>
                   <div class="input-group">
-                    <input
-                      type="number"
-                      class="form-control"
-                      id="importoConguaglio"
-                      formControlName="importoConguaglio"
-                    />
+                    <input type="number" class="form-control" id="importoConguaglio" formControlName="importoConguaglio" />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
                     </span>
@@ -141,12 +97,7 @@
                 <div class="col-md-12 mb-3">
                   <label class="form-label" for="note">Note</label>
                   <div class="input-group">
-                    <textarea
-                      class="form-control"
-                      id="note"
-                      formControlName="note"
-                      rows="3"
-                    ></textarea>
+                    <textarea class="form-control" id="note" formControlName="note" rows="3"></textarea>
                     <span class="input-group-text">
                       <i class="bi bi-chat-text"></i>
                     </span>
@@ -156,12 +107,11 @@
             </fieldset>
           </div>
 
-          
           <div class="col-12 mt-4 mb-3">
             <h4>Unità Immobiliari</h4>
             <hr>
           </div>
-          
+
           <div class="col-12">
             <div class="row mb-3" *ngFor="let unita of unitaDisponibili">
               <div class="col-md-4">
@@ -170,31 +120,31 @@
                   <span class="input-group-text">
                     <i class="bi bi-building"></i>
                   </span>
-                  <input 
-                    type="text" 
-                    class="form-control" 
-                    [id]="'unita' + unita.id" 
-                    [value]="unita.descrizione"
-                    disabled
-                  />
+                  <input type="text" class="form-control" [id]="'unita' + unita.id" [value]="unita.descrizione" disabled />
                 </div>
               </div>
-          
+
               <div class="col-md-3">
                 <label class="form-label" [for]="'millesimi' + unita.id">Millesimi</label>
                 <div class="input-group">
-                  <input
-                    type="number"
-                    class="form-control"
-                    [id]="'millesimi' + unita.id"
-                    [(ngModel)]="unita.millesimi"
-                  
-                    step="0.01"
-                    placeholder="Millesimi"
-                  />
+                  <input type="number" class="form-control" [id]="'millesimi' + unita.id" [(ngModel)]="unita.millesimi"
+                    [ngModelOptions]="{standalone: true}" step="0.01" placeholder="Millesimi" />
                   <span class="input-group-text">
                     <i class="bi bi-currency-euro"></i>
                   </span>
+                </div>
+              </div>
+
+              <div class="col-md-5 d-flex align-items-end">
+                <div class="btn-group">
+                  <button type="button" class="btn btn-outline-primary me-2" *ngIf="!unita.quotaId"
+                    (click)="onAddQuota(unita)">
+                    <i class="bi bi-plus-circle me-1"></i> Aggiorna quota
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary" *ngIf="unita.quotaId"
+                    (click)="onUpdateQuota(unita)">
+                    <i class="bi bi-pencil me-1"></i> Modifica quota
+                  </button>
                 </div>
               </div>
             </div>

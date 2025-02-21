@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { VoceSpesaDTO } from '../../models/voce-spesa.model';
 import { PeriodoLight } from '../../models/periodi-gestione.model';
 import { UnitaDisponibile } from '../../models/unita-disponibile.model';
+import { QuotaVoceSpesa } from '../../models/quote-voce-spesa.model';
 
 export interface VoceSpesaSearchParams {
   descrizione?: string;
@@ -65,19 +66,19 @@ export class VoceSpesaService {
     return this.http.get<UnitaDisponibile[]>(`${this.baseUrl}/${voceSpesaId}/unita-disponibili`);
   }
 
-  // addQuota(idVoce: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {
-  //   return this.http.post<QuotaVoceSpesa>(
-  //     `${this.baseUrl}/${idVoce}/quote`,
-  //     quota
-  //   );
-  // }
+  addQuota(idVoce: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {
+    return this.http.post<QuotaVoceSpesa>(
+      `${this.baseUrl}/${idVoce}/quote`,
+      quota
+    );
+  }
 
-  // updateQuota(idVoce: number, idQuota: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {
-  //   return this.http.put<QuotaVoceSpesa>(
-  //     `${this.baseUrl}/${idVoce}/quote/${idQuota}`,
-  //     quota
-  //   );
-  // }
+  updateQuota(idVoce: number, idQuota: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {
+    return this.http.put<QuotaVoceSpesa>(
+      `${this.baseUrl}/${idVoce}/quote/${idQuota}`,
+      quota
+    );
+  }
 
 
   // getQuote(idVoce: number): Observable<QuotaVoceSpesa[]> {
