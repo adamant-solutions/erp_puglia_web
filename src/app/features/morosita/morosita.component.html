@@ -182,7 +182,17 @@
                   </td>
 
                   <td scope="row">
-                    {{ getContrattoDescrizione(morositaItem.contrattoId) }}
+                    <span
+                      matTooltip="{{
+                        getContrattoDescrizione(morositaItem.contrattoId)
+                      }}"
+                      style="cursor: pointer"
+                    >
+                      {{
+                        getContrattoDescrizione(morositaItem.contrattoId)
+                          | slice : 0 : 30
+                      }}...
+                    </span>
                   </td>
                   <td scope="row">
                     {{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}

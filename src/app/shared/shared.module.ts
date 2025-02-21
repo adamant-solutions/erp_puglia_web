@@ -4,7 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 
-// Material
+import { CapitalizePipe } from '../core/pipes/capitalize.pipe';
+import { NaPipe } from '../core/pipes/na.pipe';
+import { EsitoFormatPipe } from '../core/pipes/esito-format.pipe';
+
+// Angular Material
+
+import { MatTooltipModule } from '@angular/material/tooltip';
+
+// for Forms
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -22,9 +30,6 @@ import {
 
 // paginator
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { CapitalizePipe } from '../core/pipes/capitalize.pipe';
-import { NaPipe } from '../core/pipes/na.pipe';
-import { EsitoFormatPipe } from '../core/pipes/esito-format.pipe';
 
 // Date format configuration
 export const MY_DATE_FORMATS = {
@@ -40,7 +45,7 @@ export const MY_DATE_FORMATS = {
 };
 
 @NgModule({
-  declarations: [BreadcrumbsComponent,CapitalizePipe,NaPipe,EsitoFormatPipe],
+  declarations: [BreadcrumbsComponent, CapitalizePipe, NaPipe, EsitoFormatPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -52,6 +57,8 @@ export const MY_DATE_FORMATS = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatPaginatorModule,
+
+    MatTooltipModule,
   ],
   exports: [
     CommonModule,
@@ -64,12 +71,13 @@ export const MY_DATE_FORMATS = {
     MatDatepickerModule,
     MatMomentDateModule,
     MatPaginatorModule,
-   
+
     BreadcrumbsComponent,
+
     CapitalizePipe,
     NaPipe,
-    EsitoFormatPipe
-    
+    EsitoFormatPipe,
+    MatTooltipModule,
   ],
   providers: [
     // Set default locale for date pickers to Italian
@@ -84,7 +92,7 @@ export const MY_DATE_FORMATS = {
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
-    CapitalizePipe
+    CapitalizePipe,
   ],
 })
 export class SharedModule {}
