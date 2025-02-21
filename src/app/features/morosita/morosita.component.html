@@ -7,51 +7,47 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
-
+        <!-- Filter -->
         <div class="col-12 mb-5">
-          <form [formGroup]="searchForm" class="row g-3" (ngSubmit)="onSearch()">
-
-            <div class="col-md-3">
+          <form
+            [formGroup]="searchForm"
+            class="row g-3"
+            (ngSubmit)="onSearch()"
+          >
+            <div class="col-md-3 select-wrapper">
               <label class="form-label" for="contrattoId">Contratto</label>
-              <div class="d-flex align-items-center">
-                  <div class="input-group select-wrapper w-100">
-                <select class="form-control"   id="contrattoId" 
-                formControlName="contrattoId">
-                <option value="">Seleziona un contratto</option>
-                <option 
-                  *ngFor="let contratto of contrattiLight" 
-                  [value]="contratto.id"
-                >
-                  {{ contratto.descrizione }}
-                </option>
-                </select>
-                  </div>
-              </div>
-            </div>
-
-
-            <div class="col-md-3">
-              <label class="form-label" for="stato">Stato</label>
-              <div class="d-flex align-items-center">
-                <div class="input-group select-wrapper w-100">
+              <div class="input-group">
                 <select
-                  class="custom-select"
-                  id="stato"
-                  formControlName="stato"
+                  class="form-control"
+                  id="contrattoId"
+                  formControlName="contrattoId"
                 >
-                  <option value="">Seleziona stato</option>
-                  <option 
-                    *ngFor="let option of statoOptions" 
-                    [value]="option.value"
+                  <option value="">Seleziona un contratto</option>
+                  <option
+                    *ngFor="let contratto of contrattiLight"
+                    [value]="contratto.id"
                   >
-                    {{option.label}}
+                    {{ contratto.descrizione }}
                   </option>
                 </select>
-
               </div>
             </div>
+
+            <div class="col-md-3 select-wrapper">
+              <label class="form-label" for="stato">Stato</label>
+              <div class="input-group">
+                <select class="form-control" id="stato" formControlName="stato">
+                  <option value="">Seleziona stato</option>
+                  <option
+                    *ngFor="let option of statoOptions"
+                    [value]="option.value"
+                  >
+                    {{ option.label }}
+                  </option>
+                </select>
+              </div>
             </div>
-            
+
             <div class="col-md-3">
               <label class="form-label" for="importoMin">Importo Minimo</label>
               <div class="input-group custom-input-group">
@@ -66,11 +62,14 @@
                   <i class="bi bi-currency-euro"></i>
                 </span>
               </div>
-              <div class="invalid-feedback" *ngIf="searchForm.get('importoMin')?.errors?.['min']">
+              <div
+                class="invalid-feedback"
+                *ngIf="searchForm.get('importoMin')?.errors?.['min']"
+              >
                 Il valore deve essere maggiore o uguale a 0
               </div>
             </div>
-            
+
             <div class="col-md-3">
               <label class="form-label" for="importoMax">Importo Massimo</label>
               <div class="input-group custom-input-group">
@@ -85,7 +84,10 @@
                   <i class="bi bi-currency-euro"></i>
                 </span>
               </div>
-              <div class="invalid-feedback" *ngIf="searchForm.get('importoMax')?.errors?.['min']">
+              <div
+                class="invalid-feedback"
+                *ngIf="searchForm.get('importoMax')?.errors?.['min']"
+              >
                 Il valore deve essere maggiore o uguale a 0
               </div>
             </div>
@@ -94,7 +96,7 @@
               <button
                 type="submit"
                 class="btn btn-primary me-3"
-                [disabled]="searchForm.invalid "
+                [disabled]="searchForm.invalid"
               >
                 <!-- <i class="bi bi-search me-1"></i> -->
                 Cerca
@@ -104,7 +106,6 @@
                 type="button"
                 class="btn btn-secondary"
                 (click)="onReset()"
-              
               >
                 <!-- <i class="bi bi-arrow-counterclockwise me-1"></i> -->
                 Reset
@@ -113,6 +114,7 @@
           </form>
         </div>
 
+        <!-- Aggiungi Morosità btn -->
         <div class="col-12 d-flex justify-content-end">
           <button
             class="btn btn-primary btn-icon btn-xs mb-3"
@@ -124,19 +126,18 @@
             <span>Aggiungi Morosità</span>
           </button>
         </div>
-     
-   
-        <div *ngIf="morositaList.length === 0" class="alert alert-info" role="alert">
+
+        <div
+          *ngIf="morositaList.length === 0"
+          class="alert alert-info"
+          role="alert"
+        >
           <i class="bi bi-info-circle me-2"></i>
           Nessun risultato trovato
         </div>
 
-     
+        <!-- Table - all Morosità -->
         <ng-container *ngIf="morositaList.length > 0">
-        
-      
-
-        
           <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered">
               <thead>
@@ -151,6 +152,7 @@
                   <th scope="col">Stato</th>
                 </tr>
               </thead>
+
               <tbody>
                 <tr *ngFor="let morositaItem of morositaList">
                   <td scope="row">
@@ -169,25 +171,41 @@
                     >
                       <i class="bi bi-pencil"></i>
                     </a>
-                    <a (click)="openDeleteModal(morositaItem)" class="me-3" role="button" title="Delete">
+
+                    <a
+                      (click)="openDeleteModal(morositaItem)"
+                      title="Cancella"
+                      style="cursor: pointer; color: #0052a3"
+                    >
                       <i class="bi bi-trash"></i>
                     </a>
                   </td>
-                  <td scope="row">{{ getContrattoDescrizione(morositaItem.contrattoId) }}</td>
-                  <td scope="row">{{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}</td>
-                  <td scope="row">{{ morositaItem.dataScadenza | date : "dd/MM/yyyy" }}</td>
-                  <td scope="row">{{ morositaItem.importoDovuto | currency:'EUR' }}</td>
-                  <td scope="row">{{ morositaItem.importoVersato | currency:'EUR' }}</td>
-                  <td scope="row">{{ morositaItem.importoMorosita | currency:'EUR' }}</td>
-                  <td scope="row">{{ morositaItem.stato | capitalize}}</td>
-               
+
+                  <td scope="row">
+                    {{ getContrattoDescrizione(morositaItem.contrattoId) }}
+                  </td>
+                  <td scope="row">
+                    {{ morositaItem.dataRilevazione | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td scope="row">
+                    {{ morositaItem.dataScadenza | date : "dd/MM/yyyy" }}
+                  </td>
+                  <td scope="row">
+                    {{ morositaItem.importoDovuto | currency : "EUR" }}
+                  </td>
+                  <td scope="row">
+                    {{ morositaItem.importoVersato | currency : "EUR" }}
+                  </td>
+                  <td scope="row">
+                    {{ morositaItem.importoMorosita | currency : "EUR" }}
+                  </td>
+                  <td scope="row">{{ morositaItem.stato | capitalize }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-         
-          <ng-container >
+          <ng-container>
             <mat-paginator
               #paginator
               [length]="totalItems"
@@ -199,26 +217,34 @@
             </mat-paginator>
           </ng-container>
         </ng-container>
-
       </div>
     </div>
   </div>
 </section>
-
 
 <div class="modal fade" id="deleteModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Conferma Eliminazione</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
       </div>
       <div class="modal-body">
-        Sei sicuro di voler eliminare questa morosità connesso a questo contratto <b>{{ morositanome }}</b>? 
+        Sei sicuro di voler eliminare questa morosità connesso a questo
+        contratto <b>{{ morositanome }}</b
+        >?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">Elimina</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Annulla
+        </button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+          Elimina
+        </button>
       </div>
     </div>
   </div>
