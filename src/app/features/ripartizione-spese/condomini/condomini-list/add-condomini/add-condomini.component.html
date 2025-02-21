@@ -36,10 +36,19 @@
                     class="form-control"
                     id="denominazione"
                     formControlName="denominazione"
+                    minlength="3"
                   />
                 </div>
                 <div class="invalid-feedback" *ngIf="shouldShowError('denominazione')">
-                  Denominazione è obbligatoria
+                  <span *ngIf="addForm.get('denominazione')?.hasError('required')">
+                    Denominazione è obbligatoria
+                  </span>
+                  <br>
+                  <span *ngIf="addForm.get('denominazione')?.hasError('minlength')">
+                    La denominazione deve avere almeno 3 caratteri
+                  </span>
+              
+                
                 </div>
               </div>
 

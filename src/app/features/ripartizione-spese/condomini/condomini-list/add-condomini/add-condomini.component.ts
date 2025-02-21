@@ -297,7 +297,11 @@ export class AddCondominiComponent implements OnInit {
   ) {
     this.addForm = this.fb.group({
       codice: ['', Validators.required],
-      denominazione: ['', Validators.required],
+      denominazione: ['', [
+        Validators.required,
+        Validators.minLength(3),
+     
+      ]],
       indirizzo: ['', [Validators.required,Validators.minLength(5)]],
       comune: ['', Validators.required],
       provincia: ['', Validators.required],
@@ -361,6 +365,7 @@ export class AddCondominiComponent implements OnInit {
         return 'Errore durante il salvataggio del condominio.';
     }
   }
+
 
   onCapKeyPress(event: KeyboardEvent): boolean {
   
