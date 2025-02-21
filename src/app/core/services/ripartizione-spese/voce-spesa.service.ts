@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { VoceSpesaDTO } from '../../models/voce-spesa.model';
 import { PeriodoLight } from '../../models/periodi-gestione.model';
+import { UnitaDisponibile } from '../../models/unita-disponibile.model';
 
 export interface VoceSpesaSearchParams {
   descrizione?: string;
@@ -58,6 +59,10 @@ export class VoceSpesaService {
 
   getPeriodi(): Observable<PeriodoLight[]> {
     return this.http.get<PeriodoLight[]>(this.periodoLightUrl);
+  }
+
+  getUnitaDisponibili(voceSpesaId: number): Observable<UnitaDisponibile[]> {
+    return this.http.get<UnitaDisponibile[]>(`${this.baseUrl}/${voceSpesaId}/unita-disponibili`);
   }
 
   // addQuota(idVoce: number, quota: QuotaVoceSpesa): Observable<QuotaVoceSpesa> {

@@ -6,6 +6,7 @@ import { VoceSpesaDTO } from 'src/app/core/models/voce-spesa.model';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { VoceSpesaService } from 'src/app/core/services/ripartizione-spese/voce-spesa.service';
 import { TipoSpesa } from '../add-voci-spesa/add-voci-spesa.component';
+import { UnitaDisponibile } from 'src/app/core/models/unita-disponibile.model';
 
 @Component({
   selector: 'app-edit-voci-spesa',
@@ -17,7 +18,7 @@ export class EditVociSpesaComponent {
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Voci Spesa', link: '/ripartizione-spese/voci-spesa' }
   ];
-
+  unitaDisponibili: UnitaDisponibile[] = [];
   modifyForm!: FormGroup;
   submitted = false;
    tipiSpesaOptions = [
@@ -41,7 +42,7 @@ export class EditVociSpesaComponent {
   ) {}
 
   ngOnInit() {
-
+    this.unitaDisponibili = this.route.snapshot.data['unitaDisponibili'];
     this.periodi = this.route.snapshot.data['periodi'];
     this.voceSpesa = this.route.snapshot.data['voceSpesaResolverID'];
     
@@ -110,6 +111,13 @@ export class EditVociSpesaComponent {
     }
   }
 
+  onMillesimiChange(unitaId: number, value: number) {
+    const unita = this.unitaDisponibili.find(u => u.id === unitaId);
+    if (unita) {
+      unita.millesimi = value;
+    }
+  }
+
   private handleError(error: any): string {
     switch (error.status) {
       case 500:
@@ -118,6 +126,8 @@ export class EditVociSpesaComponent {
         return this.errorMsg = 'Errore durante il salvataggio della voce spesa.';
     }
   }
+
+
 
   indietro() {
     this.router.navigate(['ripartizione-spese/voci-spesa']);

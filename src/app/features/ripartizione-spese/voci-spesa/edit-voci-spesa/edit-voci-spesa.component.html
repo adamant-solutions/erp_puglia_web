@@ -163,27 +163,32 @@
           </div>
           
           <div class="col-12">
-          
-      
-            <div class="row mb-3">
+            <div class="row mb-3" *ngFor="let unita of unitaDisponibili">
               <div class="col-md-4">
-                <label class="form-label" for="unita1">Unità Immobiliari 1#</label>
+                <label class="form-label" [for]="'unita' + unita.id">Unità Immobiliari {{unita.id}}#</label>
                 <div class="input-group">
                   <span class="input-group-text">
                     <i class="bi bi-building"></i>
                   </span>
-                  <input type="text" class="form-control" id="unita1" placeholder="Nome Unità Immobiliari 1" />
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    [id]="'unita' + unita.id" 
+                    [value]="unita.descrizione"
+                    disabled
+                  />
                 </div>
               </div>
           
               <div class="col-md-3">
-                <label class="form-label" for="millesimi1">Millesimi</label>
+                <label class="form-label" [for]="'millesimi' + unita.id">Millesimi</label>
                 <div class="input-group">
                   <input
                     type="number"
                     class="form-control"
-                    id="millesimi1"
-                    value="250.50"
+                    [id]="'millesimi' + unita.id"
+                    [(ngModel)]="unita.millesimi"
+                  
                     step="0.01"
                     placeholder="Millesimi"
                   />
@@ -192,63 +197,7 @@
                   </span>
                 </div>
               </div>
-          
-              <div class="col-md-5 d-flex align-items-end">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-outline-primary me-2">
-                    <i class="bi bi-plus-circle me-1"></i> Aggiungi quota
-                  </button>
-                  <button type="button" class="btn btn-outline-secondary">
-                    <i class="bi bi-pencil me-1"></i> Modifica quota
-                  </button>
-                </div>
-              </div>
             </div>
-          
-     
-            <div class="row mb-3">
-              <div class="col-md-4">
-                <label class="form-label" for="unita2">Unità Immobiliari 2#</label>
-                <div class="input-group">
-                  <span class="input-group-text">
-                    <i class="bi bi-building"></i>
-                  </span>
-                  <input type="text" class="form-control" id="unita2" placeholder="Nome Unità Immobiliari 2" />
-                </div>
-              </div>
-          
-              <div class="col-md-3">
-                <label class="form-label" for="millesimi2">Millesimi</label>
-                <div class="input-group">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="millesimi2"
-                    value="180.75"
-                    step="0.01"
-                    placeholder="Millesimi"
-                  />
-                  <span class="input-group-text">
-                    <i class="bi bi-currency-euro"></i>
-                  </span>
-                </div>
-              </div>
-          
-              <div class="col-md-5 d-flex align-items-end">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-outline-primary me-2">
-                    <i class="bi bi-plus-circle me-1"></i> Aggiungi quota
-                  </button>
-                  <button type="button" class="btn btn-outline-secondary me-2">
-                    <i class="bi bi-pencil me-1"></i> Modifica quota
-                  </button>
-                  <button type="button" class="btn btn-outline-danger">
-                    <i class="bi bi-trash"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          
           </div>
 
           <div class="col-12 mt-5 d-flex justify-content-between">
