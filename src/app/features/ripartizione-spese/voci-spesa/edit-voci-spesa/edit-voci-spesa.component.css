@@ -120,3 +120,20 @@ input[type="number"] {
 .unit-item:last-child, .quote-item:last-child {
   margin-bottom: 0;
 }
+
+
+.modal.show {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.modal-backdrop {
+  z-index: 1040;
+}
+
+.modal {
+  z-index: 1050;
+}

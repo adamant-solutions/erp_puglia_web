@@ -234,3 +234,34 @@
     </div>
   </div>
 </section>
+
+<div class="modal fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" [attr.aria-hidden]="!showDeleteModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">
+          <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+          Conferma eliminazione
+        </h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()" aria-label="Close">
+          <span aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">Sei sicuro di voler eliminare questa quota? Questa azione non può essere annullata.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="closeDeleteModal()">
+          <i class="bi bi-x-circle me-2"></i>
+          Annulla
+        </button>
+        <button type="button" class="btn btn-primary" (click)="confirmDelete()">
+          <i class="bi bi-check-circle me-2"></i>
+          Conferma
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'"></div>

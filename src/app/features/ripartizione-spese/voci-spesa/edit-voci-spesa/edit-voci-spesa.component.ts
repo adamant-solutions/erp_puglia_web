@@ -20,6 +20,9 @@ export class EditVociSpesaComponent implements OnInit {
   periodi: any[] = [];
   modifyForm!: FormGroup;
   submitted = false;
+ 
+  showDeleteModal = false;
+  quotaToDelete: any = null;
   tipiSpesaOptions = [
     { value: 'SERVIZI', label: 'Servizi' },
     { value: 'RISCALDAMENTO', label: 'Riscaldamento' },
@@ -271,7 +274,66 @@ export class EditVociSpesaComponent implements OnInit {
   }
 
   deleteQuota(quota: any) {
-   
+    this.quotaToDelete = quota;
+    this.showDeleteModal = true;
+  }
+
+
+  private refreshUnitaDisponibili() {
+    if (this.voceSpesa?.id) {
+      this.voceSpesaService.getUnitaDisponibili(this.voceSpesa.id).subscribe({
+        next: (unita) => {
+          this.unitaDisponibili = unita;
+        },
+        error: (error) => {
+          this.notificationService.addNotification({
+            message: 'Errore durante il caricamento delle unità disponibili',
+            type: 'error',
+            timeout: 5000
+          });
+        }
+      });
+    }
+  }
+
+  confirmDelete() {
+    if (!this.voceSpesa?.id || !this.quotaToDelete?.id) {
+      this.notificationService.addNotification({
+        message: 'Dati mancanti per l\'eliminazione della quota',
+        type: 'error',
+        timeout: 5000
+      });
+      return;
+    }
+
+    this.voceSpesaService.deleteQuota(this.voceSpesa.id, this.quotaToDelete.id).subscribe({
+      next: () => {
+        this.notificationService.addNotification({
+          message: 'Quota eliminata con successo',
+          type: 'success',
+          timeout: 5000
+        });
+     
+        this.quote = this.quote.filter(q => q.id !== this.quotaToDelete.id);
+       
+        this.refreshUnitaDisponibili();
+     
+        this.closeDeleteModal();
+      },
+      error: (error) => {
+        this.notificationService.addNotification({
+          message: 'Errore durante l\'eliminazione della quota',
+          type: 'error',
+          timeout: 5000
+        });
+        this.closeDeleteModal();
+      }
+    });
+  }
+
+  closeDeleteModal() {
+    this.showDeleteModal = false;
+    this.quotaToDelete = null;
   }
   viewUnitaDetails(unita: any) {
 

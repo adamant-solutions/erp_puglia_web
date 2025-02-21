@@ -98,9 +98,9 @@ export class VoceSpesaService {
   //   );
   // }
 
-  // deleteQuota(idVoce: number, idQuota: number): Observable<void> {
-  //   return this.http.delete<void>(
-  //     `${this.baseUrl}/${idVoce}/quote/${idQuota}`
-  //   );
-  // }
+  deleteQuota(idVoce: number, idQuota: number): Observable<void> {
+    return this.http.delete<void>(
+      `${this.baseUrl}/${idVoce}/quote/${idQuota}`
+    );
+  }
 }
