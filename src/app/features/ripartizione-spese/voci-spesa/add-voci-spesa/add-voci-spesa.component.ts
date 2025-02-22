@@ -25,7 +25,7 @@ const tipiSpesaOptions = [
 export class AddVociSpesaComponent implements OnInit {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Voci Spesa', link: '/spese' }
+    { label: 'Voci Spesa', link: '/ripartizione-spese/voci-spesa' }
   ];
 
   addForm!: FormGroup;
