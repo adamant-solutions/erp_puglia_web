@@ -5,6 +5,7 @@ import { periodiResolver, voceSpesaResolver, voceSpesaResolverID, vociSpesaResol
 import { AddVociSpesaComponent } from './add-voci-spesa/add-voci-spesa.component';
 import { EditVociSpesaComponent } from './edit-voci-spesa/edit-voci-spesa.component';
 import { unitaDisponibiliResolver } from 'src/app/core/resolvers/ripartizione-spese/unita-disponibile.resolver';
+import { ViewVociSpesaComponent } from './view-voci-spesa/view-voci-spesa.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,13 @@ const routes: Routes = [
       periodi: periodiResolver,
       voceSpesaResolverID,
       unitaDisponibili: unitaDisponibiliResolver,
+      resolvedData: voceSpesaResolver
+    }
+  },
+  {
+    path: 'voce-spesa-dettagli/:id',
+    component: ViewVociSpesaComponent,
+    resolve: {
       resolvedData: voceSpesaResolver
     }
   }

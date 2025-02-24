@@ -1,0 +1,142 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Visualizza Voce Spesa'">
+</app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">Visualizza Voce Spesa</h1>
+
+        <form [formGroup]="viewForm" class="row g-3" *ngIf="voceSpesa">
+          <div class="col-12">
+            <fieldset>
+              <div class="row d-flex">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="periodoId">Periodo</label>
+                  <div class="input-group">
+                    <select class="form-control" id="periodoId" formControlName="periodoId">
+                      <option *ngFor="let periodo of periodi" [value]="periodo.id">
+                        {{periodo.descrizione}}
+                      </option>
+                    </select>
+                    <span class="input-group-text">
+                      <i class="bi bi-calendar"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="descrizione">Descrizione</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" id="descrizione" formControlName="descrizione" />
+                    <span class="input-group-text">
+                      <i class="bi bi-text-paragraph"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="tipoSpesa">Tipo Spesa</label>
+                  <div class="input-group">
+                    <select class="form-control" id="tipoSpesa" formControlName="tipoSpesa">
+                      <option *ngFor="let tipo of tipiSpesaOptions" [value]="tipo.value">
+                        {{tipo.label}}
+                      </option>
+                    </select>
+                    <span class="input-group-text">
+                      <i class="bi bi-list"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="importoPreventivo">Importo Preventivo</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="importoPreventivo" formControlName="importoPreventivo" />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="importoConsuntivo">Importo Consuntivo</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="importoConsuntivo" formControlName="importoConsuntivo" />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="importoConguaglio">Importo Conguaglio</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="importoConguaglio" formControlName="importoConguaglio" />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="note">Note</label>
+                  <div class="input-group">
+                    <textarea class="form-control" id="note" formControlName="note" rows="3"></textarea>
+                    <span class="input-group-text">
+                      <i class="bi bi-chat-text"></i>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header bg-light">
+                <h4 class="mb-0">Quote</h4>
+              </div>
+              <div class="card-body">
+                <div class="quotes-container">
+                  <div *ngIf="quote.length === 0" class="text-center text-muted">
+                    Nessuna Quota
+                  </div>
+
+                  <div class="quote-item col-md-6" *ngFor="let quota of quote">
+                    <div class="quote-content">
+                      <div class="quote-millesimi">
+                        <label class="form-label">Millesimi</label>
+                        <div class="input-group">
+                          <input type="number" 
+                                 class="form-control" 
+                                 [value]="quota.millesimi" 
+                                 disabled
+                                 step="0.01" />
+                          <span class="input-group-text">
+                            <i class="bi bi-currency-euro"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 mt-5">
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              Indietro
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
