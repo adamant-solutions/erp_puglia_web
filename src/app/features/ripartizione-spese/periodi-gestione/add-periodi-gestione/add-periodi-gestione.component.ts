@@ -14,7 +14,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 export class AddPeriodoGestioneComponent implements OnInit {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
-    { label: 'Periodi di Gestione', link: '/periodi' }
+    { label: 'Periodi di Gestione', link: '/ripartizione-spese/periodi-gestione' }
   ];
   
   pageTitle = 'Nuovo Periodo di Gestione';

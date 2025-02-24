@@ -12,8 +12,8 @@ import { CondominioService } from 'src/app/core/services/ripartizione-spese/cond
 export class AddCondominiComponent implements OnInit {
   addForm: FormGroup;
   breadcrumbList: any[] = [
-    { label: 'Home', url: '/' },
-    { label: 'Condomini', url: 'ripartizione-spese/condomini' },
+    { label: 'ERP - di Regione Puglia', url: '/' },
+    { label: 'Condomini', link: '/ripartizione-spese/condomini' },
   ];
   pageTitle = 'Nuovo condominio';
   submitted = false;
