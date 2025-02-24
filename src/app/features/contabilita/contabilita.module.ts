@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {ContabilitaRoutingModule} from './contabilita-routing.module';
 import {ContabilitaComponent} from './contabilita.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import {ContabilitaComponent} from './contabilita.component';
   ],
   imports: [
     CommonModule,
-    ContabilitaRoutingModule
+    ContabilitaRoutingModule,
+    SharedModule
   ]
 })
 export class ContabilitaModule {

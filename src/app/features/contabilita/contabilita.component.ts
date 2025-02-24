@@ -7,4 +7,10 @@ import {Component} from '@angular/core';
 })
 export class ContabilitaComponent {
   pageTitle: string = 'Contabilità';
+  breadcrumbList = [{ label: 'ERP - di Regione Puglia', link: '/' }];
+
+  cards = [
+    { title: 'Piano dei Conti' , link: 'piano-dei-conti'},
+    //....
+  ]
 }
