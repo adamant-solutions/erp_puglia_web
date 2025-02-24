@@ -78,7 +78,7 @@ export class AddSollecitiComponent implements OnInit {
       dataInvio: ['', Validators.required],
       dataScadenza: ['', Validators.required],
       note: [''],
-      esitoInvio: [''],
+      esitoInvio: [null],
       esitoRisposta: ['']
     });
   }
@@ -87,7 +87,15 @@ export class AddSollecitiComponent implements OnInit {
     this.submitted = true;
 
     if (this.addForm.valid) {
-      this.sollecitoService.createSollecito(this.morositaId, this.addForm.value)
+    
+      const formData = { ...this.addForm.value };
+      
+    
+      if (formData.esitoInvio === '') {
+        formData.esitoInvio = null;
+      }
+
+      this.sollecitoService.createSollecito(this.morositaId, formData)
         .subscribe({
           next: () => {
             this.router.navigate(['../'], { relativeTo: this.route });
@@ -110,7 +118,7 @@ export class AddSollecitiComponent implements OnInit {
       dataInvio: '',
       dataScadenza: '',
       note: '',
-      esitoInvio: '',
+      esitoInvio: null,  // Reset to null instead of empty string
       esitoRisposta: ''
     });
   }

@@ -112,7 +112,7 @@
                       id="esitoInvio" 
                       formControlName="esitoInvio"
                     >
-                      <option value="">Seleziona esito</option>
+                      <option [ngValue]="null">Seleziona esito</option>
                       <option *ngFor="let esito of esitiInvioOptions" [value]="esito.value">
                         {{esito.label}}
                       </option>
