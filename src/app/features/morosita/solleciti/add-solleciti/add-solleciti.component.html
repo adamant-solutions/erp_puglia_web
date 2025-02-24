@@ -14,7 +14,7 @@
           <div class="col-12">
             <fieldset>
               <div class="row d-flex">
-                <!-- Tipo Sollecito -->
+         
                 <div class="col-md-4 mb-3">
                   <label class="form-label" for="tipoSollecito">Tipo Sollecito *</label>
                   <div class="input-group">
@@ -40,7 +40,7 @@
                   </span>
                 </div>
 
-                <!-- Data Invio -->
+            
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Data Invio *</label>
                   <mat-form-field appearance="fill" style="width: 100%">
@@ -64,7 +64,7 @@
                   </span>
                 </div>
 
-                <!-- Data Scadenza -->
+              
                 <div class="col-md-4 mb-3">
                   <label class="form-label">Data Scadenza *</label>
                   <mat-form-field appearance="fill" style="width: 100%">
@@ -86,9 +86,104 @@
                   >
                     Data scadenza è obbligatoria!
                   </span>
+                  
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Data Risposta</label>
+                  <mat-form-field appearance="fill" style="width: 100%">
+                    <input
+                      matInput
+                      [matDatepicker]="pickerRisposta"
+                      formControlName="dataRisposta"
+                      placeholder="dd/mm/yyyy"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="pickerRisposta"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #pickerRisposta></mat-datepicker>
+                  </mat-form-field>
                 </div>
 
-                <!-- The rest of your form fields remain the same -->
+                <div class="col-12">
+                  <h3 class="mb-3">Costi</h3>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="costoSollecito">Costo Sollecito</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="costoSollecito"
+                      formControlName="costoSollecito"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="costoNotifica">Costo Notifica</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="costoNotifica"
+                      formControlName="costoNotifica"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="form-label" for="costoLegale">Costo Legale</label>
+                  <div class="input-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="costoLegale"
+                      formControlName="costoLegale"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-currency-euro"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="dettaglioCosti">Dettaglio Costi</label>
+                  <div class="input-group">
+                    <textarea
+                      class="form-control"
+                      id="dettaglioCosti"
+                      formControlName="dettaglioCosti"
+                      rows="3"
+                    ></textarea>
+                    <span class="input-group-text">
+                      <i class="bi bi-list-ul"></i>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="numeroProtocollo">Numero Protocollo</label>
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="numeroProtocollo"
+                      formControlName="numeroProtocollo"
+                    />
+                    <span class="input-group-text">
+                      <i class="bi bi-hash"></i>
+                    </span>
+                  </div>
+                </div>
+           
                 <div class="col-md-12 mb-3">
                   <label class="form-label" for="note">Note</label>
                   <div class="input-group">

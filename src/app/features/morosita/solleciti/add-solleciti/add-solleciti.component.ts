@@ -79,7 +79,14 @@ export class AddSollecitiComponent implements OnInit {
       dataScadenza: ['', Validators.required],
       note: [''],
       esitoInvio: [null],
-      esitoRisposta: ['']
+      esitoRisposta: [''],
+    
+      dataRisposta: [''],
+      costoSollecito: [''],
+      costoNotifica: [''],
+      costoLegale: [''],
+      dettaglioCosti: [''],
+      numeroProtocollo: ['']
     });
   }
 
@@ -118,7 +125,7 @@ export class AddSollecitiComponent implements OnInit {
       dataInvio: '',
       dataScadenza: '',
       note: '',
-      esitoInvio: null,  // Reset to null instead of empty string
+      esitoInvio: null,  
       esitoRisposta: ''
     });
   }
