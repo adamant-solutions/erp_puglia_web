@@ -109,7 +109,7 @@ export class AddSollecitiComponent implements OnInit {
           },
           error: (error) => {
             this.notificationService.addNotification({
-              message: this.handleError(error.error),
+              message: this.handleError(error),
               type: 'error',
               timeout: 5000,
             });
@@ -134,7 +134,7 @@ export class AddSollecitiComponent implements OnInit {
     switch (error.status) {
      
       case 500:
-        return this.errorMsg = error.message;
+        return this.errorMsg = error.error.message;
       default:
         return this.errorMsg = 'Errore durante il salvataggio del sollecito.';
     }
