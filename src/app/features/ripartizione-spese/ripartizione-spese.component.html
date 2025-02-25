@@ -1,23 +1,28 @@
-<div class="container-fluid">
-  <div class="py-4">
-    <h1 id="main-content">{{ pageTitle }}</h1>
-  </div>
+<div class="col-12 py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
+        <ul class="nav nav-tabs">
+          <li class="nav-item" *ngFor="let tab of tabs">
+            <a
+              class="nav-link"
+              [routerLink]="tab.path"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: false }"
+            >
+              {{ tab.label }}
+            </a>
+          </li>
+        </ul>
 
-  <ul class="nav nav-tabs">
-    <li class="nav-item" *ngFor="let tab of tabs">
-      <a class="nav-link" 
-         [routerLink]="tab.path"
-         routerLinkActive="active"
-         [routerLinkActiveOptions]="{exact: false}">
-        {{ tab.label }}
-      </a>
-    </li>
-  </ul>
-
-  <div class="tab-content">
-    <div class="tab-pane fade show active">
-      <router-outlet></router-outlet>
+        <div class="tab-content">
+          <div class="tab-pane fade show active">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
