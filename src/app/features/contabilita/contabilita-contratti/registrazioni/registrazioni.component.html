@@ -1,0 +1,94 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Registrazioni Contabile'">
+</app-breadcrumbs>
+<section class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+          <!-- Filter -->
+          <div class="col-12 mb-5"> 
+            
+        <!-- Aggiungi  btn -->
+        <div class="col-12 d-flex justify-content-end">
+            <button
+              class="btn btn-primary btn-icon btn-xs mb-3"
+              [routerLink]="['nuova-registrazione']"
+            >
+              <svg class="icon icon-white me-1">
+                <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+              </svg>
+              <span>Aggiungi registrazione</span>
+            </button>
+          </div>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Azioni</th> 
+                      <th scope="col">Contratto</th>
+                      <th scope="col">Descrizione</th>
+                      <th scope="col">Data Registrazione</th>
+                      <th scope="col">Data Competenza</th>   
+                      <th scope="col">Numero Protocollo</th>   
+                      <th scope="col">Tipo</th>    
+                
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let registrazioniItem of registrazioni">
+                       <td scope="row">
+                          <!--
+                        <a
+                            [routerLink]="['dettagli',registrazioniItem.id]"
+                            title="Vedi dettagli"
+                            class="text-decoration-none me-3"
+                          >
+                            <i class="bi bi-eye-fill align-middle"></i>
+                          </a>
+                      
+                          <a
+                            [routerLink]="['modifica', registrazioniItem.id]"
+                            title="Modifica"
+                            class="text-decoration-none me-3"
+                          >
+                            <i class="bi bi-pencil align-middle"></i>
+                          </a>
+                      (click)="deleteModal(registrazioniItem)" 
+                          <a
+                         
+                            title="Cancella"
+                            class="text-decoration-none me-3"
+                            style="cursor: pointer; color: #0052a3"
+                          >
+                            <i class="bi bi-trash3 align-middle"></i>
+                          </a>
+                      -->
+                      </td> 
+                      <td scope="row">     <span
+                        matTooltip="{{
+                            getContrattiDescrizione(registrazioniItem.contrattoId)
+                        }}"
+                        style="cursor: pointer"
+                      >
+                        {{
+                            getContrattiDescrizione(registrazioniItem.contrattoId)
+                            | slice : 0 : 30
+                        }}...
+                      </span></td>
+                      <td scope="row">{{ registrazioniItem.descrizione }}</td>
+                      <td scope="row">
+                      {{registrazioniItem.dataRegistrazione | date: 'dd/MM/yyyy'}}
+                      </td>
+                      <td scope="row">{{ registrazioniItem.dataCompetenza | date: 'dd/MM/yyyy'}}</td>
+                      <td scope="row">{{ registrazioniItem.numeroProtocollo }}</td>
+                      <td scope="row">{{ registrazioniItem.tipo | capitalize}}</td>
+                    </tr> 
+                  </tbody>
+                </table>
+              </div>
+      
+          </div>
+        </div>
+      </div>
+    </div>
+</section>

@@ -7,7 +7,7 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
 
-        <!-- Filter -->
+      
         <div class="col-12 mb-5">
           <form class="row g-3">
             <div class="col-md-3">
@@ -19,6 +19,7 @@
                   id="nome"
                   name="nome"
                   [(ngModel)]="searchIndirizzoParam"
+                  (keydown.enter)="getFilteredData(currentPage)" 
                 />
                 <span class="input-group-text">
                   <i class="bi bi-geo-alt"></i>
@@ -36,6 +37,7 @@
                   name="canonemin"
                   inputmode="numeric"
                   [(ngModel)]="searchCanoneMensileMinParam"
+                  (keydown.enter)="getFilteredData(currentPage)" 
                 />
                 <span class="input-group-text">
                   <i class="bi bi-currency-euro"></i>
@@ -53,6 +55,7 @@
                   name="canonemax"
                   inputmode="numeric"
                   [(ngModel)]="searchCanoneMensileMaxParam"
+                  (keydown.enter)="getFilteredData(currentPage)" 
                 />
                 <span class="input-group-text">
                   <i class="bi bi-currency-euro"></i>
@@ -69,6 +72,7 @@
                   id="cognome"
                   name="cognome"
                   [(ngModel)]="searchDataInizioFromParam"
+                  (keydown.enter)="getFilteredData(currentPage)" 
                 />
                 <span class="input-group-text">
                   <!--   <i class="bi bi-calendar"></i> -->
@@ -85,6 +89,7 @@
                   id="cognome"
                   name="cognome"
                   [(ngModel)]="searchDataInizioToParam"
+                  (keydown.enter)="getFilteredData(currentPage)" 
                 />
                 <span class="input-group-text">
                   <!-- <i class="bi bi-calendar"></i> -->
@@ -101,6 +106,7 @@
                   id="cognome"
                   name="cognome"
                   [(ngModel)]="searchDataFineToParam"
+                  (keydown.enter)="getFilteredData(currentPage)" 
                 />
                 <span class="input-group-text">
                   <!-- <i class="bi bi-calendar"></i> -->
@@ -128,7 +134,7 @@
           </form>
         </div>
 
-        <!-- Aggiungi contratto btn -->
+      
         <div class="col-12 d-flex justify-content-end">
           <button
             class="btn btn-primary btn-icon btn-xs mb-3"
@@ -141,7 +147,7 @@
           </button>
         </div>
 
-        <!-- Table - Contratti locazione -->
+    
         <div class="table-responsive">
           <table class="table table-striped table-hover table-bordered">
             <thead>
@@ -187,17 +193,17 @@
                 </td>
 
                 <td scope="row">
-                  {{ contrattoItem.statoContratto | titlecase }}
+                  {{ contrattoItem.statoContratto || "N/A" | titlecase }}
                 </td>
                 <td scope="row">
-                  {{ contrattoItem.dataInizio | date : "dd/MM/yyyy" }}
+                  {{ contrattoItem.dataInizio || "N/A" | date : "dd/MM/yyyy" }}
                 </td>
                 <td scope="row">
-                  {{ contrattoItem.dataFine | date : "dd/MM/yyyy" }}
+                  {{ contrattoItem.dataFine || "N/A" | date : "dd/MM/yyyy" }}
                 </td>
-                <td scope="row">{{ contrattoItem.canoneMensile }}</td>
+                <td scope="row">{{ contrattoItem.canoneMensile  || "N/A"}}</td>
                 <td scope="row">
-                  {{ contrattoItem.indirizzoUnitaImmobiliare }}
+                  {{ contrattoItem.indirizzoUnitaImmobiliare || "N/A" }}
                 </td>
                 <!--  <td scope="row">
                   {{
@@ -240,7 +246,7 @@
   </div>
 </section>
 
-<!-- delete modal -->
+
 <div
   class="modal fade"
   id="deleteContrattoModal"

@@ -10,6 +10,13 @@ const routes: Routes = [
       import('./piani-dei-conti/piani-dei-conti.module').then(
         (m) => m.PianiDeiContiModule
       ),
+  },
+  {
+    path: 'contabilita-contratti',
+    loadChildren: () =>
+      import('./contabilita-contratti/contabilita-contratti.module').then(
+        (m) => m.ContabilitaContrattiModule
+      ),
   },];
 
 @NgModule({

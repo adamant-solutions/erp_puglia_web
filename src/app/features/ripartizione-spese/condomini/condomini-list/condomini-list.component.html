@@ -18,6 +18,7 @@
                   id="codice"
                   name="codice"
                   [(ngModel)]="searchCodiceParam"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-building"></i>
@@ -34,6 +35,7 @@
                   id="denominazione"
                   name="denominazione"
                   [(ngModel)]="searchDenominazioneParam"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-card-text"></i>
@@ -50,6 +52,7 @@
                   id="comune"
                   name="comune"
                   [(ngModel)]="searchComuneParam"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-geo-alt"></i>
@@ -67,6 +70,7 @@
                   name="provincia"
                   [(ngModel)]="searchProvinciaParam"
                   maxlength="2"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-pin-map"></i>
@@ -79,6 +83,7 @@
                 type="button"
                 class="btn btn-primary me-3"
                 (click)="cercaCondomini()"
+              
               >
                 Cerca
               </button>
@@ -146,13 +151,13 @@
                   <i class="bi bi-trash3"></i>
                 </a>
                 </td>
-                <td scope="row">{{ condominio.codice }}</td>
-                <td scope="row">{{ condominio.denominazione }}</td>
-                <td scope="row">{{ condominio.indirizzo }}</td>
-                <td scope="row">{{ condominio.comune }}</td>
-                <td scope="row">{{ condominio.provincia }}</td>
-                <td scope="row">{{ condominio.cap }}</td>
-                <td scope="row">{{ condominio.codiceFiscale }}</td>
+                <td scope="row">{{ condominio.codice || "N/A" }}</td>
+                <td scope="row">{{ condominio.denominazione || "N/A" }}</td>
+                <td scope="row">{{ condominio.indirizzo || "N/A" }}</td>
+                <td scope="row">{{ condominio.comune  || "N/A"}}</td>
+                <td scope="row">{{ condominio.provincia || "N/A"}}</td>
+                <td scope="row">{{ condominio.cap || "N/A"}}</td>
+                <td scope="row">{{ condominio.codiceFiscale || "N/A"}}</td>
               </tr>
             </tbody>
           </table>

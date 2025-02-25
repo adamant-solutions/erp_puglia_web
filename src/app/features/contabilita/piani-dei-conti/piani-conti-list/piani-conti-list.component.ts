@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Contabilita } from 'src/app/core/models/contabilita.model';
-import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
+import { ActivatedRoute } from '@angular/router';
+import { PianoDeiConti } from 'src/app/core/models/contabilita/piano-dei-conti.model';
 
 @Component({
   selector: 'app-piani-conti-list',
@@ -15,12 +14,10 @@ export class PianiContiListComponent {
     { label: 'Contabilità', link: '/contabilita' },
   ];
 
-  pianoDeiContiList: Contabilita[]= [];
+  pianoDeiContiList: PianoDeiConti[]= [];
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
 
-
-  constructor(private bootstrap: BootstrapService) { }
+  constructor() { }
   ngOnInit() {
       this.getList();
   }

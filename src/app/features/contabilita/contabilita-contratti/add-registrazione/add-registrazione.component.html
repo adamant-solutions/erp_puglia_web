@@ -1,0 +1,235 @@
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Nuova Registrazione Contabile'"
+></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-5">{{ pageTitle }}</h1>
+
+    <form [formGroup]="transactionForm" (ngSubmit)="onSubmit()" class="mt-4">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="dataRegistrazione" class="form-label">Data Registrazione</label>
+          <div class="input-group">
+          <input 
+            type="date" 
+            id="dataRegistrazione" 
+            formControlName="dataRegistrazione" 
+            class="form-control"
+            [ngClass]="{'is-invalid': hasError('dataRegistrazione')}"
+            readonly
+            locale="it-IT"
+          />
+          </div>
+        </div>
+  
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Data Competenza*</label>
+      
+        <mat-form-field appearance="fill" style="width: 100%">
+          <input matInput [matDatepicker]="picker" id="dataCompetenza" 
+          formControlName="dataCompetenza" 
+            [ngClass]="{'is-invalid': hasError('dataCompetenza')}"/>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+    
+        <div class="invalid-feedback" *ngIf="hasError('dataCompetenza')">
+            Data di competenza  è obbligatoria!
+        </div>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="numeroProtocollo" class="form-label">Numero Protocollo*</label>
+          <div class="input-group">
+          <input 
+            type="text" 
+            id="numeroProtocollo" 
+            formControlName="numeroProtocollo" 
+            class="form-control"
+            placeholder="es. 2024/0001"
+            [ngClass]="{'is-invalid': hasError('numeroProtocollo')}"
+          >
+          </div>
+          <div class="invalid-feedback" *ngIf="hasError('numeroProtocollo')">
+            Numero di protocollo  è obbligatorio!
+          </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+          <label for="tipo" class="form-label">Tipo</label>
+          <div class="input-group">
+          <input 
+          type="text" 
+          id="tipo" 
+          formControlName="tipo" 
+          class="form-control"
+          [ngClass]="{'is-invalid': hasError('tipo')}"
+          readonly
+        >
+          </div>
+          <div class="invalid-feedback" *ngIf="hasError('tipo')">
+            Tipo è obbligatorio!
+          </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label for="contrattoId" class="form-label">Contratto</label>
+          <div class="input-group">
+          <select 
+            id="contrattoId" 
+            formControlName="contrattoId" 
+            class="form-select"
+            [ngClass]="{'is-invalid': hasError('contrattoId')}"
+          >
+            <option value="">Seleziona contratto</option>
+            <option *ngFor="let contract of contratti" [value]="contract.id">{{contract.descrizione}}</option>
+          </select>
+          </div>
+          <div class="invalid-feedback" *ngIf="hasError('contrattoId')">
+            Contratto  è obbligatorio!
+          </div>
+         <!--  <small class="form-text text-muted">
+            Nota: È necessario aver registrato una QERA per questo contratto.
+          </small> -->
+        </div>
+        
+        <div class="col-md-6 mb-3">
+
+          <label for="descrizione" class="form-label">Descrizione</label>
+          <div class="input-group">
+          <input 
+            type="text" 
+            id="descrizione" 
+            formControlName="descrizione" 
+            class="form-control"
+            placeholder="es. Incasso canone marzo 2024 - Contratto n.1"
+            [ngClass]="{'is-invalid': hasError('descrizione')}"
+          >
+            </div>
+          <div class="invalid-feedback" *ngIf="hasError('descrizione')">
+            Descrizione  è obbligatoria!
+          </div>
+        </div>
+      </div>
+      
+      <h4 class="mt-4">Movimenti</h4>
+   
+      <div formArrayName="movimenti">
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <strong>Movimento Dare - Conto CREDITI VS INQUILINI</strong>
+          </div>
+          <div class="card-body" [formGroupName]="0">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="importo0" class="form-label">Importo</label>
+                <div class="input-group">
+                  <span class="input-group-text">€</span>
+                  <input 
+                    type="number" 
+                    id="importo0" 
+                    formControlName="importo" 
+                    class="form-control"
+                    step="0.01"
+                    min="0.01"
+                    [ngClass]="{'is-invalid': hasMovementError(0, 'importo')}"
+                  >
+                </div>
+                <div class="invalid-feedback" *ngIf="hasMovementError(0, 'importo')">
+                  Importo valido  è obbligatorio!
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Tipo</label>
+                <div class="input-group">
+                <input type="text" class="form-control" value="Dare" disabled>
+                <input type="hidden" formControlName="dare">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="form-label">Conto</label>
+                <div class="input-group">
+                <input type="text" class="form-control" [value]="'CREDITI VS INQUILINI'" disabled>
+                <input type="hidden" formControlName="contoId">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card mb-3">
+          <div class="card-header bg-light">
+            <strong>Movimento Avere - Conto CANONI LOCAZIONE </strong>
+          </div>
+          <div class="card-body" [formGroupName]="1">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="importo1" class="form-label">Importo</label>
+                <div class="input-group">
+                  <span class="input-group-text">€</span>
+                  <input 
+                    type="number" 
+                    id="importo1" 
+                    formControlName="importo" 
+                    class="form-control"
+                    step="0.01"
+                    min="0.01"
+                    [ngClass]="{'is-invalid': hasMovementError(1, 'importo')}"
+                  >
+                </div>
+                <div class="invalid-feedback" *ngIf="hasMovementError(1, 'importo')">
+                  Importo valido  è obbligatorio!
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Tipo</label>
+                <div class="input-group">
+                <input type="text" class="form-control" value="Avere" disabled>
+                <input type="hidden" formControlName="dare">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <label class="form-label">Conto</label>
+                <div class="input-group">
+                <input type="text" class="form-control" [value]="'CANONI LOCAZIONE'" disabled>
+                <input type="hidden" formControlName="contoId">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="col-12 mt-5 d-flex justify-content-between">
+        <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+          <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+          Indietro
+        </button>
+
+        <div>
+          <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm()">
+            <i class="bi bi-x-circle me-1"></i>
+            Annulla
+          </button>
+
+          <button type="submit" class="btn btn-primary py-2">
+            Salva
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</section>

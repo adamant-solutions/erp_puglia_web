@@ -11,6 +11,7 @@ export class ContabilitaComponent {
 
   cards = [
     { title: 'Piano dei Conti' , link: 'piano-dei-conti'},
+    { title: 'Contabilità Contratti Locazione' , link: 'contabilita-contratti'}
     //....
   ]
 }
