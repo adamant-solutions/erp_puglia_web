@@ -18,6 +18,7 @@
                   id="codice"
                   name="codice"
                   [(ngModel)]="searchCodiceParam"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-building"></i>
@@ -34,6 +35,7 @@
                   id="denominazione"
                   name="denominazione"
                   [(ngModel)]="searchDenominazioneParam"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-card-text"></i>
@@ -50,6 +52,7 @@
                   id="comune"
                   name="comune"
                   [(ngModel)]="searchComuneParam"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-geo-alt"></i>
@@ -67,6 +70,7 @@
                   name="provincia"
                   [(ngModel)]="searchProvinciaParam"
                   maxlength="2"
+                  (keydown.enter)="cercaCondomini()"
                 />
                 <span class="input-group-text">
                   <i class="bi bi-pin-map"></i>
@@ -79,6 +83,7 @@
                 type="button"
                 class="btn btn-primary me-3"
                 (click)="cercaCondomini()"
+              
               >
                 Cerca
               </button>
