@@ -193,17 +193,17 @@
                 </td>
 
                 <td scope="row">
-                  {{ contrattoItem.statoContratto | titlecase }}
+                  {{ contrattoItem.statoContratto || "N/A" | titlecase }}
                 </td>
                 <td scope="row">
-                  {{ contrattoItem.dataInizio | date : "dd/MM/yyyy" }}
+                  {{ contrattoItem.dataInizio || "N/A" | date : "dd/MM/yyyy" }}
                 </td>
                 <td scope="row">
-                  {{ contrattoItem.dataFine | date : "dd/MM/yyyy" }}
+                  {{ contrattoItem.dataFine || "N/A" | date : "dd/MM/yyyy" }}
                 </td>
-                <td scope="row">{{ contrattoItem.canoneMensile }}</td>
+                <td scope="row">{{ contrattoItem.canoneMensile  || "N/A"}}</td>
                 <td scope="row">
-                  {{ contrattoItem.indirizzoUnitaImmobiliare }}
+                  {{ contrattoItem.indirizzoUnitaImmobiliare || "N/A" }}
                 </td>
                 <!--  <td scope="row">
                   {{
