@@ -111,35 +111,6 @@ input {
 
 /* ---------------------------------------------------------------------- */
 
-/*
-.header {
-  min-height: 98px; // 98px = ".navbar" height
-}
-
-.navbar {
-  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
-  z-index: 999;
-}
-
-#navbarToggleExternalContent {
-  position: fixed;
-  height: 100vh;
-  padding-top: 98px; // 98px = ".navbar" height
-}
-#navbarToggleExternalContent.show {
-  min-width: 250px;
-}
-
-main {
-  padding-left: calc(250px + 30px); // 250px = "#navbarToggleExternalContent" width, 30px = extra space
-  padding-right: 30px;
-}
-
-footer {
-  padding-left: 250px; // 250px = "#navbarToggleExternalContent" width
-}
-*/
-
 .custom-error {
   display: inline-block;
   font-size: 14px;
@@ -244,6 +215,10 @@ form .bi-trash3 {
 }
 
 /* ---------------------------------------------------------------------- */
+
+.mat-mdc-paginator {
+  background-color: transparent !important;
+}
 
 /* override */
 .mat-mdc-text-field-wrapper {

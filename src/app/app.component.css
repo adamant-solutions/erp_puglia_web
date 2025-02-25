@@ -1,0 +1,38 @@
+.entry-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  float: left;
+  height: 100%;
+  background-color: #0075bf;
+  z-index: 999999999;
+  -webkit-transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  -o-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+.entry-overlay-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.entry-overlay-content h1 {
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+}
+.entry-overlay-content p {
+  color: #fff;
+  margin-bottom: 60px;
+}
+.entry-overlay-content button {
+  padding: 10px 30px;
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #fff;
+  border-radius: 3px;
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
