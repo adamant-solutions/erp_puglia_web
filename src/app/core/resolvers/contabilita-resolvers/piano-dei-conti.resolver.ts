@@ -1,8 +1,9 @@
 import { ResolveFn } from '@angular/router';
 import { PianoDeiContiService } from '../../services/contabilita-services/piano-dei-conti.service';
 import { inject } from '@angular/core';
-import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
-import { Contabilita } from '../../models/contabilita.model';
+import { map } from 'rxjs';
+import { PianoDeiConti } from '../../models/contabilita/piano-dei-conti.model';
+
 
 export const pianoDeiContiResolver: ResolveFn<any> = (route, state) => {
   const pianoCService = inject(PianoDeiContiService);
@@ -19,7 +20,7 @@ export const pianoDeiContiByIDResolver: ResolveFn<any> = (route, state) => {
 export const pianoDeiContiparentResolver: ResolveFn<any> = (route, state) => {
   const pianoCService = inject(PianoDeiContiService);
   return pianoCService.getAllPianoDeiConti().pipe(
-    map((items: Contabilita[]) => {
+    map((items: PianoDeiConti[]) => {
   
       items.forEach(item => {
         if (item.parentId) {
