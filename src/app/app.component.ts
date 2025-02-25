@@ -11,8 +11,8 @@ export class AppComponent {
   removeOverlay() {
     const entryOverlay = document.querySelector('.entry-overlay');
     if (entryOverlay) {
-      // entryOverlay.remove();
-      (entryOverlay as HTMLElement).style.display = 'none';
+      (entryOverlay as HTMLElement).style.opacity = '0';
+      (entryOverlay as HTMLElement).style.visibility = 'hidden';
     }
   }
 }
