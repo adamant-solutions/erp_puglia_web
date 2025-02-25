@@ -50,7 +50,14 @@
                       </td> -->
                       <td scope="row">{{ pianoDeiContiItem.codice }}</td>
                       <td scope="row">{{ pianoDeiContiItem.descrizione }}</td>
-                      <td scope="row">{{ pianoDeiContiItem.tipo }}</td>
+                      <td scope="row">
+                        <span *ngIf="pianoDeiContiItem.tipo === 'ATTIVITA'; else showTipo">
+                          ATTIVITÀ
+                        </span>
+                        <ng-template #showTipo>
+                          {{pianoDeiContiItem.tipo }}
+                        </ng-template>
+                      </td>
                       <td scope="row">{{ pianoDeiContiItem.parentCodice }}</td>
                     
                     </tr>
