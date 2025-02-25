@@ -1,12 +1,60 @@
+<div
+  class="entry-overlay"
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    float: left;
+    height: 100%;
+    background-color: #06c;
+    z-index: 999999999;
+    -webkit-transition: all 0.3s ease-in;
+    -moz-transition: all 0.3s ease-in;
+    -o-transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in;
+  "
+>
+  <div
+    class="container"
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    "
+  >
+    <h1 style="color: #fff; margin-bottom: 30px; font-size: 2.5rem">
+      Regione Puglia
+    </h1>
+    <p style="color: #fff; margin-bottom: 60px">
+      Assessorato all'industria turistica e culturale
+    </p>
+
+    <button
+      style="
+        padding: 10px 30px;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #fff;
+        border-radius: 3px;
+        box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+      "
+      (click)="removeOverlay()"
+    >
+      Vai all'app
+    </button>
+  </div>
+</div>
+
 <app-header></app-header>
 
 <app-loader></app-loader>
 
 <main>
   <app-toast></app-toast>
-  <router-outlet #outlet="outlet">
-  
-  </router-outlet>
+  <router-outlet #outlet="outlet"> </router-outlet>
 </main>
 
 <app-footer></app-footer>

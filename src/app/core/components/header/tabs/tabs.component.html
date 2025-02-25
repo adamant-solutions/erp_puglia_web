@@ -1,6 +1,8 @@
-<nav class="navbar navbar-dark bg-dark fixed-top py-4">
-  <div class="container-fluid justify-content-start">
-    <button
+<!-- navbar-dark bg-dark fixed-top -->
+<nav class="navbar py-3">
+  <!-- container-fluid justify-content-start -->
+  <div class="container">
+    <!-- <button
       class="navbar-toggler"
       type="button"
       data-bs-toggle="collapse"
@@ -10,14 +12,11 @@
       aria-label="Toggle navigation"
     >
       <span class="navbar-toggler-icon"></span>
-    </button>
+    </button> -->
 
     <!-- navbar brand -->
-    <a
-      class="navbar-brand py-0 ms-5 me-0"
-      [routerLink]="['/']"
-      title="ERP Puglia"
-    >
+    <!-- ms-5 -->
+    <a class="navbar-brand py-0 me-0" [routerLink]="['/']" title="ERP Puglia">
       <img
         src="./assets/images/logo-regione-puglia-white.svg"
         alt="ERP Puglia Logo"
@@ -27,17 +26,15 @@
   </div>
 </nav>
 
-<div
-  class="collapse collapse-horizontal show"
-  id="navbarToggleExternalContent"
-  data-bs-theme="dark"
->
-  <div class="bg-dark p-4" style="height: 100%">
+<!-- class="collapse collapse-horizontal show" id="navbarToggleExternalContent" data-bs-theme="dark" -->
+<div class="main-nav-menu-wrapper col-12 py-4">
+  <!-- class="bg-dark p-4" style="height: 100%" -->
+  <div class="container">
     <ul class="navbar-nav main-nav-menu">
       <li class="nav-item">
         <!-- aria-current="page" -->
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/anagrafica']"
           [queryParams]="{ pagina: 0 }"
           [ngClass]="{ active: isCurrentRoute('anagrafica') }"
@@ -48,7 +45,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/patrimonio']"
           [queryParams]="{ pagina: 0 }"
           [ngClass]="{ active: isCurrentRoute('patrimonio') }"
@@ -59,7 +56,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/contratti-locazione']"
           [ngClass]="{ active: isCurrentRoute('contratti-locazione') }"
         >
@@ -69,7 +66,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/manutenzione']"
           [ngClass]="{ active: isCurrentRoute('manutenzione') }"
         >
@@ -79,7 +76,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/ripartizione-spese']"
           [ngClass]="{ active: isCurrentRoute('ripartizione-spese') }"
         >
@@ -89,7 +86,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/morosita']"
           [ngClass]="{ active: isCurrentRoute('morosita') }"
         >
@@ -99,7 +96,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/contabilita']"
           [ngClass]="{ active: isCurrentRoute('contabilita') }"
         >
@@ -109,7 +106,7 @@
 
       <li class="nav-item">
         <a
-          class="nav-link"
+          class="nav-link px-3"
           [routerLink]="['/ciclo-passivo']"
           [ngClass]="{ active: isCurrentRoute('ciclo-passivo') }"
         >

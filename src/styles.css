@@ -92,6 +92,7 @@ body {
   -webkit-font-smoothing: antialiased;
   font-size: 100%; */
   font-family: "Titillium Web", sans-serif;
+  background-color: #f2f2f2;
 }
 
 h1,
@@ -110,8 +111,9 @@ input {
 
 /* ---------------------------------------------------------------------- */
 
+/*
 .header {
-  min-height: 98px; /* 98px = ".navbar" height */
+  min-height: 98px; // 98px = ".navbar" height
 }
 
 .navbar {
@@ -122,22 +124,21 @@ input {
 #navbarToggleExternalContent {
   position: fixed;
   height: 100vh;
-  padding-top: 98px; /* 98px = ".navbar" height */
+  padding-top: 98px; // 98px = ".navbar" height
 }
 #navbarToggleExternalContent.show {
   min-width: 250px;
 }
 
 main {
-  padding-left: calc(
-    250px + 30px
-  ); /* 250px = "#navbarToggleExternalContent" width, 30px = extra space */
+  padding-left: calc(250px + 30px); // 250px = "#navbarToggleExternalContent" width, 30px = extra space
   padding-right: 30px;
 }
 
 footer {
-  padding-left: 250px; /* 250px = "#navbarToggleExternalContent" width */
+  padding-left: 250px; // 250px = "#navbarToggleExternalContent" width
 }
+*/
 
 .custom-error {
   display: inline-block;
