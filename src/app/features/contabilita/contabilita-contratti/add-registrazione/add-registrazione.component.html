@@ -63,14 +63,14 @@
         <div class="col-md-6 mb-3">
           <label for="tipo" class="form-label">Tipo</label>
           <div class="input-group">
-          <input 
-          type="text" 
-          id="tipo" 
-          formControlName="tipo" 
-          class="form-control"
-          [ngClass]="{'is-invalid': hasError('tipo')}"
-          readonly
-        >
+              <select 
+                id="tipo" 
+                formControlName="tipo" 
+                class="form-select"
+                [ngClass]="{'is-invalid': hasError('tipo')}"
+              >
+                <option *ngFor="let tipo of tipoOptions"  [value]="tipo">{{tipo | capitalize}}</option>
+              </select>
           </div>
           <div class="invalid-feedback" *ngIf="hasError('tipo')">
             Tipo è obbligatorio!
@@ -89,7 +89,7 @@
             [ngClass]="{'is-invalid': hasError('contrattoId')}"
           >
             <option value="">Seleziona contratto</option>
-            <option *ngFor="let contract of contratti" [value]="contract.id">{{contract.descrizione}}</option>
+            <option *ngFor="let contract of contratti"  [value]="contract.id">{{transformCodice(contract.descrizione)}}</option>
           </select>
           </div>
           <div class="invalid-feedback" *ngIf="hasError('contrattoId')">

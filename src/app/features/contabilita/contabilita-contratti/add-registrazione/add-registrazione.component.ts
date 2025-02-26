@@ -15,13 +15,18 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 export class AddRegistrazioneComponent {
 pageTitle: string = 'Nuova Registrazione Contabile';
 breadcrumbList = [
-  { label: 'ERP - di Regione Puglia', link: '/' },
-  { label: 'Contabilità', link: '/contabilita' },
-  { label: 'Registrazioni Contabile', link: '/contabilita/contabilita-contratti' },
+  { label: 'ERP - di Regione Puglia', link: '/' }
 ];
+
 transactionForm!: FormGroup;
 contratti: ModelLight[] = [];
-tipoOptions: TipoRegistrazione[]= [];
+contrattoId!: number;
+tipoOptions: TipoRegistrazione[]= [
+  TipoRegistrazione.DA_CONTRATTO, 
+  TipoRegistrazione.DA_INCASSO,
+  TipoRegistrazione.STORNO,
+  TipoRegistrazione.MANUALE
+];
 pianiConto: any;
 submitted = false;
 
@@ -33,9 +38,19 @@ submitted = false;
     private router: Router,
     private route: ActivatedRoute
   ) {
+
+    this.contrattoId = +this.route.snapshot.params['id'];
+
+    this.breadcrumbList = [
+      { label: 'ERP - di Regione Puglia', link: '/' },
+      { label: 'Contabilità', link: '/contabilita' },
+      { label: 'Contratti locazione', link: '/contabilita/contabilita-contratti' },
+      { label: 'Registrazioni Contabile', link: `/contabilita/contabilita-contratti/${this.contrattoId}/registrazioni` },
+    ];
+
     this.route.data.subscribe({
       next: (data) => {
-
+    
         this.contratti = data['contrattiLightResolver'] as ModelLight[];
         this.pianiConto = data['pianoDeiContiparentResolver']
       }
@@ -53,9 +68,9 @@ submitted = false;
       dataRegistrazione: [today, Validators.required],
       dataCompetenza: ['', Validators.required],
       numeroProtocollo: ['', Validators.required],
-      tipo: ['DA_CONTRATTO', Validators.required],
+      tipo: [{value: 'DA_CONTRATTO', disabled: true}, Validators.required],
       descrizione: ['', Validators.required],
-      contrattoId: ['', Validators.required],
+      contrattoId: [{value: this.contrattoId, disabled: true}, Validators.required],
       movimenti: this.fb.array([
         this.createMovement(0.0, true, 3),
         this.createMovement(0.0, false, 8)
@@ -77,8 +92,9 @@ submitted = false;
 
   onSubmit(): void {
     this.submitted = true;
+
     if (this.transactionForm.valid) {
-      const formValue = this.transactionForm.value as RegistrazioneContabile;
+      const formValue = this.transactionForm.getRawValue() as RegistrazioneContabile;
       
       const amount = formValue.movimenti[0].importo;
       formValue.movimenti.forEach(movement => {
@@ -94,7 +110,7 @@ submitted = false;
             type: 'success',
             timeout: 3000,
           });
-          this.router.navigate(['/contabilita/contabilita-contratti']);
+          this.router.navigate([`/contabilita/contabilita-contratti/${this.contrattoId}/registrazioni`]);
         },
         error: (err) => {
           this.notifS.addNotification({
@@ -143,10 +159,13 @@ submitted = false;
   }
   
   indietro() {
-    this.router.navigate(['/contabilita/contabilita-contratti']);
+    this.router.navigate([`/contabilita/contabilita-contratti/${this.contrattoId}/registrazioni`]);
   }
 
   resetForm() {
     this.initForm();
+  }
+  transformCodice(value: string){
+    return value.replace(/^\d+ - /, '');
   }
 }

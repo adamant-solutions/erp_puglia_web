@@ -26,6 +26,11 @@
   .form-control:disabled {
     background-color: #fff;
   }
+  .form-select:disabled {
+    background-color: #fff;
+    background-image: none;
+    cursor: not-allowed;
+  }
   .invalid-feedback {
     margin-left: 1rem;
     font-size: 12px;
