@@ -35,22 +35,22 @@
           <table class="table table-striped table-hover table-bordered">
             <thead>
               <tr>
-                <th scope="col"  class="text-center">Registrazioni</th>
-                <th scope="col">Contratto</th>
+                <th scope="col" style=" padding: 10px 20px;">Contratto</th>
+                <th scope="col"  class="text-center">Azioni</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let item of contrattiList">
+                <td scope="row">{{ transformCodice(item.descrizione) }}</td>
                 <td scope="row" class="text-center">
 
-                  <a [routerLink]="[item.id,'registrazioni']" title="Vedi registrazioni"
-                    class="text-decoration-none me-3">
-                    <i class="bi bi-eye-fill align-middle"></i>
-                  </a>
-                </td>
-               
-                <td scope="row">{{ transformCodice(item.descrizione) }}</td>
-             
+                  <!--      <a [routerLink]="[item.id,'registrazioni']" title="Vedi registrazioni"
+                       class="text-decoration-none me-3">
+                       <i class="bi bi-eye-fill align-middle"></i>
+                     </a> -->
+                     <button class="btn btn-primary me-2" [routerLink]="[item.id,'registrazioni']">Registrazioni</button>
+                     <button class="btn btn-primary" [routerLink]="[item.id,'situazione-crediti']">Situazione Crediti</button>
+                   </td>
               </tr>
             </tbody>
           </table>

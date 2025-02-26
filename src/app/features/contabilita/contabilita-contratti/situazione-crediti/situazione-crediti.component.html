@@ -1,0 +1,64 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'SituazioneCrediti'">
+</app-breadcrumbs>
+<section class="py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+        <!-- Filter -->
+        <div class="col-12 mb-5">
+  
+        </div>
+        <div class="alert alert-primary" role="alert"  *ngIf="!crediti.length">
+            Non risultano situazioni crediti registrate!
+        </div>
+        <div class="table-responsive" *ngIf="crediti.length">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Intestatario</th>
+                <th scope="col">Indirizzo</th>
+                <th scope="col">Comune</th>
+                <th scope="col">Provincia</th>
+                <th scope="col">Data Competenza</th>
+                <th scope="col">Descrizione</th>
+                <th scope="col">Importo Canone</th>
+                <th scope="col">Importo Incassato</th>
+                <th scope="col">Saldo Credito</th>
+                <th scope="col">Stato</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of crediti">
+                <td scope="row">{{item.intestatario}}</td>
+                <td scope="row">{{item.indirizzo}}</td>
+                <td scope="row">{{item.comune}}</td>
+                <td scope="row">{{item.provincia}}</td>
+                <td scope="row">{{item.dataCompetenza | date: 'dd/MM/yyyy'}}</td>
+ <!--                <td scope="row">{{item.descrizione}}</td>
+ -->
+                <td scope="row"> <span matTooltip="{{
+                    item.descrizione
+                }}" style="cursor: pointer">
+            {{
+                (item.descrizione) | slice : 0 : 20}}
+          </span></td>
+
+                <td scope="row">{{item.importoCanone}}</td>
+                <td scope="row">{{item.importoIncassato}}</td>
+                <td scope="row">{{item.saldoCredito}}</td>
+                <td scope="row">
+
+                <span [ngClass]="getStatoClass(item.stato)">
+                    {{ item.stato }}
+                  </span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
