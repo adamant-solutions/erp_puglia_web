@@ -7,3 +7,12 @@ export const registrazioniContabileResolver: ResolveFn<RegistrazioneContabile[]>
     const registrazioneService = inject(RegistrazioneContabileService);
     return registrazioneService.findAll();
   };
+
+
+  export const registrazioniContabileByContrattoResolver: ResolveFn<RegistrazioneContabile[]> = (route, state) => {
+    const ID = route.params['id']
+     const registrazioneService = inject(RegistrazioneContabileService);
+     return registrazioneService.findByContratto(ID);
+   };
+ 
+   

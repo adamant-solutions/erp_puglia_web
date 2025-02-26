@@ -14,6 +14,7 @@ export class RegistrazioniComponent {
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contabilità', link: '/contabilita' },
+    { label: 'Contratti locazione', link: '/contabilita/contabilita-contratti' },
   ];
 
   registrazioni: RegistrazioneContabile[]= [];
