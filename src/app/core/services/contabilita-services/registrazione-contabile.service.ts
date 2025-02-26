@@ -30,14 +30,17 @@ export class RegistrazioneContabileService {
   }
 
   findByPeriodo(dataInizio: Date, dataFine: Date, tipo?: TipoRegistrazione): Observable<RegistrazioneContabile[]> {
-    let params = new HttpParams()
-      .set('dataInizio', formatDate(dataInizio, 'yyyy-MM-dd', 'en-US'))
-      .set('dataFine', formatDate(dataFine, 'yyyy-MM-dd', 'en-US'));
-    
+    let params = new HttpParams();
+
+
     if (tipo) {
       params = params.set('tipo', tipo);
     }
-    
+
+    if (dataInizio || dataFine) {
+      params = params.set('dataInizio', formatDate(dataInizio, 'yyyy-MM-dd', 'en-US'))
+        .set('dataFine', formatDate(dataFine, 'yyyy-MM-dd', 'en-US'));
+    }
     return this.http.get<RegistrazioneContabile[]>(`${this.apiUrl}/registrazioni/periodo`, { params });
   }
 
