@@ -2,6 +2,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { PianoDeiConti } from 'src/app/core/models/contabilita/piano-dei-conti.model';
 import { RegistrazioneContabile, TipoRegistrazione } from 'src/app/core/models/contabilita/registrazione-contabile.model';
 import { ModelLight } from 'src/app/core/models/contratto.model';
 import { RegistrazioneContabileService } from 'src/app/core/services/contabilita-services/registrazione-contabile.service';
@@ -13,7 +14,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
   styleUrls: ['./add-registrazione.component.css']
 })
 export class AddRegistrazioneComponent {
-pageTitle: string = 'Nuova Registrazione Contabile';
+pageTitle: string = 'Nuova Registrazione Contabile - Registrazione del mese da pagare';
 breadcrumbList = [
   { label: 'ERP - di Regione Puglia', link: '/' }
 ];
@@ -27,7 +28,7 @@ tipoOptions: TipoRegistrazione[]= [
   TipoRegistrazione.STORNO,
   TipoRegistrazione.MANUALE
 ];
-pianiConto: any;
+pianiConto!: PianoDeiConti[];
 submitted = false;
 
 
@@ -52,7 +53,7 @@ submitted = false;
       next: (data) => {
     
         this.contratti = data['contrattiLightResolver'] as ModelLight[];
-        this.pianiConto = data['pianoDeiContiparentResolver']
+        this.pianiConto = data['pianoDeiContiResolver']
       }
       });
   }
@@ -72,17 +73,17 @@ submitted = false;
       descrizione: ['', Validators.required],
       contrattoId: [{value: this.contrattoId, disabled: true}, Validators.required],
       movimenti: this.fb.array([
-        this.createMovement(0.0, true, 3),
-        this.createMovement(0.0, false, 8)
+        this.createMovement('', true, 3),
+        this.createMovement('', false, 8)
       ])
     });
   }
 
-  createMovement(importo: number = 0, dare: boolean = true, contoId: number = 0): FormGroup {
-    return this.fb.group({
-      importo: [importo, [Validators.required, Validators.min(0.01)]],
-      dare: [dare],
-      contoId: [contoId, Validators.required]
+  createMovement(importo: any = 0, dare: boolean = true, contoId: number = 0): FormGroup {
+      return this.fb.group({
+        importo: [importo, [Validators.required, Validators.min(0.01)]],
+        dare: [{value: dare, disabled: true}],
+        contoId: [{value: contoId, disabled: true}, Validators.required]
     });
   }
 
@@ -96,17 +97,17 @@ submitted = false;
     if (this.transactionForm.valid) {
       const formValue = this.transactionForm.getRawValue() as RegistrazioneContabile;
       
-      const amount = formValue.movimenti[0].importo;
+/*       const amount = formValue.movimenti[0].importo;
       formValue.movimenti.forEach(movement => {
         movement.importo = amount;
       });
-      
+       */
       console.log('Submitted transaction:', formValue);
       
       this.registrazioneService.save(formValue).subscribe({
         next: (res) => {
           this.notifS.addNotification({
-            message: 'Registrazioni contabile salvati con successo!',
+            message: 'Registrazione contabile salvata con successo!',
             type: 'success',
             timeout: 3000,
           });
@@ -150,12 +151,7 @@ submitted = false;
 
   hasMovementError(index: number, controlName: string): boolean {
     const control = this.movimenti.at(index).get(controlName);
-    return control ? control.invalid && (control.dirty || control.touched) : false;
-  }
-
-  getPianoConto(id: number): string {
-    const found = this.pianiConto.find((item: { id: number }) => item.id === id);
-    return found?.descrizione
+    return control ? control.invalid && this.submitted : false;
   }
   
   indietro() {
@@ -163,6 +159,7 @@ submitted = false;
   }
 
   resetForm() {
+    this.submitted = false;
     this.initForm();
   }
   transformCodice(value: string){

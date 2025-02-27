@@ -40,6 +40,9 @@
         <div class="invalid-feedback" *ngIf="hasError('dataCompetenza')">
             Data di competenza  è obbligatoria!
         </div>
+<!--         <div class="invalid-feedback"  *ngIf="transactionForm.get('dataCompetenza')?.errors?.['matDatepickerParse']">
+          Inserisci una data valida nel formato gg/mm/aaaa!
+         </div> -->
       </div>
       </div>
       <div class="row">
@@ -120,96 +123,63 @@
       </div>
       
       <h4 class="mt-4">Movimenti</h4>
-   
       <div formArrayName="movimenti">
-        <div class="card mb-3">
+        <div class="card mb-3" *ngFor="let movimento of movimenti?.controls; let i = index" [formGroupName]="i">
           <div class="card-header bg-light">
-            <strong>Movimento Dare - Conto CREDITI VS INQUILINI</strong>
+            <strong>Movimento {{movimento.get('dare')?.value ? 'Dare' : 'Avere'}}</strong>
           </div>
-          <div class="card-body" [formGroupName]="0">
+          <div class="card-body" >
             <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Conto</label>
+                  <div class="input-group">
+                    
+                        <select 
+                          id="contoId" 
+                          formControlName="contoId" 
+                          class="form-select"
+                          [ngClass]="{'is-invalid': hasError('contoId')}"
+                        >
+                          <option *ngFor="let conti of pianiConto"  [value]="conti.id">{{conti.descrizione}}</option>
+                        </select>
+                  
+             
+                  </div>
+                </div>
+            
+            
               <div class="col-md-6 mb-3">
-                <label for="importo0" class="form-label">Importo</label>
+                <label for="importo{{i}}" class="form-label">Importo*</label>
                 <div class="input-group">
                   <span class="input-group-text">€</span>
                   <input 
                     type="number" 
-                    id="importo0" 
+                    id="importo{{i}}" 
                     formControlName="importo" 
                     class="form-control"
                     step="0.01"
                     min="0.01"
-                    [ngClass]="{'is-invalid': hasMovementError(0, 'importo')}"
+                    [ngClass]="{'is-invalid': hasMovementError(i, 'importo')}"
                   >
                 </div>
-                <div class="invalid-feedback" *ngIf="hasMovementError(0, 'importo')">
+                <div class="invalid-feedback" *ngIf="hasMovementError(i, 'importo')">
                   Importo valido  è obbligatorio!
                 </div>
               </div>
-              <div class="col-md-6 mb-3">
+<!--               <div class="col-md-6 mb-3">
                 <label class="form-label">Tipo</label>
                 <div class="input-group">
-                <input type="text" class="form-control" value="Dare" disabled>
+                <input type="text" class="form-control" disabled [value]="movimento.get('dare')?.value ? 'Dare' : 'Avere'">
                 <input type="hidden" formControlName="dare">
                 </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label class="form-label">Conto</label>
-                <div class="input-group">
-                <input type="text" class="form-control" [value]="'CREDITI VS INQUILINI'" disabled>
-                <input type="hidden" formControlName="contoId">
-                </div>
-              </div>
-            </div>
+              </div> -->
+            
+    
           </div>
         </div>
-        
-        <div class="card mb-3">
-          <div class="card-header bg-light">
-            <strong>Movimento Avere - Conto CANONI LOCAZIONE </strong>
-          </div>
-          <div class="card-body" [formGroupName]="1">
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="importo1" class="form-label">Importo</label>
-                <div class="input-group">
-                  <span class="input-group-text">€</span>
-                  <input 
-                    type="number" 
-                    id="importo1" 
-                    formControlName="importo" 
-                    class="form-control"
-                    step="0.01"
-                    min="0.01"
-                    [ngClass]="{'is-invalid': hasMovementError(1, 'importo')}"
-                  >
-                </div>
-                <div class="invalid-feedback" *ngIf="hasMovementError(1, 'importo')">
-                  Importo valido  è obbligatorio!
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label class="form-label">Tipo</label>
-                <div class="input-group">
-                <input type="text" class="form-control" value="Avere" disabled>
-                <input type="hidden" formControlName="dare">
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label class="form-label">Conto</label>
-                <div class="input-group">
-                <input type="text" class="form-control" [value]="'CANONI LOCAZIONE'" disabled>
-                <input type="hidden" formControlName="contoId">
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
+      
       
       <div class="col-12 mt-5 d-flex justify-content-between">
         <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
