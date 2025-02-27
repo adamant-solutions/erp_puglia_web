@@ -70,7 +70,7 @@ submitted = false;
       dataCompetenza: ['', Validators.required],
       numeroProtocollo: ['', Validators.required],
       tipo: [{value: 'DA_CONTRATTO', disabled: true}, Validators.required],
-      descrizione: ['', Validators.required],
+      descrizione: [''],
       contrattoId: [{value: this.contrattoId, disabled: true}, Validators.required],
       movimenti: this.fb.array([
         this.createMovement('', true, 3),

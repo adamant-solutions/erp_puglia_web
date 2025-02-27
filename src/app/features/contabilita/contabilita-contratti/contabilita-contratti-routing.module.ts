@@ -8,6 +8,7 @@ import { pianoDeiContiResolver } from 'src/app/core/resolvers/contabilita-resolv
 import { ContrattiListComponent } from './contratti-list/contratti-list.component';
 import { SituazioneCreditiComponent } from './situazione-crediti/situazione-crediti.component';
 import { AddPagamentiComponent } from './add-pagamenti/add-pagamenti.component';
+import { EditRegistrazioneComponent } from './edit-registrazione/edit-registrazione.component';
 
 const routes: Routes = [{
   path: '',
@@ -32,6 +33,16 @@ const routes: Routes = [{
       path: 'nuova-registrazione-pagamento',
       component: AddPagamentiComponent,
       resolve: { contrattiLightResolver, pianoDeiContiResolver  },
+    },
+     {
+      path: ':registerId/modifica-registrazione',
+      component: EditRegistrazioneComponent,
+      resolve: { contrattiLightResolver,pianoDeiContiResolver, registrazioniContabileByIdResolver },
+    },
+    {
+      path: ':registerId/visualizza-registrazione',
+      component: EditRegistrazioneComponent,
+      resolve: { contrattiLightResolver,pianoDeiContiResolver, registrazioniContabileByIdResolver },
     }
   ],
 

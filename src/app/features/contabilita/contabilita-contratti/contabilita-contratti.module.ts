@@ -8,12 +8,14 @@ import { AddRegistrazioneComponent } from './add-registrazione/add-registrazione
 import { ContrattiListComponent } from './contratti-list/contratti-list.component';
 import { SituazioneCreditiComponent } from './situazione-crediti/situazione-crediti.component';
 import { AddPagamentiComponent } from './add-pagamenti/add-pagamenti.component';
+import { EditRegistrazioneComponent } from './edit-registrazione/edit-registrazione.component';
 
 
 @NgModule({
   declarations: [
     RegistrazioniComponent,
     AddRegistrazioneComponent,
+    EditRegistrazioneComponent,
     ContrattiListComponent,
     SituazioneCreditiComponent,
     AddPagamentiComponent
