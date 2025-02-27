@@ -44,9 +44,9 @@
                 (item.descrizione) | slice : 0 : 20}}
           </span></td>
 
-                <td scope="row">{{item.importoCanone}}</td>
-                <td scope="row">{{item.importoIncassato}}</td>
-                <td scope="row">{{item.saldoCredito}}</td>
+                <td scope="row">{{item.importoCanone | currency:'EUR'}}</td>
+                <td scope="row">{{item.importoIncassato  | currency:'EUR' }}</td>
+                <td scope="row">{{item.saldoCredito  | currency:'EUR'}}</td>
                 <td scope="row">
 
                 <span [ngClass]="getStatoClass(item.stato)">
