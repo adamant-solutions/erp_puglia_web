@@ -6,6 +6,10 @@
   float: left;
   height: 100%;
   background-color: #0075bf;
+  /* background-image: url("/assets/images/entry-overlay-bg.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat; */
   z-index: 999999999;
   opacity: 1;
   visibility: visible;
