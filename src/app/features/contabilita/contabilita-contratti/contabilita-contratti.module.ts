@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AddRegistrazioneComponent } from './add-registrazione/add-registrazione.component';
 import { ContrattiListComponent } from './contratti-list/contratti-list.component';
 import { SituazioneCreditiComponent } from './situazione-crediti/situazione-crediti.component';
+import { AddPagamentiComponent } from './add-pagamenti/add-pagamenti.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { SituazioneCreditiComponent } from './situazione-crediti/situazione-cred
     RegistrazioniComponent,
     AddRegistrazioneComponent,
     ContrattiListComponent,
-    SituazioneCreditiComponent
+    SituazioneCreditiComponent,
+    AddPagamentiComponent
   ],
   imports: [
     CommonModule,

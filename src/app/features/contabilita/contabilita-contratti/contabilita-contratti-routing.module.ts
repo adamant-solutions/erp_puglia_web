@@ -1,33 +1,47 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrazioniComponent } from './registrazioni/registrazioni.component';
-import { registrazioniContabileByContrattoResolver, registrazioniContabileResolver, registrazioniContabileSituazioneCreditiResolver } from 'src/app/core/resolvers/contabilita-resolvers/registrazioni-contabile.resolver';
+import { registrazioniContabileByContrattoResolver, registrazioniContabileByIdResolver, registrazioniContabileSituazioneCreditiResolver } from 'src/app/core/resolvers/contabilita-resolvers/registrazioni-contabile.resolver';
 import { contrattiLightResolver } from 'src/app/core/resolvers/morosita.resolver';
 import { AddRegistrazioneComponent } from './add-registrazione/add-registrazione.component';
-import { pianoDeiContiparentResolver } from 'src/app/core/resolvers/contabilita-resolvers/piano-dei-conti.resolver';
+import { pianoDeiContiResolver } from 'src/app/core/resolvers/contabilita-resolvers/piano-dei-conti.resolver';
 import { ContrattiListComponent } from './contratti-list/contratti-list.component';
 import { SituazioneCreditiComponent } from './situazione-crediti/situazione-crediti.component';
+import { AddPagamentiComponent } from './add-pagamenti/add-pagamenti.component';
 
 const routes: Routes = [{
   path: '',
   component: ContrattiListComponent,
-  resolve: { data: contrattiLightResolver},
+  resolve: { data: contrattiLightResolver },
   runGuardsAndResolvers: 'always',
-},{
+}, {
   path: ':id/registrazioni',
-  component: RegistrazioniComponent,
-  resolve: { data: registrazioniContabileByContrattoResolver , contrattiLightResolver},
-  runGuardsAndResolvers: 'always',
-},{
-  path: ':id/registrazioni/nuova-registrazione',
-  component: AddRegistrazioneComponent,
-  resolve: { contrattiLightResolver,pianoDeiContiparentResolver},
-},{
+  children: [
+    {
+      path: '',
+      component: RegistrazioniComponent,
+      resolve: { data: registrazioniContabileByContrattoResolver, contrattiLightResolver },
+      runGuardsAndResolvers: 'always',
+    },
+    {
+      path: 'nuova-registrazione',
+      component: AddRegistrazioneComponent,
+      resolve: { contrattiLightResolver, pianoDeiContiResolver },
+    },
+    {
+      path: 'nuova-registrazione-pagamento',
+      component: AddPagamentiComponent,
+      resolve: { contrattiLightResolver, pianoDeiContiResolver  },
+    }
+  ],
+
+}
+  , {
   path: ':id/situazione-crediti',
   component: SituazioneCreditiComponent,
   resolve: { data: registrazioniContabileSituazioneCreditiResolver },
   runGuardsAndResolvers: 'always',
-},];
+}];
 
 
 @NgModule({
