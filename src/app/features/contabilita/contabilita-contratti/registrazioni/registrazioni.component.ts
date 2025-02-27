@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RegistrazioneContabile, TipoRegistrazione } from 'src/app/core/models/contabilita/registrazione-contabile.model';
 import { ModelLight } from 'src/app/core/models/contratto.model';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { RegistrazioneContabileService } from 'src/app/core/services/contabilita-services/registrazione-contabile.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-registrazioni',
@@ -18,6 +20,8 @@ export class RegistrazioniComponent {
   ];
 
   registrazioni: RegistrazioneContabile[]= [];
+  registerId!: number;
+  registerDescrizione: string = '';
   contratti: ModelLight[] = []
   private route = inject(ActivatedRoute);
   searchDataInizioParam :any = '';
@@ -30,7 +34,7 @@ export class RegistrazioniComponent {
     TipoRegistrazione.MANUALE
   ];
 
-  constructor(private registrazioneS: RegistrazioneContabileService) { }
+  constructor(private registrazioneS: RegistrazioneContabileService,private bootstrap: BootstrapService,private notificationServ: NotificationService) { }
   ngOnInit() {
       this.getList();
   }
@@ -66,4 +70,30 @@ export class RegistrazioniComponent {
     this.searchTipoParam = '';
     this.getList()
   }
+
+   
+  deleteModal(item: RegistrazioneContabile) {
+    this.registerId = item.id;
+    this.registerDescrizione = item.descrizione;
+    this.bootstrap.showModal('deleteRegistrazioneModal');
+  }
+
+  deleteRegistrazione() {
+    this.registrazioneS.delete(this.registerId).subscribe({
+      next: () => {
+        this.registrazioni = this.registrazioni.filter(
+          (item) => item.id !== this.registerId
+        );
+      },
+      error: (error: any) => {
+        console.error(error);
+        this.notificationServ.addNotification({
+          message: 'Eliminazione non completata, si è verificato un errore.',
+          type: 'error',
+          timeout: 5000
+        })
+      },
+    });
+  }
+
 }
