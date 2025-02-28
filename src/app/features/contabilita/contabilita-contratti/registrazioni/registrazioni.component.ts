@@ -21,7 +21,8 @@ export class RegistrazioniComponent {
 
   registrazioni: RegistrazioneContabile[]= [];
   registerId!: number;
-  registerDescrizione: string = '';
+  registerInizio: string = '';
+  registerFine: string = '';
   contratti: ModelLight[] = []
   private route = inject(ActivatedRoute);
   searchDataInizioParam :any = '';
@@ -74,7 +75,8 @@ export class RegistrazioniComponent {
    
   deleteModal(item: RegistrazioneContabile) {
     this.registerId = item.id;
-    this.registerDescrizione = item.descrizione;
+    this.registerInizio = item.dataRegistrazione;
+    this.registerFine = item.dataCompetenza;
     this.bootstrap.showModal('deleteRegistrazioneModal');
   }
 
