@@ -1,9 +1,13 @@
+.hidden-overlay {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none; /* Prevents interaction when hidden */
+}
 .entry-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  float: left;
   height: 100%;
   background-color: #0075bf;
   /* background-image: url("/assets/images/entry-overlay-bg.png");
@@ -13,32 +17,29 @@
   z-index: 999999999;
   opacity: 1;
   visibility: visible;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 .entry-overlay-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
-.entry-overlay-content img {
+.entry-overlay img {
   margin-bottom: 30px;
 }
-.entry-overlay-content h1 {
+.entry-overlay h1 {
   color: #fff;
   margin-bottom: 30px;
   font-size: 2.5rem;
 }
-.entry-overlay-content p {
+.entry-overlay p {
   color: #fff;
   margin-bottom: 60px;
   font-size: 18px;
 }
-.entry-overlay-content button {
+.entry-overlay button {
   padding: 10px 30px;
   font-size: 18px;
   font-weight: 600;
@@ -49,7 +50,7 @@
   box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
   transition: all 0.3s ease-in-out;
 }
-.entry-overlay-content button:hover {
+.entry-overlay button:hover {
   background-color: #003a54;
   color: #fff;
   border: 2px solid #003a54;
