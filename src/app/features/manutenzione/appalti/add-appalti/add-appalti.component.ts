@@ -102,7 +102,7 @@ onSubmit(form: NgForm) {
     this.appaltoSrc.addAppalto(sendData).subscribe({
       next: (res) => {
         this.notificationService.addNotification({
-          message: 'Dati salvati con successo!',
+          message: 'Appalto salvato con successo!',
           type: 'success',
           timeout: 3000,
         });

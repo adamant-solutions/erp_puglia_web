@@ -92,20 +92,30 @@ export class AddRichiesteComponent {
       origineRichiesta: [null,[Validators.required]],
       budgetStimato: ['',[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       budgetEffettivo: ['',[Validators.pattern('^\\d*(\\.\\d+)?$')]],
-      periodoPianificato: ['',[Validators.required,Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
+      periodoPianificato: ['',[Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
     });
 
   }
 
   onSubmit() {
     this.submitted = true;
+ 
     console.log('Form Submitted', this.addForm.value);
     if (this.addForm.valid) {
-      console.log('Form Submitted', this.addForm.value);
-      this.richiesteService.addRichiesta(this.addForm.getRawValue()).subscribe({
+      const formValue = this.addForm.getRawValue()
+      const sendData = {
+        ...formValue,
+        richiedenteId: +this.addForm.controls['richiedenteId'].value,
+        unitaImmobiliareId: +this.addForm.controls['unitaImmobiliareId'].value,
+        pianoId: +this.addForm.controls['pianoId'].value,
+      }
+
+      
+    //  console.log('Form Submitted', this.addForm.value);
+      this.richiesteService.addRichiesta(sendData).subscribe({
         next: (res) => {
           this.notificationService.addNotification({
-            message: 'Dati salvati con successo!',
+            message: 'Richiesta salvata con successo!',
             type: 'success',
             timeout: 3000,
           });

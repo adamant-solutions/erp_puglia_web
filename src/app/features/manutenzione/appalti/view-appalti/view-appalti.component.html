@@ -17,6 +17,7 @@
                         id="codiceCIG"
                         name="codiceCIG"
                         [(ngModel)]="appaltiSearchParams.codiceCIG"
+                        (keydown.enter)="getFilteredData(0)"
                       />
                       <span class="input-group-text">
                         <i class="bi bi-ticket-detailed"></i>
@@ -33,6 +34,7 @@
                         id="codiceCUP"
                         name="codiceCUP"
                         [(ngModel)]="appaltiSearchParams.codiceCUP"
+                        (keydown.enter)="getFilteredData(0)"
                       />
                       <span class="input-group-text">
                         <i class="bi bi-ticket-detailed"></i>
@@ -50,6 +52,7 @@
                         id="stato"
                         name="stato"
                         [(ngModel)]="appaltiSearchParams.stato"
+                       
                       >
                         <option value="" selected="">
                           Seleziona stato

@@ -17,6 +17,7 @@
                     id="descrizione"
                     name="descrizione"
                     [(ngModel)]="richiesteSearchParams.descrizione"
+                    (keyboard.enter)="getFilteredData(0)"
                   />
                   <span class="input-group-text">
                     <i class="bi bi-text-left"></i>

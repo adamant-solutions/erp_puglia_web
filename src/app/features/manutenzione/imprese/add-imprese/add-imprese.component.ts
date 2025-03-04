@@ -64,7 +64,7 @@ export class AddImpreseComponent {
         next: (res) => {
          /*  alert('Dati salvati con successo!'); */
           this.notifService.addNotification({
-            message: 'Dati salvati con successo!',
+            message: 'Impresa salvata con successo!',
             type: 'success',
             timeout: 3000,
           });

@@ -558,7 +558,7 @@
               <!-- Periodo Pianificato -->
               <div class="col-md-4 mb-3">
                 <label for="periodoPianificato" class="form-label"
-                  >Periodo Pianificato*</label
+                  >Periodo Pianificato</label
                 >
                 <div class="input-group">
                   <input
@@ -570,13 +570,7 @@
                   />
                 </div>
                 <div class="custom-error"  *ngIf="addForm.get('periodoPianificato')?.invalid && submitted">
-                  <span
-                  *ngIf="
-                    addForm.get('periodoPianificato')?.hasError('required')
-                  "
-                >
-                  Periodo Pianificato è obbligatorio!
-                </span>
+
                 <span
                   *ngIf="
                     addForm.get('periodoPianificato')?.hasError('pattern')

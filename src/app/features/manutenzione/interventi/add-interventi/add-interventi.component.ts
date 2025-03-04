@@ -86,7 +86,7 @@ export class AddInterventiComponent {
       this.intService.addInterventi(this.interventoForm.value).subscribe({
         next: (res) => {
           this.notificationService.addNotification({
-            message: 'Dati salvati con successo!',
+            message: 'Intervento salvato con successo!',
             type: 'success',
             timeout: 3000,
           });
