@@ -9,7 +9,7 @@ export class AppComponent implements AfterViewInit {
   title = 'erp-puglia';
 
   entryOverlay!: HTMLElement | null;
-  private readonly OVERLAY_TIMEOUT = 10 * 60 * 1000; // 10 minutes in milliseconds
+  private readonly OVERLAY_TIMEOUT = 5 * 60 * 1000; // 5 minutes in milliseconds
 
   ngAfterViewInit() {
     this.entryOverlay = document.querySelector('.entry-overlay');
