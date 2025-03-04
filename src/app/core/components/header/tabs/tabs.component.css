@@ -13,6 +13,7 @@
 }
 .navbar-nav {
   flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .main-nav-menu .nav-item {
@@ -51,7 +52,7 @@
 .main-nav-menu .nav-link {
   padding-top: 10px;
   padding-bottom: 10px;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 600;
   color: #000;
   transition: all 0.3s ease-in-out;
