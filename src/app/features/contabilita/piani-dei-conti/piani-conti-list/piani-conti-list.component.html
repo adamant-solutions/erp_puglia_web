@@ -6,6 +6,26 @@
         <div class="col-12">
           <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
           <!-- Filter -->
+           
+  <div class="row mb-3">
+    <div class="col-md-4">
+    <div class="d-flex align-items-center">
+      <div class="input-group select-wrapper w-100">
+      <select class="form-control" (change)="filterByType($event)">
+        <option value="">Seleziona tipo conto</option>
+        <option *ngFor="let type of tipoConto" [value]="type"> {{ transformTipo(type) }}</option>
+      </select>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary btn-icon btn-xs" [routerLink]="['nuovo-piano-di-conti']">
+        <i class="fa fa-plus"></i>   <svg class="icon icon-white me-1">
+          <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+        </svg> Aggiungi piano
+      </button>
+    </div>
+  </div> 
           <div class="col-12 mb-5">          
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
@@ -19,7 +39,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let pianoDeiContiItem of pianoDeiContiList">
+                    <tr *ngFor="let pianoDeiContiItem of filteredPiano">
                       <!--   <td scope="row">
                        
                         <a
@@ -51,18 +71,20 @@
                       <td scope="row">{{ pianoDeiContiItem.codice }}</td>
                       <td scope="row">{{ pianoDeiContiItem.descrizione }}</td>
                       <td scope="row">
-                        <span *ngIf="pianoDeiContiItem.tipo === 'ATTIVITA'; else showTipo">
-                          ATTIVITÀ
+                        <span *ngIf="pianoDeiContiItem.tipo === 'ATTIVITA' || pianoDeiContiItem.tipo === 'PASSIVITA'; else showTipo">
+                          {{ pianoDeiContiItem.tipo === 'ATTIVITA' ? 'ATTIVITÀ' : 'PASSIVITÀ' }}
                         </span>
                         <ng-template #showTipo>
-                          {{pianoDeiContiItem.tipo }}
+                          {{ pianoDeiContiItem.tipo }}
                         </ng-template>
                       </td>
+                      
                       <td scope="row">{{ pianoDeiContiItem.parentCodice }}</td>
                     
                     </tr>
                   </tbody>
                 </table>
+            
               </div>
       
           </div>
