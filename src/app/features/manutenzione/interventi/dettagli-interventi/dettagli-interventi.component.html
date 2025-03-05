@@ -84,10 +84,10 @@
                             <div class="col-md-4 mb-3">
                                 <label for="stato" class="form-label">Stato</label>
                                 <div class="input-group">
-                                    <select class="form-control" id="stato" formControlName="stato">
-                                        <option value="IN_CORSO">In Corso</option>
-                                        <option value="COMPLETATO">Completato</option>
-                                        <option value="ANNULLATO">Annullato</option>
+                                    <select class="form-control" id="stato" name="stato" formControlName="stato">
+                                        <option *ngFor="let stato of statoList" [value]="stato">
+                                            {{ stato | capitalize }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>

@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Interventi } from 'src/app/core/models/manutenzione.model';
+import { Interventi, StatoIntervento } from 'src/app/core/models/manutenzione.model';
 
 @Component({
   selector: 'app-dettagli-interventi',
@@ -18,8 +18,15 @@ export class DettagliInterventiComponent {
   ];
   interventoForm!: FormGroup;
   intervento!: Interventi;
-  imprese: any[]=[];
-  richieste: any[]=[]
+  imprese: any[] = [];
+  richieste: any[] = [];
+  statoList: StatoIntervento[] = [
+    StatoIntervento.PROGRAMMATO,
+    StatoIntervento.IN_CORSO,
+    StatoIntervento.COMPLETATO,
+    StatoIntervento.ANNULLATO
+  ];
+
  
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -55,7 +62,7 @@ export class DettagliInterventiComponent {
       esitoIntervento: [this.intervento.esitoIntervento],
       impresaId: [this.getImprese(this.intervento.impresaId)],
       personaleCoinvolto: [this.intervento.personaleCoinvolto],
-      garanziaFino: [this.intervento.garanziaFino || ''],
+      garanziaFino: [this.formatDate(this.intervento.garanziaFino) || ''],
       stato: [this.intervento.stato]
     });
 

@@ -221,10 +221,20 @@
                             <!-- Garanzia Fino -->
                             <div class="col-md-4 mb-3">
                                 <label for="garanziaFino" class="form-label">Garanzia Fino</label>
-                                <div class="input-group">
-                                    <input type="text" id="garanziaFino" class="form-control"
-                                        formControlName="garanziaFino" />
-                                </div>
+    
+                                <mat-form-field appearance="fill" style="width: 100%">
+                                  <input matInput [matDatepicker]="pickergaranzia"  id="garanziaFino" name="garanziaFino"
+                                  formControlName="garanziaFino"/>
+                                  <mat-datepicker-toggle matSuffix [for]="pickergaranzia"></mat-datepicker-toggle>
+                                  <mat-datepicker #pickergaranzia></mat-datepicker>
+                                </mat-form-field>
+                
+
+                                <span class="custom-error" *ngIf="interventoForm.get('garanziaFino')?.hasError('matDatepickerParse')
+                                 && (interventoForm.get('garanziaFino')?.dirty || interventoForm.get('garanziaFino')?.touched)">
+                                 Inserisci una data valida nel formato gg/mm/aaaa!
+                                  </span> 
+
                             </div>
 
                             <!-- Note Tecniche -->
