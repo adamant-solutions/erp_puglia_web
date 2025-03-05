@@ -29,7 +29,7 @@
                      <option [ngValue]="null">Seleziona unità immobiliare</option>
                       <option
                         *ngFor="let item of unita"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="
                           item.id == addForm.get('unitaImmobiliareId')?.value
                         "
@@ -68,7 +68,7 @@
                     <option [ngValue]="null">Seleziona richiedente</option>
                       <option
                         *ngFor="let item of richiedente"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="
                           item.id === addForm.get('richiedenteId')?.value
                         "
@@ -430,7 +430,7 @@
                       <option [ngValue]="null">Seleziona piano</option>
                       <option
                         *ngFor="let item of piani"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="item.id === addForm.get('pianoId')?.value"
                       >
                         {{ item.descrizione }}
@@ -458,7 +458,7 @@
                       <option [ngValue]="null">Seleziona appalto</option>
                       <option
                         *ngFor="let item of appalti"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="item.id === addForm.get('appaltoId')?.value"
                       >
                         {{ item.codiceCIG }}

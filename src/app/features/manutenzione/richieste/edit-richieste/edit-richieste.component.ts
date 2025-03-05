@@ -95,7 +95,7 @@ export class EditRichiesteComponent {
       origineRichiesta: [this.richiesta.origineRichiesta,[Validators.required]],
       budgetStimato: [this.richiesta.budgetStimato,[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       budgetEffettivo: [this.richiesta.budgetEffettivo,[Validators.pattern('^\\d*(\\.\\d+)?$')]],
-      periodoPianificato: [this.richiesta.periodoPianificato,[Validators.required,Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
+      periodoPianificato: [this.richiesta.periodoPianificato,[Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
     });
 
   }
@@ -108,7 +108,7 @@ export class EditRichiesteComponent {
       this.richiesteService.editRichiesta(this.editForm.getRawValue()).subscribe({
         next: (res) => {
           this.notificationService.addNotification({
-            message: 'Dati salvati con successo!',
+            message: 'Richiesta salvata con successo!',
             type: 'success',
             timeout: 3000,
           });
@@ -116,7 +116,7 @@ export class EditRichiesteComponent {
         },
         error: (err) =>{
           this.notificationService.addNotification({
-            message: "Si è verificato un errore!",
+            message: err.error.message,
             type: 'error',
             timeout: 5000,
           });

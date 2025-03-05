@@ -73,11 +73,10 @@ export class AddRichiesteComponent {
 
   initForm() {
     this.addForm = this.fb.group({
-      id: [-1],
       unitaImmobiliareId: [null,[Validators.required]],
       richiedenteId: [null,[Validators.required]],
-      dataRichiesta: ['',[Validators.required]],
-      descrizione: ['',[Validators.required,Validators.minLength(10),Validators.maxLength(1000)]],
+      dataRichiesta: [null,[Validators.required]],
+      descrizione: [null,[Validators.required,Validators.minLength(10),Validators.maxLength(1000)]],
       tipoManutenzione: [null,[Validators.required]],
       stato: [null,[Validators.required]],
       priorita: [null,[Validators.required]],
@@ -92,7 +91,7 @@ export class AddRichiesteComponent {
       origineRichiesta: [null,[Validators.required]],
       budgetStimato: ['',[Validators.pattern('^\\d*(\\.\\d+)?$')]],
       budgetEffettivo: ['',[Validators.pattern('^\\d*(\\.\\d+)?$')]],
-      periodoPianificato: ['',[Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
+      periodoPianificato: [null,[Validators.pattern(/^(Q[1-4]|[A-Z]{3})\s\d{4}$/)]]
     });
 
   }
@@ -102,15 +101,7 @@ export class AddRichiesteComponent {
  
     console.log('Form Submitted', this.addForm.value);
     if (this.addForm.valid) {
-      const formValue = this.addForm.getRawValue()
-      const sendData = {
-        ...formValue,
-        richiedenteId: +this.addForm.controls['richiedenteId'].value,
-        unitaImmobiliareId: +this.addForm.controls['unitaImmobiliareId'].value,
-        pianoId: +this.addForm.controls['pianoId'].value,
-      }
-
-      
+      const sendData = this.addForm.getRawValue();
     //  console.log('Form Submitted', this.addForm.value);
       this.richiesteService.addRichiesta(sendData).subscribe({
         next: (res) => {

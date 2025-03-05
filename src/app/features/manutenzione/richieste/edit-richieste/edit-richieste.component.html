@@ -27,7 +27,7 @@
                     >
                       <option
                         *ngFor="let item of unita"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="
                           item.id == editForm.get('unitaImmobiliareId')?.value
                         "
@@ -65,7 +65,7 @@
                     >
                       <option
                         *ngFor="let item of richiedente"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="
                           item.id === editForm.get('richiedenteId')?.value
                         "
@@ -428,7 +428,7 @@
                       <option [ngValue]="null">Seleziona piano</option>
                       <option
                         *ngFor="let item of piani"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="item.id === editForm.get('pianoId')?.value"
                       >
                         {{ item.descrizione }}
@@ -455,7 +455,7 @@
                       <option [ngValue]="null">Seleziona appalto</option>
                       <option
                         *ngFor="let item of appalti"
-                        [value]="item.id"
+                        [ngValue]="item.id"
                         [selected]="
                           item.id === editForm.get('appaltoId')?.value
                         "
@@ -556,7 +556,7 @@
               <!-- Periodo Pianificato -->
               <div class="col-md-4 mb-3">
                 <label for="periodoPianificato" class="form-label"
-                  >Periodo Pianificato*</label
+                  >Periodo Pianificato</label
                 >
                 <div class="input-group">
                   <input
@@ -567,7 +567,7 @@
                     [ngClass] ="{'is-invalid': editForm.get('periodoPianificato')?.invalid && submitted}"
                   />
                 </div>
-                <span
+          <!--       <span
                   class="custom-error"
                   *ngIf="
                     editForm.get('periodoPianificato')?.hasError('required') &&
@@ -575,7 +575,7 @@
                   "
                 >
                   Periodo Pianificato è obbligatorio!
-                </span>
+                </span> -->
                 <span
                   class="custom-error"
                   *ngIf="
