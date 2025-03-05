@@ -92,7 +92,7 @@ export class AddPeriodoGestioneComponent implements OnInit {
     this.periodoService.createPeriodo(periodoData).subscribe({
       next: (response) => {
         this.notifService.addNotification({
-          message: 'Dati salvati con successo!',
+          message: 'Periodo gestione salvato con successo!',
           type: 'success',
           timeout: 3000,
         });

@@ -94,7 +94,7 @@ export class EditImpreseComponent {
       this.impreseService.editImprese(this.impresaForm.value).subscribe({
         next: (res) => {
           this.notificationService.addNotification({
-            message: 'Dati salvati con successo!',
+            message: 'Impresa salvata con successo!',
             type: 'success',
             timeout: 3000,
           });

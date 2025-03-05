@@ -65,7 +65,7 @@ onSubmit() {
     this.pianoSrc.editPiani(this.editForm.getRawValue()).subscribe({
       next: (res) => {
         this.notificationService.addNotification({
-          message: 'Dati salvati con successo!',
+          message: 'Piano salvato con successo!',
           type: 'success',
           timeout: 3000,
         });
