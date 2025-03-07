@@ -4,11 +4,13 @@ import { CommonModule } from '@angular/common';
 import { PianiDeiContiRoutingModule } from './piani-dei-conti-routing.module';
 import { PianiContiListComponent } from './piani-conti-list/piani-conti-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AddPianoContiComponent } from './add-piano-conti/add-piano-conti.component';
 
 
 @NgModule({
   declarations: [
-    PianiContiListComponent
+    PianiContiListComponent,
+    AddPianoContiComponent
   ],
   imports: [
     CommonModule,

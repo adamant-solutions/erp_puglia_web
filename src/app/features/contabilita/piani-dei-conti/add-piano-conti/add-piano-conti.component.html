@@ -1,0 +1,114 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Nuovo Piano dei Conti'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 id="main-content" class="mb-5">Nuovo Piano</h1>
+
+                <form [formGroup]="pianoForm" (ngSubmit)="save()" class="row g-3">
+                    <div class="col-12">
+                        <div class="row d-flex">
+
+                          <div class="mb-3">
+                          <label class="form-label" for="codice">Codice *</label>
+                            <div class="input-group">
+                                <input
+                                  type="text"
+                                  id="codice"
+                                  class="form-control"
+                                  formControlName="codice"
+                                  placeholder="Inserisci codice"
+                                  [class.is-invalid]="pianoForm.get('codice')?.invalid && submitted"
+                                />
+                              
+                              </div>
+                              <div class="custom-error" *ngIf="pianoForm.get('codice')?.invalid && submitted" >
+                                Il codice è obbligatorio.
+                              </div>
+                          </div>
+                          <div class="mb-3">
+                              <label class="form-label" for="descrizione">Descrizione *</label>
+                              <div class="input-group">
+                              
+                                <textarea
+                                  id="descrizione"
+                                  class="form-control"
+                                  formControlName="descrizione"
+                                  placeholder="Inserisci descrizione"
+                                  [class.is-invalid]="pianoForm.get('descrizione')?.invalid && submitted"
+                                ></textarea>
+                               
+                              </div>
+                              <div *ngIf="pianoForm.get('descrizione')?.invalid && submitted" class=" custom-error">
+                                La descrizione è obbligatoria.
+                              </div>
+                          </div>
+                              <div class="mb-3">
+                                <label class="form-label" for="tipoConto">Tipo Conto *</label>
+                                <div class="d-flex align-items-center">
+                                  <div class="input-group select-wrapper w-100">
+                                <select
+                                  id="tipoConto"
+                                  class="form-control"
+                                  formControlName="tipo"
+                                  [class.is-invalid]="pianoForm.get('tipo')?.invalid && submitted"
+                                >
+                                  <option [ngValue]="null">Seleziona tipo conto</option>
+                                  <option *ngFor="let tipo of tipoContoList" [value]="tipo">
+                                    {{ transformTipo(tipo) }}
+                                  </option>
+                                </select>
+                              
+                              </div>
+                     
+                                </div>
+                                <div *ngIf="pianoForm.get('tipo')?.invalid && submitted" class=" custom-error">
+                                  Il tipo conto è obbligatorio.
+                                </div>
+                              </div>
+                          
+                              <div class="mb-3">
+                                <label class="form-label" for="parentId">Parent</label>
+                                <div class="d-flex align-items-center">
+                                  <div class="input-group select-wrapper w-100">
+                                <select
+                                  id="parentId"
+                                  class="form-control"
+                                  formControlName="parentId"
+                                >
+                                  <option [ngValue]="null">Seleziona parent</option>
+                                  <option *ngFor="let parent of parents" [value]="parent.id">
+                                    {{ parent.codice }} - {{ parent.descrizione }}
+                                  </option>
+                                </select>
+                              </div>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+
+                        <!-- Buttons -->
+              <div class="col-12 mt-5 d-flex justify-content-between">
+                <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+                  <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+                  Indietro
+                </button>
+    
+                <div>
+                  <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm(pianoForm)">
+                    <i class="bi bi-arrow-counterclockwise me-1"></i>
+                    Annulla
+                  </button>
+    
+                  <button type="submit" class="btn btn-primary py-2">
+                    Salva
+                  </button>
+                </div>
+              
+              </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
