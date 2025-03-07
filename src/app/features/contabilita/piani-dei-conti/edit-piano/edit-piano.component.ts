@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TipoConto } from 'src/app/core/models/contabilita/piano-dei-conti.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PianoDeiConti, TipoConto } from 'src/app/core/models/contabilita/piano-dei-conti.model';
 import { PianoDeiContiService } from 'src/app/core/services/contabilita-services/piano-dei-conti.service';
 import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
-  selector: 'app-add-piano-conti',
-  templateUrl: './add-piano-conti.component.html',
-  styleUrls: ['./add-piano-conti.component.css']
+  selector: 'app-edit-piano',
+  templateUrl: './edit-piano.component.html',
+  styleUrls: ['./edit-piano.component.css']
 })
-export class AddPianoContiComponent {
-  pageTitle: string = 'Aggiungi Piano dei Conti';
+export class EditPianoComponent {
+  pageTitle: string = 'Modifica Piano del Conto';
   breadcrumbList = [
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contabilità', link: '/contabilita' },
@@ -21,7 +21,8 @@ export class AddPianoContiComponent {
   pianoForm!: FormGroup;
   errorMsg: string = '';
   submitted = false;
-  parents: any[]=[]
+  pianoConti!: PianoDeiConti;
+  parents: any[] = [];
 
   tipoContoList : TipoConto[] = [
     TipoConto.ATTIVITA ,
@@ -39,22 +40,28 @@ export class AddPianoContiComponent {
   ){}
 
   ngOnInit(){
-    this.route.data.subscribe(({ allPiani }) => {
-      this.parents = allPiani
-    })
+    this.route.data.subscribe(({ piano , allPiani }) => {
+      this.pianoConti = piano;
+      this.parents = allPiani;
       this.initForm();
+    })
+    
  }
 
  initForm(){
   this.pianoForm = new FormGroup({
- 
-    codice: new FormControl(null,[Validators.required]),
-    descrizione: new FormControl(null,[Validators.required]),
-    tipo: new FormControl(null,[Validators.required]),
-    parentId: new FormControl(null),
+    id: new FormControl(this.pianoConti?.id),
+    codice: new FormControl(this.pianoConti?.codice,[Validators.required]),
+    descrizione: new FormControl(this.pianoConti?.descrizione,[Validators.required]),
+    tipo: new FormControl(this.pianoConti?.tipo,[Validators.required]),
+    parentId: new FormControl(this.pianoConti?.parentId),
+    children: new FormControl(this.pianoConti?.children)
+
   });
+ 
  }
 
+ 
  save(): void {
   this.submitted = true;
   if (this.pianoForm.invalid) {
@@ -63,10 +70,10 @@ export class AddPianoContiComponent {
   
   const accountData = this.pianoForm.getRawValue()
 
-  this.pianoDeiContiService.create(accountData).subscribe({
+  this.pianoDeiContiService.update(accountData.id,accountData).subscribe({
       next: (res) => {
         this.notifService.addNotification({
-          message: 'Piano dei conti salvato con successo!',
+          message: 'Piano dei conti modificato con successo!',
           type: 'success',
           timeout: 3000,
         });
@@ -97,16 +104,17 @@ export class AddPianoContiComponent {
     }
   }
 
-  resetForm(form: any) {
-    form.reset();
-  }
-  
-  
-  indietro() {
-    this.router.navigate(['/contabilita/piano-dei-conti']);
-  }
 
-  transformTipo(tipo: string): string {
-    return tipo === 'ATTIVITA' ? 'ATTIVITÀ' : tipo === 'PASSIVITA' ? 'PASSIVITÀ' : tipo;
-  }
+ transformTipo(tipo: string): string {
+  return tipo === 'ATTIVITA' ? 'ATTIVITÀ' : tipo === 'PASSIVITA' ? 'PASSIVITÀ' : tipo;
+}
+
+ indietro(){
+  this.router.navigate(['/contabilita/piano-dei-conti']);
+ }
+
+ resetForm(form: any) {
+  form.reset();
+}
+
 }

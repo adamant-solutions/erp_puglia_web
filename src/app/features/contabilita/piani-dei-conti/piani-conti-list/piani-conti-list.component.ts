@@ -108,7 +108,7 @@ export class PianiContiListComponent {
   delete() {
     this.pianoDeiContiService.delete(this.pianoId).subscribe({
       next: () => {
-        this.pianoDeiContiList = this.pianoDeiContiList.filter(
+        this.filteredPiano = this.filteredPiano.filter(
           (item) => item.id !== this.pianoId
         );
         this.notifService.addNotification({
