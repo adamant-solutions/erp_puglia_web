@@ -3,7 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { PianoDeiConti, TipoConto } from 'src/app/core/models/contabilita/piano-dei-conti.model';
+import { BootstrapService } from 'src/app/core/services/bootstrap-service.service';
 import { PianoDeiContiService } from 'src/app/core/services/contabilita-services/piano-dei-conti.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
 
 @Component({
   selector: 'app-piani-conti-list',
@@ -24,6 +26,8 @@ export class PianiContiListComponent {
 
   selectedAccount: PianoDeiConti | null = null;
   isEditing = false;
+  pianoId!: number;
+  pianoItem : string = '';
   
   tipoConto : TipoConto[] = [
     TipoConto.ATTIVITA ,
@@ -37,6 +41,8 @@ export class PianiContiListComponent {
 
   constructor(
     private pianoDeiContiService: PianoDeiContiService,
+    private notifService: NotificationService,
+    private bootstrap: BootstrapService
   ) {}
 
   ngOnInit() {
@@ -91,4 +97,35 @@ export class PianiContiListComponent {
     return tipo === 'ATTIVITA' ? 'ATTIVITÀ' : tipo === 'PASSIVITA' ? 'PASSIVITÀ' : tipo;
   }
  
+
+   
+  deleteModal(item: PianoDeiConti) {
+    this.pianoId = item.id;
+    this.pianoItem = item.codice + '-' + item.descrizione;
+    this.bootstrap.showModal('deletePianoModal');
+  }
+
+  delete() {
+    this.pianoDeiContiService.delete(this.pianoId).subscribe({
+      next: () => {
+        this.pianoDeiContiList = this.pianoDeiContiList.filter(
+          (item) => item.id !== this.pianoId
+        );
+        this.notifService.addNotification({
+          message: 'Eliminato con successo!',
+          type: 'success',
+          timeout: 3000
+        })
+      },
+      error: (error: any) => {
+        console.error(error);
+        this.notifService.addNotification({
+          message: 'Eliminazione non completata, si è verificato un errore.',
+          type: 'error',
+          timeout: 5000
+        })
+      },
+    });
+  }
+
 }
