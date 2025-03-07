@@ -100,12 +100,21 @@ export class PianiContiListComponent {
 
    
   deleteModal(item: PianoDeiConti) {
+    if(item.children.length > 0){
+      this.notifService.addNotification({
+        message: 'Eliminazione non possibile, il codice ha codici figli',
+        type: 'error',
+        timeout: 5000
+      })
+     return;
+    }
     this.pianoId = item.id;
     this.pianoItem = item.codice + '-' + item.descrizione;
     this.bootstrap.showModal('deletePianoModal');
   }
 
   delete() {
+   
     this.pianoDeiContiService.delete(this.pianoId).subscribe({
       next: () => {
         this.filteredPiano = this.filteredPiano.filter(
