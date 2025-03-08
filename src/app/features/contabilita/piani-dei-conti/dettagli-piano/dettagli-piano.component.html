@@ -1,0 +1,83 @@
+<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Dettagli Piano del Conto'"></app-breadcrumbs>
+
+<section class="pt-4 pb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 id="main-content" class="mb-5">Visualizza Piano del Conto</h1>
+
+                <form [formGroup]="pianoForm" class="row g-3">
+                    <div class="col-12">
+                        <div class="row d-flex">
+
+                            <div class="mb-3">
+                                <label class="form-label" for="codice">Codice</label>
+                                <div class="input-group">
+                                    <input type="text" id="codice" class="form-control" formControlName="codice" />
+
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="descrizione">Descrizione</label>
+                                <div class="input-group">
+
+                                    <textarea id="descrizione" class="form-control"
+                                        formControlName="descrizione"></textarea>
+
+                                </div>
+
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="tipoConto">Tipo Conto</label>
+                                <div class="d-flex align-items-center">
+                                    <div class="input-group select-wrapper w-100">
+                                        <select id="tipoConto" class="form-control" formControlName="tipo">
+                                            <option [ngValue]="null">Seleziona tipo conto</option>
+                                            <option *ngFor="let tipo of tipoContoList" [value]="tipo">
+                                                {{ transformTipo(tipo) }}
+                                            </option>
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="mb-3">
+                                <label class="form-label" for="parentId">Parent Codice</label>
+                                <div class="input-group">
+                                    <input id="parentId" class="form-control" formControlName="parentId" />
+
+                                </div>
+                            </div>
+
+                            <div *ngIf="pianoForm.get('children')?.value?.length" class="mb-3">
+                                <h3>Children</h3>
+                                <ul class="list-group">
+                                    <li *ngFor="let child of pianoForm.get('children')?.value" class="list-group-item">
+                                        {{ child.codice }} - {{ child.descrizione }}
+                                    </li>
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="col-12 mt-5 d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
+                            <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+                            Indietro
+                        </button>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
