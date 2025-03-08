@@ -1,4 +1,3 @@
-
 .form-label {
   margin-left: 1rem;
   color: #0075bf;
@@ -18,7 +17,6 @@
   padding-right: 1rem;
   background-color: transparent;
 }
-
 
 .units-container,
 .quotes-container {
@@ -47,7 +45,6 @@
   gap: 0.5rem;
 }
 
-
 .input-group-text {
   background-color: transparent;
   color: #0075bf;
@@ -56,7 +53,6 @@
 input[type="number"] {
   text-align: right;
 }
-
 
 .btn {
   padding: 0.5rem 1rem;
@@ -75,15 +71,17 @@ input[type="number"] {
 }
 
 .btn-outline-danger {
-  color: #CC334D;
-  border-color: #CC334D;
+  color: #cc334d;
+  border-color: #cc334d;
 }
 
 .btn-outline-danger:hover {
-  background-color: #CC334D;
+  background-color: #cc334d;
   color: white;
 }
-
+.btn-outline-danger:hover i {
+  color: white;
+}
 
 .card {
   border: none;
@@ -101,15 +99,14 @@ input[type="number"] {
   margin: 0;
 }
 
-
 .text-muted {
   color: #6c757d;
   font-style: italic;
   padding: 1rem 0;
 }
 
-
-.unit-item, .quote-item {
+.unit-item,
+.quote-item {
   margin-bottom: 1rem;
   padding: 1rem;
   border: 1px solid #e0e0e0;
@@ -117,10 +114,10 @@ input[type="number"] {
   background-color: #f8f9fa;
 }
 
-.unit-item:last-child, .quote-item:last-child {
+.unit-item:last-child,
+.quote-item:last-child {
   margin-bottom: 0;
 }
-
 
 .modal.show {
   background-color: rgba(0, 0, 0, 0.5);

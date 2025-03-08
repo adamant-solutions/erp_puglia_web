@@ -1,166 +1,277 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="pageTitle"></app-breadcrumbs>
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="pageTitle"
+></app-breadcrumbs>
 
 <section class="pt-4 pb-5">
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 class="mb-5">{{pageTitle}}</h1>
+        <h1 class="mb-5">{{ pageTitle }}</h1>
 
-        <form [formGroup]="contratoForm" (ngSubmit)="onSubmit()" class="row g-3">
-          
+        <form
+          [formGroup]="contratoForm"
+          (ngSubmit)="onSubmit()"
+          class="row g-3"
+        >
           <div class="col-md-4 mb-3">
             <label class="form-label">Stato Contratto*</label>
-            <div class="input-group" [ngClass]="{'is-invalid': submitted && contratoForm.get('statoContratto')?.invalid}">
+            <div
+              class="input-group"
+              [ngClass]="{
+                'is-invalid':
+                  submitted && contratoForm.get('statoContratto')?.invalid
+              }"
+            >
               <select class="form-control" formControlName="statoContratto">
-                <option *ngFor="let stato of statoContrattoOptions" [value]="stato">
-                  {{stato.charAt(0) + stato.slice(1).toLowerCase()}}
+                <option
+                  *ngFor="let stato of statoContrattoOptions"
+                  [value]="stato"
+                >
+                  {{ stato.charAt(0) + stato.slice(1).toLowerCase() }}
                 </option>
               </select>
               <span class="input-group-text">
                 <i class="bi bi-caret-down-fill"></i>
               </span>
             </div>
-            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('statoContratto')?.errors?.['required']">
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && contratoForm.get('statoContratto')?.errors?.['required']"
+            >
               Stato Contratto è obbligatorio
             </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Canone Mensile*</label>
-            <input type="number" class="form-control" min="0" formControlName="canoneMensile"
-              [ngClass]="{'is-invalid': submitted && contratoForm.get('canoneMensile')?.invalid}">
-              <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('canoneMensile')?.errors?.['required']">
-                Canone Mensile è obbligatorio
-              </div>
+            <input
+              type="number"
+              class="form-control"
+              min="0"
+              formControlName="canoneMensile"
+              [ngClass]="{
+                'is-invalid':
+                  submitted && contratoForm.get('canoneMensile')?.invalid
+              }"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && contratoForm.get('canoneMensile')?.errors?.['required']"
+            >
+              Canone Mensile è obbligatorio
+            </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Inizio*</label>
-            
+
             <mat-form-field appearance="fill" style="width: 100%">
-              <input matInput [matDatepicker]="pickerdataInizio" name="dataInizio"
-              formControlName="dataInizio"  id="dataInizio" />
-              <mat-datepicker-toggle matSuffix [for]="pickerdataInizio"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="pickerdataInizio"
+                name="dataInizio"
+                formControlName="dataInizio"
+                id="dataInizio"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerdataInizio"
+              ></mat-datepicker-toggle>
               <mat-datepicker #pickerdataInizio></mat-datepicker>
             </mat-form-field>
-           
-              <div class="invalid-feedback"  *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']">
-                Data Inizio è obbligatoria
-              </div>
 
-              <div class="invalid-feedback"  *ngIf="contratoForm.get('dataInizio')?.errors?.['matDatepickerParse']">
-               Inserisci una data valida nel formato gg/mm/aaaa!
-              </div>
-          
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && contratoForm.get('dataInizio')?.errors?.['required']"
+            >
+              Data Inizio è obbligatoria
+            </div>
+
+            <div
+              class="invalid-feedback"
+              *ngIf="contratoForm.get('dataInizio')?.errors?.['matDatepickerParse']"
+            >
+              Inserisci una data valida nel formato gg/mm/aaaa!
+            </div>
           </div>
 
           <div class="col-md-4 mb-3">
             <label class="form-label">Data Fine</label>
-            
+
             <mat-form-field appearance="fill" style="width: 100%">
-              <input matInput [matDatepicker]="pickerdataFine" name="dataFine"
-              formControlName="dataFine"  id="dataFine" />
-              <mat-datepicker-toggle matSuffix [for]="pickerdataFine"></mat-datepicker-toggle>
+              <input
+                matInput
+                [matDatepicker]="pickerdataFine"
+                name="dataFine"
+                formControlName="dataFine"
+                id="dataFine"
+              />
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="pickerdataFine"
+              ></mat-datepicker-toggle>
               <mat-datepicker #pickerdataFine></mat-datepicker>
             </mat-form-field>
 
-              <div class="invalid-feedback"  *ngIf="contratoForm.get('dataFine')?.errors?.['matDatepickerParse']">
-               Inserisci una data valida nel formato gg/mm/aaaa!
-              </div>
-          
+            <div
+              class="invalid-feedback"
+              *ngIf="contratoForm.get('dataFine')?.errors?.['matDatepickerParse']"
+            >
+              Inserisci una data valida nel formato gg/mm/aaaa!
+            </div>
           </div>
 
           <div class="col-md-8 mb-3">
             <label class="form-label">Descrizione</label>
-            <input type="text" class="form-control" formControlName="descrizione">
+            <input
+              type="text"
+              class="form-control"
+              formControlName="descrizione"
+            />
           </div>
 
           <div class="col-md-6 mb-3">
             <label class="form-label">Unità Immobiliare*</label>
-            <div class="input-group" [ngClass]="{'is-invalid': submitted && contratoForm.get('unitaImmobiliare')?.invalid}">
+            <div
+              class="input-group"
+              [ngClass]="{
+                'is-invalid':
+                  submitted && contratoForm.get('unitaImmobiliare')?.invalid
+              }"
+            >
               <select class="form-control" formControlName="unitaImmobiliare">
                 <option [ngValue]="null">Seleziona un'Unità Immobiliare</option>
-                <option *ngFor="let unita of unitaImmobiliariOptions" [ngValue]="unita">
-                  {{unita.descrizione}}
+                <option
+                  *ngFor="let unita of unitaImmobiliariOptions"
+                  [ngValue]="unita"
+                >
+                  {{ unita.descrizione }}
                 </option>
               </select>
               <span class="input-group-text">
                 <i class="bi bi-caret-down-fill"></i>
               </span>
             </div>
-            <div class="invalid-feedback" *ngIf="submitted && contratoForm.get('unitaImmobiliare')?.errors?.['required']">
-                Unità Immobiliare è obbligatorio
+            <div
+              class="invalid-feedback"
+              *ngIf="submitted && contratoForm.get('unitaImmobiliare')?.errors?.['required']"
+            >
+              Unità Immobiliare è obbligatorio
             </div>
           </div>
 
-     
           <div class="col-12 mb-3">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <label class="form-label">Intestatari</label>
-              <button type="button" class="btn btn-outline-primary btn-sm" (click)="addIntestatario()">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                (click)="addIntestatario()"
+              >
                 <i class="bi bi-plus-circle me-1"></i>Aggiungi Intestatario
               </button>
             </div>
 
             <div formArrayName="intestatari">
-              <div *ngFor="let intestatarioGroup of intestatari.controls; let i=index" [formGroupName]="i"
-                class="row mb-3">
+              <div
+                *ngFor="
+                  let intestatarioGroup of intestatari.controls;
+                  let i = index
+                "
+                [formGroupName]="i"
+                class="row mb-3"
+              >
                 <div class="col-md-6">
                   <label class="form-label">Intestatari*</label>
-                  <div class="input-group" formGroupName="intestatario"
-                    [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('intestatario.id')?.invalid}">
+                  <div
+                    class="input-group"
+                    formGroupName="intestatario"
+                    [ngClass]="{
+                      'is-invalid':
+                        submitted &&
+                        intestatarioGroup.get('intestatario.id')?.invalid
+                    }"
+                  >
                     <select class="form-control" formControlName="id">
                       <option [ngValue]="null">Seleziona intestatario</option>
-                      <option *ngFor="let intestatario of intestatariOptions" [ngValue]="intestatario">
-                        {{intestatario.descrizione}}
+                      <option
+                        *ngFor="let intestatario of intestatariOptions"
+                        [ngValue]="intestatario"
+                      >
+                        {{ intestatario.descrizione }}
                       </option>
                     </select>
-                    <button type="button" class="btn btn-outline-danger" (click)="removeIntestatario(i)">
-                      <i class="bi bi-trash"></i>
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger"
+                      (click)="removeIntestatario(i)"
+                    >
+                      <i class="bi bi-trash3"></i>
                     </button>
                   </div>
-                  <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('intestatario.id')?.errors?.['required']">
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && intestatarioGroup.get('intestatario.id')?.errors?.['required']"
+                  >
                     Intestatari è obbligatorio
                   </div>
                 </div>
-                <div class="col-md-6 ">
-        
+                <div class="col-md-6">
                   <label class="form-label">Data Inizio*</label>
-                  
-                  <mat-form-field appearance="fill" style="width: 100%;" >
-                    <input matInput [matDatepicker]="pickerdataInizio" name="dataInizioI"
-                    formControlName="dataInizio"  id="dataInizioI" [ngClass]="{'is-invalid': submitted && intestatarioGroup.get('dataInizio')?.invalid}" />
-                    <mat-datepicker-toggle matSuffix [for]="pickerdataInizio"></mat-datepicker-toggle>
+
+                  <mat-form-field appearance="fill" style="width: 100%">
+                    <input
+                      matInput
+                      [matDatepicker]="pickerdataInizio"
+                      name="dataInizioI"
+                      formControlName="dataInizio"
+                      id="dataInizioI"
+                      [ngClass]="{
+                        'is-invalid':
+                          submitted &&
+                          intestatarioGroup.get('dataInizio')?.invalid
+                      }"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="pickerdataInizio"
+                    ></mat-datepicker-toggle>
                     <mat-datepicker #pickerdataInizio></mat-datepicker>
                   </mat-form-field>
-                 
-                  <div class="invalid-feedback" *ngIf="submitted && intestatarioGroup.get('dataInizio')?.errors?.['required']">
+
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="submitted && intestatarioGroup.get('dataInizio')?.errors?.['required']"
+                  >
                     Data Inizio è obbligatoria
                   </div>
-      
-                    <div class="invalid-feedback"  *ngIf="intestatarioGroup.get('dataInizio')?.errors?.['matDatepickerParse']">
-                     Inserisci una data valida nel formato gg/mm/aaaa!
-                    </div>
+
+                  <div
+                    class="invalid-feedback"
+                    *ngIf="intestatarioGroup.get('dataInizio')?.errors?.['matDatepickerParse']"
+                  >
+                    Inserisci una data valida nel formato gg/mm/aaaa!
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
-        
           <div class="col-12 mb-3">
             <label class="form-label">Documenti</label>
             <div class="input-group" style="border: none">
-              <input 
-              type="file" 
-              #fileInput
-              style="display: none;" 
-              multiple 
-              (change)="onFileSelected($event)"
-              accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-            >
-              <button 
-                type="button" 
-                class="btn btn-outline-secondary" 
+              <input
+                type="file"
+                #fileInput
+                style="display: none"
+                multiple
+                (change)="onFileSelected($event)"
+                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+              />
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
                 (click)="fileInput.click()"
               >
                 <i class="bi bi-upload me-1"></i>Carica Documenti
@@ -174,43 +285,53 @@
                 File Caricati ({{ selectedFiles.length }})
               </div>
               <ul class="list-group list-group-flush">
-                <li 
-                  *ngFor="let file of selectedFiles; let i = index" 
+                <li
+                  *ngFor="let file of selectedFiles; let i = index"
                   class="list-group-item d-flex justify-content-between align-items-center"
                 >
                   {{ file.name }}
-                  <button 
-                    type="button" 
-                    class="btn btn-sm btn-outline-danger" 
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger"
                     (click)="removeFile(i)"
                   >
-                    <i class="bi bi-trash"></i>
+                    <i class="bi bi-trash3"></i>
                   </button>
                 </li>
               </ul>
             </div>
           </div>
-<!-- buttons -->
+          <!-- buttons -->
           <div class="col-12 mt-5 d-flex justify-content-between">
-            <button type="button" class="btn btn-outline-primary py-2" (click)="indietro()">
-              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+            <button
+              type="button"
+              class="btn btn-outline-primary py-2"
+              (click)="indietro()"
+            >
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
               Indietro
             </button>
 
             <div>
-              <button type="button" class="btn btn-outline-primary py-2 me-3" (click)="resetForm(contratoForm)">
+              <button
+                type="button"
+                class="btn btn-outline-primary py-2 me-3"
+                (click)="resetForm(contratoForm)"
+              >
                 <i class="bi bi-x-circle me-1"></i>
                 Annulla
               </button>
 
-              <button type="submit" class="btn btn-primary py-2">   
+              <button type="submit" class="btn btn-primary py-2">
                 <i class="bi bi-save me-1"></i>
                 Salva
               </button>
             </div>
           </div>
         </form>
-
       </div>
     </div>
   </div>

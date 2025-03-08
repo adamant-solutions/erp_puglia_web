@@ -1,4 +1,7 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Periodi di Gestione'">
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Periodi di Gestione'"
+>
 </app-breadcrumbs>
 
 <section class="py-4">
@@ -19,9 +22,7 @@
                   name="dataInizio"
                   [(ngModel)]="searchDataInizioParam"
                 />
-                <span class="input-group-text">
-                
-                </span>
+                <span class="input-group-text"> </span>
               </div>
             </div>
 
@@ -35,9 +36,7 @@
                   name="dataFine"
                   [(ngModel)]="searchDataFineParam"
                 />
-                <span class="input-group-text">
-          
-                </span>
+                <span class="input-group-text"> </span>
               </div>
             </div>
 
@@ -45,25 +44,23 @@
               <label class="form-label" for="stato">Stato</label>
               <div class="d-flex align-items-center">
                 <div class="input-group select-wrapper w-100">
-                <select
-                  class="form-control"
-                  id="stato"
-                  name="stato"
-                  [(ngModel)]="searchStatoParam"
-                >
-                  <option value="">Tutti</option>
-                  <option value="PREVENTIVO">Preventivo</option>
-                  <option value="CONSUNTIVO">Consuntivo</option>
-                  <option value="CONGUAGLIATO">Conguagliato</option>
-                  <option value="CHIUSO">Chiuso</option>
-                </select>
-                <span class="input-group-text">
-                  <i class="bi bi-check-circle"></i>
-                </span>
+                  <select
+                    class="form-control"
+                    id="stato"
+                    name="stato"
+                    [(ngModel)]="searchStatoParam"
+                  >
+                    <option value="">Tutti</option>
+                    <option value="PREVENTIVO">Preventivo</option>
+                    <option value="CONSUNTIVO">Consuntivo</option>
+                    <option value="CONGUAGLIATO">Conguagliato</option>
+                    <option value="CHIUSO">Chiuso</option>
+                  </select>
+                  <span class="input-group-text">
+                    <i class="bi bi-check-circle"></i>
+                  </span>
+                </div>
               </div>
-              
-            </div>
-            
             </div>
 
             <div class="col-md-3 search-form-buttons d-flex align-items-end">
@@ -109,6 +106,7 @@
                 <th scope="col">Note</th>
               </tr>
             </thead>
+
             <tbody>
               <tr *ngFor="let periodo of periodiList">
                 <td scope="row">
@@ -127,6 +125,7 @@
                   >
                     <i class="bi bi-pencil"></i>
                   </a>
+
                   <a
                     (click)="openDeleteModal(periodo)"
                     title="Cancella"
@@ -135,15 +134,22 @@
                     <i class="bi bi-trash3"></i>
                   </a>
                 </td>
-                <td scope="row">{{ periodo.dataInizio || "N/A" | date:'dd/MM/yyyy'  }}</td>
-                <td scope="row">{{ periodo.dataFine || "N/A" | date:'dd/MM/yyyy' }}</td>
-                <td scope="row">{{ periodo.stato || "N/A"}}</td>
-                <td scope="row">{{ periodo.note || "N/A" }}</td>
+
+                <td>
+                  {{ periodo.dataInizio || "N/A" | date : "dd/MM/yyyy" }}
+                </td>
+                <td>
+                  {{ periodo.dataFine || "N/A" | date : "dd/MM/yyyy" }}
+                </td>
+                <td>{{ periodo.stato || "N/A" }}</td>
+                <td>{{ periodo.note || "N/A" }}</td>
               </tr>
             </tbody>
           </table>
           <div *ngIf="periodiList.length === 0" class="text-center p-4">
-            <p class="fs-5 text-muted">Non sono presenti periodi di gestione.</p>
+            <p class="fs-5 text-muted">
+              Non sono presenti periodi di gestione.
+            </p>
           </div>
         </div>
 
@@ -180,15 +186,13 @@
       </div>
       <div class="modal-body text-center">
         <p>
-          Sei sicuro di voler eliminare il periodo di gestione dal {{ periodoToDelete?.dataInizio | date:'dd/MM/yyyy' }} al {{ periodoToDelete?.dataFine | date:'dd/MM/yyyy' }}?
+          Sei sicuro di voler eliminare il periodo di gestione dal
+          {{ periodoToDelete?.dataInizio | date : "dd/MM/yyyy" }} al
+          {{ periodoToDelete?.dataFine | date : "dd/MM/yyyy" }}?
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="confirmDelete()"
-        >
+        <button type="button" class="btn btn-primary" (click)="confirmDelete()">
           Sì
         </button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -208,14 +212,12 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">
       <div class="modal-body text-center">
-        <p>
-          Periodo di gestione eliminato!
-        </p>
+        <p>Periodo di gestione eliminato!</p>
       </div>
       <div class="modal-footer" style="justify-content: center">
-        <button 
-          type="button" 
-          class="btn btn-primary" 
+        <button
+          type="button"
+          class="btn btn-primary"
           (click)="closeSuccessModal()"
         >
           Ok

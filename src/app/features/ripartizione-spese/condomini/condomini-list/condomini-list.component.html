@@ -27,7 +27,9 @@
             </div>
 
             <div class="col-md-3">
-              <label class="form-label" for="denominazione">Denominazione</label>
+              <label class="form-label" for="denominazione"
+                >Denominazione</label
+              >
               <div class="input-group">
                 <input
                   type="text"
@@ -83,7 +85,6 @@
                 type="button"
                 class="btn btn-primary me-3"
                 (click)="cercaCondomini()"
-              
               >
                 Cerca
               </button>
@@ -125,6 +126,7 @@
                 <th scope="col">Codice Fiscale</th>
               </tr>
             </thead>
+
             <tbody>
               <tr *ngFor="let condominio of condominiList">
                 <td scope="row">
@@ -143,21 +145,23 @@
                   >
                     <i class="bi bi-pencil"></i>
                   </a>
+
                   <a
-                  (click)="openDeleteModal(condominio)"
-                  title="Cancella"
-                  style="cursor: pointer; color: #0052a3"
-                >
-                  <i class="bi bi-trash3"></i>
-                </a>
+                    (click)="openDeleteModal(condominio)"
+                    title="Cancella"
+                    style="cursor: pointer; color: #0052a3"
+                  >
+                    <i class="bi bi-trash3"></i>
+                  </a>
                 </td>
-                <td scope="row">{{ condominio.codice || "N/A" }}</td>
-                <td scope="row">{{ condominio.denominazione || "N/A" }}</td>
-                <td scope="row">{{ condominio.indirizzo || "N/A" }}</td>
-                <td scope="row">{{ condominio.comune  || "N/A"}}</td>
-                <td scope="row">{{ condominio.provincia || "N/A"}}</td>
-                <td scope="row">{{ condominio.cap || "N/A"}}</td>
-                <td scope="row">{{ condominio.codiceFiscale || "N/A"}}</td>
+
+                <td>{{ condominio.codice || "N/A" }}</td>
+                <td>{{ condominio.denominazione || "N/A" }}</td>
+                <td>{{ condominio.indirizzo || "N/A" }}</td>
+                <td>{{ condominio.comune || "N/A" }}</td>
+                <td>{{ condominio.provincia || "N/A" }}</td>
+                <td>{{ condominio.cap || "N/A" }}</td>
+                <td>{{ condominio.codiceFiscale || "N/A" }}</td>
               </tr>
             </tbody>
           </table>
@@ -176,7 +180,6 @@
     </div>
   </div>
 </section>
-
 
 <div
   class="modal fade"
@@ -197,15 +200,13 @@
       </div>
       <div class="modal-body text-center">
         <p>
-          Sei sicuro di voler eliminare il condominio <b>{{ condominioToDelete?.denominazione }}</b>?
+          Sei sicuro di voler eliminare il condominio
+          <b>{{ condominioToDelete?.denominazione }}</b
+          >?
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="confirmDelete()"
-        >
+        <button type="button" class="btn btn-primary" (click)="confirmDelete()">
           Sì
         </button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
@@ -215,7 +216,6 @@
     </div>
   </div>
 </div>
-
 
 <div
   class="modal fade"
@@ -231,9 +231,9 @@
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
-        <button 
-          type="button" 
-          class="btn btn-primary" 
+        <button
+          type="button"
+          class="btn btn-primary"
           (click)="closeSuccessModal()"
         >
           Ok

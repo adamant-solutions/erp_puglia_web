@@ -1,4 +1,7 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Modifica Voce Spesa'">
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Modifica Voce Spesa'"
+>
 </app-breadcrumbs>
 
 <section class="pt-4 pb-5">
@@ -7,37 +10,68 @@
       <div class="col-12">
         <h1 id="main-content" class="mb-5">Modifica Voce Spesa</h1>
 
-        <form [formGroup]="modifyForm" (ngSubmit)="onSubmit()" class="row g-3" *ngIf="voceSpesa">
+        <form
+          [formGroup]="modifyForm"
+          (ngSubmit)="onSubmit()"
+          class="row g-3"
+          *ngIf="voceSpesa"
+        >
           <div class="col-12">
             <fieldset>
               <div class="row d-flex">
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="periodoId">Periodo *</label>
                   <div class="input-group">
-                    <select class="form-control" id="periodoId" formControlName="periodoId">
+                    <select
+                      class="form-control"
+                      id="periodoId"
+                      formControlName="periodoId"
+                    >
                       <option value="">Seleziona periodo</option>
-                      <option *ngFor="let periodo of periodi" [value]="periodo.id">
-                        {{periodo.descrizione}}
+                      <option
+                        *ngFor="let periodo of periodi"
+                        [value]="periodo.id"
+                      >
+                        {{ periodo.descrizione }}
                       </option>
                     </select>
                     <span class="input-group-text">
                       <i class="bi bi-calendar"></i>
                     </span>
                   </div>
-                  <span class="custom-error" *ngIf="modifyForm.get('periodoId')?.hasError('required') && submitted">
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modifyForm.get('periodoId')?.hasError('required') &&
+                      submitted
+                    "
+                  >
                     Periodo è obbligatorio!
                   </span>
                 </div>
 
                 <div class="col-md-12 mb-3">
-                  <label class="form-label" for="descrizione">Descrizione *</label>
+                  <label class="form-label" for="descrizione"
+                    >Descrizione *</label
+                  >
                   <div class="input-group">
-                    <input type="text" class="form-control" id="descrizione" formControlName="descrizione" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="descrizione"
+                      formControlName="descrizione"
+                    />
                     <span class="input-group-text">
                       <i class="bi bi-text-paragraph"></i>
                     </span>
                   </div>
-                  <span class="custom-error" *ngIf="modifyForm.get('descrizione')?.hasError('required') && submitted">
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modifyForm.get('descrizione')?.hasError('required') &&
+                      submitted
+                    "
+                  >
                     Descrizione è obbligatoria!
                   </span>
                 </div>
@@ -45,39 +79,72 @@
                 <div class="col-md-6 mb-3">
                   <label class="form-label" for="tipoSpesa">Tipo Spesa *</label>
                   <div class="input-group">
-                    <select class="form-control" id="tipoSpesa" formControlName="tipoSpesa">
+                    <select
+                      class="form-control"
+                      id="tipoSpesa"
+                      formControlName="tipoSpesa"
+                    >
                       <option value="">Seleziona tipo</option>
-                      <option *ngFor="let tipo of tipiSpesaOptions" [value]="tipo.value">
-                        {{tipo.label}}
+                      <option
+                        *ngFor="let tipo of tipiSpesaOptions"
+                        [value]="tipo.value"
+                      >
+                        {{ tipo.label }}
                       </option>
                     </select>
                     <span class="input-group-text">
                       <i class="bi bi-list"></i>
                     </span>
                   </div>
-                  <span class="custom-error" *ngIf="modifyForm.get('tipoSpesa')?.hasError('required') && submitted">
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modifyForm.get('tipoSpesa')?.hasError('required') &&
+                      submitted
+                    "
+                  >
                     Tipo spesa è obbligatorio!
                   </span>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                  <label class="form-label" for="importoPreventivo">Importo Preventivo *</label>
+                  <label class="form-label" for="importoPreventivo"
+                    >Importo Preventivo *</label
+                  >
                   <div class="input-group">
-                    <input type="number" class="form-control" id="importoPreventivo" formControlName="importoPreventivo" />
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="importoPreventivo"
+                      formControlName="importoPreventivo"
+                    />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
                     </span>
                   </div>
-                  <span class="custom-error"
-                    *ngIf="modifyForm.get('importoPreventivo')?.hasError('required') && submitted">
+                  <span
+                    class="custom-error"
+                    *ngIf="
+                      modifyForm
+                        .get('importoPreventivo')
+                        ?.hasError('required') && submitted
+                    "
+                  >
                     Importo preventivo è obbligatorio!
                   </span>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                  <label class="form-label" for="importoConsuntivo">Importo Consuntivo</label>
+                  <label class="form-label" for="importoConsuntivo"
+                    >Importo Consuntivo</label
+                  >
                   <div class="input-group">
-                    <input type="number" class="form-control" id="importoConsuntivo" formControlName="importoConsuntivo" />
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="importoConsuntivo"
+                      formControlName="importoConsuntivo"
+                    />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
                     </span>
@@ -85,9 +152,16 @@
                 </div>
 
                 <div class="col-md-6 mb-3">
-                  <label class="form-label" for="importoConguaglio">Importo Conguaglio</label>
+                  <label class="form-label" for="importoConguaglio"
+                    >Importo Conguaglio</label
+                  >
                   <div class="input-group">
-                    <input type="number" class="form-control" id="importoConguaglio" formControlName="importoConguaglio" />
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="importoConguaglio"
+                      formControlName="importoConguaglio"
+                    />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
                     </span>
@@ -97,7 +171,12 @@
                 <div class="col-md-12 mb-3">
                   <label class="form-label" for="note">Note</label>
                   <div class="input-group">
-                    <textarea class="form-control" id="note" formControlName="note" rows="3"></textarea>
+                    <textarea
+                      class="form-control"
+                      id="note"
+                      formControlName="note"
+                      rows="3"
+                    ></textarea>
                     <span class="input-group-text">
                       <i class="bi bi-chat-text"></i>
                     </span>
@@ -114,44 +193,54 @@
               </div>
               <div class="card-body">
                 <div class="units-container">
-             
-                  <div *ngIf="unitaDisponibili.length === 0" class="text-center text-muted">
+                  <div
+                    *ngIf="unitaDisponibili.length === 0"
+                    class="text-center text-muted"
+                  >
                     Nessuna Unità Disponibile
                   </div>
-          
-             
+
                   <div class="unit-item" *ngFor="let unita of unitaDisponibili">
                     <div class="unit-content">
                       <div class="unit-description">
                         <label class="form-label">Descrizione</label>
                         <div class="input-group">
-                          <input type="text" class="form-control" [value]="unita.descrizione" readonly />
+                          <input
+                            type="text"
+                            class="form-control"
+                            [value]="unita.descrizione"
+                            readonly
+                          />
                           <span class="input-group-text">
                             <i class="bi bi-building"></i>
                           </span>
                         </div>
                       </div>
-          
+
                       <div class="unit-millesimi mt-2">
                         <label class="form-label">Millesimi</label>
                         <div class="input-group">
-                          <input type="number" 
-                                 class="form-control" 
-                                 [(ngModel)]="unita.millesimi" 
-                                 [ngModelOptions]="{standalone: true}"
-                                 step="0.01" />
+                          <input
+                            type="number"
+                            class="form-control"
+                            [(ngModel)]="unita.millesimi"
+                            [ngModelOptions]="{ standalone: true }"
+                            step="0.01"
+                          />
                           <span class="input-group-text">
                             <i class="bi bi-currency-euro"></i>
                           </span>
                         </div>
                       </div>
-          
+
                       <div class="text-end mt-2">
-                        <button type="button" 
-                                class="btn btn-outline-primary btn-sm"
-                                (click)="onAddQuota(unita)">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary"
+                          (click)="onAddQuota(unita)"
+                        >
                           <i class="bi bi-plus-circle me-1"></i>
-                          Aggiungi  quota
+                          Aggiungi quota
                         </button>
                       </div>
                     </div>
@@ -160,8 +249,7 @@
               </div>
             </div>
           </div>
-          
-    
+
           <div class="col-md-6">
             <div class="card">
               <div class="card-header bg-light">
@@ -169,39 +257,46 @@
               </div>
               <div class="card-body">
                 <div class="quotes-container">
-             
-                  <div *ngIf="quote.length === 0" class="text-center text-muted">
+                  <div
+                    *ngIf="quote.length === 0"
+                    class="text-center text-muted"
+                  >
                     Nessuna Quota
                   </div>
-          
-                
+
                   <div class="quote-item" *ngFor="let quota of quote">
                     <div class="quote-content">
                       <div class="quote-millesimi">
                         <label class="form-label">Millesimi</label>
                         <div class="input-group">
-                          <input type="number" 
-                                 class="form-control" 
-                                 [(ngModel)]="quota.millesimi" 
-                                 [ngModelOptions]="{standalone: true}"
-                                 step="0.01" />
+                          <input
+                            type="number"
+                            class="form-control"
+                            [(ngModel)]="quota.millesimi"
+                            [ngModelOptions]="{ standalone: true }"
+                            step="0.01"
+                          />
                           <span class="input-group-text">
                             <!-- <i class="bi bi-currency-euro"></i> -->
                           </span>
                         </div>
                       </div>
-          
+
                       <div class="text-end mt-2">
-                        <button type="button" 
-                                class="btn btn-outline-primary btn-sm me-2"
-                                (click)="editQuota(quota)">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary me-2"
+                          (click)="editQuota(quota)"
+                        >
                           <i class="bi bi-pencil me-1"></i>
                           Modifica quota
                         </button>
-                        <button type="button" 
-                                class="btn btn-outline-danger btn-sm"
-                                (click)="deleteQuota(quota)">
-                          <i class="bi bi-trash"></i>
+                        <button
+                          type="button"
+                          class="btn btn-outline-danger"
+                          (click)="deleteQuota(quota)"
+                        >
+                          <i class="bi bi-trash3"></i>
                         </button>
                       </div>
                     </div>
@@ -210,8 +305,6 @@
               </div>
             </div>
           </div>
-                  
-               
 
           <div class="col-12 mt-5 d-flex justify-content-between">
             <button
@@ -219,14 +312,15 @@
               class="btn btn-outline-primary py-2"
               (click)="indietro()"
             >
-              <i class="bi bi-arrow-left me-1" style="vertical-align: middle"></i>
+              <i
+                class="bi bi-arrow-left me-1"
+                style="vertical-align: middle"
+              ></i>
               Indietro
             </button>
 
             <div>
-              <button type="submit" class="btn btn-primary py-2">
-                Salva 
-              </button>
+              <button type="submit" class="btn btn-primary py-2">Salva</button>
             </div>
           </div>
         </form>
@@ -235,7 +329,15 @@
   </div>
 </section>
 
-<div class="modal fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" [attr.aria-hidden]="!showDeleteModal">
+<div
+  class="modal fade"
+  [class.show]="showDeleteModal"
+  [style.display]="showDeleteModal ? 'block' : 'none'"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="deleteModalLabel"
+  [attr.aria-hidden]="!showDeleteModal"
+>
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -243,15 +345,27 @@
           <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
           Conferma eliminazione
         </h5>
-        <button type="button" class="btn-close" (click)="closeDeleteModal()" aria-label="Close">
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeDeleteModal()"
+          aria-label="Close"
+        >
           <span aria-hidden="true"></span>
         </button>
       </div>
       <div class="modal-body">
-        <p class="mb-0">Sei sicuro di voler eliminare questa quota? Questa azione non può essere annullata.</p>
+        <p class="mb-0">
+          Sei sicuro di voler eliminare questa quota? Questa azione non può
+          essere annullata.
+        </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-outline-primary" (click)="closeDeleteModal()">
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          (click)="closeDeleteModal()"
+        >
           <i class="bi bi-x-circle me-2"></i>
           Annulla
         </button>
@@ -264,4 +378,8 @@
   </div>
 </div>
 
-<div class="modal-backdrop fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'"></div>
+<div
+  class="modal-backdrop fade"
+  [class.show]="showDeleteModal"
+  [style.display]="showDeleteModal ? 'block' : 'none'"
+></div>

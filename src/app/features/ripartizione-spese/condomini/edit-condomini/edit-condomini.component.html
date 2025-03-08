@@ -50,7 +50,7 @@
                   class="invalid-feedback"
                   *ngIf="shouldShowError('denominazione')"
                 >
-                Denominazione obbligatorio
+                  Denominazione obbligatorio
                 </div>
               </div>
 
@@ -71,20 +71,28 @@
                   class="invalid-feedback"
                   *ngIf="shouldShowError('indirizzo')"
                 >
-                Indirizzo obbligatorio
+                  Indirizzo obbligatorio
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="provincia">Provincia *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('provincia')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('provincia')"
+                >
                   <select
                     class="form-control"
                     id="provincia"
                     formControlName="provincia"
                   >
-                    <option value="" disabled selected>Seleziona una provincia</option>
-                    <option *ngFor="let provincia of provinces" [value]="provincia.sigla">
+                    <option value="" disabled selected>
+                      Seleziona una provincia
+                    </option>
+                    <option
+                      *ngFor="let provincia of provinces"
+                      [value]="provincia.sigla"
+                    >
                       {{ provincia.nome }}
                     </option>
                   </select>
@@ -92,22 +100,33 @@
                     <i class="bi bi-caret-down-fill"></i>
                   </span>
                 </div>
-                <div class="invalid-feedback" *ngIf="shouldShowError('provincia')">
+                <div
+                  class="invalid-feedback"
+                  *ngIf="shouldShowError('provincia')"
+                >
                   Provincia obbligatoria
                 </div>
               </div>
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="comune">Comune *</label>
-                <div class="input-group" [class.is-invalid]="shouldShowError('comune')">
+                <div
+                  class="input-group"
+                  [class.is-invalid]="shouldShowError('comune')"
+                >
                   <select
                     class="form-control"
                     id="comune"
                     formControlName="comune"
                     [disabled]="!editForm.get('provincia')?.value"
                   >
-                    <option value="" disabled selected>Seleziona un comune</option>
-                    <option *ngFor="let comune of filteredComuni" [value]="comune.nome">
+                    <option value="" disabled selected>
+                      Seleziona un comune
+                    </option>
+                    <option
+                      *ngFor="let comune of filteredComuni"
+                      [value]="comune.nome"
+                    >
                       {{ comune.nome }}
                     </option>
                   </select>
@@ -119,7 +138,6 @@
                   Comune obbligatorio
                 </div>
               </div>
-
 
               <div class="col-md-4 mb-3">
                 <label class="form-label" for="cap">CAP *</label>
@@ -158,7 +176,7 @@
                   class="invalid-feedback"
                   *ngIf="shouldShowError('codiceFiscale')"
                 >
-                Codice Fiscale obbligatorio
+                  Codice Fiscale obbligatorio
                 </div>
               </div>
             </div>
@@ -213,10 +231,11 @@
                       <td>
                         <button
                           type="button"
-                          class="btn btn-danger btn-sm"
+                          class="btn btn-danger"
                           (click)="removeUnitaImmobiliare(unita.id)"
                         >
-                          <i class="bi bi-trash"></i> Rimuovi
+                          <i class="bi bi-trash3 text-white me-1"></i>
+                          <span>Rimuovi</span>
                         </button>
                       </td>
                     </tr>
@@ -227,7 +246,6 @@
           </div>
 
           <div class="col-12 mt-5">
-            
             <button
               type="button"
               class="btn btn-outline-primary"
@@ -240,7 +258,6 @@
               Indietro
             </button>
             <button type="submit" class="btn btn-primary ms-3">Salva</button>
-
           </div>
         </form>
       </div>
