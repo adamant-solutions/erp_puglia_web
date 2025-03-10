@@ -41,13 +41,13 @@ export class EditVociSpesaComponent implements OnInit {
 
   private initializeForm() {
     this.modifyForm = this.fb.group({
-      descrizione: ['', Validators.required],
+      descrizione: ['', [Validators.required,Validators.minLength(3)]],
       tipoSpesa: ['', Validators.required],
       importoPreventivo: ['', [Validators.required, Validators.min(0)]],
-      importoConsuntivo: [''],
-      importoConguaglio: [''],
+      importoConsuntivo: [null],
+      importoConguaglio: [null],
       periodoId: ['', Validators.required],
-      note: ['']
+      note: [null]
     });
   }
 
@@ -77,10 +77,11 @@ export class EditVociSpesaComponent implements OnInit {
             importoPreventivo: this.voceSpesa.importoPreventivo || '',
             periodoId: this.voceSpesa.periodoId || '',
             importoConsuntivo: this.voceSpesa.importoConsuntivo || '',
-            importoConguaglio: this.voceSpesa.importoConguaglio || '',
+            importoConguaglio: this.voceSpesa.importoConguaglio,
             note: this.voceSpesa.note || ''
           });
         }
+
       },
       error: (error) => {
   
@@ -171,7 +172,7 @@ export class EditVociSpesaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
+    
     if (!this.modifyForm.valid) {
       this.notificationService.addNotification({
         message: 'Compilare tutti i campi obbligatori',
@@ -193,9 +194,9 @@ export class EditVociSpesaComponent implements OnInit {
     const updatedVoceSpesa = {
       ...this.voceSpesa,
       ...this.modifyForm.value,
-      importoConsuntivo: this.modifyForm.value.importoConsuntivo || undefined,
-      importoConguaglio: this.modifyForm.value.importoConguaglio || undefined,
-      note: this.modifyForm.value.note || undefined
+      importoConsuntivo: this.modifyForm.value.importoConsuntivo,
+      importoConguaglio: this.modifyForm.value.importoConguaglio,
+      note: this.modifyForm.value.note
     };
 
     this.voceSpesaService.updateVoceSpesa(updatedVoceSpesa).subscribe({

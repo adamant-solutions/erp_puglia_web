@@ -45,7 +45,7 @@ export class AddVociSpesaComponent implements OnInit {
   ngOnInit() {
     this.periodi = this.route.snapshot.data['periodi'];
     this.addForm = this.fb.group({
-      descrizione: ['', Validators.required],
+      descrizione: ['', [Validators.required,Validators.minLength(3)]],
       tipoSpesa: ['', Validators.required],
       importoPreventivo: ['', [Validators.required, Validators.min(0)]],
       importoConsuntivo: [''],
