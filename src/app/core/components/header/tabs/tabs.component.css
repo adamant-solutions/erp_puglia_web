@@ -31,7 +31,9 @@
   background-color: #ccc;
 }
 .main-nav-menu .nav-item::after {
-  display: none;
+  /* display: none; */
+  opacity: 0;
+  visibility: hidden;
   content: "";
   position: absolute;
   bottom: 0;
@@ -39,14 +41,13 @@
   height: 3px;
   width: 80%;
   background-color: #0075bf;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 .main-nav-menu .nav-item:has(.nav-link:hover)::after,
 .main-nav-menu .nav-item:has(.nav-link.active)::after {
-  display: block;
+  /* display: block; */
+  opacity: 1;
+  visibility: visible;
 }
 
 .main-nav-menu .nav-link {
