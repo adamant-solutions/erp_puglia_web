@@ -127,7 +127,7 @@ export class EditVociSpesaComponent implements OnInit {
       error: (error) => {
    
         this.notificationService.addNotification({
-          message: 'Errore durante l\'aggiunta della quota',
+          message: this.handleError(error),
           type: 'error',
           timeout: 5000
         });
@@ -201,7 +201,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.updateVoceSpesa(updatedVoceSpesa).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Voce spesa modificata con successo',
+          message: 'Voce spesa modificata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -210,7 +210,7 @@ export class EditVociSpesaComponent implements OnInit {
       error: (error) => {
      
         this.notificationService.addNotification({
-          message: 'Errore durante il salvataggio della voce spesa',
+          message: error.error.message,
           type: 'error',
           timeout: 5000
         });
@@ -240,7 +240,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.updateQuota(this.voceSpesa.id, quota.id, updatedQuota).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Quota modificata con successo',
+          message: 'Quota modificata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -248,7 +248,7 @@ export class EditVociSpesaComponent implements OnInit {
       },
       error: (error) => {
         this.notificationService.addNotification({
-          message: 'Errore durante la modifica della quota',
+          message: error.error.message,
           type: 'error',
           timeout: 5000
         });
@@ -340,5 +340,14 @@ export class EditVociSpesaComponent implements OnInit {
   }
   addNewQuota() {
    
+  }
+
+  private handleError(error: any): string {
+    switch (error.status) {
+      case 500:
+        return error.error.message;
+      default:
+        return 'Errore durante l\'aggiunta della quota';
+    }
   }
 }
