@@ -74,6 +74,15 @@
                   >
                     Descrizione è obbligatoria!
                   </span>
+                  <span
+                  class="custom-error"
+                  *ngIf="
+                    modifyForm.get('descrizione')?.hasError('minlength') &&
+                    submitted
+                  "
+                >
+                  Descrizione deve avere più di 3 caratteri!
+                </span>
                 </div>
 
                 <div class="col-md-6 mb-3">
@@ -117,6 +126,7 @@
                       class="form-control"
                       id="importoPreventivo"
                       formControlName="importoPreventivo"
+                      min="0"
                     />
                     <span class="input-group-text">
                       <i class="bi bi-currency-euro"></i>
@@ -132,6 +142,16 @@
                   >
                     Importo preventivo è obbligatorio!
                   </span>
+                  <span
+                  class="custom-error"
+                  *ngIf="
+                    modifyForm
+                      .get('importoPreventivo')
+                      ?.hasError('min') && submitted
+                  "
+                >
+                 L'importo preventivo deve essere un numero positivo.
+                </span>
                 </div>
 
                 <div class="col-md-6 mb-3">

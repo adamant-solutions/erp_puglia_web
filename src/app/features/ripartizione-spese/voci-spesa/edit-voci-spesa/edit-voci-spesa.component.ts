@@ -41,13 +41,13 @@ export class EditVociSpesaComponent implements OnInit {
 
   private initializeForm() {
     this.modifyForm = this.fb.group({
-      descrizione: ['', Validators.required],
+      descrizione: ['', [Validators.required,Validators.minLength(3)]],
       tipoSpesa: ['', Validators.required],
       importoPreventivo: ['', [Validators.required, Validators.min(0)]],
-      importoConsuntivo: [''],
-      importoConguaglio: [''],
+      importoConsuntivo: [null],
+      importoConguaglio: [null],
       periodoId: ['', Validators.required],
-      note: ['']
+      note: [null]
     });
   }
 
@@ -77,10 +77,11 @@ export class EditVociSpesaComponent implements OnInit {
             importoPreventivo: this.voceSpesa.importoPreventivo || '',
             periodoId: this.voceSpesa.periodoId || '',
             importoConsuntivo: this.voceSpesa.importoConsuntivo || '',
-            importoConguaglio: this.voceSpesa.importoConguaglio || '',
+            importoConguaglio: this.voceSpesa.importoConguaglio,
             note: this.voceSpesa.note || ''
           });
         }
+
       },
       error: (error) => {
   
@@ -111,15 +112,16 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.addQuota(this.voceSpesa.id, newQuota).subscribe({
       next: (response) => {
         const index = this.unitaDisponibili.findIndex(u => u.id === unita.id);
-        if (index !== -1) {
+        /*  if (index !== -1) {
           this.unitaDisponibili[index] = {
             ...this.unitaDisponibili[index],
             quotaId: response.id
           };
-        }
-
+        }; */
+        this.refreshUnitaDisponibili()
+        this.refreshQuote();
         this.notificationService.addNotification({
-          message: 'Quota aggiunta con successo',
+          message: 'Quota aggiunta con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -127,7 +129,7 @@ export class EditVociSpesaComponent implements OnInit {
       error: (error) => {
    
         this.notificationService.addNotification({
-          message: 'Errore durante l\'aggiunta della quota',
+          message: this.handleError(error),
           type: 'error',
           timeout: 5000
         });
@@ -153,7 +155,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.updateQuota(this.voceSpesa.id, unita.quotaId, updatedQuota).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Quota modificata con successo',
+          message: 'Quota modificata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -193,15 +195,15 @@ export class EditVociSpesaComponent implements OnInit {
     const updatedVoceSpesa = {
       ...this.voceSpesa,
       ...this.modifyForm.value,
-      importoConsuntivo: this.modifyForm.value.importoConsuntivo || undefined,
-      importoConguaglio: this.modifyForm.value.importoConguaglio || undefined,
-      note: this.modifyForm.value.note || undefined
+      importoConsuntivo: this.modifyForm.value.importoConsuntivo,
+      importoConguaglio: this.modifyForm.value.importoConguaglio,
+      note: this.modifyForm.value.note
     };
 
     this.voceSpesaService.updateVoceSpesa(updatedVoceSpesa).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Voce spesa modificata con successo',
+          message: 'Voce spesa modificata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -210,7 +212,7 @@ export class EditVociSpesaComponent implements OnInit {
       error: (error) => {
      
         this.notificationService.addNotification({
-          message: 'Errore durante il salvataggio della voce spesa',
+          message: error.error.message,
           type: 'error',
           timeout: 5000
         });
@@ -240,7 +242,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.updateQuota(this.voceSpesa.id, quota.id, updatedQuota).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Quota modificata con successo',
+          message: 'Quota modificata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -248,7 +250,7 @@ export class EditVociSpesaComponent implements OnInit {
       },
       error: (error) => {
         this.notificationService.addNotification({
-          message: 'Errore durante la modifica della quota',
+          message: error.error.message,
           type: 'error',
           timeout: 5000
         });
@@ -309,7 +311,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.deleteQuota(this.voceSpesa.id, this.quotaToDelete.id).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Quota eliminata con successo',
+          message: 'Quota eliminata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -340,5 +342,14 @@ export class EditVociSpesaComponent implements OnInit {
   }
   addNewQuota() {
    
+  }
+
+  private handleError(error: any): string {
+    switch (error.status) {
+      case 500:
+        return error.error.message;
+      default:
+        return 'Errore durante l\'aggiunta della quota';
+    }
   }
 }
