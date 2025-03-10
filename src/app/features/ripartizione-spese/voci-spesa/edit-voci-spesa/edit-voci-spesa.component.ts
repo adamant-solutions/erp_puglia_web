@@ -112,15 +112,16 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.addQuota(this.voceSpesa.id, newQuota).subscribe({
       next: (response) => {
         const index = this.unitaDisponibili.findIndex(u => u.id === unita.id);
-        if (index !== -1) {
+        /*  if (index !== -1) {
           this.unitaDisponibili[index] = {
             ...this.unitaDisponibili[index],
             quotaId: response.id
           };
-        }
-
+        }; */
+        this.refreshUnitaDisponibili()
+        this.refreshQuote();
         this.notificationService.addNotification({
-          message: 'Quota aggiunta con successo',
+          message: 'Quota aggiunta con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -154,7 +155,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.updateQuota(this.voceSpesa.id, unita.quotaId, updatedQuota).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Quota modificata con successo',
+          message: 'Quota modificata con successo.',
           type: 'success',
           timeout: 5000
         });
@@ -172,7 +173,7 @@ export class EditVociSpesaComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-    
+
     if (!this.modifyForm.valid) {
       this.notificationService.addNotification({
         message: 'Compilare tutti i campi obbligatori',
@@ -310,7 +311,7 @@ export class EditVociSpesaComponent implements OnInit {
     this.voceSpesaService.deleteQuota(this.voceSpesa.id, this.quotaToDelete.id).subscribe({
       next: () => {
         this.notificationService.addNotification({
-          message: 'Quota eliminata con successo',
+          message: 'Quota eliminata con successo.',
           type: 'success',
           timeout: 5000
         });
