@@ -103,6 +103,7 @@
                 <th scope="col">Data Inizio</th>
                 <th scope="col">Data Fine</th>
                 <th scope="col">Stato</th>
+                <th scope="col">Indirizzo</th>
                 <th scope="col">Note</th>
               </tr>
             </thead>
@@ -142,6 +143,19 @@
                   {{ periodo.dataFine || "N/A" | date : "dd/MM/yyyy" }}
                 </td>
                 <td>{{ periodo.stato || "N/A" }}</td>
+                <td>
+                  {{ periodo.indirizzoCondominio || "N/A" }}
+                  {{
+                    periodo.comuneCondominio
+                      ? ", " + periodo.comuneCondominio
+                      : ""
+                  }}
+                  {{
+                    periodo.provinciaCondominio
+                      ? ", " + periodo.provinciaCondominio
+                      : ""
+                  }}
+                </td>
                 <td>{{ periodo.note || "N/A" }}</td>
               </tr>
             </tbody>
