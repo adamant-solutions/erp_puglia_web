@@ -1,4 +1,13 @@
 table {
-    border-color: #0075bf;
-    text-align: center;
+  border-color: #0075bf;
+  text-align: center;
+}
+
+#infoModal li {
+  font-size: 16px;
+}
+@media (min-width: 576px) {
+  #infoModal .modal-dialog {
+    max-width: 70%;
   }
+}

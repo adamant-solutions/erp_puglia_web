@@ -1,99 +1,126 @@
-<app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Piano dei Conti'">
+<app-breadcrumbs
+  [crumbsList]="breadcrumbList"
+  [currentPage]="'Piano dei Conti'"
+>
 </app-breadcrumbs>
+
 <section class="py-4">
-    <div class="container">
-      <div class="row">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+
+        <!-- Info -->
         <div class="col-12">
-          <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
-          <!-- Filter -->
-           
-  <div class="row mb-3">
-    <div class="col-md-4">
-    <div class="d-flex align-items-center">
-      <div class="input-group select-wrapper w-100">
-      <select class="form-control" (change)="filterByType($event)">
-        <option value="">Seleziona tipo conto</option>
-        <option *ngFor="let type of tipoConto" [value]="type"> {{ transformTipo(type) }}</option>
-      </select>
-    </div>
-    </div>
-    </div>
-    <div class="col-md-2">
-      <button class="btn btn-primary btn-icon btn-xs" [routerLink]="['nuovo-piano-di-conti']">
-        <i class="fa fa-plus"></i>   <svg class="icon icon-white me-1">
-          <use href="assets/svg/sprites.svg#it-plus-circle"></use>
-        </svg> Aggiungi piano
-      </button>
-    </div>
-  </div> 
-          <div class="col-12 mb-5">          
-            <div class="table-responsive">
-                <table class="table table-striped table-hover table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">Azioni</th>
-                      <th scope="col">Codice</th>
-                      <th scope="col">Descrizione</th>
-                      <th scope="col">Tipo</th>
-                      <th scope="col">Parent Codice</th>     
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let pianoDeiContiItem of filteredPiano">
-                        <td scope="row">
-                       
-                        <a
-                            [routerLink]="['dettagli',pianoDeiContiItem.id]"
-                            title="Vedi dettagli"
-                            class="text-decoration-none me-3"
-                          >
-                            <i class="bi bi-eye-fill align-middle"></i>
-                          </a>
-                      
-                          <a
-                            [routerLink]="['modifica', pianoDeiContiItem.id]"
-                            title="Modifica"
-                            class="text-decoration-none me-3"
-                          >
-                            <i class="bi bi-pencil align-middle"></i>
-                          </a>
-                      
-                          <a
-                           (click)="deleteModal(pianoDeiContiItem)"
-                            title="Cancella"
-                            class="text-decoration-none me-3"
-                            style="cursor: pointer; color: #0052a3"
-                          >
-                            <i class="bi bi-trash3 align-middle"></i>
-                          </a>
-                      
-                      </td> 
-                      <td scope="row">{{ pianoDeiContiItem.codice }}</td>
-                      <td scope="row">{{ pianoDeiContiItem.descrizione }}</td>
-                      <td scope="row">
-                        <span *ngIf="pianoDeiContiItem.tipo === 'ATTIVITA' || pianoDeiContiItem.tipo === 'PASSIVITA'; else showTipo">
-                          {{ pianoDeiContiItem.tipo === 'ATTIVITA' ? 'ATTIVITÀ' : 'PASSIVITÀ' }}
-                        </span>
-                        <ng-template #showTipo>
-                          {{ pianoDeiContiItem.tipo }}
-                        </ng-template>
-                      </td>
-                      
-                      <td scope="row">{{ pianoDeiContiItem.parentCodice }}</td>
-                    
-                    </tr>
-                  </tbody>
-                </table>
-            
+          <button
+            class="btn btn-primary btn-icon btn-xs mb-5"
+            (click)="infoModal()"
+          >
+            <svg class="icon icon-white me-1">
+              <use href="assets/svg/sprites.svg#it-info-circle"></use>
+            </svg>
+            <span>Info</span>
+          </button>
+        </div>
+
+        <!-- Filter -->
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <div class="d-flex align-items-center">
+              <div class="input-group select-wrapper w-100">
+                <select class="form-control" (change)="filterByType($event)">
+                  <option value="">Seleziona tipo conto</option>
+                  <option *ngFor="let type of tipoConto" [value]="type">
+                    {{ transformTipo(type) }}
+                  </option>
+                </select>
               </div>
-      
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button
+              class="btn btn-primary btn-icon btn-xs"
+              [routerLink]="['nuovo-piano-di-conti']"
+            >
+              <i class="fa fa-plus"></i>
+              <svg class="icon icon-white me-1">
+                <use href="assets/svg/sprites.svg#it-plus-circle"></use>
+              </svg>
+              Aggiungi piano
+            </button>
+          </div>
+        </div>
+        <div class="col-12 mb-5">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+              <thead>
+                <tr>
+                  <th scope="col">Azioni</th>
+                  <th scope="col">Codice</th>
+                  <th scope="col">Descrizione</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Parent Codice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let pianoDeiContiItem of filteredPiano">
+                  <td scope="row">
+                    <a
+                      [routerLink]="['dettagli', pianoDeiContiItem.id]"
+                      title="Vedi dettagli"
+                      class="text-decoration-none me-3"
+                    >
+                      <i class="bi bi-eye-fill align-middle"></i>
+                    </a>
+
+                    <a
+                      [routerLink]="['modifica', pianoDeiContiItem.id]"
+                      title="Modifica"
+                      class="text-decoration-none me-3"
+                    >
+                      <i class="bi bi-pencil align-middle"></i>
+                    </a>
+
+                    <a
+                      (click)="deleteModal(pianoDeiContiItem)"
+                      title="Cancella"
+                      class="text-decoration-none me-3"
+                      style="cursor: pointer; color: #0052a3"
+                    >
+                      <i class="bi bi-trash3 align-middle"></i>
+                    </a>
+                  </td>
+                  <td scope="row">{{ pianoDeiContiItem.codice }}</td>
+                  <td scope="row">{{ pianoDeiContiItem.descrizione }}</td>
+                  <td scope="row">
+                    <span
+                      *ngIf="
+                        pianoDeiContiItem.tipo === 'ATTIVITA' ||
+                          pianoDeiContiItem.tipo === 'PASSIVITA';
+                        else showTipo
+                      "
+                    >
+                      {{
+                        pianoDeiContiItem.tipo === "ATTIVITA"
+                          ? "ATTIVITÀ"
+                          : "PASSIVITÀ"
+                      }}
+                    </span>
+                    <ng-template #showTipo>
+                      {{ pianoDeiContiItem.tipo }}
+                    </ng-template>
+                  </td>
+
+                  <td scope="row">{{ pianoDeiContiItem.parentCodice }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
     </div>
+  </div>
 </section>
-
-
 
 <!-- delete modal -->
 <div
@@ -106,7 +133,9 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">
       <div class="modal-header p-0" style="margin-left: 24px">
-         <h1 class="modal-title fs-5" id="deletePianoModalLabel">Elimina Piano</h1> 
+        <h1 class="modal-title fs-5" id="deletePianoModalLabel">
+          Elimina Piano
+        </h1>
         <button
           type="button"
           class="btn-close"
@@ -116,7 +145,8 @@
       </div>
       <div class="modal-body">
         <p>
-          Sei sicuro di voler eliminare piano dei conti: <b>{{ pianoItem }}</b> ?
+          Sei sicuro di voler eliminare piano dei conti:
+          <b>{{ pianoItem }}</b> ?
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">
@@ -133,6 +163,106 @@
           No
         </button>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Info modal -->
+<div
+  class="modal fade"
+  id="infoModal"
+  tabindex="-1"
+  aria-labelledby="infoModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4">
+      <div class="modal-header p-0">
+        <!-- <h1 class="modal-title fs-5" id="infoModalLabel">Info</h1> -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <p>
+            Il piano dei conti è uno strumento fondamentale nella contabilità
+            che rappresenta una struttura gerarchica organizzata di tutti i
+            conti utilizzati per registrare le operazioni contabili di
+            un'azienda.
+          </p>
+
+          <p>Ecco le caratteristiche principali:</p>
+
+          <ol>
+            <li>
+              <b>Struttura Gerarchica:</b>
+              <ul>
+                <li>È organizzato in livelli (solitamente da 3 a 5)</li>
+                <li>
+                  Parte da categorie generali fino ad arrivare ai conti
+                  specifici
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b>Classificazione Principale:</b>
+              <ul>
+                <li>
+                  Conti Patrimoniali (Stato Patrimoniale)
+                  <ul>
+                    <li>Attività</li>
+                    <li>Passività</li>
+                  </ul>
+                </li>
+                <li>
+                  Conti Economici (Conto Economico)
+                  <ul>
+                    <li>Costi</li>
+                    <li>Ricavi</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <b>Codifica:</b>
+              <ul>
+                <li>Ogni conto ha un codice univoco</li>
+                <li>La codifica riflette la struttura gerarchica</li>
+                <li>Esempio:</li>
+              </ul>
+            </li>
+            <li>
+              <b>Vantaggi:</b>
+              <ul>
+                <li>Standardizzazione delle registrazioni contabili</li>
+                <li>Facilità di ricerca e aggregazione dei dati</li>
+                <li>Migliore controllo e analisi dei dati contabili</li>
+                <li>Conformità alle normative contabili</li>
+              </ul>
+            </li>
+          </ol>
+
+          <p>
+            Nel contesto di un sistema ERP come quello che stai sviluppando, il
+            piano dei conti è tipicamente implementato come una struttura dati
+            che permette:
+          </p>
+
+          <ul>
+            <li>La gestione gerarchica dei conti</li>
+            <li>L'associazione con le scritture contabili</li>
+            <li>La generazione di report e bilanci</li>
+            <li>
+              La gestione delle autorizzazioni per l'accesso ai vari livelli
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- <div class="modal-footer"></div> -->
     </div>
   </div>
 </div>
