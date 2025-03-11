@@ -61,6 +61,7 @@ registerLocaleData(localeIt);
     { provide: 'condominiUrl', useValue: environment.condominiUrl },
     { provide: 'periodiGestioniUrl', useValue: environment.periodiGestioniUrl },
     { provide: 'condominiLightUrl', useValue: environment.condominiLightUrl },
+    { provide: 'statoPagamentiUrl', useValue: environment.statoPagamentiUrl },
     { provide: 'contabilitaUrl', useValue: environment.contabilitaUrl }
   ],
   bootstrap: [AppComponent],

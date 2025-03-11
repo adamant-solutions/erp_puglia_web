@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { StatoPagamentiRoutingModule } from './stato-pagamenti-routing.module';
 import { StatoPagamentiListComponent } from './stato-pagamenti-list/stato-pagamenti-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { StatoPagamentiListComponent } from './stato-pagamenti-list/stato-pagame
   ],
   imports: [
     CommonModule,
+    SharedModule,
     StatoPagamentiRoutingModule
   ]
 })

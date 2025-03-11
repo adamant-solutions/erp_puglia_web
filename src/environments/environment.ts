@@ -14,7 +14,8 @@ export const environment = {
   manutenzioneUrl: API_BASE_URL + 'manutenzione',
   condominiUrl: API_BASE_URL + 'spese/condomini',
   periodiGestioniUrl: API_BASE_URL + 'spese/periodi',
-  condominiLightUrl:API_BASE_URL + 'spese/condomini/light',
+  condominiLightUrl: API_BASE_URL + 'spese/condomini/light',
+  statoPagamentiUrl : API_BASE_URL + 'spese/monitoraggio-pagamenti/unita',
   contabilitaUrl: API_BASE_URL + 'contabilita'
 };
 
