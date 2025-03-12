@@ -1,5 +1,5 @@
 const API_BASE_URL = '/gw/';
-
+ 
 export const environment = {
   production: true,
   tokenUrl: API_BASE_URL + 'oauth2/token',

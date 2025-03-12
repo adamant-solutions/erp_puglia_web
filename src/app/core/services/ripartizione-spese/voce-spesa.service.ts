@@ -13,7 +13,7 @@ export interface VoceSpesaSearchParams {
   page?: number;
   size?: number;
 }
-
+ 
 @Injectable({
   providedIn: 'root'
 })

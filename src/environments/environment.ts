@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 const API_BASE_URL = '/';
-
+ 
 export const environment = {
   production: false,
   tokenUrl: API_BASE_URL + 'oauth2/token',
