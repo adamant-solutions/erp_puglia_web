@@ -9,7 +9,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #0075bf;
+  background-color: #003a54;
   /* background-image: url("/assets/images/entry-overlay-bg.png");
   background-position: center center;
   background-size: cover;
@@ -26,8 +26,26 @@
   align-items: center;
   flex-direction: column;
 }
-.entry-overlay img {
+.logo-wrapper {
+  position: relative;
+  padding: 30px;
   margin-bottom: 30px;
+}
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(0, 0, 0, 0) 70%
+  );
+  border-radius: 50%;
+  filter: blur(40px);
+  z-index: -1;
 }
 .entry-overlay h1 {
   color: #fff;
@@ -51,7 +69,7 @@
   transition: all 0.3s ease-in-out;
 }
 .entry-overlay button:hover {
-  background-color: #003a54;
+  background-color: #0075bf;
   color: #fff;
-  border: 2px solid #003a54;
+  border: 2px solid #0075bf;
 }
