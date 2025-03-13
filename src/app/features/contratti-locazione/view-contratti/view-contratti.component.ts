@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ContrattiService } from 'src/app/core/services/contratti.service';
+import * as bootstrap from 'bootstrap';
+
 interface PatrimonioItem {
   id: number;
   descrizione: any;
@@ -48,12 +49,12 @@ export class ViewContrattiComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private contrattiService: ContrattiService,
     private fb: FormBuilder,
     private router:Router
   ) {}
 
   ngOnInit() {
+     
     this.route.data.subscribe(({ contratto, unitaImmobiliareResolver }) => {
       if (!contratto) {
        
@@ -70,6 +71,24 @@ export class ViewContrattiComponent {
       this.documenti = contratto.documenti || [];
     });
   }
+
+   toggleAccordion(targetId: string): void {  
+    const collapseElement = document.getElementById(targetId);  
+    if (collapseElement) {  
+      // toggle the visibility  
+      const bootstrapCollapse = new bootstrap.Collapse(collapseElement, {  
+        toggle: true  
+      });   
+      const isCollapsed = collapseElement.classList.contains("show");  
+      if (isCollapsed) {  
+        bootstrapCollapse.hide();  
+      } else {  
+        bootstrapCollapse.show();  
+      }  
+    }  
+  }  
+
+ 
   private findPatrimonioDescription(unitaId: number): string {
     const unita = this.patrimonio.find((item: { id: number }) => item.id === unitaId);
     return unita?.descrizione;

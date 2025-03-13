@@ -49,9 +49,9 @@
            
             <div class="accordion-item">
               <h2 class="accordion-header" id="heading1d">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" 
-                        data-bs-target="#collapse1d" aria-expanded="true" 
-                        aria-controls="collapse1d">
+                <button class="accordion-button" type="button" 
+
+                        aria-controls="collapse1d" (click)="toggleAccordion('collapse1d')">
                   Intestatari Attuali
                 </button>
               </h2>
@@ -97,7 +97,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header" id="heading2d">
                   <button class="accordion-button collapsed" type="button" 
-                          data-bs-toggle="collapse" data-bs-target="#collapse2d" 
+                  (click)="toggleAccordion('collapse2d')"
                           aria-expanded="false" aria-controls="collapse2d">
                     Intestatari Residenza
                   </button>
@@ -149,7 +149,7 @@
               <div class="accordion-item">
                 <h2 class="accordion-header" id="heading3d">
                   <button class="accordion-button collapsed" type="button" 
-                          data-bs-toggle="collapse" data-bs-target="#collapse3d" 
+                  (click)="toggleAccordion('collapse3d')"
                           aria-expanded="false" aria-controls="collapse3d">
                     Contatti
                   </button>
