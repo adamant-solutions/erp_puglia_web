@@ -5,6 +5,7 @@ import { VoceSpesaDTO } from '../../models/voce-spesa.model';
 import { PeriodoLight } from '../../models/periodi-gestione.model';
 import { UnitaDisponibile } from '../../models/unita-disponibile.model';
 import { QuotaVoceSpesa } from '../../models/quote-voce-spesa.model';
+import { environment } from 'src/environments/environment';
 
 export interface VoceSpesaSearchParams {
   descrizione?: string;
@@ -17,8 +18,8 @@ export interface VoceSpesaSearchParams {
   providedIn: 'root'
 })
 export class VoceSpesaService {
-  private baseUrl = 'spese/voci-spesa';
-  private periodoLightUrl = 'spese/periodi/light';
+  private baseUrl = `${environment.speseUrl}/voci-spesa`;
+  private periodoLightUrl = `${environment.speseUrl}/periodi/light`;
   private defaultPageSize = 10;
 
   constructor(private http: HttpClient) {}
