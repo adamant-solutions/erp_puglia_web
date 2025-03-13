@@ -1,4 +1,5 @@
-const API_BASE_URL = 'https://195.231.37.106:8443/';
+/* const API_BASE_URL = 'https://195.231.37.106:8443/';*/
+const API_BASE_URL = '/gw/';
 
 export const environment = {
   production: true,
