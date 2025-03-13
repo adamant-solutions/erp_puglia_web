@@ -19,6 +19,7 @@ export class ViewContrattiComponent {
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
   ];
+  intestatari: any[]=[];
   viewForm = this.fb.group({
     descrizione: [''],
     canoneMensile: [''],
@@ -69,6 +70,7 @@ export class ViewContrattiComponent {
   
      
       this.documenti = contratto.documenti || [];
+      this.intestatari = contratto.intestatari || []
     });
   }
 
