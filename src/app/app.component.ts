@@ -15,7 +15,14 @@ export class AppComponent implements AfterViewInit {
   private readonly OVERLAY_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
 
   prepareRoute(outlet: RouterOutlet): string {
-    return outlet?.activatedRouteData?.['animation'] ?? outlet?.activatedRoute?.snapshot?.url?.[0]?.path ?? 'root';
+    if (!outlet || !outlet.isActivated) {
+      return 'root';
+    }
+    return (
+      outlet.activatedRouteData?.['animation'] ??
+      outlet.activatedRoute?.snapshot?.url?.[0]?.path ??
+      'root'
+    );
   }
 
   ngAfterViewInit() {
