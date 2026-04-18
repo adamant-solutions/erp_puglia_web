@@ -3,6 +3,10 @@
   visibility: hidden !important;
   pointer-events: none; /* Prevents interaction when hidden */
 }
+.route-anim-host {
+  display: block;
+  position: relative;
+}
 .entry-overlay {
   position: fixed;
   top: 0;

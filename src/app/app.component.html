@@ -30,7 +30,9 @@
 
 <main>
   <app-toast></app-toast>
-  <router-outlet #outlet="outlet"> </router-outlet>
+  <div class="route-anim-host" [@routeAnimations]="prepareRoute(outlet)">
+    <router-outlet #outlet="outlet"></router-outlet>
+  </div>
 </main>
 
 <app-footer></app-footer>

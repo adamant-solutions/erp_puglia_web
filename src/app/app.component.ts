@@ -1,15 +1,22 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { routeAnimations } from './app.animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  animations: [routeAnimations],
 })
 export class AppComponent implements AfterViewInit {
   title = 'erp-puglia';
 
   entryOverlay!: HTMLElement | null;
   private readonly OVERLAY_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
+
+  prepareRoute(outlet: RouterOutlet): string {
+    return outlet?.activatedRouteData?.['animation'] ?? outlet?.activatedRoute?.snapshot?.url?.[0]?.path ?? 'root';
+  }
 
   ngAfterViewInit() {
     this.entryOverlay = document.querySelector('.entry-overlay');
