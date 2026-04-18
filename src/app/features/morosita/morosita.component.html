@@ -1,7 +1,7 @@
 <app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Morosità'">
 </app-breadcrumbs>
 
-<section class="py-4">
+<section class="erp-page">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -92,7 +92,7 @@
               </div>
             </div>
 
-            <div class="col-md-3 search-form-buttons d-flex align-items-end">
+            <div class="col-12 col-lg-3 search-form-buttons d-flex align-items-end">
               <button
                 type="submit"
                 class="btn btn-primary me-3"
@@ -139,7 +139,7 @@
         <!-- Table - all Morosità -->
         <ng-container *ngIf="morositaList.length > 0">
           <div class="table-responsive">
-            <table class="table table-striped table-hover table-bordered">
+            <table class="table table-striped table-hover align-middle">
               <thead>
                 <tr>
                   <th scope="col">Azioni</th>
@@ -175,7 +175,7 @@
                     <a
                       (click)="openDeleteModal(morositaItem)"
                       title="Cancella"
-                      style="cursor: pointer; color: #0052a3"
+                      class="action-link"
                     >
                       <i class="bi bi-trash3"></i>
                     </a>

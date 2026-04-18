@@ -1,35 +1,45 @@
-table {
-  border-color: #0075bf;
+/* Stili locali minimi: quasi tutto arriva dal globale styles.css */
+
+:host {
+  display: block;
+}
+
+/* Tabella: allineamento e spaziatura celle */
+.table th,
+.table td {
   text-align: center;
 }
-th {
-  font-size: 16px;
-}
-td {
-  padding: 10px 20px;
-  font-size: 14px;
+.table td {
+  font-size: 0.9rem;
 }
 
-i {
-  font-size: 20px;
+/* Cella azioni: icone con tap target generoso */
+.actions-cell {
+  white-space: nowrap;
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  justify-content: center;
+}
+.actions-cell a {
+  color: var(--erp-primary);
+}
+.actions-cell .action-link--danger i {
+  color: var(--erp-danger);
 }
 
-/* modali */
-.modal {
-  display: none;
+/* Filter panel: un po' più compatto rispetto al default */
+.erp-filter-form {
+  margin-bottom: 1.5rem;
 }
 
-.modal.show {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-dialog {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) !important;
-  width: 100%;
-  max-width: 500px;
-  margin: 0;
+/* Su mobile, la cella azioni scorre orizzontale se serve */
+@media (max-width: 575.98px) {
+  .actions-cell {
+    justify-content: flex-end;
+  }
+  .actions-cell a {
+    font-size: 1.2rem;
+    padding: 0.3rem 0.4rem;
+  }
 }

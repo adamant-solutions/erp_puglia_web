@@ -1,32 +1,50 @@
-<!-- skip links -->
-<div id="skip-link">
-  <a href="#main-content">Skip to Main Content</a>
-  <a href="#footer">Skip to footer</a>
-</div>
+<ng-container *ngIf="currentUser$ | async as user">
+  <!-- skip links -->
+  <div id="skip-link">
+    <a href="#main-content">Skip to Main Content</a>
+    <a href="#footer">Skip to footer</a>
+  </div>
 
-<!-- -------------------------------------------------------------------- -->
+  <!-- -------------------------------------------------------------------- -->
 
-<header class="header">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 px-0">
-        <div class="user-bar" *ngIf="currentUser$ | async as user">
-          <div class="user-info">
-            <i class="bi bi-person-circle"></i>
-            <span class="user-name">{{ user.nome }} {{ user.cognome }}</span>
-            <span class="user-username">({{ user.username }})</span>
-            <span class="user-roles">
+  <header class="header">
+    <div class="user-bar">
+      <div class="user-bar__inner">
+        <div class="user-info">
+          <i class="bi bi-person-circle" aria-hidden="true"></i>
+          <div class="user-info__text">
+            <span class="user-name"
+              >{{ user.nome }} {{ user.cognome }}
+              <span class="user-username">({{ user.username }})</span>
+            </span>
+            <span class="user-roles" *ngIf="user.roles?.length">
               <span class="role-badge" *ngFor="let r of user.roles">{{ r }}</span>
             </span>
           </div>
-          <div class="user-actions">
-            <button *ngIf="isAdmin()" class="btn-link" (click)="goToUtenti()">Gestione utenti</button>
-            <button class="btn-link" (click)="logout()">Logout</button>
-          </div>
         </div>
 
-        <app-tabs></app-tabs>
+        <div class="user-actions">
+          <button
+            *ngIf="isAdmin()"
+            type="button"
+            class="btn-link"
+            (click)="goToUtenti()"
+          >
+            <i class="bi bi-people" aria-hidden="true"></i>
+            <span>Gestione utenti</span>
+          </button>
+          <button
+            type="button"
+            class="btn-link btn-link--danger"
+            (click)="logout()"
+          >
+            <i class="bi bi-box-arrow-right" aria-hidden="true"></i>
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-</header>
+
+    <app-tabs></app-tabs>
+  </header>
+</ng-container>

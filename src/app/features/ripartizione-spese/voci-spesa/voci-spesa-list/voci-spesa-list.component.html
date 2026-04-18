@@ -1,7 +1,7 @@
 <app-breadcrumbs [crumbsList]="breadcrumbList" [currentPage]="'Voci di Spesa'">
 </app-breadcrumbs>
 
-<section class="py-4">
+<section class="erp-page">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -74,7 +74,7 @@
         </div>
 
         <div class="table-responsive">
-          <table class="table table-striped table-hover table-bordered">
+          <table class="table table-striped table-hover align-middle">
             <thead>
               <tr>
                 <th scope="col">Azioni</th>
@@ -109,7 +109,7 @@
                   <a
                     (click)="openDeleteModal(voceSpesa)"
                     title="Cancella"
-                    style="cursor: pointer; color: #0052a3"
+                    class="action-link"
                   >
                     <i class="bi bi-trash3"></i>
                   </a>
