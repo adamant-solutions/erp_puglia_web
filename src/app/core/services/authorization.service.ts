@@ -1,54 +1,115 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap, of, catchError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface LoginResponse {
+  accessToken: string;
+  expiresIn: number;
+  username: string;
+  roles: string[];
+}
+
+export interface CurrentUser {
+  username: string;
+  roles: string[];
+  nome?: string;
+  cognome?: string;
+  expiresAt: number;
+}
+
+const TOKEN_KEY = 'erp_token';
+const USER_KEY = 'erp_user';
+
+@Injectable({ providedIn: 'root' })
 export class AuthorizationService {
-  private readonly tokenExpiryTimeSubject: BehaviorSubject<number> = new BehaviorSubject(0);
-  private readonly tokenSubject: BehaviorSubject<string> = new BehaviorSubject('');
-  private http = inject(HttpClient);
 
-  constructor(@Inject('tokenUrl') private AccessTokenUrl: string) {}
+  private currentUserSubject = new BehaviorSubject<CurrentUser | null>(this.readUserFromStorage());
+  readonly currentUser$ = this.currentUserSubject.asObservable();
 
-  private fetchToken(isWriteAccess: boolean): Observable<string> {
-    const authHeader = isWriteAccess
-      ? 'Basic d3JpdGVyOnNlY3JldC13cml0ZXI='
-      : 'Basic cmVhZGVyOnNlY3JldC1yZWFkZXI=';
-    const body = `grant_type=client_credentials&scope=${isWriteAccess ? 'erp:write' : 'erp:read'}`;
-    //console.log("Auth service: ", `${isWriteAccess}` , body)
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    @Inject('loginUrl') private loginUrl: string
+  ) {}
 
-    const headers = new HttpHeaders({
-      'Authorization': authHeader,
-      'Content-Type': 'application/x-www-form-urlencoded',
-    });
-
-    return this.http.post<any>(this.AccessTokenUrl, body, { headers }).pipe(
-      switchMap(response => {
-        this.tokenSubject.next(response.access_token);
-        const expiryTime = Date.now() + response.expires_in * 1000;
-        this.tokenExpiryTimeSubject.next(expiryTime);
-        return of(response.access_token);
-      }),
-      catchError(error => {
-        throw error;
-      })
-    );
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(this.loginUrl, { username, password })
+      .pipe(tap(res => this.persistSession(res)));
   }
 
-/*   private isTokenExpired(): boolean {
-    const expiryTime = this.tokenExpiryTimeSubject.value;
-    return expiryTime ? Date.now() > expiryTime : true;
-  } */
+  logout(): void {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    this.currentUserSubject.next(null);
+    this.router.navigate(['/login']);
+  }
 
-  ensureTokenIsValid(isWriteAccess: boolean): Observable<string> {
- //   console.log("ensure token is valid: " , isWriteAccess)
-      return this.fetchToken(isWriteAccess);
+  getToken(): string | null {
+    const token = localStorage.getItem(TOKEN_KEY);
+    if (!token) return null;
+    const user = this.currentUserSubject.value;
+    if (user && Date.now() >= user.expiresAt) {
+      this.logout();
+      return null;
+    }
+    return token;
+  }
+
+  isAuthenticated(): boolean {
+    return this.getToken() !== null;
+  }
+
+  hasRole(role: string): boolean {
+    const u = this.currentUserSubject.value;
+    return !!u && u.roles.includes(role);
+  }
+
+  getCurrentUser(): CurrentUser | null {
+    return this.currentUserSubject.value;
   }
 
   clearTokens(): void {
-    this.tokenSubject.next('');
-    this.tokenExpiryTimeSubject.next(0);
+    this.logout();
+  }
+
+  private persistSession(res: LoginResponse): void {
+    const claims = this.decodeJwt(res.accessToken);
+    const user: CurrentUser = {
+      username: res.username,
+      roles: res.roles || [],
+      nome: claims?.nome,
+      cognome: claims?.cognome,
+      expiresAt: Date.now() + res.expiresIn * 1000
+    };
+    localStorage.setItem(TOKEN_KEY, res.accessToken);
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.currentUserSubject.next(user);
+  }
+
+  private readUserFromStorage(): CurrentUser | null {
+    const raw = localStorage.getItem(USER_KEY);
+    if (!raw) return null;
+    try {
+      const u = JSON.parse(raw) as CurrentUser;
+      if (Date.now() >= u.expiresAt) {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+        return null;
+      }
+      return u;
+    } catch {
+      return null;
+    }
+  }
+
+  private decodeJwt(token: string): any | null {
+    try {
+      const payload = token.split('.')[1];
+      const json = atob(payload.replace(/-/g, '+').replace(/_/g, '/'));
+      return JSON.parse(json);
+    } catch {
+      return null;
+    }
   }
 }

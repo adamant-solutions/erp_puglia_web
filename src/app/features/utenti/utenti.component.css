@@ -1,0 +1,65 @@
+.utenti-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+.utenti-table th, .utenti-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.utenti-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+.badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  background: #e3f2fd;
+  color: #0066cc;
+  border-radius: 4px;
+  margin-right: 0.25rem;
+  font-size: 0.85rem;
+}
+.badge-ok { color: #2e7d32; font-weight: 600; }
+.badge-ko { color: #c62828; font-weight: 600; }
+
+.btn-primary, .btn-secondary, .btn-danger {
+  padding: 0.5rem 1rem;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  margin-right: 0.4rem;
+}
+.btn-primary { background: #0066cc; color: #fff; }
+.btn-primary:hover:not(:disabled) { background: #004f99; }
+.btn-primary:disabled { background: #aaa; cursor: not-allowed; }
+.btn-secondary { background: #e0e0e0; color: #333; }
+.btn-danger { background: #c62828; color: #fff; }
+
+.error {
+  background: #fde8e8;
+  color: #c0392b;
+  padding: 0.7rem 0.9rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.utente-form { max-width: 540px; }
+.form-row { margin-bottom: 1rem; }
+.form-row > label { display: block; font-weight: 600; margin-bottom: 0.3rem; }
+.form-row input[type="text"], .form-row input[type="email"], .form-row input[type="password"] {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+.ruoli-checks { display: flex; flex-direction: column; gap: 0.3rem; }
+.ruolo-check { display: flex; align-items: center; gap: 0.5rem; font-weight: normal; }
+.ruolo-check small { color: #777; font-size: 0.8rem; }
+.form-actions { margin-top: 1.5rem; display: flex; gap: 0.5rem; }

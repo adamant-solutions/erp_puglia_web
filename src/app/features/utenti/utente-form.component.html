@@ -1,0 +1,56 @@
+<div class="container py-4">
+  <h1>{{ isEdit ? 'Modifica utente' : 'Nuovo utente' }}</h1>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" novalidate class="utente-form">
+    <div class="form-row">
+      <label>Username</label>
+      <input type="text" formControlName="username" />
+    </div>
+
+    <div class="form-row">
+      <label>Password {{ isEdit ? '(lasciare vuoto per non cambiare)' : '' }}</label>
+      <input type="password" formControlName="password" autocomplete="new-password" />
+    </div>
+
+    <div class="form-row">
+      <label>Nome</label>
+      <input type="text" formControlName="nome" />
+    </div>
+
+    <div class="form-row">
+      <label>Cognome</label>
+      <input type="text" formControlName="cognome" />
+    </div>
+
+    <div class="form-row">
+      <label>Email</label>
+      <input type="email" formControlName="email" />
+    </div>
+
+    <div class="form-row">
+      <label>
+        <input type="checkbox" formControlName="attivo" /> Attivo
+      </label>
+    </div>
+
+    <div class="form-row">
+      <label>Ruoli</label>
+      <div class="ruoli-checks">
+        <label *ngFor="let r of ruoli" class="ruolo-check">
+          <input type="checkbox" [checked]="hasRuolo(r.nome)" (change)="toggleRuolo(r.nome)" />
+          <span>{{ r.nome }}</span>
+          <small *ngIf="r.descrizione">{{ r.descrizione }}</small>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" (click)="cancel()">Annulla</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
+        {{ loading ? 'Salvataggio...' : 'Salva' }}
+      </button>
+    </div>
+  </form>
+</div>

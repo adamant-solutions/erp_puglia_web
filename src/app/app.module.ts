@@ -53,6 +53,8 @@ registerLocaleData(localeIt);
     { provide: MatPaginatorIntl, useClass: CustomPaginatorIntl },
 
     { provide: 'tokenUrl', useValue: environment.tokenUrl },
+    { provide: 'loginUrl', useValue: environment.loginUrl },
+    { provide: 'utentiUrl', useValue: environment.utentiUrl },
     { provide: 'patrimonioUrl', useValue: environment.patrimonioUrl },
     { provide: 'anagraficaUrl', useValue: environment.anagraficaUrl },
     { provide: 'contrattiUrl', useValue: environment.contrattiUrl },

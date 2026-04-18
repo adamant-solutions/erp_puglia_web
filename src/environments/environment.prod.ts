@@ -4,6 +4,8 @@ const API_BASE_URL = '/gw/';
 export const environment = {
   production: true,
   tokenUrl: API_BASE_URL + 'oauth2/token',
+  loginUrl: API_BASE_URL + 'auth/login',
+  utentiUrl: API_BASE_URL + 'utenti',
   patrimonioUrl: API_BASE_URL + 'patrimonio',
   anagraficaUrl: API_BASE_URL + 'anagrafica',
   contrattiUrl: API_BASE_URL + 'contratti',

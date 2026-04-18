@@ -1,0 +1,45 @@
+<div class="container py-4">
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <h1 class="m-0">Gestione Utenti</h1>
+    <button class="btn-primary" (click)="create()">+ Nuovo utente</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+  <div *ngIf="loading">Caricamento...</div>
+
+  <table class="utenti-table" *ngIf="!loading && utenti.length > 0">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Nome</th>
+        <th>Cognome</th>
+        <th>Email</th>
+        <th>Ruoli</th>
+        <th>Attivo</th>
+        <th>Azioni</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of utenti">
+        <td>{{ u.username }}</td>
+        <td>{{ u.nome }}</td>
+        <td>{{ u.cognome }}</td>
+        <td>{{ u.email }}</td>
+        <td>
+          <span class="badge" *ngFor="let r of u.ruoli">{{ r }}</span>
+        </td>
+        <td>
+          <span [class.badge-ok]="u.attivo" [class.badge-ko]="!u.attivo">
+            {{ u.attivo ? 'Sì' : 'No' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn-secondary" (click)="edit(u)">Modifica</button>
+          <button class="btn-danger" (click)="delete(u)">Elimina</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && utenti.length === 0">Nessun utente</div>
+</div>

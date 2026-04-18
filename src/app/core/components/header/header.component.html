@@ -10,6 +10,21 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-12 px-0">
+        <div class="user-bar" *ngIf="currentUser$ | async as user">
+          <div class="user-info">
+            <i class="bi bi-person-circle"></i>
+            <span class="user-name">{{ user.nome }} {{ user.cognome }}</span>
+            <span class="user-username">({{ user.username }})</span>
+            <span class="user-roles">
+              <span class="role-badge" *ngFor="let r of user.roles">{{ r }}</span>
+            </span>
+          </div>
+          <div class="user-actions">
+            <button *ngIf="isAdmin()" class="btn-link" (click)="goToUtenti()">Gestione utenti</button>
+            <button class="btn-link" (click)="logout()">Logout</button>
+          </div>
+        </div>
+
         <app-tabs></app-tabs>
       </div>
     </div>
