@@ -16,13 +16,14 @@
 /* Cella azioni: icone con tap target generoso */
 .actions-cell {
   white-space: nowrap;
-  display: inline-flex;
-  gap: 0.4rem;
-  align-items: center;
-  justify-content: center;
+  text-align: center;
+  vertical-align: middle;
 }
 .actions-cell a {
   color: var(--erp-primary);
+}
+.actions-cell a + a {
+  margin-inline-start: 0.25rem;
 }
 .actions-cell .action-link--danger i {
   color: var(--erp-danger);
@@ -33,10 +34,10 @@
   margin-bottom: 1.5rem;
 }
 
-/* Su mobile, la cella azioni scorre orizzontale se serve */
+/* Su mobile (card mode), la cella azioni si allinea a destra */
 @media (max-width: 575.98px) {
   .actions-cell {
-    justify-content: flex-end;
+    text-align: right;
   }
   .actions-cell a {
     font-size: 1.2rem;
