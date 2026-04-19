@@ -78,8 +78,26 @@ export class AnagraficaService {
           }
         });
       }
+      this.mergeSnakeNested(cittadino.residenza, [
+        ['comuneResidenza', 'comune_residenza'],
+        ['provinciaResidenza', 'provincia_residenza'],
+        ['statoResidenza', 'stato_residenza'],
+      ]);
     }
     return raw as Anagrafica;
+  }
+
+  /** Copia da chiave snake solo se il camel è assente o stringa vuota. */
+  private mergeSnakeNested(obj: any, pairs: [string, string][]): void {
+    if (!obj || typeof obj !== 'object') return;
+    for (const [camel, snake] of pairs) {
+      if (snake === camel) continue;
+      const s = obj[snake];
+      const c = obj[camel];
+      if (s != null && s !== '' && (c == null || c === '')) {
+        obj[camel] = s;
+      }
+    }
   }
 
 
