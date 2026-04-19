@@ -4,16 +4,19 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+        <h1 class="mb-4">{{ pageTitle }}</h1>
         <!-- Filter -->
         <div class="col-12 mb-5">
-  
+
         </div>
         <div class="alert alert-primary" role="alert"  *ngIf="!crediti.length">
             Non risultano situazioni crediti registrate!
         </div>
         <div class="table-responsive" *ngIf="crediti.length">
           <table class="table table-striped table-hover align-middle">
+            <caption class="visually-hidden">
+              Situazione crediti del contratto
+            </caption>
             <thead>
               <tr>
                 <th scope="col">Intestatario</th>
@@ -30,28 +33,25 @@
             </thead>
             <tbody>
               <tr *ngFor="let item of crediti">
-                <td scope="row">{{item.intestatario}}</td>
-                <td scope="row">{{item.indirizzo}}</td>
-                <td scope="row">{{item.comune}}</td>
-                <td scope="row">{{item.provincia}}</td>
-                <td scope="row">{{item.dataCompetenza | date: 'dd/MM/yyyy'}}</td>
- <!--                <td scope="row">{{item.descrizione}}</td>
- -->
-                <td scope="row"> <span matTooltip="{{
-                    item.descrizione
-                }}" style="cursor: pointer">
-            {{
-                (item.descrizione) | slice : 0 : 20}}
-          </span></td>
+                <td data-label="Intestatario">{{item.intestatario}}</td>
+                <td data-label="Indirizzo">{{item.indirizzo}}</td>
+                <td data-label="Comune">{{item.comune}}</td>
+                <td data-label="Provincia">{{item.provincia}}</td>
+                <td data-label="Data Competenza">{{item.dataCompetenza | date: 'dd/MM/yyyy'}}</td>
+                <td data-label="Descrizione">
+                  <span matTooltip="{{ item.descrizione }}" style="cursor: pointer">
+                    {{ (item.descrizione) | slice : 0 : 20 }}
+                  </span>
+                </td>
 
-                <td scope="row">{{item.importoCanone | currency:'EUR'}}</td>
-                <td scope="row">{{item.importoIncassato  | currency:'EUR' }}</td>
-                <td scope="row">{{item.saldoCredito  | currency:'EUR'}}</td>
-                <td scope="row">
-
-                <span [ngClass]="getStatoClass(item.stato)">
+                <td data-label="Importo Canone">{{item.importoCanone | currency:'EUR'}}</td>
+                <td data-label="Importo Incassato">{{item.importoIncassato  | currency:'EUR' }}</td>
+                <td data-label="Saldo Credito">{{item.saldoCredito  | currency:'EUR'}}</td>
+                <td data-label="Stato">
+                  <span [ngClass]="getStatoClass(item.stato)">
                     {{ item.stato }}
-                  </span></td>
+                  </span>
+                </td>
               </tr>
             </tbody>
           </table>

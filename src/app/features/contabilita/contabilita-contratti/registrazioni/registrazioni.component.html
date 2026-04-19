@@ -4,11 +4,11 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+        <h1 class="mb-4">{{ pageTitle }}</h1>
         <!-- Filter -->
         <div class="col-12 mb-5">
           <div class="col-12 mb-5">
-            <form class="erp-panel erp-filter-form row g-3">
+            <form class="erp-panel erp-filter-form row g-3" role="search" aria-label="Filtri registrazioni contabili">
 
               <div class="col-md-3">
                 <label class="form-label" for="dataInizio">Data Inizio</label>
@@ -16,19 +16,19 @@
                 <mat-form-field appearance="fill" style="width: 100%">
                   <input matInput [matDatepicker]="picker" id="dataInizio" name="dataInizio"
                     [(ngModel)]="searchDataInizioParam" [max]="searchDataFineParam" (keydown.enter)="getFilteredData()" />
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix [for]="picker" aria-label="Apri calendario data inizio"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
 
               </div>
               <div class="col-md-3">
-                <label class="form-label" for="cognome">Data Fine</label>
+                <label class="form-label" for="dataFine">Data Fine</label>
 
                 <mat-form-field appearance="fill" style="width: 100%">
                   <input matInput [matDatepicker]="pickerDataFine"  id="dataFine" name="dataFine"
                   [(ngModel)]="searchDataFineParam" (keydown.enter)="getFilteredData()" [min]="searchDataInizioParam"/>
-                  <mat-datepicker-toggle matSuffix [for]="pickerDataFine"></mat-datepicker-toggle>
+                  <mat-datepicker-toggle matSuffix [for]="pickerDataFine" aria-label="Apri calendario data fine"></mat-datepicker-toggle>
                   <mat-datepicker #pickerDataFine></mat-datepicker>
                 </mat-form-field>
               </div>
@@ -38,7 +38,7 @@
                 >
                 <div class="d-flex align-items-center">
                   <div class="input-group select-wrapper w-100">
-          
+
                   <select
                     class="form-control"
                     id="tipo"
@@ -58,9 +58,9 @@
                   </div>
                 </div>
               </div>
-  
 
-  
+
+
               <div class="col-12 col-lg-3 search-form-buttons d-flex align-items-end">
                 <button
                   type="button"
@@ -70,7 +70,7 @@
                 >
                   Cerca
                 </button>
-  
+
                 <button
                   type="button"
                   class="btn btn-secondary"
@@ -85,23 +85,24 @@
           <!-- Aggiungi  btn -->
           <div class="col-12 d-flex justify-content-between">
 
-            <button class="btn btn-outline-primary btn-icon btn-xs mb-3 me-2" 
+            <button class="btn btn-outline-primary btn-icon btn-xs mb-3 me-2"
             routerLink="/contabilita/contabilita-contratti">
               <i
                 class="bi bi-arrow-left me-1"
                 style="vertical-align: middle"
+                aria-hidden="true"
               ></i>
               Torna alla sezione contratti
             </button>
             <div>
             <button class="btn btn-primary btn-icon btn-xs mb-3 me-2" [routerLink]="['nuova-registrazione']">
-              <svg class="icon icon-white me-1">
+              <svg class="icon icon-white me-1" aria-hidden="true" focusable="false">
                 <use href="assets/svg/sprites.svg#it-plus-circle"></use>
               </svg>
               <span>Registra Mese da Pagare</span>
             </button>
             <button class="btn btn-primary btn-icon btn-xs mb-3" [routerLink]="['nuova-registrazione-pagamento']">
-              <svg class="icon icon-white me-1">
+              <svg class="icon icon-white me-1" aria-hidden="true" focusable="false">
                 <use href="assets/svg/sprites.svg#it-plus-circle"></use>
               </svg>
               <span>Registra Pagamento</span>
@@ -114,10 +115,12 @@
         </div>
         <div class="table-responsive" *ngIf="registrazioni.length">
           <table class="table table-striped table-hover align-middle">
+            <caption class="visually-hidden">
+              Registrazioni contabili del contratto
+            </caption>
             <thead>
               <tr>
                 <th scope="col">Azioni</th>
-             <!--    <th scope="col">Contratto</th> -->
                 <th scope="col">Descrizione</th>
                 <th scope="col">Data Registrazione</th>
                 <th scope="col">Data Competenza</th>
@@ -128,37 +131,34 @@
             </thead>
             <tbody>
               <tr *ngFor="let registrazioniItem of registrazioni">
-                <td scope="row">
+                <td>
 
-                  <a [routerLink]="[registrazioniItem.id,'visualizza-registrazione']" title="Vedi dettagli"
-                    class="text-decoration-none me-3">
-                    <i class="bi bi-eye-fill align-middle"></i>
+                  <a [routerLink]="[registrazioniItem.id,'visualizza-registrazione']"
+                     [attr.aria-label]="'Vedi dettagli registrazione ' + (registrazioniItem.numeroProtocollo || registrazioniItem.id)"
+                     class="text-decoration-none me-3">
+                    <i class="bi bi-eye-fill align-middle" aria-hidden="true"></i>
                   </a>
 
-                  <a [routerLink]="[registrazioniItem.id,'modifica-registrazione']" title="Modifica"
-                    class="text-decoration-none me-3">
-                    <i class="bi bi-pencil align-middle"></i>
+                  <a [routerLink]="[registrazioniItem.id,'modifica-registrazione']"
+                     [attr.aria-label]="'Modifica registrazione ' + (registrazioniItem.numeroProtocollo || registrazioniItem.id)"
+                     class="text-decoration-none me-3">
+                    <i class="bi bi-pencil align-middle" aria-hidden="true"></i>
                   </a>
-                  <a title="Cancella" class="text-decoration-none me-3" class="action-link" (click)="deleteModal(registrazioniItem)" >
-                    <i class="bi bi-trash3 align-middle"></i>
-                  </a>
+                  <button type="button"
+                          [attr.aria-label]="'Elimina registrazione ' + (registrazioniItem.numeroProtocollo || registrazioniItem.id)"
+                          class="action-link text-decoration-none me-3"
+                          (click)="deleteModal(registrazioniItem)">
+                    <i class="bi bi-trash3 align-middle" aria-hidden="true"></i>
+                  </button>
 
                 </td>
-          <!--       <td scope="row"> <span matTooltip="{{
-                            getContrattiDescrizione(registrazioniItem.contrattoId)
-                        }}" style="cursor: pointer">
-                    {{
-                    getContrattiDescrizione(registrazioniItem.contrattoId)
-                    | slice : 0 : 30
-                    }}...
-                  </span></td> -->
-                <td scope="row">{{ registrazioniItem.descrizione }}</td>
-                <td scope="row">
+                <td data-label="Descrizione">{{ registrazioniItem.descrizione }}</td>
+                <td data-label="Data Registrazione">
                   {{registrazioniItem.dataRegistrazione | date: 'dd/MM/yyyy'}}
                 </td>
-                <td scope="row">{{ registrazioniItem.dataCompetenza | date: 'dd/MM/yyyy'}}</td>
-                <td scope="row">{{ registrazioniItem.numeroProtocollo }}</td>
-                <td scope="row">{{ registrazioniItem.tipo | capitalize}}</td>
+                <td data-label="Data Competenza">{{ registrazioniItem.dataCompetenza | date: 'dd/MM/yyyy'}}</td>
+                <td data-label="Numero Protocollo">{{ registrazioniItem.numeroProtocollo }}</td>
+                <td data-label="Tipo">{{ registrazioniItem.tipo | capitalize}}</td>
               </tr>
             </tbody>
           </table>
@@ -185,14 +185,14 @@
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
+          aria-label="Chiudi"
         ></button>
       </div>
       <div class="modal-body">
         <p>
 
           Sei sicuro di voler eliminare la registrazione con data di registrazione: <b>{{ registerInizio }} </b> e data di competenza <b>{{registerFine}} </b>?
-        
+
         </p>
       </div>
       <div class="modal-footer" style="justify-content: center">

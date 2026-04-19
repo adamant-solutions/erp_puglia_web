@@ -4,11 +4,11 @@
     <div class="container">
       <div class="row">
         <div class="col-12">
-          <h1 id="main-content" class="mb-4">{{ pageTitle }}</h1>
+          <h1 class="mb-4">{{ pageTitle }}</h1>
 
                <!-- Filter -->
          <div class="col-12 mb-5">
-          <form class="row g-3">
+          <form class="row g-3" role="search" aria-label="Filtri ricerca imprese">
             <div class="col-md-3">
               <label class="form-label" for="ragioneSociale">Ragione Sociale</label>
               <div class="input-group">
@@ -20,7 +20,7 @@
                   [(ngModel)]="impreseSearchParams.ragioneSociale"
                   (keydown.enter)="getFilteredData(0)"
                 />
-                <span class="input-group-text">
+                <span class="input-group-text" aria-hidden="true">
                   <i class="bi bi-buildings"></i>
                 </span>
               </div>
@@ -37,7 +37,7 @@
                   [(ngModel)]="impreseSearchParams.partitaIva"
                   (keydown.enter)="getFilteredData(0)"
                 />
-                <span class="input-group-text">
+                <span class="input-group-text" aria-hidden="true">
                   <i class="bi bi-cash"></i>
                 </span>
               </div>
@@ -69,7 +69,7 @@
             class="btn btn-primary btn-icon btn-xs mb-3"
             [routerLink]="['nuova-imprese']"
           >
-            <svg class="icon icon-white me-1">
+            <svg class="icon icon-white me-1" aria-hidden="true" focusable="false">
               <use href="assets/svg/sprites.svg#it-plus-circle"></use>
             </svg>
             <span>Aggiungi impresa</span>
@@ -78,6 +78,9 @@
         <!-- Table -->
         <div class="table-responsive">
           <table class="table table-striped table-hover table-bordered">
+            <caption class="visually-hidden">
+              Elenco imprese, {{ totalItems }} risultati totali
+            </caption>
             <thead>
               <tr>
                 <th scope="col">Azioni</th>
@@ -85,44 +88,42 @@
                 <th scope="col">Partita Iva</th>
                 <th scope="col">Codice Fiscale</th>
                 <th scope="col">Indirizzo</th>
-                <th scope="col">Città</th>            
+                <th scope="col">Città</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let impreseItem of impreseList">
-                <td scope="row">
-                 
+                <td>
                     <a
                       [routerLink]="['imprese-dettagli',impreseItem.id]"
-                      title="Vedi dettagli"
+                      [attr.aria-label]="'Vedi dettagli impresa ' + (impreseItem.ragioneSociale || impreseItem.id)"
                       class="text-decoration-none me-3"
                     >
-                      <i class="bi bi-eye-fill align-middle"></i>
+                      <i class="bi bi-eye-fill align-middle" aria-hidden="true"></i>
                     </a>
-                
+
                     <a
                       [routerLink]="['modifica-imprese', impreseItem.id]"
-                      title="Modifica"
+                      [attr.aria-label]="'Modifica impresa ' + (impreseItem.ragioneSociale || impreseItem.id)"
                       class="text-decoration-none me-3"
                     >
-                      <i class="bi bi-pencil align-middle"></i>
+                      <i class="bi bi-pencil align-middle" aria-hidden="true"></i>
                     </a>
-                
-                    <a
-                     (click)="deleteModal(impreseItem)"
-                      title="Cancella"
-                      class="text-decoration-none me-3"
-                      style="cursor: pointer; color: #0052a3"
+
+                    <button
+                      type="button"
+                      (click)="deleteModal(impreseItem)"
+                      [attr.aria-label]="'Elimina impresa ' + (impreseItem.ragioneSociale || impreseItem.id)"
+                      class="action-link text-decoration-none me-3"
                     >
-                      <i class="bi bi-trash3 align-middle"></i>
-                    </a>
-                
+                      <i class="bi bi-trash3 align-middle" aria-hidden="true"></i>
+                    </button>
                 </td>
-                <td scope="row">{{ impreseItem.ragioneSociale }}</td>
-                <td scope="row">{{ impreseItem.partitaIva }}</td>
-                <td scope="row">{{ impreseItem.codiceFiscale }}</td>
-                <td scope="row">{{ impreseItem.indirizzo }}</td>
-                <td scope="row">{{ impreseItem.citta }}</td>
+                <td data-label="Ragione Sociale">{{ impreseItem.ragioneSociale }}</td>
+                <td data-label="Partita Iva">{{ impreseItem.partitaIva }}</td>
+                <td data-label="Codice Fiscale">{{ impreseItem.codiceFiscale }}</td>
+                <td data-label="Indirizzo">{{ impreseItem.indirizzo }}</td>
+                <td data-label="Città">{{ impreseItem.citta }}</td>
               </tr>
             </tbody>
           </table>
@@ -135,7 +136,7 @@
           [pageSize]="pageSize"
           [pageIndex]="currentPage"
           (page)="onPageChange($event)"
-          aria-label="Select page"
+          aria-label="Selezione pagina"
         >
         </mat-paginator>
 
@@ -157,12 +158,12 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-4">
       <div class="modal-header p-0" style="margin-left: 24px">
-        <h1 class="modal-title fs-5" id="deleteImpreseModalLabel">Elimina Imprese</h1> 
+        <h1 class="modal-title fs-5" id="deleteImpreseModalLabel">Elimina Imprese</h1>
         <button
           type="button"
           class="btn-close"
           data-bs-dismiss="modal"
-          aria-label="Close"
+          aria-label="Chiudi"
         ></button>
       </div>
       <div class="modal-body">
