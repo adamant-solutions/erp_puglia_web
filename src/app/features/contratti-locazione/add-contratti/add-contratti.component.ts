@@ -140,21 +140,30 @@ export class AddContrattiComponent {
     const formValue = this.contratoForm.getRawValue();
     const formData = new FormData();
 
+    const unitaSel = formValue.unitaImmobiliare;
+    const unitaId =
+      typeof unitaSel === 'number'
+        ? unitaSel
+        : unitaSel?.id;
+
     const contratto = {
       dataInizio: this.formatDate(formValue.dataInizio),
       dataFine: formValue.dataFine ? this.formatDate(formValue.dataFine) : null,
       canoneMensile: formValue.canoneMensile,
       statoContratto: formValue.statoContratto,
       descrizione: formValue.descrizione || '',
-      unitaImmobiliare: {
-        id: formValue.unitaImmobiliare.id,
-      },
-      intestatari: formValue.intestatari.map((int: any) => ({
-        intestatario: {
-          id: int.intestatario.id.id,
-        },
-        dataInizio: this.formatDate(int.dataInizio),
-      })),
+      // L'entità JPA espone @JsonProperty("unitaImmobiliare") su Long unitaImmobiliareId: serve il numero.
+      unitaImmobiliare: unitaId,
+      intestatari: formValue.intestatari.map((int: any) => {
+        const sel = int.intestatario;
+        const anagraficaId =
+          typeof sel === 'number' ? sel : sel?.id;
+        return {
+          // ContrattoIntestatario: @JsonProperty("intestatario") su Long anagraficaId
+          intestatario: anagraficaId,
+          dataInizio: this.formatDate(int.dataInizio),
+        };
+      }),
       documenti: this.selectedFiles
         .filter((file) => file.name.toLowerCase().endsWith('.pdf'))
         .map((file) => ({

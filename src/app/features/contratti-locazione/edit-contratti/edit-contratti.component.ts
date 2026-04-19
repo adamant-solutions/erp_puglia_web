@@ -67,22 +67,25 @@ private modal: any;
   }
  
   private initForm() {
+    const unitaId: number | undefined = this.contratto.unitaImmobiliareId
+      ?? (typeof this.contratto.unitaImmobiliare === 'number'
+            ? this.contratto.unitaImmobiliare
+            : this.contratto.unitaImmobiliare?.id);
+
     this.editForm = this.fb.group({
       dataInizio: { value: this.contratto.dataInizio, disabled: true },
-    dataFine: { value: this.contratto.dataFine, disabled: true },
+      dataFine: { value: this.contratto.dataFine, disabled: true },
       canoneMensile: { value: this.contratto.canoneMensile, disabled: true },
       statoContratto: this.contratto.statoContratto,
       descrizione: { value: this.contratto.descrizione, disabled: true },
-      unitaImmobiliare: { value: { id: this.contratto.unitaImmobiliare }, disabled: true },
+      unitaImmobiliare: { value: { id: unitaId }, disabled: true },
       intestatari: this.fb.array([]),
-      documenti: this.fb.array([] ),
-  
+      documenti: this.fb.array([]),
     });
     const intestatariArray = this.editForm.get('intestatari') as FormArray;
-    this.contratto.intestatari.forEach((intestatario: any) => {
+    (this.contratto.intestatari || []).forEach((intestatario: any) => {
       intestatariArray.push(this.createIntestatarioGroup(intestatario));
     });
-     
   }
 
   get intestatari(): FormArray {
@@ -99,9 +102,12 @@ private modal: any;
   }
 
   private createIntestatarioGroup(intestatario?: any): FormGroup {
+    const anagraficaId = intestatario?.intestatarioId
+      ?? intestatario?.intestatario
+      ?? null;
     return this.fb.group({
       intestatario: this.fb.group({
-        id: [{ value: intestatario?.intestatario || null, disabled: true }, Validators.required]
+        id: [{ value: anagraficaId, disabled: true }, Validators.required]
       }),
       dataInizio: [{ value: intestatario?.dataInizio || null, disabled: true }, Validators.required]
     });
@@ -123,8 +129,7 @@ private modal: any;
   }
  
   onIntestatariChange(anagrafica: any, index: number) {
-    this.intestatari.at(index).get('intestatario.id')?.setValue(anagrafica.id);
-    
+    this.intestatari.at(index).get('intestatario')?.get('id')?.setValue(anagrafica.id);
   }
 
   

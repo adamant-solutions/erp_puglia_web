@@ -211,13 +211,13 @@
                   }}
                 </td> -->
                 <td scope="row">
-                  <ng-container *ngIf="contrattoItem.documenti.length > 0">
+                  <ng-container *ngIf="(contrattoItem.documenti?.length ?? 0) > 0">
                     <a
                       href="javascript:void(0)"
                       (click)="
                         showDownloadModal(
                           contrattoItem.id,
-                          contrattoItem.documenti
+                          contrattoItem.documenti ?? []
                         )
                       "
                       title="Scarica"

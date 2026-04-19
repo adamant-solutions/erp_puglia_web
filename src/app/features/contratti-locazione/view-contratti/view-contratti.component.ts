@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as bootstrap from 'bootstrap';
+import { AnagraficaService } from 'src/app/core/services/anagrafica.service';
+import { Intestatari } from 'src/app/core/models/contratto.model';
 
 interface PatrimonioItem {
   id: number;
@@ -19,7 +21,7 @@ export class ViewContrattiComponent {
     { label: 'ERP - di Regione Puglia', link: '/' },
     { label: 'Contratti', link: '/contratti-locazione' },
   ];
-  intestatari: any[]=[];
+  intestatari: Intestatari[] = [];
   viewForm = this.fb.group({
     descrizione: [''],
     canoneMensile: [''],
@@ -51,26 +53,20 @@ export class ViewContrattiComponent {
   constructor(
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private router:Router
+    private router: Router,
+    private anagraficaService: AnagraficaService
   ) {}
 
   ngOnInit() {
-     
     this.route.data.subscribe(({ contratto, unitaImmobiliareResolver }) => {
       if (!contratto) {
-       
         return;
       }
-  
-     
+
       this.patrimonio = unitaImmobiliareResolver?.body || [];
-  
-  
-      this.populateForm(contratto);
-  
-     
       this.documenti = contratto.documenti || [];
-      this.intestatari = contratto.intestatari || []
+      this.intestatari = contratto.intestatari || [];
+      this.populateForm(contratto);
     });
   }
 
@@ -91,17 +87,17 @@ export class ViewContrattiComponent {
   }  
 
  
-  private findPatrimonioDescription(unitaId: number): string {
+  private findPatrimonioDescription(unitaId: number | undefined): string {
+    if (unitaId == null) return '';
     const unita = this.patrimonio.find((item: { id: number }) => item.id === unitaId);
     return unita?.descrizione;
   }
 
   private populateForm(contratto: any) {
-   
-    const unitaDescrizione = contratto.unitaImmobiliare?.descrizione 
-      || this.findPatrimonioDescription(contratto.unitaImmobiliare);
-  
- 
+    const unitaId: number = contratto.unitaImmobiliareId ?? contratto.unitaImmobiliare?.id ?? contratto.unitaImmobiliare;
+    const unitaDescrizione = contratto.indirizzoUnitaImmobiliare
+      || this.findPatrimonioDescription(unitaId);
+
     this.viewForm.patchValue({
       descrizione: contratto.descrizione,
       canoneMensile: contratto.canoneMensile,
@@ -110,31 +106,55 @@ export class ViewContrattiComponent {
       statoContratto: contratto.statoContratto,
       unitaImmobiliare: unitaDescrizione || 'N/A'
     });
-  
-  
-    if (contratto.intestatariAttuali?.length > 0) {
-      const intestatario = contratto.intestatariAttuali[0].cittadino;
-      const residenza = intestatario.residenza;
-      const contatti = intestatario.contatti;
-  
-      this.viewForm.patchValue({
-        nomeIntestatario: intestatario.nome,
-        cognomeIntestatario: intestatario.cognome,
-        cfIntestatario: intestatario.codiceFiscale,
-        cittadinanzaIntestatario: intestatario.cittadinanza,
-        genereIntestatario: intestatario.genere,
-        residenzaIndirizzo: residenza?.indirizzo,
-        residenzaCivico: residenza?.civico,
-        residenzaCap: residenza?.cap,
-        residenzaComune: residenza?.comuneResidenza,
-        residenzaProvincia: residenza?.provinciaResidenza,
-        residenzaStato: residenza?.statoResidenza,
-        contattiTelefono: contatti?.telefono,
-        contattiCellulare: contatti?.cellulare,
-        contattiEmail: contatti?.email,
-        contattiPec: contatti?.pec
-      });
+
+    // Dopo lo split del bounded context, il DTO pubblico del contratto espone solo
+    // id/nome/cognome degli intestatari (arricchiti lato backend via anagrafica-service).
+    // Per CF, cittadinanza, genere, residenza, contatti dobbiamo chiamare esplicitamente
+    // anagrafica-service con l'ID dell'intestatario attuale.
+    const intestatariAttuali: Intestatari[] = (contratto.intestatari || [])
+      .filter((i: Intestatari) => !i.dataFine);
+    const intestatarioAttuale = intestatariAttuali[0];
+    if (!intestatarioAttuale) {
+      return;
     }
+
+    this.viewForm.patchValue({
+      nomeIntestatario: intestatarioAttuale.nomeIntestatario,
+      cognomeIntestatario: intestatarioAttuale.cognomeIntestatario,
+    });
+
+    const anagraficaId = intestatarioAttuale.intestatarioId;
+    if (!anagraficaId) {
+      return;
+    }
+    this.anagraficaService.getAnagraficaById(anagraficaId).subscribe({
+      next: (anagrafica: any) => {
+        const cittadino = anagrafica?.cittadino;
+        if (!cittadino) return;
+        const residenza = cittadino.residenza;
+        const contatti = cittadino.contatti;
+        this.viewForm.patchValue({
+          nomeIntestatario: cittadino.nome,
+          cognomeIntestatario: cittadino.cognome,
+          cfIntestatario: cittadino.codiceFiscale,
+          cittadinanzaIntestatario: cittadino.cittadinanza,
+          genereIntestatario: cittadino.genere,
+          residenzaIndirizzo: residenza?.indirizzo,
+          residenzaCivico: residenza?.civico,
+          residenzaCap: residenza?.cap,
+          residenzaComune: residenza?.comuneResidenza,
+          residenzaProvincia: residenza?.provinciaResidenza,
+          residenzaStato: residenza?.statoResidenza,
+          contattiTelefono: contatti?.telefono,
+          contattiCellulare: contatti?.cellulare,
+          contattiEmail: contatti?.email,
+          contattiPec: contatti?.pec
+        });
+      },
+      error: () => {
+        // Anagrafica non raggiungibile: manteniamo solo nome/cognome gia' popolati.
+      }
+    });
   }
 
 
