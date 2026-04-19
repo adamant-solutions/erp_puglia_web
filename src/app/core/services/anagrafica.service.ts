@@ -17,11 +17,12 @@ export class AnagraficaService {
 
 
   getAnagrafica(pageNumber: number): Observable<Anagrafica[]> {
-    return this.http.get<Anagrafica[]>(`${this.anagraficaUrl}?pagina=${pageNumber}`).pipe(
+    return this.http.get<any[]>(`${this.anagraficaUrl}?pagina=${pageNumber}`).pipe(
+      map((list) => (list || []).map((a) => this.normalizeAnagrafica(a))),
       catchError(this.handleError)
     );
   }
-  
+
   getFilteredAnagrafica(params: AnagraficaSearchParams) {
     let httpParams = new HttpParams().set('pagina', (params.pagina || 0).toString())
 
@@ -35,7 +36,10 @@ export class AnagraficaService {
       httpParams = httpParams.set('cognome', params.cognome);
     }
 
-    return this.http.get<Anagrafica[]>(`${this.anagraficaUrl}`, { params: httpParams, observe: 'response' }).pipe(
+    return this.http.get<any[]>(`${this.anagraficaUrl}`, { params: httpParams, observe: 'response' }).pipe(
+      map((response) => response.clone({
+        body: (response.body || []).map((a) => this.normalizeAnagrafica(a)) as any,
+      })),
       catchError(this.handleError)
     );
 
@@ -43,9 +47,35 @@ export class AnagraficaService {
 
 
   getAnagraficaById(id: number): Observable<Anagrafica> {
-    return this.http.get<Anagrafica>(`${this.anagraficaUrl}/${id}`).pipe(
+    return this.http.get<any>(`${this.anagraficaUrl}/${id}`).pipe(
+      map((a) => this.normalizeAnagrafica(a)),
       catchError(this.handleError)
     );
+  }
+
+  private normalizeAnagrafica(raw: any): Anagrafica {
+    if (!raw) return raw;
+    const cittadino = raw.cittadino;
+    if (cittadino) {
+      if (cittadino.codiceFiscale === undefined && cittadino.codice_fiscale !== undefined) {
+        cittadino.codiceFiscale = cittadino.codice_fiscale;
+      }
+      if (cittadino.dataDiNascita === undefined && cittadino.data_nascita !== undefined) {
+        cittadino.dataDiNascita = cittadino.data_nascita;
+      }
+      const docs = cittadino.documenti_identita;
+      if (Array.isArray(docs)) {
+        docs.forEach((doc: any) => {
+          if (doc.nomeFile === undefined && doc.nome_file !== undefined) {
+            doc.nomeFile = doc.nome_file;
+          }
+          if (doc.contentType === undefined && doc.content_type !== undefined) {
+            doc.contentType = doc.content_type;
+          }
+        });
+      }
+    }
+    return raw as Anagrafica;
   }
 
 
