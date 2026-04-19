@@ -2,6 +2,9 @@ import { ResolveFn } from '@angular/router';
 import { ContrattiService } from '../services/contratti.service';
 import { inject } from '@angular/core';
 import { catchError, of } from 'rxjs';
+import { HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Contratti } from '../models/contratto.model';
+
 export interface ContrattiSearchParams {
   pagina?: number;
   indirizzo?: string,
@@ -11,6 +14,16 @@ export interface ContrattiSearchParams {
   dataInizioTo?: string,
   dataFineTo?: string,
 }
+
+const emptyContrattiResponse = () =>
+  new HttpResponse<Contratti[]>({
+    body: [],
+    headers: new HttpHeaders({
+      'X-Paging-TotalRecordCount': '0',
+      'X-Paging-PageCount': '0',
+    }),
+  });
+
 export const contrattiResolver: ResolveFn<any> = (route, state, contrattiService: ContrattiService = inject(ContrattiService)) => {
 
   const searchParams: ContrattiSearchParams = {
@@ -21,8 +34,10 @@ export const contrattiResolver: ResolveFn<any> = (route, state, contrattiService
      dataInizioFrom:  route.queryParams['dataInizioFrom'] || '',
      dataInizioTo:  route.queryParams['dataInizioTo'] || '',
      dataFineTo:  route.queryParams['dataFineTo'] || '',
-  }; 
-  return contrattiService.getFilteredContratti(searchParams)
+  };
+  return contrattiService.getFilteredContratti(searchParams).pipe(
+    catchError(() => of(emptyContrattiResponse()))
+  );
 }
 
 export const contrattiByIdResolver: ResolveFn<any> = 
@@ -46,7 +61,9 @@ export const unitaImmobiliareResolver: ResolveFn<any> =
   );
 };
 
-export const intestatariResolver: ResolveFn<any> = 
+export const intestatariResolver: ResolveFn<any> =
 (route, state, contrattiService: ContrattiService = inject(ContrattiService)) => {
-  return contrattiService.getIntestatari()
+  return contrattiService.getIntestatari().pipe(
+    catchError(() => of({ body: [] }))
+  );
 };

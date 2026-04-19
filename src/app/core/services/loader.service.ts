@@ -18,8 +18,14 @@ export class LoaderService {
 
   hideLoader() {
     this.activeRequests--;
-    if (this.activeRequests === 0) {
+    if (this.activeRequests <= 0) {
+      this.activeRequests = 0;
       this.isLoadingSubject.next(false);
     }
+  }
+
+  reset() {
+    this.activeRequests = 0;
+    this.isLoadingSubject.next(false);
   }
 }

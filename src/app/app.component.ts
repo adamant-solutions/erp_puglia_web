@@ -1,6 +1,14 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {
+  NavigationCancel,
+  NavigationEnd,
+  NavigationError,
+  Router,
+  RouterOutlet,
+} from '@angular/router';
+import { filter } from 'rxjs';
 import { routeAnimations } from './app.animations';
+import { LoaderService } from './core/services/loader.service';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +21,19 @@ export class AppComponent implements AfterViewInit {
 
   entryOverlay!: HTMLElement | null;
   private readonly OVERLAY_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
+
+  constructor(private router: Router, private loader: LoaderService) {
+    this.router.events
+      .pipe(
+        filter(
+          (e) =>
+            e instanceof NavigationEnd ||
+            e instanceof NavigationCancel ||
+            e instanceof NavigationError
+        )
+      )
+      .subscribe(() => this.loader.reset());
+  }
 
   prepareRoute(outlet: RouterOutlet): string {
     if (!outlet || !outlet.isActivated) {
