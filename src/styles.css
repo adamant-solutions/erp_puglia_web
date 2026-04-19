@@ -210,6 +210,33 @@ button:focus-visible {
   box-shadow: none !important;
 }
 
+/* main landmark riceve focus programmatico al route change:
+   non mostriamo l'outline per non disturbare l'utente vedente. */
+main#main-content:focus,
+main#main-content:focus-visible {
+  outline: none;
+}
+
+.visually-hidden,
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+input[aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+  border-color: var(--erp-danger) !important;
+  box-shadow: 0 0 0 1px var(--erp-danger);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -476,7 +503,8 @@ textarea.form-control {
 
 /* Icone azione: target tap generoso su mobile */
 .table td a,
-.table td .action-link {
+.table td .action-link,
+.table td .btn-icon-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -485,8 +513,18 @@ textarea.form-control {
   padding: 2px 4px;
   border-radius: var(--erp-radius-sm);
 }
-.table td a:hover {
+.table td a:hover,
+.table td button.action-link:hover,
+.table td button.btn-icon-link:hover {
   background-color: var(--erp-primary-050);
+}
+/* Pulsanti azione inline (sostituiscono link icona-only) — azzerati visivamente */
+.table td button.action-link,
+.table td button.btn-icon-link {
+  background: transparent;
+  border: 0;
+  color: var(--erp-primary);
+  cursor: pointer;
 }
 
 /* Icona cestino standard */

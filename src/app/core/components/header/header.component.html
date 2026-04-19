@@ -1,13 +1,5 @@
 <ng-container *ngIf="currentUser$ | async as user">
-  <!-- skip links -->
-  <div id="skip-link">
-    <a href="#main-content">Skip to Main Content</a>
-    <a href="#footer">Skip to footer</a>
-  </div>
-
-  <!-- -------------------------------------------------------------------- -->
-
-  <header class="header">
+  <header class="header" role="banner">
     <div class="user-bar">
       <div class="user-bar__inner">
         <div class="user-info">

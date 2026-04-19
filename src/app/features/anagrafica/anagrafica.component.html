@@ -4,7 +4,7 @@
 <section class="erp-page">
   <div class="container">
     <div class="erp-page-head">
-      <h1 id="main-content">{{ pageTitle }}</h1>
+      <h1>{{ pageTitle }}</h1>
       <button
         class="btn btn-primary"
         [routerLink]="['nuova-anagrafica']"
@@ -17,7 +17,7 @@
     </div>
 
     <!-- Filter -->
-    <form class="erp-panel erp-filter-form row g-3">
+    <form class="erp-panel erp-filter-form row g-3" role="search" aria-label="Filtri ricerca anagrafica">
       <div class="col-12 col-sm-6 col-lg-3">
         <label class="form-label" for="nome">Nome</label>
         <div class="input-group">
@@ -91,6 +91,9 @@
     <!-- Table - all Anagrafica -->
     <div class="table-responsive">
       <table class="table table-striped table-hover erp-table--card align-middle">
+        <caption class="visually-hidden">
+          Elenco anagrafiche, {{ totalItems }} risultati totali
+        </caption>
         <thead>
           <tr>
             <th scope="col">Azioni</th>
@@ -109,51 +112,49 @@
             <td data-label="Azioni" class="actions-cell">
               <a
                 [routerLink]="['anagrafica-dettagli', anagraficaItem.id]"
-                title="Vedi dettagli"
+                [attr.aria-label]="'Vedi dettagli di ' + anagraficaItem.cittadino.nome + ' ' + anagraficaItem.cittadino.cognome"
               >
-                <i class="bi bi-eye-fill"></i>
+                <i class="bi bi-eye-fill" aria-hidden="true"></i>
               </a>
 
               <a
                 [routerLink]="['modifica-anagrafica', anagraficaItem.id]"
-                title="Modifica"
+                [attr.aria-label]="'Modifica ' + anagraficaItem.cittadino.nome + ' ' + anagraficaItem.cittadino.cognome"
               >
-                <i class="bi bi-pencil"></i>
+                <i class="bi bi-pencil" aria-hidden="true"></i>
               </a>
 
-              <a
+              <button
+                type="button"
                 (click)="deleteAnagraficaModal(anagraficaItem)"
-                title="Cancella"
                 class="action-link action-link--danger"
-                style="cursor: pointer"
+                [attr.aria-label]="'Elimina ' + anagraficaItem.cittadino.nome + ' ' + anagraficaItem.cittadino.cognome"
               >
-                <i class="bi bi-trash3"></i>
-              </a>
+                <i class="bi bi-trash3" aria-hidden="true"></i>
+              </button>
             </td>
 
             <td data-label="Nome">{{ anagraficaItem.cittadino.nome }}</td>
             <td data-label="Cognome">{{ anagraficaItem.cittadino.cognome }}</td>
             <td data-label="Codice fiscale">
-              {{ anagraficaItem.cittadino.codiceFiscale || anagraficaItem.cittadino.codice_fiscale }}
+              {{ anagraficaItem.cittadino.codiceFiscale }}
             </td>
             <td data-label="Genere">{{ anagraficaItem.cittadino.genere }}</td>
             <td data-label="Cittadinanza">
               {{ anagraficaItem.cittadino.cittadinanza }}
             </td>
             <td data-label="Data di nascita">
-              {{
-                (anagraficaItem.cittadino.dataDiNascita
-                  || anagraficaItem.cittadino.data_nascita) | date : "dd/MM/yyyy"
-              }}
+              {{ anagraficaItem.cittadino.dataDiNascita | date : "dd/MM/yyyy" }}
             </td>
             <td data-label="Documenti">
-              <a
-                href="javascript:void(0)"
+              <button
+                type="button"
+                class="btn-icon-link"
                 (click)="showDownloadModal(anagraficaItem.id)"
-                title="Download"
+                [attr.aria-label]="'Scarica documenti di ' + anagraficaItem.cittadino.nome + ' ' + anagraficaItem.cittadino.cognome"
               >
-                <i class="bi bi-download"></i>
-              </a>
+                <i class="bi bi-download" aria-hidden="true"></i>
+              </button>
             </td>
           </tr>
         </tbody>
@@ -167,7 +168,7 @@
       [pageSize]="pageSize"
       [pageIndex]="currentPage"
       (page)="onPageChange($event)"
-      aria-label="Select page"
+      aria-label="Selezione pagina"
     >
     </mat-paginator>
   </div>

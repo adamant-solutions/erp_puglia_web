@@ -1,4 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import {
   NavigationCancel,
   NavigationEnd,
@@ -18,11 +19,16 @@ import { LoaderService } from './core/services/loader.service';
 })
 export class AppComponent implements AfterViewInit {
   title = 'erp-puglia';
+  routeAnnouncement = '';
 
   entryOverlay!: HTMLElement | null;
   private readonly OVERLAY_TIMEOUT = 15 * 60 * 1000; // 15 minutes in milliseconds
 
-  constructor(private router: Router, private loader: LoaderService) {
+  constructor(
+    private router: Router,
+    private loader: LoaderService,
+    private titleService: Title
+  ) {
     this.router.events
       .pipe(
         filter(
@@ -32,7 +38,15 @@ export class AppComponent implements AfterViewInit {
             e instanceof NavigationError
         )
       )
-      .subscribe(() => this.loader.reset());
+      .subscribe((e) => {
+        this.loader.reset();
+        if (e instanceof NavigationEnd) {
+          const title = this.titleService.getTitle();
+          this.routeAnnouncement = title ? `Navigato a ${title}` : 'Pagina caricata';
+          const main = document.getElementById('main-content');
+          main?.focus({ preventScroll: false });
+        }
+      });
   }
 
   prepareRoute(outlet: RouterOutlet): string {

@@ -7,22 +7,54 @@
       />
     </div>
     <h1>Accedi alla piattaforma</h1>
-    <p class="subtitle">Inserisci le tue credenziali per continuare</p>
+    <p class="subtitle" id="login-subtitle">Inserisci le tue credenziali per continuare</p>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="submit()"
+      novalidate
+      aria-labelledby="login-subtitle"
+    >
       <div class="login-field">
         <label for="username">Username</label>
-        <input id="username" type="text" formControlName="username" autocomplete="username" autofocus />
+        <input
+          id="username"
+          type="text"
+          formControlName="username"
+          autocomplete="username"
+          autofocus
+          required
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.username.invalid && form.controls.username.touched ? 'true' : null"
+        />
       </div>
 
       <div class="login-field">
         <label for="password">Password</label>
-        <input id="password" type="password" formControlName="password" autocomplete="current-password" />
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          autocomplete="current-password"
+          required
+          aria-required="true"
+          [attr.aria-invalid]="form.controls.password.invalid && form.controls.password.touched ? 'true' : null"
+          [attr.aria-describedby]="errorMessage ? 'login-error' : null"
+        />
       </div>
 
-      <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div
+        *ngIf="errorMessage"
+        id="login-error"
+        class="error"
+        role="alert"
+        aria-live="assertive"
+      >
+        {{ errorMessage }}
+      </div>
 
       <button type="submit" [disabled]="form.invalid || loading">
+        <span *ngIf="loading" class="visually-hidden">Accesso in corso, </span>
         {{ loading ? 'Attendere...' : 'Accedi' }}
       </button>
     </form>

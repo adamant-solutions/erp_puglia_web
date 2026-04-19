@@ -1,24 +1,34 @@
-<div class="entry-overlay">
+<div id="skip-link">
+  <a href="#main-content">Salta al contenuto principale</a>
+  <a href="#footer">Salta al footer</a>
+</div>
+
+<div
+  class="entry-overlay"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="entry-overlay-title"
+>
   <div class="container">
     <div class="row">
       <div class="col-12 entry-overlay-content">
         <div class="logo-wrapper">
-          <div class="glow"></div>
+          <div class="glow" aria-hidden="true"></div>
           <img
             src="./assets/images/logo-domus-reg-v.png"
-            alt="ERP DomusReg Logo"
+            alt="ERP DomusReg"
             height="140"
           />
         </div>
 
-        <p class="text-center">
+        <p id="entry-overlay-title" class="text-center">
           Piattaforma Regionale per la Gestione del Patrimonio Immobiliare
           Pubblico
           <br />
           e dell'Edilizia Residenziale Popolare - ERP - di Regione Puglia
         </p>
 
-        <button (click)="dismissOverlay()">Vai all'app</button>
+        <button type="button" (click)="dismissOverlay()">Vai all'app</button>
       </div>
     </div>
   </div>
@@ -28,11 +38,15 @@
 
 <app-header></app-header>
 
-<main>
+<main id="main-content" tabindex="-1">
   <app-toast></app-toast>
   <div class="route-anim-host" [@routeAnimations]="prepareRoute(outlet)">
     <router-outlet #outlet="outlet"></router-outlet>
   </div>
 </main>
+
+<div class="visually-hidden" role="status" aria-live="polite" aria-atomic="true">
+  {{ routeAnnouncement }}
+</div>
 
 <app-footer></app-footer>
