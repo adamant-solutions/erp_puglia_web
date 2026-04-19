@@ -86,7 +86,9 @@ export class AnagraficaComponent implements OnInit {
   deleteAnagraficaModal(anagrafica: Anagrafica | any) {
     this.anagraficaId = anagrafica.id;
 
-    this.anagraficaMainIdentificationData = `${anagrafica.cittadino.nome} ${anagrafica.cittadino.cognome} - ${anagrafica.cittadino.codiceFiscale}`;
+    const c = anagrafica.cittadino;
+    const cf = c.codiceFiscale || c.codice_fiscale || '';
+    this.anagraficaMainIdentificationData = `${c.nome} ${c.cognome} - ${cf}`;
 
     this.bootstrapService.showModal('deleteAnagraficaModal');
   }

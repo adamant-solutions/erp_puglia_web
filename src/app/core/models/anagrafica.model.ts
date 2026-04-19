@@ -55,9 +55,12 @@ export interface Cittadino {
   nome: string;
   cognome: string;
   codiceFiscale: string;
+  /** Presente se il backend serializza in snake_case (Jackson SNAKE_CASE, ecc.). */
+  codice_fiscale?: string;
   genere: string;
   cittadinanza: string;
   dataDiNascita: string;
+  data_nascita?: string;
 
   residenza: Residenza;
   contatti: Contatti;

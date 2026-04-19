@@ -57,11 +57,15 @@ export class AnagraficaService {
     if (!raw) return raw;
     const cittadino = raw.cittadino;
     if (cittadino) {
-      if (cittadino.codiceFiscale === undefined && cittadino.codice_fiscale !== undefined) {
-        cittadino.codiceFiscale = cittadino.codice_fiscale;
+      const cfSnake = cittadino.codice_fiscale;
+      const cfCamel = cittadino.codiceFiscale;
+      if (cfSnake != null && cfSnake !== '' && (cfCamel == null || cfCamel === '')) {
+        cittadino.codiceFiscale = cfSnake;
       }
-      if (cittadino.dataDiNascita === undefined && cittadino.data_nascita !== undefined) {
-        cittadino.dataDiNascita = cittadino.data_nascita;
+      const dataSnake = cittadino.data_nascita;
+      const dataCamel = cittadino.dataDiNascita;
+      if (dataSnake != null && dataSnake !== '' && (dataCamel == null || dataCamel === '')) {
+        cittadino.dataDiNascita = dataSnake;
       }
       const docs = cittadino.documenti_identita;
       if (Array.isArray(docs)) {

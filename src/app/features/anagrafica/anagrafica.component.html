@@ -134,7 +134,7 @@
             <td data-label="Nome">{{ anagraficaItem.cittadino.nome }}</td>
             <td data-label="Cognome">{{ anagraficaItem.cittadino.cognome }}</td>
             <td data-label="Codice fiscale">
-              {{ anagraficaItem.cittadino.codiceFiscale }}
+              {{ anagraficaItem.cittadino.codiceFiscale || anagraficaItem.cittadino.codice_fiscale }}
             </td>
             <td data-label="Genere">{{ anagraficaItem.cittadino.genere }}</td>
             <td data-label="Cittadinanza">
@@ -142,7 +142,8 @@
             </td>
             <td data-label="Data di nascita">
               {{
-                anagraficaItem.cittadino.dataDiNascita | date : "dd/MM/yyyy"
+                (anagraficaItem.cittadino.dataDiNascita
+                  || anagraficaItem.cittadino.data_nascita) | date : "dd/MM/yyyy"
               }}
             </td>
             <td data-label="Documenti">
