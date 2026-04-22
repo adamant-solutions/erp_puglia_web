@@ -73,7 +73,7 @@ export class AuthorizationService {
     this.logout();
   }
 
-  private persistSession(res: LoginResponse): void {
+  persistSession(res: LoginResponse): void {
     const claims = this.decodeJwt(res.accessToken);
     const user: CurrentUser = {
       username: res.username,

@@ -79,6 +79,13 @@ const routes: Routes = [
         (m) => m.CicloPassivoModule
       ),
   },
+  {
+    path: 'auth-callback',
+    loadChildren: () =>
+      import('./features/auth-callback/auth-callback.module').then(
+        (m) => m.AuthCallbackModule
+      ),
+  },
   { path: '**', redirectTo: 'anagrafica' },
 ];
 
